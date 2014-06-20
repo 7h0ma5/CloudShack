@@ -1,0 +1,31 @@
+{
+  "name": "cloudshack",
+  "version": "0.0.1",
+  "main": "public/js/app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-resource": "latest",
+    "angular-animate": "latest",
+    "base": "latest",
+    "font-awesome": "latest",
+    "socket.io-client": "latest"
+  },
+  "overrides": {
+    "socket.io-client": {
+      "main": "socket.io.js"
+    },
+    "base": {
+      "main": ["js", "less"]
+    },
+    "font-awesome": {
+      "main": ["fonts", "css/font-awesome.css"]
+    }
+  }
+}
+

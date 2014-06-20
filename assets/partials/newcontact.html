@@ -1,0 +1,118 @@
+<h1>New Contact</h1>
+
+<form class="clear" novalidate name="form">
+  <p>
+    <div class="form-group">
+      <label for="callsign">Callsign</label>
+      <input type="text" autocomplete="off"
+             ng-model="contact.call" id="callsign" taborder="1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="rst-rcvd">RST Rcvd</label>
+      <input smartinput type="text" id="rst-rcvd" autocomplete="off"
+             placeholder="599" ng-model="contact.rst_rcvd" taborder="2">
+    </div>
+
+    <div class="form-group">
+      <label for="rst-sent">RST Sent</label>
+      <input smartinput type="text" id="rst-sent" autocomplete="off"
+             placeholder="599" ng-model="contact.rst_sent" taborder="3">
+    </div>
+
+    <div class="form-group">
+        <label for="mode">Mode</label>
+        <select name="mode" ng-model="contact.mode"
+                ng-options="mode.name as mode.name group by mode.group for mode in modes">
+        </select>
+    </div>
+
+    <b>{{dxcc.name}}</b>
+    {{dxcc.cont}}
+  </p>
+
+  <p>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input smartinput type="text" ng-model="contact.name" id="name"
+             placeholder="{{callbook.name}}" autocomplete="off" taborder="4">
+    </div>
+
+    <div class="form-group">
+      <label for="qth">QTH</label>
+      <input smartinput type="text" ng-model="contact.qth" id="qth"
+             placeholder="{{callbook.qth}}" autocomplete="off" taborder="5">
+    </div>
+
+    <div class="form-group">
+      <label for="gridsquare">Gridsquare</label>
+      <input smartinput type="text" ng-model="contact.gridsquare" id="gridsquare"
+             placeholder="{{callbook.gridsquare}}" autocomplete="off" taborder="6">
+    </div>
+  </p>
+
+  <p>
+    <div class="form-group">
+      <label for="cqz">CQ</label>
+      <input class="cqz" type="text" ng-model="dxcc.cqz" id="cqz"
+             autocomplete="off" taborder="7">
+    </div>
+
+    <div class="form-group">
+      <label for="ituz">ITU</label>
+      <input class="ituz" type="text" ng-model="dxcc.ituz" id="ituz"
+             autocomplete="off" taborder="8">
+    </div>
+
+    <div class="form-group">
+      <label for="power">Power</label>
+      <div class="input-group">
+        <input type="number" min="0" max="2000"
+               step="1" ng-model="contact.tx_pwr" id="power"
+               autocomplete="off" taborder="9">
+        <span class="input-addon">
+          W
+        </span>
+      </div>
+    </div>
+  </p>
+
+  <p  style="background-color: #cc9999;">
+    <div class="form-group">
+      <label for="start">Start</label>
+      <div class="input-group">
+        <input type="datetime-local" step="1" ng-model="startDate"
+               id="start" taborder="10" required>
+        <span class="input-addon">
+          <a ng-click="resetStart()">Now</a>
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="end">End</label>
+      <div class="input-group">
+        <input type="datetime-local" step="1" ng-model="endDate"
+               id="end" taborder="11" required>
+        <span class="input-addon">
+          <a ng-click="resetEnd()">Now</a>
+        </span>
+      </div>
+    </div>
+  </p>
+
+  <p>
+    <button type="button" ng-click="save()" class="primary">
+      <i class="fa fa-check"></i> Save
+    </button>
+    <button type="button" ng-click="reset()" class="danger">
+      <i class="fa fa-times"></i> Reset
+    </button>
+    <button ng-click="qrz()" ng-disabled="!contact.call">
+      QRZ <i class="fa fa-question-circle"></i>
+    </button>
+  </p>
+</form>
+
+<p>
+  {{contact}}
+</p>

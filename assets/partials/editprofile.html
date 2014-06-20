@@ -1,0 +1,57 @@
+<h1 ng-hide="new">Edit Profile {{profile.name}}</h1>
+<h1 ng-show="new">New Profile</h1>
+
+<p>
+  <div class="form-group">
+    <label for="gridsquare">Profile name</label>
+    <input type="text" id="gridsquare" ng-model="profile.name">
+  </div>
+</p>
+
+<h3>Operator</h3>
+
+<p>
+  <div class="form-group">
+    <label for="callsign">Callsign</label>
+    <input type="text" id="callsign" ng-model="profile.callsign">
+  </div>
+
+  <div class="form-group">
+    <label for="gridsquare">Name</label>
+    <input type="text" id="gridsquare" ng-model="profile.opname">
+  </div>
+</p>
+
+<h3>Location</h3>
+
+<p>
+  <div class="form-group">
+    <label for="gridsquare">Gridsquare</label>
+    <input type="text" id="gridsquare" ng-model="profile.gridsquare">
+  </div>
+
+  <div class="form-group">
+    <label for="gridsquare">QTH</label>
+    <input type="text" id="gridsquare" ng-model="profile.qth">
+  </div>
+</p>
+
+<h3>Hardware</h3>
+
+<p>
+  <div class="form-group">
+    <label for="gridsquare">Rig</label>
+    <input type="text" id="gridsquare" ng-model="profile.rig">
+  </div>
+
+  <div class="form-group">
+    <label for="gridsquare">Antenna</label>
+    <input type="text" id="gridsquare" ng-model="profile.antenna">
+  </div>
+</p>
+
+<p>
+  <button type="button" class="primary" ng-click="save()">Save</button>
+</p>
+
+{{profile}}

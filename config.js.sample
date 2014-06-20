@@ -1,0 +1,20 @@
+exports.callbook = {
+    username: "AA0AAA",
+    password: "123456"
+};
+
+exports.db = {
+    local: "contacts",
+    remote: "https://user:passwd@example.com/contacts"
+};
+
+exports.rig = {
+    host: "127.0.0.1",
+    port: 4532
+};
+
+exports.cluster = {
+    host: "example.com",
+    port: 8000,
+    username: "AA0AAA"
+};

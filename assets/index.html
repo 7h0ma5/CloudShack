@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CloudShack</title>
+    <link type="text/css" rel="stylesheet" href="/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="/css/app.css" />
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>CloudShack</h1>
+      <div class="ticker" ng-controller="TickerCtrl">
+          <div class="ticker-text" ng-show="show">
+              <i class="fa fa-globe fa-lg"></i>
+              <b>{{spot.dxcall}}</b> on
+              {{spot.freq}} by
+              {{spot.spotter}}
+              <i ng-show="spot.comment">({{spot.comment}})</i>
+          </div>
+      </div>
+      <div class="profile-select" ng-controller="ProfileSelectCtrl">
+          <a ng-click="toggleDropdown()">{{activeProfile.name}} <i class="fa fa-angle-down fa-lg"></i></a>
+          <ul ng-show="showDropdown">
+              <li ng-repeat="profile in profiles">
+                  <a ng-click="activate($index)">{{profile.name}}</a> <a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a>
+              </li>
+              <li>
+                  <a href="/#/profile/new">
+                      <i a class="fa fa-plus fa-lg"></i> New Profile
+                  </a>
+              </li>
+          </ul>
+      </div>
+    </header>
+
+    <aside>
+      <div class="clock" clock>
+      </div>
+      <div class="rig" ng-controller="RigCtrl">
+        <div class="freq">{{freq}} MHz</div>
+        <div class="mode">{{mode}}</div>
+      </div>
+      <nav nav-menu>
+        <ul>
+          <li><a href="/#/"><i class="fa fa-home fa-lg"></i> Home</a></li>
+          <li><a href="/#/logbook"><i class="fa fa-book fa-lg"></i> Logbook</a></li>
+          <li><a href="/#/contact/new"><i class="fa fa-plus fa-lg"></i> New Contact</a></li>
+          <li><a href="/#/cluster"><i class="fa fa-globe fa-lg"></i> DX Cluster</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <section id="page" ng-view>
+    </section>
+  </body>
+</html>
