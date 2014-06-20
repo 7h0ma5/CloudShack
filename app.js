@@ -4,7 +4,7 @@ var express = require("express"),
     rigctl = require("./lib/rigctl"),
     cluster = require("./lib/cluster");
 
-global.config = require("./config");
+global.config = require("./settings");
 
 var app = express();
 
