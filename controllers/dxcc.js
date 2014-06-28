@@ -1,7 +1,7 @@
 var Dxcc = require("../lib/dxcc").Dxcc;
-var dxcc = new Dxcc();
+var dxcc;
 
-exports.lookup = function(req, res) {
+function lookup(req, res) {
     var result = dxcc.lookup(req.params.callsign);
 
     if (result) {
@@ -10,4 +10,9 @@ exports.lookup = function(req, res) {
     else {
         res.send(404, { error: "Not Found" });
     }
+}
+
+exports.setup = function(config, app, io) {
+    dxcc = new Dxcc();
+    app.get("/dxcc/:callsign", lookup);
 }

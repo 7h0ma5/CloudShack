@@ -1,7 +1,7 @@
 var PouchDB = require("pouchdb");
-var db = new PouchDB("profiles");
+var db;
 
-exports.allProfiles = function(req, res) {
+function allProfiles(req, res) {
     var options = {
         include_docs: true
     };
@@ -11,21 +11,21 @@ exports.allProfiles = function(req, res) {
     });
 };
 
-exports.readProfile = function(req, res) {
+function readProfile(req, res) {
     db.get(req.params.id, req.query, function(err, data) {
         if (err) res.send(404, {error: err});
         else res.send(data);
     });
 };
 
-exports.createProfile = function(req, res) {
+function createProfile(req, res) {
     db.post(req.body, function(err, data) {
         if (err) res.send(500, {error: err});
         else res.send(data);
     });
 };
 
-exports.updateProfile = function(req, res) {
+function updateProfile(req, res) {
     var profile = req.body;
     profile["_id"] = req.params.id;
     profile["_rev"] = req.params.rev;
@@ -36,10 +36,19 @@ exports.updateProfile = function(req, res) {
      });
 };
 
-exports.deleteProfile = function(req, res) {
+function deleteProfile(req, res) {
     var params = {"_id": req.params.id, "_rev": req.params.rev};
     db.remove(params, {}, function(err, data) {
         if (err) res.send(404, {error: err});
         else res.send(200, data);
     });
 };
+
+exports.setup = function(config, app, io) {
+    db = new PouchDB("profiles");
+    app.get("/profiles", allProfiles);
+    app.get("/profiles/:id", readProfile);
+    app.post("/profiles", createProfile);
+    app.put("/profiles/:id/:rev", updateProfile);
+    app.delete("/profiles/:id/:rev", deleteProfile);
+}

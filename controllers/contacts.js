@@ -1,27 +1,23 @@
-var adi = require("../lib/adi");
+var adi = require("../lib/adi"),
+    PouchDB = require("PouchDB");
 
-var PouchDB = require("pouchdb");
-var local = global.config.db.local;
-var server = global.config.db.remote;
+var db;
 
-var db = new PouchDB(local);
-
-//db.replicate.to(server, {live: true});
-//db.replicate.from(server, {live: true});
-
-db.put({_id: "_design/logbook",
-    views: {
-        "logbook": {
-            map: function(doc) {
-                if (doc.start) {
-                    emit(doc.start, doc);
-                }
-            }.toString()
+function createViews(db) {
+    db.put({_id: "_design/logbook",
+        views: {
+            "logbook": {
+                map: function(doc) {
+                    if (doc.start) {
+                        emit(doc.start, doc);
+                    }
+                }.toString()
+            }
         }
-    }
-}).catch(function(err) {});
+    }).catch(function(err) {});
+}
 
-exports.allContacts = function(req, res) {
+function allContacts(req, res) {
     var options = {
         descending: true
     };
@@ -30,31 +26,30 @@ exports.allContacts = function(req, res) {
         options["limit"] = parseInt(req.query["limit"]);
     }
 
-    console.log("query" + options);
     db.query("logbook", options, function(err, data) {
         if (err) res.send(500, {error: err});
         else res.send(data);
     });
 };
 
-exports.readContact = function(req, res) {
+function readContact(req, res) {
     db.get(req.params.id, req.query, function(err, data) {
         if (err) res.send(404, {error: err});
         else res.send(data);
     });
 };
 
-exports.createContact = function(req, res) {
+function createContact(req, res) {
     db.post(req.body, function(err, data) {
         if (err) res.send(500, {error: err});
         else res.send(data);
     });
 };
 
-exports.updateContact = function(req, res) {
+function updateContact(req, res) {
 };
 
-exports.deleteContact = function(req, res) {
+function deleteContact(req, res) {
     var params = {"_id": req.params.id, "_rev": req.params.rev};
     db.remove(params, {}, function(err, data) {
         if (err) res.send(404, {error: err});
@@ -62,7 +57,7 @@ exports.deleteContact = function(req, res) {
     });
 };
 
-exports.exportAdif = function(req, res) {
+function exportAdif(req, res) {
     var map = function(doc) {
         if (doc.start) {
             emit(doc.start, doc);
@@ -81,7 +76,7 @@ exports.exportAdif = function(req, res) {
     });
 };
 
-exports.importAdif = function(req, res) {
+function importAdif(req, res) {
     var reader = new adi.AdiReader(req.rawBody);
     var contacts = reader.readAll();
 
@@ -95,7 +90,7 @@ exports.importAdif = function(req, res) {
     });
 };
 
-exports.statistics = function(req, res) {
+function statistics(req, res) {
     var map = function(doc) {
         if (doc.start) {
             emit(doc.start.split("T")[0], doc);
@@ -111,3 +106,24 @@ exports.statistics = function(req, res) {
         }
     });
 };
+
+exports.setup = function(config, app, io) {
+    var local = config.db.local;
+    var server = config.db.remote;
+
+    db = new PouchDB(local);
+
+    //db.replicate.to(server, {live: true});
+    //db.replicate.from(server, {live: true});
+
+    createViews(db);
+
+    app.get("/contacts", allContacts);
+    app.get("/contacts/stats", statistics);
+    app.get("/contacts/:id", readContact);
+    app.post("/contacts", createContact);
+    app.put("/contacts/:id/:rev", updateContact);
+    app.delete("/contacts/:id/:rev", deleteContact);
+    app.get("/contacts.adi", exportAdif);
+    app.post("/contacts.adi", importAdif);
+}

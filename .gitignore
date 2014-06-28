@@ -32,6 +32,6 @@ public/
 bower_components/
 
 cty.dat
-config.js
-profiles/
-contacts/
+settings.js
+profiles*
+contacts*

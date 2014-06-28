@@ -11,8 +11,8 @@ exports.config =
     stylesheets:
       joinTo: "css/app.css"
       order:
-        before: /^bower_components/
-        after: /^webapp/
+        before: ["/bower_components/*"]
+        after: ["/webapp/*"]
   modules:
     definition: false
     wrapper: false
