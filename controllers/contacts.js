@@ -1,5 +1,5 @@
 var adi = require("../lib/adi"),
-    PouchDB = require("PouchDB");
+    PouchDB = require("pouchdb");
 
 var db;
 
