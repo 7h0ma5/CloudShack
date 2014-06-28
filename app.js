@@ -18,10 +18,10 @@ var rawBodyParser = function(req, res, next) {
     }
 };
 
-app.use(require('errorhandler')());
-app.use(require('morgan')());
+app.use(require("errorhandler")());
+app.use(require("morgan")("dev"));
 app.use(serveStatic(__dirname + "/public"));
-app.use(require('body-parser').json());
+app.use(require("body-parser").json());
 app.use(rawBodyParser);
 
 var server = app.listen(3000);
