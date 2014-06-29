@@ -12,6 +12,7 @@
     "angular-route": "latest",
     "angular-resource": "latest",
     "angular-animate": "latest",
+    "angular-cookies": "latest",
     "base": "latest",
     "font-awesome": "latest",
     "socket.io-client": "latest"
@@ -28,4 +29,3 @@
     }
   }
 }
-

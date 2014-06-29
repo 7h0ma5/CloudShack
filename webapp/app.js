@@ -1,4 +1,4 @@
-var app = angular.module("app", ["ngRoute", "ngResource", "ngAnimate"]);
+var app = angular.module("app", ["ngRoute", "ngResource", "ngAnimate", "ngCookies"]);
 
 app.factory("Contact", function($resource) {
     return $resource("/contacts/:id/:rev", {id: "@id", rev: "@rev"},

@@ -23,6 +23,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
     $scope.reset = function() {
         $scope.resetStart();
         $scope.resetEnd();
+
         $scope.contact = null;
         $scope.callbook = null;
         $scope.dxcc = null;
@@ -35,6 +36,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
         var end = new Date(Date.parse($scope.endDate));
         $scope.contact["start"] = start.toJSON();
         $scope.contact["end"] = end.toJSON();
+
         Contact.save($scope.contact);
         $scope.reset();
     };
@@ -44,28 +46,23 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
     };
 
     $scope.$watch("contact.call", function(newValue, oldValue) {
-        if (newValue) {
-            var uppercase = newValue.toUpperCase();
-            if (uppercase != newValue) {
-                $scope.contact.call = uppercase;
-                return;
-            }
+        if (!newValue) return;
 
-            if (newValue.length < 1) {
-                $scope.country = "";
-                return;
-            }
-
-            Dxcc.get({"call": newValue}, function(result) {
-                console.log("got dxcc");
-                $scope.dxcc = result;
-            });
-
-            if (newValue.length < 3) return;
-
-            Callbook.get({"call": newValue}, function(result) {
-                $scope.callbook = result;
-            });
+        var uppercase = newValue.toUpperCase();
+        if (uppercase != newValue) {
+            $scope.contact.call = uppercase;
+            return;
         }
+
+        Dxcc.get({"call": newValue}, function(result) {
+            console.log("got dxcc");
+            $scope.dxcc = result;
+        });
+
+        if (newValue.length < 3) return;
+
+        Callbook.get({"call": newValue}, function(result) {
+            $scope.callbook = result;
+        });
     });
 });

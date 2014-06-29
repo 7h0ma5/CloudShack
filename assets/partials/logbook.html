@@ -13,7 +13,7 @@
     <th>Callsign</th>
     <th>Name</th>
     <th>Mode</th>
-    <th>Band</th>
+    <th>Frequency</th>
   </tr>
   <tr ng-repeat="contact in contacts.rows">
     <td>{{contact.value.start|date:"dd.MM.yyyy"}}</td>
@@ -21,7 +21,7 @@
     <td><b>{{contact.value.call}}</b></td>
     <td>{{contact.value.name}}</td>
     <td>{{contact.value.mode}}</td>
-    <td>{{contact.value.band}}</td>
+    <td>{{contact.value.freq}}</td>
     <td><a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a></td>
     <td><a ng-click="delete($index)"><i class="fa fa-trash-o fg-lg"></i></a></td>
   </tr>
