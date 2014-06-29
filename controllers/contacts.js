@@ -18,15 +18,13 @@ function createViews(db) {
 }
 
 function allContacts(req, res) {
-    var options = {
-        descending: true
-    };
-
-    if ("limit" in req.query) {
-        options["limit"] = parseInt(req.query["limit"]);
+    if (!("descending" in req.query)) {
+        req.query.descending = true;
     }
 
-    db.query("logbook", options, function(err, data) {
+    console.log(req.query);
+
+    db.query("logbook", req.query, function(err, data) {
         if (err) res.send(500, {error: err});
         else res.send(data);
     });

@@ -18,11 +18,22 @@ var rawBodyParser = function(req, res, next) {
     }
 };
 
+var jsonParamParser = function(req, res, next) {
+    for (prop in req.query) {
+        try {
+            req.query[prop] = JSON.parse(req.query[prop]);
+        }
+        catch (e) {}
+    }
+    next();
+}
+
 app.use(require("errorhandler")());
 app.use(require("morgan")("dev"));
 app.use(serveStatic(__dirname + "/public"));
 app.use(require("body-parser").json());
 app.use(rawBodyParser);
+app.use(jsonParamParser);
 
 var server = app.listen(3000);
 var io = sockio.listen(server);

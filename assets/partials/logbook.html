@@ -1,12 +1,6 @@
 <h1>Logbook</h1>
 
-<a href="/contacts.adi" download="logbook.adi">Export .adi</a>
-
-<p>
-<input type="file" value="Choose file">
-<button ng-click="import('adi')">Import</button>
-</p>
-<table>
+<table style="table-layout: auto; display: inline;">
   <tr>
     <th>Date</th>
     <th>Time</th>
@@ -15,7 +9,7 @@
     <th>Mode</th>
     <th>Frequency</th>
   </tr>
-  <tr ng-repeat="contact in contacts.rows">
+  <tr ng-repeat="contact in contacts">
     <td>{{contact.value.start|date:"dd.MM.yyyy"}}</td>
     <td>{{contact.value.start|date:"HH:mm"}}</td>
     <td><b>{{contact.value.call}}</b></td>
@@ -26,3 +20,11 @@
     <td><a ng-click="delete($index)"><i class="fa fa-trash-o fg-lg"></i></a></td>
   </tr>
 </table>
+
+<p>
+    <a ng-show="hasPrevPage()" ng-click="prevPage()">Previous Page</a>
+    <span>Page {{page}} of {{total_pages}}</span>
+    <a ng-show="hasNextPage()" ng-click="nextPage()">Next Page</a>
+</p>
+
+<p>{{next}}</p>
