@@ -11,8 +11,8 @@ app.directive("cookieBind", function($cookies) {
         }
 
         element.bind("blur", function() {
-            if (element.val().length > 0) {
-                $cookies[scope.cookie] = element.val();
+            if (ngModel.$viewValue.length > 0) {
+                $cookies[scope.cookie] = ngModel.$viewValue;
             }
         });
     }
