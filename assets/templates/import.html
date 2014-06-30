@@ -1,0 +1,10 @@
+<h1>Import</h1>
+
+<p><input type="file" ng-file-select="onFileSelect($files)"></p>
+
+<p>
+    <button class="primary" ng-click="import()" ng-disabled="!file || loading">
+        Import
+    </button>
+    <spinner ng-show="loading"></spinner>
+</p>

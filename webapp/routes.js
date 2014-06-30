@@ -1,36 +1,41 @@
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider.when("/contact/new", {
-        templateUrl: "/partials/newcontact.html",
+        templateUrl: "/templates/newcontact.html",
         controller: "NewContactCtrl"
     });
 
     $routeProvider.when("/contact/:id", {
-        templateUrl: "/partials/editcontact.html",
+        templateUrl: "/templates/editcontact.html",
         controller: "EditContactCtrl"
     });
 
     $routeProvider.when("/profile/new", {
-        templateUrl: "/partials/editprofile.html",
+        templateUrl: "/templates/editprofile.html",
         controller: "EditProfileCtrl"
     });
 
     $routeProvider.when("/profile/:id", {
-        templateUrl: "/partials/editprofile.html",
+        templateUrl: "/templates/editprofile.html",
         controller: "EditProfileCtrl"
     });
 
     $routeProvider.when("/logbook", {
-        templateUrl: "/partials/logbook.html",
+        templateUrl: "/templates/logbook.html",
         controller: "LogbookCtrl"
     });
 
+    $routeProvider.when("/import", {
+        templateUrl: "/templates/import.html",
+        controller: "ImportCtrl"
+    })
+
     $routeProvider.when("/cluster", {
-        templateUrl: "/partials/cluster.html",
+        templateUrl: "/templates/cluster.html",
         controller: "ClusterCtrl"
     });
 
     $routeProvider.when("/", {
-        templateUrl: "/partials/home.html"
+        templateUrl: "/templates/home.html"
     });
 
     $routeProvider.otherwise({
