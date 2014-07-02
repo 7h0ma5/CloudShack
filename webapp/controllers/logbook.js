@@ -1,5 +1,5 @@
 app.controller("LogbookCtrl", function($scope, $location, Contact) {
-    var limit = 10;
+    var limit = 20;
     var prev = [];
     var start = null;
     var next = null;

@@ -14,7 +14,7 @@
     "angular-animate": "latest",
     "angular-cookies": "latest",
     "ng-file-upload": "latest",
-    "base": "latest",
+    "normalize-css": "latest",
     "font-awesome": "latest",
     "socket.io-client": "latest"
   },

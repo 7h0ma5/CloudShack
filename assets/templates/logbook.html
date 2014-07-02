@@ -1,6 +1,6 @@
 <h1>Logbook</h1>
 
-<table style="table-layout: auto; display: inline;">
+<table>
   <tr>
     <th>Date</th>
     <th>Time</th>
@@ -22,9 +22,9 @@
 </table>
 
 <p>
-    <a ng-show="hasPrevPage()" ng-click="prevPage()">Previous Page</a>
+    <button ng-disabled="!hasPrevPage()" ng-click="prevPage()">Previous Page</button>
     <span>Page {{page}} of {{total_pages}}</span>
-    <a ng-show="hasNextPage()" ng-click="nextPage()">Next Page</a>
+    <button ng-disabled="!hasNextPage()" ng-click="nextPage()">Next Page</button>
 </p>
 
 <p>{{next}}</p>
