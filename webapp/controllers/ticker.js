@@ -1,20 +1,12 @@
 app.controller("TickerCtrl", function($scope, $timeout, Socket) {
-    var timeout = null;
-
-    function hide() {
-        $scope.show = false;
-        timeout = null;
-    }
-
-    function show() {
-        $scope.show = true;
-    }
+    var timeout;
 
     Socket.on("dx_spot", function(spot) {
-        if (!timeout) {
-            $scope.spot = spot;
-            show();
-            timeout = $timeout(hide, 8000);
-        }
+        $timeout.cancel(timeout);
+        $scope.spot = spot;
+        $scope.show = true;
+        timeout = $timeout(function() {
+            $scope.show = false;
+        }, 8000);
     });
 });
