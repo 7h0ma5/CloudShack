@@ -4,7 +4,7 @@ var dateToUTC = function(local) {
                     local.getUTCMinutes(), local.getUTCSeconds(), 0);
 }
 
-app.controller("NewContactCtrl", function($scope, $filter, $window,
+app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
                                           Contact, Callbook, Dxcc, Data)
 {
     $scope.modes = Data.get("modes");
@@ -37,8 +37,13 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
         $scope.contact["start"] = start.toJSON();
         $scope.contact["end"] = end.toJSON();
 
-        Contact.save($scope.contact);
-        $scope.reset();
+        Contact.save($scope.contact, function(res) {
+            Flash.success("Contact with " + $scope.contact.call + " saved.");
+            $scope.reset();
+        }, function(res) {
+            Flash.error("Failed to save contact.")
+        });
+
     };
 
     $scope.qrz = function() {

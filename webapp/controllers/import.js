@@ -1,4 +1,4 @@
-app.controller("ImportCtrl", function($scope, $upload) {
+app.controller("ImportCtrl", function($scope, $upload, Flash) {
     $scope.file = null;
     $scope.progress = null;
     $scope.loading = false;
@@ -20,15 +20,12 @@ app.controller("ImportCtrl", function($scope, $upload) {
                 url: '/contacts.adi',
                 headers: {'Content-Type': "text/plain"},
                 data: e.target.result
-            }).then(function(data) {
-                console.log(data);
+            }).then(function(res) {
+                Flash.success(res.data.count + " contacts imported.")
                 $scope.loading = false;
-            }, function(data) {
-                console.log(data);
+            }, function(res) {
+                Flash.error("Import failed.")
                 $scope.loading = false;
-            }, function(evt) {
-                $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-                console.log($scope.progress);
             });
         };
     };

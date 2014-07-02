@@ -16,6 +16,5 @@ app.controller("EditProfileCtrl", function($scope, $routeParams, Profile) {
             Profile.update({id: $scope.profile._id, rev: $scope.profile._rev},
                            $scope.profile);
         } 
-        alert("Saved!");
     }
 });

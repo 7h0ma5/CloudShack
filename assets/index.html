@@ -54,7 +54,13 @@
       </nav>
     </aside>
 
-    <section id="page" ng-view>
+    <section id="page">
+        <div ng-controller="FlashCtrl">
+            <div class="flash {{message.level}}" ng-show="show">
+                {{message.text}}
+            </div>
+        </div>
+        <div ng-view></div>
     </section>
   </body>
 </html>
