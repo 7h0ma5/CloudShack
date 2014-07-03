@@ -19,6 +19,12 @@ app.factory("Dxcc", function($resource) {
     return $resource("/dxcc/:call", {call: "@call"});
 });
 
+app.factory("Spots", function($resource) {
+    return $resource("/spots", {}, {
+        get: {method: "GET", isArray: true}
+   });
+});
+
 app.factory("Data", function($resource) {
     var Data = $resource('/data/:id', {id: "@id"}, {
         get: {method: "GET", cache: true, isArray: true}

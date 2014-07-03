@@ -1,1 +1,18 @@
 <h1>DX Cluster</h1>
+
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Callsign</th>
+    <th>Spotter</th>
+    <th>Frequency</th>
+    <th>Comment</th>
+  </tr>
+  <tr ng-repeat="spot in spots">
+    <td>{{spot.time}}</td>
+    <td><b>{{spot.dxcall}}</b></td>
+    <td>{{spot.spotter}}</td>
+    <td>{{spot.freq}}</td>
+    <td>{{spot.comment}}</td>
+  </tr>
+</table>
