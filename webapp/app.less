@@ -315,6 +315,45 @@ table {
     }
 }
 
+.tabs {
+    > ul {
+        display: inline-block;
+        list-style: none;
+        padding: 0;
+        border-bottom: 1px solid #ddd;
+
+        li {
+            display: inline-block;
+            margin: 0;
+            margin-bottom: -1px;
+
+            a {
+                display: inline-block;
+                padding: 8px 15px;
+                margin-right: 5px;
+                border: 1px solid transparent;
+            }
+
+            a:hover {
+                background-color: #ddd;
+            }
+
+            &.active a {
+                cursor: default;
+                color: inherit;
+                border-color: #ddd #ddd @page-background;
+
+                &:hover {
+                    background-color: inherit;
+                }
+            }
+        }
+    }
+    > div {
+        padding: 5px 0;
+    }
+}
+
 .flash {
     position: absolute;
     left: 10px;
