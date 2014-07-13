@@ -16,3 +16,13 @@ exports.config =
   modules:
     definition: false
     wrapper: false
+  optimize: true
+  plugins:
+    uglify:
+      mangle: false
+      compress:
+        global_defs:
+          DEBUG: false
+    cleancss:
+      keepSpecialComments: 0
+      removeEmpty: true
