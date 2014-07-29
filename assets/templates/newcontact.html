@@ -1,11 +1,11 @@
 <h1>New Contact</h1>
 
-<form class="clear" novalidate name="form">
+<form class="clear" name="form">
   <p>
     <div class="form-group">
       <label for="callsign">Callsign</label>
-      <input type="text" autocomplete="off"
-             ng-model="contact.call" id="callsign" taborder="1" required>
+      <input required uppercase type="text" autocomplete="off"
+             ng-model="contact.call" id="callsign" taborder="1">
     </div>
 
     <div class="form-group">
@@ -111,6 +111,21 @@
       </div>
     </div>
   </p>
+
+  <tabs>
+      <div title="QSL">
+          <div class="form-group">
+            <label for="qsl_via">QSL via: </label>
+            <input uppercase type="text" name="qsl_via" autocomplete="off"
+                   ng-model="contact.qsl_via" />
+          </div>
+
+      </div>
+      <div title="Contest">
+      </div>
+      <div title="Station">
+      </div>
+  </tabs>
 
   <p>
     <button type="button" ng-click="save()" class="primary">

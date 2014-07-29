@@ -21,7 +21,7 @@ app.controller("LogbookCtrl", function($scope, $location, Contact) {
         Contact.get(options,
             function(result) {
                 $scope.contacts = result["rows"].slice(0, limit);
-                $scope.total_pages = Math.ceil(result["total_rows"]/10);
+                $scope.total_pages = Math.ceil(result["total_rows"]/limit);
 
                 if (result["rows"].length == limit + 1) {
                     next = result["rows"][limit];

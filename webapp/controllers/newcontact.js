@@ -53,12 +53,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
     $scope.$watch("contact.call", function(newValue, oldValue) {
         if (!newValue) return;
 
-        var uppercase = newValue.toUpperCase();
-        if (uppercase != newValue) {
-            $scope.contact.call = uppercase;
-            return;
-        }
-
         Dxcc.get({"call": newValue}, function(result) {
             console.log("got dxcc");
             $scope.dxcc = result;
