@@ -119,7 +119,20 @@
             <input uppercase type="text" name="qsl_via" autocomplete="off"
                    ng-model="contact.qsl_via" />
           </div>
-
+          <div class="form-group">
+            <label for="qsl_sent">QSL sent: </label>
+            <select name="qsl_sent" ng-model="contact.qsl_sent"
+                    ng-options="o.id as o.name for o in qsl_sent">
+              <option value="">---</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="qsl_rcvd">QSL received: </label>
+            <select name="qsl_rcvd" ng-model="contact.qsl_rcvd"
+                    ng-options="o.id as o.name for o in qsl_rcvd">
+              <option value="">---</option>
+           </select>
+          </div>
       </div>
       <div title="Contest">
       </div>

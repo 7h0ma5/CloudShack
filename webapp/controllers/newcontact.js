@@ -64,4 +64,19 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
             $scope.callbook = result;
         });
     });
+
+    $scope.qsl_rcvd = [
+        {id: "N", name: "No"},
+        {id: "Y", name: "Yes"},
+        {id: "R", name: "Requested"},
+        {id: "I", name: "Invalid"}
+    ];
+
+    $scope.qsl_sent = [
+        {id: "N", name: "No"},
+        {id: "Y", name: "Yes"},
+        {id: "Q", name: "Queued"},
+        {id: "R", name: "Requested"},
+        {id: "I", name: "Invalid"}
+    ];
 });
