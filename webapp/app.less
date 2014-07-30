@@ -58,7 +58,6 @@ header {
     background-color: @header-background;
     color: @header-foreground;
     height: 60px;
-    padding: 0 10px;
     top: 0px;
     width: 100%;
     .user-select(none);
@@ -67,6 +66,7 @@ header {
         color: #fff;
         display: table-cell;
         height: 60px;
+        padding: 0 10px;
         vertical-align: middle;
     }
 
@@ -109,6 +109,10 @@ header {
         font-weight: bold;
         position: relative;
         text-align: right;
+
+        a {
+            color: #fff;
+        }
 
         ul {
             text-align: left;

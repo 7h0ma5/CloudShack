@@ -1,12 +1,15 @@
-app.controller("ProfileSelectCtrl", function($scope, $location) {
-    $scope.profiles = [
-        {"name": "DL0ABC", "_id": "1"},
-        {"name": "DL0DEF", "_id": "2"}
-    ];
+app.controller("ProfileSelectCtrl", function($scope, $location, $cookies, Profile) {
+    $scope.activeProfile = null;
 
-    $scope.activeProfile = {
-        "name": "DL0ABC"
-    };
+    $scope.profiles = Profile.get({}, function() {
+        if (!$cookies.profile) return;
+
+        angular.forEach($scope.profiles.rows, function(profile) {
+            if (profile.id == $cookies.profile) {
+                $scope.activeProfile = profile.doc;
+            }
+        });
+    });
 
     $scope.showDropdown = false;
 
@@ -15,12 +18,13 @@ app.controller("ProfileSelectCtrl", function($scope, $location) {
     };
 
     $scope.activate = function(idx) {
-        $scope.activeProfile = $scope.profiles[idx];
+        $scope.activeProfile = $scope.profiles.rows[idx].doc;
+        $cookies.profile = $scope.activeProfile._id;
         $scope.showDropdown = false;
     };
 
     $scope.edit = function(idx) {
-        var profile = $scope.profiles[idx];
-        $location.path("/profile/" + profile._id);
+        var profile = $scope.profiles.rows[idx];
+        $location.path("/profile/" + profile.id);
     };
 });

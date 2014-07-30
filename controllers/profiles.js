@@ -7,7 +7,7 @@ function allProfiles(req, res) {
     };
     db.allDocs(options, function(err, data) {
         if (err) res.send(500, {error: err});
-        else res.send(data["rows"]);
+        else res.send(data);
     });
 };
 

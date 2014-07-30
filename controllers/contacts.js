@@ -22,8 +22,6 @@ function allContacts(req, res) {
         req.query.descending = true;
     }
 
-    console.log(req.query);
-
     db.query("logbook", req.query, function(err, data) {
         if (err) res.send(500, {error: err});
         else res.send(data);
