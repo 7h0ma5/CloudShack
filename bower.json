@@ -22,9 +22,6 @@
     "socket.io-client": {
       "main": "socket.io.js"
     },
-    "base": {
-      "main": ["js", "less"]
-    },
     "font-awesome": {
       "main": ["fonts", "css/font-awesome.css"]
     }

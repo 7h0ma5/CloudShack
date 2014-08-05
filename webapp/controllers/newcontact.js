@@ -8,7 +8,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
                                           Contact, Callbook, Dxcc, Data)
 {
     $scope.modes = Data.get("modes");
-    console.log($scope.modes);
 
     $scope.resetStart = function() {
         var utc = dateToUTC(new Date());

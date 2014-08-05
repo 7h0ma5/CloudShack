@@ -1,26 +1,26 @@
-var PouchDB = require("pouchdb");
+var nano = require("nano");
 var db;
 
 function allProfiles(req, res) {
     var options = {
         include_docs: true
     };
-    db.allDocs(options, function(err, data) {
-        if (err) res.send(500, {error: err});
+    db.list(options, function(err, data) {
+        if (err) res.status(500).send({error: err});
         else res.send(data);
     });
 };
 
 function readProfile(req, res) {
     db.get(req.params.id, req.query, function(err, data) {
-        if (err) res.send(404, {error: err});
+        if (err) res.status(404).send({error: err});
         else res.send(data);
     });
 };
 
 function createProfile(req, res) {
-    db.post(req.body, function(err, data) {
-        if (err) res.send(500, {error: err});
+    db.insert(req.body, function(err, data) {
+        if (err) res.status(500).send({error: err});
         else res.send(data);
     });
 };
@@ -29,23 +29,22 @@ function updateProfile(req, res) {
     var profile = req.body;
     profile["_id"] = req.params.id;
     profile["_rev"] = req.params.rev;
-    db.put(profile, function(err, data) {
-        console.log(data);
-        if (err) res.send(404, {error: err});
-        else res.send(200, data);
+    db.insert(profile, function(err, data) {
+        if (err) res.status(404).send({error: err});
+        else res.send(data);
      });
 };
 
 function deleteProfile(req, res) {
-    var params = {"_id": req.params.id, "_rev": req.params.rev};
-    db.remove(params, {}, function(err, data) {
-        if (err) res.send(404, {error: err});
-        else res.send(200, data);
+    db.destroy(req.params.id, req.params.rev, function(err, data) {
+        if (err) res.status(404).send({error: err});
+        else res.send(data);
     });
 };
 
 exports.setup = function(config, app, io) {
-    db = new PouchDB("profiles");
+    db = nano(config.db.local).use("profiles");
+
     app.get("/profiles", allProfiles);
     app.get("/profiles/:id", readProfile);
     app.post("/profiles", createProfile);

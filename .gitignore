@@ -32,7 +32,5 @@ public/
 bower_components/
 
 cty.dat
-settings.js
-profiles/
-contacts/
-*-mrview-*
+settings.json
+bin/

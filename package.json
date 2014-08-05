@@ -1,9 +1,7 @@
 {
   "name": "cloudshack",
   "version": "0.0.1",
-  "scripts": {
-    "start": "node app"
-  },
+  "main": "main.js",
   "dependencies": {
     "express": "latest",
     "body-parser": "latest",
@@ -13,7 +11,7 @@
     "request": "latest",
     "xmldoc": "latest",
     "xmlrpc": "latest",
-    "pouchdb": "latest",
+    "nano": "latest",
     "socket.io": "latest",
     "dateformat": "latest"
   },
@@ -23,6 +21,9 @@
     "less-brunch": "latest",
     "clean-css-brunch": "latest",
     "auto-reload-brunch": "latest",
-    "ngmin-uglify-js-brunch": "latest"
+    "ngmin-uglify-js-brunch": "latest",
+    "grunt": "latest",
+    "grunt-download-atom-shell": "latest",
+    "grunt-contrib-copy": "latest"
   }
 }
