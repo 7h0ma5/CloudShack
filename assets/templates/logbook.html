@@ -4,14 +4,21 @@
   <tr>
     <th>Date</th>
     <th>Time</th>
+    <th><!-- Icon --></th>
     <th>Callsign</th>
     <th>Name</th>
     <th>Mode</th>
     <th>Frequency</th>
+    <th colspan="2"></th>
   </tr>
   <tr ng-repeat="contact in contacts">
     <td>{{contact.value.start|date:"dd.MM.yyyy"}}</td>
     <td>{{contact.value.start|date:"HH:mm"}}</td>
+    <td>
+        <span ng-show="contact.value.contest_id">
+            <i style="color: #c8ad00;" class="fa fa-trophy" title="{{contact.value.contest_id}}"></i>
+        </span>
+    </td>
     <td><b>{{contact.value.call}}</b></td>
     <td>{{contact.value.name}}</td>
     <td>{{contact.value.mode}}</td>
