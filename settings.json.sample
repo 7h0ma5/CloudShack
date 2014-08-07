@@ -4,7 +4,7 @@
         "password": "123456"
     },
     "db": {
-        "local": "https://127.0.0.1:5984",
+        "local": "http://127.0.0.1:5984",
         "remote": "https://user:passwd@example.com:5984"
     },
     "rig": {
