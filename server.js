@@ -45,7 +45,7 @@ Server.prototype.run = function() {
     this.server = this.app.listen(3000);
     this.io = sockio.listen(this.server);
 
-    ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster"]
+    ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster", "config"]
         .map(function(controllerName) {
             var controller = require("./controllers/" + controllerName);
             controller.setup(self.config, self.app, self.io);

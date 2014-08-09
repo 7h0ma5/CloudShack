@@ -1,15 +1,15 @@
 var data = require("../lib/data.js");
 
 function getAllData(req, res) {
-    res.send(200, data);
+    res.send(data);
 }
 
 function getData(req, res) {
     if (req.params.id in data) {
-        res.send(200, data[req.params.id]);
+        res.send(data[req.params.id]);
     }
     else {
-        res.send(404);
+        res.status(404).send();
     }
 }
 
