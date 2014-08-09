@@ -1,7 +1,7 @@
 var express = require("express"),
     serveStatic = require('serve-static'),
     sockio = require("socket.io"),
-    config = require("./settings");
+    config = require("./lib/config");
 
 function rawBodyParser(req, res, next) {
     req.rawBody = "";
@@ -27,6 +27,8 @@ function jsonParamParser(req, res, next) {
 }
 
 var Server = exports.Server = function() {
+    this.config = new config.Config();
+
     this.app = express();
     this.app.use(require("errorhandler")());
     this.app.use(require("morgan")("dev"));
@@ -34,6 +36,7 @@ var Server = exports.Server = function() {
     this.app.use(require("body-parser").json());
     this.app.use(rawBodyParser);
     this.app.use(jsonParamParser);
+
     return this;
 }
 
@@ -45,7 +48,7 @@ Server.prototype.run = function() {
     ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster"]
         .map(function(controllerName) {
             var controller = require("./controllers/" + controllerName);
-            controller.setup(config, self.app, self.io);
+            controller.setup(self.config, self.app, self.io);
         }
     );
 

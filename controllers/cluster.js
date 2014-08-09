@@ -7,9 +7,9 @@ function allSpots(req, res) {
 }
 
 exports.setup = function(config, app, io) {
-    var dx = new cluster.Cluster(config.cluster.host,
-                                 config.cluster.port,
-                                 config.cluster.username);
+    var dx = new cluster.Cluster(config.get("cluster.host"),
+                                 config.get("cluster.port"),
+                                 config.get("cluster.username"));
 
     app.get("/spots", allSpots);
 

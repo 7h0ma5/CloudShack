@@ -103,7 +103,7 @@ function statistics(req, res) {
 };
 
 exports.setup = function(config, app, io) {
-    db = nano(config.db.local).use("contacts");
+    db = nano(config.get("db.local")).use("contacts");
     createViews(db);
 
     app.get("/contacts", allContacts);
