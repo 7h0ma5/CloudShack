@@ -1,0 +1,44 @@
+<h1>Settings</h1>
+
+<tabs>
+    <div title="Callbook">
+        <div class="form-group">
+          <label for="callbook-username">Username</label>
+          <input type="text" id="callbook-username" ng-model="config.callbook.username" />
+        </div>
+        <div class="form-group">
+          <label for="callbook-password">Password</label>
+          <input type="password" id="callbook-password" ng-model="config.callbook.username" />
+        </div>
+    </div>
+    <div title="Database">
+        <div class="form-group">
+          <label for="db-local">Local</label>
+          <input type="text" id="db-local" ng-model="config.db.local" />
+        </div>
+        <div class="form-group">
+          <label for="db-remote">Remote</label>
+          <input type="text" id="db-remote" ng-model="config.db.remote" />
+        </div>
+    </div>
+    <div title="DX Cluster">
+        <div class="form-group">
+          <label for="cluster-host">Host</label>
+          <input type="text" id="cluster-host" ng-model="config.cluster.host" />
+        </div>
+        <div class="form-group">
+          <label for="cluster-port">Port</label>
+          <input type="number" step="1" id="cluster-port" ng-model="config.cluster.port" />
+        </div>
+        <div class="form-group">
+          <label for="cluster-username">Port</label>
+          <input type="text" id="cluster-username" ng-model="config.cluster.username" />
+        </div>
+    </div>
+</tabs>
+
+<p>
+    <button type="button" ng-click="save()" class="primary">
+      <i class="fa fa-check"></i> Save
+    </button>
+</p>
