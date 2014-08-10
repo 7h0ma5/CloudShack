@@ -43,7 +43,9 @@ function deleteProfile(req, res) {
 };
 
 exports.setup = function(config, app, io) {
-    db = nano(config.get("db.local")).use("profiles");
+    config.observe("db", function() {
+        db = nano(config.get("db.local")).use("profiles");
+    });
 
     app.get("/profiles", allProfiles);
     app.get("/profiles/:id", readProfile);

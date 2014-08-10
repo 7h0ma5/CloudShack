@@ -22,7 +22,7 @@ app.factory("Dxcc", function($resource) {
 app.factory("Spots", function($resource) {
     return $resource("/spots", {}, {
         get: {method: "GET", isArray: true}
-   });
+    });
 });
 
 app.factory("Data", function($resource) {
@@ -35,6 +35,10 @@ app.factory("Data", function($resource) {
             return Data.get({id: id});
         }
     };
+});
+
+app.factory("Config", function($resource) {
+    return $resource("/config", {}, {});
 });
 
 app.factory("Socket", function($rootScope) {

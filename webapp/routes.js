@@ -34,6 +34,11 @@ app.config(function($routeProvider, $locationProvider) {
         controller: "ClusterCtrl"
     });
 
+    $routeProvider.when("/settings", {
+        templateUrl: "/templates/settings.html",
+        controller: "SettingsCtrl"
+    });
+
     $routeProvider.when("/", {
         templateUrl: "/templates/home.html"
     });

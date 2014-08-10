@@ -199,11 +199,14 @@ aside {
 }
 
 #page {
-    position: relative;
-    margin-top: 60px;
-    margin-left: 225px;
+    position: absolute;
+    top: 60px;
+    left: 225px;
+    bottom: 0;
+    right: 0;
     padding: 20px;
     opacity: 1;
+    overflow: auto;
 
     &.ng-enter, &.ng-leave {
         transition: all 0.1s linear;
