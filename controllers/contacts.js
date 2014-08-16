@@ -158,7 +158,10 @@ function importLotw(req, res) {
                     res.status(500).send({error: err});
                 }
                 else {
-                    res.send({count: data.length, matches: matches, fails: fails});
+                    res.send({count: data.length,
+                              matches: matches,
+                              fails: fails,
+                              result: data});
                 }
             });
         });
@@ -169,10 +172,23 @@ function importLotw(req, res) {
 
 exports.setup = function(config, app, io) {
     config.observe("db", function() {
-        var couch = nano(config.get("db.local"));
+        var local = config.get("db.local");
+        var remote = config.get("db.remote");
+
+        var couch = nano(local);
         couch.db.create("contacts");
         db = couch.db.use("contacts");
         createViews(db);
+
+        if (remote) {
+            var options = {
+                continuous: true,
+                create_target: true
+            };
+            couch.db.replicate(local + "/contacts", remote + "/contacts", options, function(err) {
+                console.log(err);
+            });
+        }
 
         lotw = new lotwlib.LOTW(config.get("lotw.username"), config.get("lotw.password"));
     });

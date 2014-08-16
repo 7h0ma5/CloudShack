@@ -7,7 +7,7 @@ function lookup(req, res) {
             res.send(result);
         }
         else {
-            res.send(404, { error: "Not Found" });
+            res.status(404).send({error: "Not Found"});
         }
     });
 }
