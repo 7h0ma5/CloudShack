@@ -13,7 +13,8 @@
     "xmlrpc": "latest",
     "nano": "latest",
     "socket.io": "latest",
-    "dateformat": "latest"
+    "dateformat": "latest",
+    "async": "latest"
   },
   "devDependencies": {
     "javascript-brunch": "latest",

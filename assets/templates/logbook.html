@@ -16,7 +16,10 @@
     <td>{{contact.value.start|date:"HH:mm"}}</td>
     <td>
         <span ng-show="contact.value.contest_id">
-            <i style="color: #c8ad00;" class="fa fa-trophy" title="{{contact.value.contest_id}}"></i>
+            <i style="color: #e67e22;" class="fa fa-trophy" title="{{contact.value.contest_id}}"></i>
+        </span>
+        <span ng-show="contact.value.lotw_qsl_rcvd == 'Y'">
+            <i style="color: #27ae60;" class="fa fa-check-circle" title="Confirmed via LoTW"></i>
         </span>
     </td>
     <td><b>{{contact.value.call}}</b></td>

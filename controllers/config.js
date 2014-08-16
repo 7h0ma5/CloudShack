@@ -6,7 +6,6 @@ function getAll(req, res) {
 
 function setAll(req, res) {
     config.setAll(req.body);
-    console.log(req.body);
     config.save();
     res.send("OK");
 }
