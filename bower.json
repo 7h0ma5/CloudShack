@@ -16,14 +16,21 @@
     "ng-file-upload": "latest",
     "normalize-css": "latest",
     "font-awesome": "latest",
-    "socket.io-client": "latest"
+    "socket.io-client": "latest",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#latest"
   },
   "overrides": {
     "socket.io-client": {
       "main": "socket.io.js"
     },
     "font-awesome": {
-      "main": ["fonts", "css/font-awesome.css"]
+      "main": [
+        "fonts",
+        "css/font-awesome.css"
+      ]
+    },
+    "angular-hotkeys": {
+        "main": "build/hotkeys.js"
     }
   }
 }

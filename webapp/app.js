@@ -1,5 +1,5 @@
 var app = angular.module("app", ["ngRoute", "ngResource", "ngAnimate", "ngCookies",
-                                 "angularFileUpload"]);
+                                 "angularFileUpload", "cfp.hotkeys"]);
 
 app.factory("Contact", function($resource) {
     return $resource("/contacts/:id/:rev", {id: "@id", rev: "@rev"},
@@ -94,6 +94,10 @@ app.factory("Rig", function($rootScope, Socket) {
     });
 
     return rig;
+});
+
+app.config(function(hotkeysProvider) {
+    hotkeysProvider.includeCheatSheet = false;
 });
 
 app.run(function(Rig) {

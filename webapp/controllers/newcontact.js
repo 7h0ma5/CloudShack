@@ -4,7 +4,7 @@ var dateToUTC = function(local) {
                     local.getUTCMinutes(), local.getUTCSeconds(), 0);
 }
 
-app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
+app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, Flash,
                                           Contact, Callbook, Dxcc, Data, Rig)
 {
     $scope.rig = Rig;
@@ -79,4 +79,30 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
         {id: "R", name: "Requested"},
         {id: "I", name: "Invalid"}
     ];
+
+    hotkeys.bindTo($scope).add({
+        combo: "ctrl+s",
+        description: "Save the contact",
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function(event, hotkey) {
+            event.preventDefault();
+            $scope.save();
+        }
+    }).add({
+        combo: "ctrl+r",
+        description: "Reset the form",
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function(event, hotkey) {
+            event.preventDefault();
+            $scope.reset();
+        }
+    }).add({
+        combo: "ctrl+y",
+        description: "Lookup call on QRZ",
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function(event, hotkey) {
+            event.preventDefault();
+            $scope.qrz();
+        }
+    });
 });
