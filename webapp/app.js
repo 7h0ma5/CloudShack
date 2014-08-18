@@ -88,3 +88,8 @@ app.factory("Rig", function($rootScope, Socket) {
         }
     };
 });
+
+app.run(function(Rig) {
+    // this function is here to always initialize the rig service
+    console.log("CloudShack is ready.");
+});
