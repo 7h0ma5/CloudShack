@@ -14,7 +14,7 @@ function createViews(db) {
                     if (doc.start) {
                         emit(doc.start, doc);
                     }
-                }.toString()
+                }
             },
             byCall: {
                 map: function(doc) {
@@ -22,6 +22,16 @@ function createViews(db) {
                         emit([doc.call, doc.start], doc);
                     }
                 }
+            },
+            stats: {
+                map: function(doc) {
+                    if (doc.start) {
+                        var date = doc.start.split("T")[0];
+                        var date_components = date.split("-");
+                        emit(date_components, doc);
+                    }
+                },
+                reduce: "_count"
             }
         }
     }, "_design/logbook");
@@ -90,19 +100,13 @@ function importAdif(req, res) {
 }
 
 function statistics(req, res) {
-    var map = function(doc) {
-        if (doc.start) {
-            emit(doc.start.split("T")[0], doc);
-        }
+    if (!("group_level" in req.query)) {
+        req.query.group_level = 3;
     }
 
-    db.query({map: map, reduce: "_count"}, function(err, data) {
-        if (err) {
-            res.status(500).send({error: err});
-        }
-        else {
-            res.send(data["rows"]);
-        }
+    db.view("logbook", "stats", req.query, function(err, data) {
+        if (err) res.status(500).send({error: err});
+        else res.send(data);
     });
 }
 
