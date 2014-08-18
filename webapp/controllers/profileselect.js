@@ -11,16 +11,9 @@ app.controller("ProfileSelectCtrl", function($scope, $location, $cookies, Profil
         });
     });
 
-    $scope.showDropdown = false;
-
-    $scope.toggleDropdown = function() {
-        $scope.showDropdown = !$scope.showDropdown;
-    };
-
     $scope.activate = function(idx) {
         $scope.activeProfile = $scope.profiles.rows[idx].doc;
         $cookies.profile = $scope.activeProfile._id;
-        $scope.showDropdown = false;
     };
 
     $scope.edit = function(idx) {

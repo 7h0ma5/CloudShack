@@ -10,6 +10,9 @@
 @text-color: #222;
 @link-color: #0680c5;
 
+@header-height: 50px;
+@sidebar-width: 180px;
+
 .user-select(@value) {
     -webkit-user-select: @value;
     -moz-user-select: @value;
@@ -90,16 +93,17 @@ header {
     z-index: 1000;
     background-color: @header-background;
     color: @header-foreground;
-    height: 60px;
+    height: @header-height;
     top: 0px;
     width: 100%;
     .user-select(none);
 
     h1 {
         display: table-cell;
-        height: 60px;
+        height: 100%;
         padding: 0 10px;
         vertical-align: middle;
+        white-space:nowrap;
 
         a {
             color: #fff;
@@ -109,11 +113,12 @@ header {
 
     .ticker {
         display: table-cell;
-        height: 60px;
+        height: 100%;
         vertical-align: middle;
         text-align: center;
         padding: 0 20px;
         font-size: 1.5em;
+        width: 100%;
     }
 
     .ticker-text {
@@ -140,7 +145,8 @@ header {
 
     .profile-select {
         display: table-cell;
-        height: 60px;
+        white-space:nowrap;
+        height: 100%;
         vertical-align: middle;
         padding: 0 10px;
         font-weight: bold;
@@ -158,24 +164,32 @@ header {
             margin: 0;
             background-color: @header-background;
             position: absolute;
-            top: 60px;
+            top: @header-height;
             right: 0;
             z-index: 100;
         }
 
         li {
-            border-top: 1px solid #fff;
             padding: 10px;
+        }
+
+        ul {
+            display: none;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .8);
+        }
+
+        &:hover ul {
+            display: block;
         }
     }
 }
 
 aside {
     position: fixed;
-    top: 60px;
+    top: @header-height;
     bottom: 0;
     background-color: @sidebar-background;
-    width: 225px;
+    width: @sidebar-width;
     .user-select(none);
 
     ul {
@@ -226,8 +240,8 @@ aside {
 
 #page {
     position: absolute;
-    top: 60px;
-    left: 225px;
+    top: @header-height;
+    left: @sidebar-width;
     bottom: 0;
     right: 0;
     padding: 20px;

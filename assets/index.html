@@ -23,12 +23,12 @@
           </div>
       </div>
       <div class="profile-select" ng-controller="ProfileSelectCtrl">
-          <a ng-click="toggleDropdown()">
+          <a>
               <span ng-if="activeProfile">{{activeProfile.name}}</span>
               <span ng-if="!activeProfile">No Profile</span>
               <i class="fa fa-caret-down fa-lg"></i>
           </a>
-          <ul ng-show="showDropdown">
+          <ul>
               <li ng-repeat="profile in profiles.rows">
                   <a ng-click="activate($index)">{{profile.doc.name}}</a> <a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a>
               </li>
