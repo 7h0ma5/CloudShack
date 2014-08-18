@@ -58,7 +58,7 @@
     <section id="page">
         <div ng-controller="FlashCtrl">
             <div class="flash {{message.level}}" ng-show="show">
-                {{message.text}}
+                <span>{{message.text}}</span>
             </div>
         </div>
         <div ng-view></div>

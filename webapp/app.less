@@ -20,7 +20,7 @@
 
 body {
     color: @text-color;
-    font-family: Helvetica, sans-serif;
+    font-family: sans-serif;
 }
 
 a {
@@ -225,7 +225,7 @@ aside {
 input, select {
     display: inline-block;
     box-sizing: border-box;
-    margin: 0 ! important;
+    margin: 0 ! importpant;
     padding: 4px ! important;
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -389,38 +389,44 @@ table {
 
 .flash {
     position: absolute;
-    left: 10px;
-    right: 10px;
-    display: block;
-    padding: 5px 10px;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     color: #fff;
-    border-radius: 5px;
-    opacity: 0.9;
+    font-weight: bold;
     text-align: center;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 
-    @media screen and (min-width: 1000px) {
-        margin: 0 15%;
+    span {
+        display: inline-block;
+        margin: 0 auto;
+        box-shadow: 0 0 5px #ccc;
+        padding: 8px 20px;
+        opacity: 1;
+        border-radius: 3px;
     }
 
-    &.info {
+    &.info span {
         background-color: #3498db;
     }
 
-    &.success {
+    &.success span {
         background-color: #2ecc71;
     }
 
-    &.warning {
+    &.warning span {
         background-color: #e67e22;
     }
 
-    &.error {
+    &.error span {
         background-color: #e74c3c;
     }
 
+
     &.ng-hide-add, &.ng-hide-remove {
         display: block ! important;
-        transition: all 1s ease;
+        transition: all 0.5s ease;
     }
 
     &.ng-hide-remove, &.ng-hide-add.ng-hide-add-active {
@@ -428,7 +434,7 @@ table {
     }
 
     &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
-        opacity: 0.9;
+        opacity: 1;
     }
 }
 
