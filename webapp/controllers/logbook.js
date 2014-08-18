@@ -1,4 +1,4 @@
-app.controller("LogbookCtrl", function($scope, $location, Contact) {
+app.controller("LogbookCtrl", function($scope, $location, $window, Contact) {
     var limit = 20;
     var prev = [];
     var start = null;
@@ -63,6 +63,10 @@ app.controller("LogbookCtrl", function($scope, $location, Contact) {
 
     $scope.delete = function(idx) {
         var contact = $scope.contacts[idx];
+
+        var permission = $window.confirm("Delete contact with " + contact.value.call + "?");
+
+        if (!permission) return;
 
         var id = contact.value._id;
         var rev = contact.value._rev;
