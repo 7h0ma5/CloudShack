@@ -136,7 +136,10 @@
 
 <div style="float: right; width: 30%;">
     <div class="box">
-        <div class="title">Radio</div>
+        <div class="title">
+          <i class="fa fa-circle" ng-class="{green: rig.connected, red: !rig.connected}"></i>
+          Radio
+        </div>
         <div class="content">
             <b>{{rig.freq}} MHz</b> {{rig.mode}}
         </div>
