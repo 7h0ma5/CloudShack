@@ -40,7 +40,8 @@ app.config(function($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when("/", {
-        templateUrl: "/templates/home.html"
+        templateUrl: "/templates/home.html",
+        controller: "HomeCtrl"
     });
 
     $routeProvider.otherwise({

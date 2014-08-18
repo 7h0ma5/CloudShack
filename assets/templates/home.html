@@ -1,1 +1,17 @@
 <h1>Welcome to CloudShack!</h1>
+
+<div ng-if="contactCount > 0">
+    <p>There are <b>{{contactCount}}</b> contacts in the log!</p>
+    <p>
+        <i class="fa fa-hand-o-right"></i>
+        <a href="/#/contact/new">Log a new contact</a>
+    </p>
+</div>
+
+<div ng-if="contactCount == 0">
+    <p>There are no contacts in the log yet.</p>
+    <p>
+        <i class="fa fa-hand-o-right"></i>
+        <a href="/#/contact/new">Log your first contact!</a>
+    </p>
+</div>

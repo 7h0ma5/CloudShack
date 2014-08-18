@@ -2,8 +2,10 @@ var app = angular.module("app", ["ngRoute", "ngResource", "ngAnimate", "ngCookie
                                  "angularFileUpload", "cfp.hotkeys"]);
 
 app.factory("Contact", function($resource) {
-    return $resource("/contacts/:id/:rev", {id: "@id", rev: "@rev"},
-                     {"update": {method: "PUT"}});
+    return $resource("/contacts/:id/:rev", {id: "@id", rev: "@rev"}, {
+                        "update": {method: "PUT"},
+                        "stats": {method: "GET", url: "/contacts/stats"}
+    });
 });
 
 app.factory("Profile", function($resource) {
