@@ -16,8 +16,7 @@
     "ng-file-upload": "latest",
     "normalize-css": "latest",
     "font-awesome": "latest",
-    "socket.io-client": "latest",
-    "gridism": "latest"
+    "socket.io-client": "latest"
   },
   "overrides": {
     "socket.io-client": {

@@ -47,7 +47,7 @@ exports.setup = function(config, app, io) {
         var couch = nano(config.get("db.local"));
         couch.db.create("profiles");
         db = couch.db.use("profiles");
-    });
+    }, true);
 
     app.get("/profiles", allProfiles);
     app.get("/profiles/:id", readProfile);

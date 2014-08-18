@@ -62,6 +62,29 @@ app.factory("Socket", function($rootScope) {
                     }
                 });
             });
+        },
+        removeAllListeners: function(eventName) {
+            socket.removeListener(eventName);
+        }
+    };
+});
+
+app.factory("Rig", function($rootScope, Socket) {
+    var rig = {
+        connected: false,
+        freq: 0.0,
+        mode: ""
+    };
+
+    Socket.on("rig_update", function(rigState) {
+        rig.freq = parseFloat(rigState.frequency/1e6).toFixed(4);
+        rig.mode = rigState.mode;
+        rig.connected = rigState.connected;
+    });
+
+    return {
+        get: function() {
+            return rig;
         }
     };
 });

@@ -171,6 +171,14 @@ function importLotw(req, res) {
 }
 
 exports.setup = function(config, app, io) {
+    lotw = new lotwlib.LOTW(null, null);
+
+    config.observe("lotw", function() {
+        var user = config.get("lotw.username");
+        var pass = config.get("lotw.password");
+        lotw.setCredentials(user, pass);
+    }, true);
+
     config.observe("db", function() {
         var local = config.get("db.local");
         var remote = config.get("db.remote");
@@ -189,9 +197,8 @@ exports.setup = function(config, app, io) {
                 console.log(err);
             });
         }
+    }, true);
 
-        lotw = new lotwlib.LOTW(config.get("lotw.username"), config.get("lotw.password"));
-    });
 
     app.get("/contacts", allContacts);
     app.get("/contacts/stats", statistics);

@@ -5,8 +5,9 @@ var dateToUTC = function(local) {
 }
 
 app.controller("NewContactCtrl", function($scope, $filter, $window, Flash,
-                                          Contact, Callbook, Dxcc, Data)
+                                          Contact, Callbook, Dxcc, Data, Rig)
 {
+    $scope.rig = Rig.get();
     $scope.modes = Data.get("modes");
 
     $scope.resetStart = function() {
