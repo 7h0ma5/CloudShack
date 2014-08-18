@@ -15,6 +15,6 @@ exports.setup = function(config, app, io) {
 
     dx.on("spot", function(spot) {
         spots.push(spot);
-        io.sockets.emit("dx_spot", spot);
+        io.sockets.emit("dx-spot", spot);
     });
 }
