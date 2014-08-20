@@ -65,6 +65,8 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, foc
 
         Callbook.get({"call": newValue}, function(result) {
             $scope.callbook = result;
+        }, function(err) {
+            $scope.callbook = null;
         });
     });
 
