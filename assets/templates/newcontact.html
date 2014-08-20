@@ -5,19 +5,19 @@
       <div class="form-group">
         <label for="callsign">Callsign</label>
         <input required uppercase type="text" autocomplete="off"
-               ng-model="contact.call" id="callsign" taborder="1">
+               ng-model="contact.call" id="callsign" focus-on="call">
       </div>
 
       <div class="form-group">
         <label for="rst-rcvd">RST Rcvd</label>
         <input smartinput type="text" id="rst-rcvd" autocomplete="off"
-               placeholder="599" ng-model="contact.rst_rcvd" taborder="2">
+               placeholder="599" ng-model="contact.rst_rcvd">
       </div>
 
       <div class="form-group">
         <label for="rst-sent">RST Sent</label>
         <input smartinput type="text" id="rst-sent" autocomplete="off"
-               placeholder="599" ng-model="contact.rst_sent" taborder="3">
+               placeholder="599" ng-model="contact.rst_sent">
       </div>
     </div>
 
@@ -25,19 +25,19 @@
       <div class="form-group">
         <label for="name">Name</label>
         <input smartinput type="text" ng-model="contact.name" id="name"
-               placeholder="{{callbook.name}}" autocomplete="off" taborder="4">
+               placeholder="{{callbook.name}}" autocomplete="off">
       </div>
 
       <div class="form-group">
         <label for="qth">QTH</label>
         <input smartinput type="text" ng-model="contact.qth" id="qth"
-               placeholder="{{callbook.qth}}" autocomplete="off" taborder="5">
+               placeholder="{{callbook.qth}}" autocomplete="off">
       </div>
 
       <div class="form-group">
         <label for="gridsquare">Gridsquare</label>
         <input smartinput type="text" ng-model="contact.gridsquare" id="gridsquare"
-               placeholder="{{callbook.gridsquare}}" autocomplete="off" taborder="6">
+               placeholder="{{callbook.gridsquare}}" autocomplete="off">
       </div>
     </div>
 
@@ -47,7 +47,7 @@
         <div class="input-group">
           <input type="number" min="0.0" max="100000.0" cookie-bind="freq"
                  step="0.001" ng-model="contact.freq" id="freq"
-                 autocomplete="off" taborder="9">
+                 autocomplete="off">
           <span class="input-addon">
             MHz
           </span>
@@ -56,7 +56,7 @@
 
       <div class="form-group">
         <label for="mode">Mode</label>
-        <select name="mode" ng-model="contact.mode" cookie-bind="mode"
+        <select name="mode" id="mode" ng-model="contact.mode" cookie-bind="mode"
                 ng-options="mode.name as mode.name group by mode.group for mode in modes">
         </select>
       </div>
@@ -66,7 +66,7 @@
         <div class="input-group">
           <input type="number" min="0" max="2000"  cookie-bind="tx_pwr"
                  step="1" ng-model="contact.tx_pwr" id="power"
-                 autocomplete="off" taborder="9">
+                 autocomplete="off">
           <span class="input-addon">
             W
           </span>
@@ -79,7 +79,7 @@
         <label for="start">Start</label>
         <div class="input-group">
           <input type="datetime-local" step="1" ng-model="startDate"
-                 id="start" taborder="10" required>
+                 id="start" required>
             <a class="input-addon" ng-click="resetStart()">Now</a>
         </div>
       </div>
@@ -87,7 +87,7 @@
         <label for="end">End</label>
         <div class="input-group">
           <input type="datetime-local" step="1" ng-model="endDate"
-                 id="end" taborder="11" required>
+                 id="end" required>
           <a class="input-addon" ng-click="resetEnd()">Now</a>
         </div>
       </div>
@@ -97,27 +97,56 @@
       <div title="QSL">
         <div class="form-group">
           <label for="qsl_via">QSL via: </label>
-          <input uppercase type="text" name="qsl_via" autocomplete="off"
-                 ng-model="contact.qsl_via" />
+          <input uppercase type="text" name="qsl_via" id="qsl_via"
+                 ng-model="contact.qsl_via" autocomplete="off" />
         </div>
         <div class="form-group">
           <label for="qsl_sent">QSL sent: </label>
-          <select name="qsl_sent" ng-model="contact.qsl_sent"
+          <select name="qsl_sent" id="qsl_sent" ng-model="contact.qsl_sent"
                   ng-options="o.id as o.name for o in qsl_sent">
             <option value=""></option>
           </select>
         </div>
         <div class="form-group">
           <label for="qsl_rcvd">QSL received: </label>
-          <select name="qsl_rcvd" ng-model="contact.qsl_rcvd"
+          <select name="qsl_rcvd" id="qsl_rcvd" ng-model="contact.qsl_rcvd"
                   ng-options="o.id as o.name for o in qsl_rcvd">
             <option value=""></option>
           </select>
         </div>
       </div>
-      <div title="Contest">
+
+      <div title="Contact">
+        <div class="form-group">
+          <label for="age">Age</label>
+          <div class="input-group">
+            <input type="number" min="1" max="150"
+                   step="1" ng-model="contact.age" id="age"
+                   autocomplete="off">
+            <span class="input-addon">
+              Years
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="text" name="email" id="email" ng-model="contact.email" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="rig">Equipment</label>
+          <input type="text" name="rig" id="rig" ng-mode="contact.rig">
+        </div>
       </div>
-      <div title="Station">
+
+      <div title="Contest">
+        <div class="form-group">
+          <label for="contest_id">Contest</label>
+          <select name="contest_id" id="contest_id" ng-model="contact.contest_id"
+                  ng-options="contest.id as contest.desc for contest in contests | orderBy:'desc'">
+          </select>
+        </div>
       </div>
     </tabs>
 
@@ -152,13 +181,13 @@
              <div class="form-group">
                <label for="cqz">CQ</label>
                <input class="cqz" type="text" ng-model="dxcc.cqz" id="cqz"
-                      autocomplete="off" taborder="7">
+                      autocomplete="off">
              </div>
 
              <div class="form-group">
                <label for="ituz">ITU</label>
                <input class="ituz" type="text" ng-model="dxcc.ituz" id="ituz"
-                      autocomplete="off" taborder="8">
+                      autocomplete="off">
              </div>
          </div>
       </div>

@@ -4,11 +4,12 @@ var dateToUTC = function(local) {
                     local.getUTCMinutes(), local.getUTCSeconds(), 0);
 }
 
-app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, Flash,
-                                          Contact, Callbook, Dxcc, Data, Rig)
+app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, focus,
+                                          Flash, Contact, Callbook, Dxcc, Data, Rig)
 {
     $scope.rig = Rig;
     $scope.modes = Data.get("modes");
+    $scope.contests = Data.get("contests");
 
     $scope.resetStart = function() {
         var utc = dateToUTC(new Date());
@@ -27,6 +28,8 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, Fla
         $scope.contact = null;
         $scope.callbook = null;
         $scope.dxcc = null;
+
+        focus("call");
     };
 
     $scope.reset();
