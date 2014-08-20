@@ -205,12 +205,12 @@ exports.setup = function(config, app, io) {
 
 
     app.get("/contacts", allContacts);
-    app.get("/contacts/stats", statistics);
+    app.get("/contacts/_stats", statistics);
     app.get("/contacts/:id", readContact);
     app.post("/contacts", createContact);
     app.put("/contacts/:id/:rev", updateContact);
     app.delete("/contacts/:id/:rev", deleteContact);
     app.get("/contacts.adi", exportAdif);
     app.post("/contacts.adi", importAdif);
-    app.post("/lotw/import", importLotw);
+    app.post("/contacts/_lotw", importLotw);
 }

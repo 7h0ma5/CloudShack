@@ -4,7 +4,7 @@ var app = angular.module("app", ["ngRoute", "ngResource", "ngAnimate", "ngCookie
 app.factory("Contact", function($resource) {
     return $resource("/contacts/:id/:rev", {id: "@id", rev: "@rev"}, {
                         "update": {method: "PUT"},
-                        "stats": {method: "GET", url: "/contacts/stats"}
+                        "stats": {method: "GET", url: "/contacts/_stats"}
     });
 });
 
