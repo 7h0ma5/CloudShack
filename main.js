@@ -10,7 +10,21 @@ var mainWindow = null;
 var trayIcon = null;
 
 function createMainWindow() {
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        title: "CloudShack",
+        icon: "resources/app/public/favicon.png",
+        "node-integration": "disable",
+        "web-preferences": {
+            "web-security": false,
+            "java": false,
+            "webgl": false,
+            "webaudio": false,
+            "plugins": false
+        }
+    });
+
     mainWindow.loadUrl("http://127.0.0.1:3000");
     trayIcon = null;
 
@@ -20,7 +34,7 @@ function createMainWindow() {
 }
 
 function quit() {
-    mainWindow.close();
+    if(mainWindow) mainWindow.close();
     app.quit();
     server.shutdown();
 }
