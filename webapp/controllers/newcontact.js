@@ -27,6 +27,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, foc
 
         $scope.contact = null;
         $scope.callbook = null;
+        $scope.previous = null;
         $scope.dxcc = null;
 
         focus("call");
@@ -57,7 +58,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, foc
         if (!newValue) return;
 
         Dxcc.get({"call": newValue}, function(result) {
-            console.log("got dxcc");
             $scope.dxcc = result;
         });
 
@@ -67,6 +67,20 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, foc
             $scope.callbook = result;
         }, function(err) {
             $scope.callbook = null;
+        });
+
+        var queryOptions = {
+            view: "byCall",
+            startkey: JSON.stringify([newValue]),
+            endkey: JSON.stringify([newValue, {}]),
+            descending: false
+        };
+
+        Contact.get(queryOptions,
+           function(result) {
+            $scope.previous = result.rows;
+        }, function(err) {
+            $scope.previous = null;
         });
     });
 

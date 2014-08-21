@@ -199,7 +199,20 @@
     </div>
     <div class="box" ng-show="previous">
       <div class="title">Previous Contacts</div>
-      <div class="content"></div>
+      <div class="content">
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Freq</th>
+          </tr>
+          <tr ng-repeat="row in previous">
+            <td>{{row.value.start|date:"dd.MM.yyyy"}}</td>
+            <td>{{row.value.start|date:"HH:mm"}}</td>
+            <td>{{row.value.freq}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
 </div>
 
