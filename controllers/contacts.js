@@ -42,7 +42,11 @@ function allContacts(req, res) {
         req.query.descending = true;
     }
 
-    db.view("logbook", "byDate", req.query, function(err, data) {
+    if (!("view" in req.query)) {
+        req.query.view = "byDate";
+    }
+
+    db.view("logbook", req.query.view, req.query, function(err, data) {
         if (err) res.status(500).send({error: err});
         else res.send(data);
     });
