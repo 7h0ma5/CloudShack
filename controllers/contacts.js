@@ -47,21 +47,21 @@ function allContacts(req, res) {
     }
 
     db.view("logbook", req.query.view, req.query, function(err, data) {
-        if (err) res.status(500).send({error: err});
+        if (err) res.status(500).send(err);
         else res.send(data);
     });
 }
 
 function readContact(req, res) {
     db.get(req.params.id, req.query, function(err, data) {
-        if (err) res.status(404).send({error: err});
+        if (err) res.status(404).send(err);
         else res.send(data);
     });
 }
 
 function createContact(req, res) {
     db.insert(req.body, function(err, data) {
-        if (err) res.status(500).send({error: err});
+        if (err) res.status(500).send(err);
         else res.send(data);
     });
 }
@@ -71,7 +71,7 @@ function updateContact(req, res) {
 
 function deleteContact(req, res) {
     db.destroy(req.params.id, req.params.rev, function(err, data) {
-        if (err) res.status(404).send({error: err});
+        if (err) res.status(404).send(err);
         else res.status(200).send();
     });
 }
@@ -79,7 +79,7 @@ function deleteContact(req, res) {
 function exportAdif(req, res) {
     db.view("logbook", "byDate", req.query, function(err, data) {
         if (err) {
-            res.status(500).send({error: err});
+            res.status(500).send(err);
         }
         else {
             var writer = new adi.AdiWriter(data["rows"]);
@@ -95,7 +95,7 @@ function importAdif(req, res) {
 
     db.bulk({docs: contacts}, function(err, data) {
         if (err) {
-            res.status(500).send({error: err});
+            res.status(500).send(err);
         }
         else {
             res.send({count: contacts.length});
@@ -109,7 +109,7 @@ function statistics(req, res) {
     }
 
     db.view("logbook", "stats", req.query, function(err, data) {
-        if (err) res.status(500).send({error: err});
+        if (err) res.status(500).send(err);
         else res.send(data);
     });
 }
@@ -163,7 +163,7 @@ function importLotw(req, res) {
         }, function(err) {
             db.bulk({docs: updates}, function(err, data) {
                 if (err) {
-                    res.status(500).send({error: err});
+                    res.status(500).send(err);
                 }
                 else {
                     res.send({count: data.length,
