@@ -12,5 +12,5 @@ app.directive("uppercase", function() {
         ngModel.$parsers.push(makeUppercase);
     }
 
-    return ({ restrict: "A", require: 'ngModel', link: link, scope: {ngModel: '='} });
+    return ({ restrict: "A", require: 'ngModel', link: link, scope: false });
 });

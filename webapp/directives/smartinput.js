@@ -9,5 +9,5 @@ app.directive("smartinput", function($location) {
         });
     }
 
-    return ({ restrict: "A", require: 'ngModel', link: link, scope: {ngModel: '='} });
+    return ({restrict: "A", require: 'ngModel', link: link, scope: false});
 });
