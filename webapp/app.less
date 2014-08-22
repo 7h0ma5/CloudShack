@@ -79,6 +79,23 @@ table {
 
     .content {
         padding: 10px;
+
+        > :first-child {
+            margin-top: 0;
+        }
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        td {
+            overflow:hidden;
+            white-space:nowrap;
+        }
     }
 }
 
@@ -411,8 +428,17 @@ button, .btn {
             }
         }
     }
+
     > div {
         padding: 5px 0;
+
+        > :first-child {
+            margin-top: 0;
+        }
+
+        > :last-child {
+            margin-bottom: 0;
+        }
     }
 }
 

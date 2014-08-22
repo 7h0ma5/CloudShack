@@ -202,11 +202,13 @@
       <div class="content">
         <table>
           <tr>
+            <th>Call</th>
             <th>Date</th>
             <th>Time</th>
             <th>Freq</th>
           </tr>
           <tr ng-repeat="row in previous">
+            <td>{{row.value.call}}</td>
             <td>{{row.value.start|date:"dd.MM.yyyy"}}</td>
             <td>{{row.value.start|date:"HH:mm"}}</td>
             <td>{{row.value.freq}}</td>
