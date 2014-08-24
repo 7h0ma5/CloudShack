@@ -1,8 +1,8 @@
 @header-background: #20262a;
 @header-foreground: #ecf0f1;
 
-@sidebar-background: #20262a;
-@sidebar-foreground: #ecf0f1;
+@sidebar-background: @header-background;
+@sidebar-foreground: @header-foreground;
 @sidebar-link-hover: #283035;
 @sidebar-link-active: #415160;
 
@@ -12,6 +12,9 @@
 
 @header-height: 50px;
 @sidebar-width: 180px;
+
+@tooltip-background: @sidebar-link-active;
+@tooltip-foreground: #fff;
 
 .user-select(@value) {
     -webkit-user-select: @value;
@@ -459,14 +462,15 @@ button, .btn {
     	left: 50%;
     	margin-bottom: 5px;
     	margin-left: -30px;
-    	padding: 10px 12px;
+    	padding: 8px 12px;
     	border-radius: 5px;
-    	background-color: hsla(0, 0%, 20%, 0.95);
-    	color: #fff;
+    	background-color: @tooltip-background;
+    	color: @tooltip-foreground;
     	content: attr(data-tooltip);
     	font-size: 14px;
         white-space: nowrap;
-        font-weight: bold;
+        box-shadow: 0 1px 10px rgba(0,0,0,0.8);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     &:after {
@@ -475,7 +479,7 @@ button, .btn {
     	left: 50%;
     	margin-left: -5px;
     	width: 0;
-    	border-top: 5px solid hsla(0, 0%, 20%, 0.95);
+    	border-top: 5px solid @tooltip-background;
     	border-right: 5px solid transparent;
     	border-left: 5px solid transparent;
     	content: " ";
