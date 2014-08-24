@@ -442,6 +442,51 @@ button, .btn {
     }
 }
 
+[data-tooltip] {
+    position: relative;
+	z-index: 2;
+
+    &:before, &:after {
+        visibility: hidden;
+	    opacity: 0;
+    }
+
+    &:before {
+    	position: absolute;
+    	bottom: 120%;
+    	left: 50%;
+    	margin-bottom: 5px;
+    	margin-left: -30px;
+    	padding: 10px 12px;
+    	border-radius: 5px;
+    	background-color: hsla(0, 0%, 20%, 0.95);
+    	color: #fff;
+    	content: attr(data-tooltip);
+    	font-size: 14px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    &:after {
+    	position: absolute;
+    	bottom: 120%;
+    	left: 50%;
+    	margin-left: -5px;
+    	width: 0;
+    	border-top: 5px solid hsla(0, 0%, 20%, 0.95);
+    	border-right: 5px solid transparent;
+    	border-left: 5px solid transparent;
+    	content: " ";
+    	font-size: 0;
+    	line-height: 0;
+    }
+
+    &:hover:before, &:hover:after {
+	    visibility: visible;
+	    opacity: 1;
+    }
+}
+
 .flash {
     position: absolute;
     top: 20px;
