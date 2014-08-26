@@ -9,8 +9,54 @@ app.factory("Contact", function($resource) {
 });
 
 app.factory("Profile", function($resource) {
-    return $resource("/profiles/:id/:rev", {id: "@id", rev: "@rev"},
-                     {"update": {method: "PUT"}});
+    var Profile = $resource("/profiles/:id/:rev", {id: "@id", rev: "@rev"},
+                            {"update": {method: "PUT"}});
+
+    var active = null;
+
+    function setDefaults(defaults) {
+        if (!active) return;
+        var updated = false;
+
+        for (key in defaults) {
+            if (!(key in active)) {
+                updated = true;
+            }
+            else if (active[key] != defaults[key]) {
+                updated = true;
+            }
+            else {
+                continue;
+            }
+
+            active[key] = defaults[key];
+        }
+
+        if (updated) {
+            Profile.update({id: active._id, rev: active._rev}, active,
+                function(res) {
+                    active["_rev"] = res["rev"];
+                }
+            );
+        }
+    }
+
+    function getActive() {
+        return active;
+    }
+
+    function setActive(profile) {
+        active = profile;
+    }
+
+    return {
+        get: Profile.get,
+        save: Profile.save,
+        update: Profile.update,
+        getActive: getActive,
+        setActive: setActive,
+        setDefaults: setDefaults
+    };
 });
 
 app.factory("Callbook", function($resource) {
@@ -102,7 +148,17 @@ app.config(function(hotkeysProvider) {
     hotkeysProvider.includeCheatSheet = false;
 });
 
-app.run(function(Rig) {
-    // this function is here to always initialize the rig service
+// this function is also here to always initialize the rig service
+app.run(function(Rig, $rootScope, dateFilter) {
+    $rootScope.dateToUTC = function(local) {
+        return new Date(local.getUTCFullYear(), local.getUTCMonth(),
+                        local.getUTCDate(), local.getUTCHours(),
+                        local.getUTCMinutes(), local.getUTCSeconds(), 0);
+    }
+
+    $rootScope.dateToJson = function(date) {
+        return dateFilter(date, "yyyy-MM-ddTHH:mm:ss");
+    }
+
     console.log("CloudShack is ready.");
 });

@@ -1,31 +1,67 @@
-var dateToUTC = function(local) {
-    return new Date(local.getUTCFullYear(), local.getUTCMonth(),
-                    local.getUTCDate(), local.getUTCHours(),
-                    local.getUTCMinutes(), local.getUTCSeconds(), 0);
-}
-
-app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, focus,
-                                          Flash, Contact, Callbook, Dxcc, Data, Rig)
+app.controller("NewContactCtrl", function($scope, $filter, $window,
+                                          hotkeys, focus, Flash, Profile,
+                                          Contact, Callbook, Dxcc, Data, Rig)
 {
     $scope.rig = Rig;
     $scope.modes = Data.get("modes");
     $scope.contests = Data.get("contests");
 
+    var preserve = ["freq", "mode", "tx_pwr"];
+
+    function loadDefaults() {
+        var profile = Profile.getActive();
+        if (!profile) return;
+
+        angular.forEach(preserve, function(key) {
+            if (key in profile) {
+                $scope.contact[key] = profile[key];
+            }
+        });
+    }
+
+    function saveDefaults() {
+        var profile = Profile.getActive();
+        if (!profile) return;
+
+        var defaults = {};
+
+        angular.forEach(preserve, function(key) {
+            if (key in $scope.contact) {
+                defaults[key] = $scope.contact[key];
+            }
+        });
+
+        Profile.setDefaults(defaults);
+    }
+
     $scope.resetStart = function() {
-        var utc = dateToUTC(new Date());
-        $scope.startDate = $filter("date")(utc, "yyyy-MM-ddTHH:mm:ss");
+        var utc = $scope.dateToUTC(new Date());
+        $scope.startDate = $scope.dateToJson(utc);
     };
 
     $scope.resetEnd = function() {
-        var utc = dateToUTC(new Date());
-        $scope.endDate = $filter("date")(utc, "yyyy-MM-ddTHH:mm:ss");
+        var utc = $scope.dateToUTC(new Date());
+        $scope.endDate = $scope.dateToJson(utc);
     };
 
     $scope.reset = function() {
         $scope.resetStart();
         $scope.resetEnd();
 
-        $scope.contact = null;
+        if ($scope.contact) {
+            var newContact = {};
+            angular.forEach(preserve, function(key) {
+                if (key in $scope.contact) {
+                    newContact[key] = $scope.contact[key];
+                }
+            });
+            $scope.contact = newContact;
+        }
+        else {
+            $scope.contact = {};
+            loadDefaults();
+        }
+
         $scope.callbook = null;
         $scope.previous = null;
         $scope.dxcc = null;
@@ -43,11 +79,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, hotkeys, foc
 
         Contact.save($scope.contact, function(res) {
             Flash.success("Contact with " + $scope.contact.call + " saved.");
+            saveDefaults();
             $scope.reset();
         }, function(res) {
             Flash.error("Failed to save contact.")
         });
-
     };
 
     $scope.qrz = function() {

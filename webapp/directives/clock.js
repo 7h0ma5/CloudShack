@@ -3,7 +3,7 @@ app.directive("clock", function($interval, dateFilter) {
         var format = 'HH:mm:ss';
 
         var update = function() {
-            element.text(dateFilter(dateToUTC(new Date()), format));
+            element.text(dateFilter($scope.dateToUTC(new Date()), format));
         };
 
         var timer = $interval(update, 1000);
