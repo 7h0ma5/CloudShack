@@ -3,8 +3,10 @@ app.directive("smartinput", function($location) {
         element.bind("blur", function() {
             if (element.val().length == 0) {
                 var value = element.attr("placeholder");
-                ngModel.$setViewValue(value);
-                ngModel.$render();
+                if (value) {
+                    ngModel.$setViewValue(value);
+                    ngModel.$render();
+                }
             }
         });
     }

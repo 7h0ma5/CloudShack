@@ -57,8 +57,16 @@
       <div class="form-group">
         <label for="mode">Mode</label>
         <select name="mode" id="mode" ng-model="contact.mode"
-                ng-options="mode.name as mode.name group by mode.group for mode in modes">
+                ng-options="mode.name as mode.name for mode in modes">
         </select>
+      </div>
+
+      <div class="form-group" ng-show="submodes">
+          <label for="submode">Submode</label>
+          <select name="submode" id="submode" ng-model="contact.submode"
+                  ng-options="mode.name as mode.name for mode in submodes">
+                  <option value=""></option>
+          </select>
       </div>
 
       <div class="form-group">

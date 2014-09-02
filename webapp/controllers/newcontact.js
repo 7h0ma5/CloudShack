@@ -6,7 +6,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
     $scope.modes = Data.get("modes");
     $scope.contests = Data.get("contests");
 
-    var preserve = ["freq", "mode", "tx_pwr"];
+    var preserve = ["freq", "mode", "submode", "tx_pwr"];
 
     function loadDefaults() {
         var profile = Profile.getActive();
@@ -69,13 +69,18 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
         focus("call");
     };
 
-    $scope.reset();
-
     $scope.save = function() {
         var start = new Date(Date.parse($scope.startDate));
         var end = new Date(Date.parse($scope.endDate));
         $scope.contact["start"] = start.toJSON();
         $scope.contact["end"] = end.toJSON();
+
+        // remove empty fields
+        for (var key in $scope.contact) {
+            if (!$scope.contact[key]) {
+                delete $scope.contact[key];
+            }
+        }
 
         Contact.save($scope.contact, function(res) {
             Flash.success("Contact with " + $scope.contact.call + " saved.");
@@ -89,6 +94,21 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
     $scope.qrz = function() {
         $window.open("http://www.qrz.com/db/" + $scope.contact.call);
     };
+
+    $scope.$watch("contact.mode", function(newValue, oldValue) {
+        if (newValue != oldValue) {
+            delete $scope.contact["submode"];
+        }
+        $scope.submodes = null;
+
+        $scope.modes.$promise.then(function(modes) {
+            angular.forEach(modes, function(mode) {
+                if (mode.name == newValue) {
+                    $scope.submodes = mode.submodes;
+                }
+            });
+        });
+    });
 
     $scope.$watch("contact.call", function(newValue, oldValue) {
         if (!newValue) return;
@@ -160,4 +180,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
             $scope.qrz();
         }
     });
+
+    $scope.reset();
 });
