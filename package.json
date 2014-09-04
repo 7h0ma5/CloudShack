@@ -1,7 +1,20 @@
 {
   "name": "cloudshack",
   "version": "0.0.1",
-  "main": "main.js",
+  "description": "Amateur Radio logbook server",
+  "author": "Thomas Gatzweiler <dl2ic@darc.de>",
+  "main": "server.js",
+  "bin": {
+    "cloudshack": "server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/7h0ma5/cloudshack.git"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "npm install && bash build"
+  },
   "dependencies": {
     "express": "latest",
     "body-parser": "latest",
@@ -17,6 +30,8 @@
     "async": "latest"
   },
   "devDependencies": {
+    "bower": "latest",
+    "brunch": "latest",
     "javascript-brunch": "latest",
     "css-brunch": "latest",
     "less-brunch": "latest",
