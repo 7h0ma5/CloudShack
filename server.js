@@ -29,12 +29,15 @@ function jsonParamParser(req, res, next) {
 var Server = exports.Server = function() {
     this.config = new config.Config();
 
+    var bodyParser = require("body-parser");
+
     this.app = express();
     this.app.use(require("errorhandler")());
     this.app.use(require("morgan")("dev"));
     this.app.use(serveStatic(__dirname + "/public"));
-    this.app.use(require("body-parser").json());
-    this.app.use(rawBodyParser);
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.text({type: "text/plain", limit: 10*1024*1024}));
+    this.app.use(bodyParser.text({type: "text/xml", limit: 1*1024*1024}))
     this.app.use(jsonParamParser);
 
     return this;
@@ -45,7 +48,7 @@ Server.prototype.run = function() {
     this.server = this.app.listen(3000);
     this.io = sockio.listen(this.server);
 
-    ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster", "config"]
+    ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster", "fldigi", "config"]
         .map(function(controllerName) {
             var controller = require("./controllers/" + controllerName);
             controller.setup(self.config, self.app, self.io);

@@ -36,12 +36,12 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
 
     $scope.resetStart = function() {
         var utc = $scope.dateToUTC(new Date());
-        $scope.startDate = $scope.dateToJson(utc);
+        $scope.startDate = $scope.dateToIso(utc);
     };
 
     $scope.resetEnd = function() {
         var utc = $scope.dateToUTC(new Date());
-        $scope.endDate = $scope.dateToJson(utc);
+        $scope.endDate = $scope.dateToIso(utc);
     };
 
     $scope.reset = function() {
@@ -111,7 +111,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
     });
 
     $scope.$watch("contact.call", function(newValue, oldValue) {
-        if (!newValue) return;
+        if (!newValue) {
+            $scope.resetStart();
+            $scope.resetEnd();
+            return;
+        }
 
         Dxcc.get({"call": newValue}, function(result) {
             $scope.dxcc = result;

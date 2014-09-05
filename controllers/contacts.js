@@ -1,4 +1,4 @@
-var adi = require("../lib/adi"),
+var adif = require("../lib/adif"),
     lotwlib = require("../lib/lotw"),
     nano = require("nano"),
     async = require("async");
@@ -81,7 +81,7 @@ function exportAdif(req, res) {
             res.status(500).send(err);
         }
         else {
-            var writer = new adi.AdiWriter(data["rows"]);
+            var writer = new adif.AdiWriter(data["rows"]);
             res.contentType("application/octet-stream");
             res.send(writer.writeAll());
         }
@@ -89,7 +89,7 @@ function exportAdif(req, res) {
 }
 
 function importAdif(req, res) {
-    var reader = new adi.AdiReader(req.rawBody);
+    var reader = new adif.AdiReader(req.body);
     var contacts = reader.readAll();
 
     db.bulk({docs: contacts}, function(err, data) {

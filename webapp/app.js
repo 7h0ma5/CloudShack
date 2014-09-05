@@ -156,7 +156,7 @@ app.run(function(Rig, $rootScope, dateFilter) {
                         local.getUTCMinutes(), local.getUTCSeconds(), 0);
     }
 
-    $rootScope.dateToJson = function(date) {
+    $rootScope.dateToIso = function(date) {
         return dateFilter(date, "yyyy-MM-ddTHH:mm:ss");
     }
 
