@@ -75,7 +75,7 @@ function deleteContact(req, res) {
     });
 }
 
-function exportAdif(req, res) {
+function exportAdi(req, res) {
     db.view("logbook", "byDate", req.query, function(err, data) {
         if (err) {
             res.status(500).send(err);
@@ -88,8 +88,35 @@ function exportAdif(req, res) {
     });
 }
 
-function importAdif(req, res) {
+function importAdi(req, res) {
     var reader = new adif.AdiReader(req.body);
+    var contacts = reader.readAll();
+
+    db.bulk({docs: contacts}, function(err, data) {
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            res.send({count: contacts.length});
+        }
+    });
+}
+
+function exportAdx(req, res) {
+    db.view("logbook", "byDate", req.query, function(err, data) {
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            var writer = new adif.AdxWriter(data["rows"]);
+            res.contentType("application/octet-stream");
+            res.send(writer.writeAll());
+        }
+    });
+}
+
+function importAdx(req, res) {
+    var reader = new adif.AdxReader(req.body);
     var contacts = reader.readAll();
 
     db.bulk({docs: contacts}, function(err, data) {
@@ -213,7 +240,9 @@ exports.setup = function(config, app, io) {
     app.post("/contacts", createContact);
     app.put("/contacts/:id/:rev", updateContact);
     app.delete("/contacts/:id/:rev", deleteContact);
-    app.get("/contacts.adi", exportAdif);
-    app.post("/contacts.adi", importAdif);
+    app.get("/contacts.adi", exportAdi);
+    app.post("/contacts.adi", importAdi);
+    app.get("/contacts.adx", exportAdx);
+    app.post("/contacts.adx", importAdx);
     app.post("/contacts/_lotw", importLotw);
 }
