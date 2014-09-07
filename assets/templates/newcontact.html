@@ -3,21 +3,21 @@
 <div style="float: left; width: 70%;">
     <div class="form-row">
       <div class="form-group">
-        <label for="callsign">Callsign</label>
-        <input required uppercase type="text" autocomplete="off"
-               ng-model="contact.call" id="callsign" focus-on="call">
+        <label for="call">Callsign</label>
+        <input required uppercase type="text" autocomplete="off" id="call"
+               ng-model="contact.call"  class="callsign" focus-on="call">
       </div>
 
       <div class="form-group">
         <label for="rst-rcvd">RST Rcvd</label>
         <input smartinput type="text" id="rst-rcvd" autocomplete="off"
-               placeholder="599" ng-model="contact.rst_rcvd">
+               placeholder="599" ng-model="contact.rst_rcvd" class="rst">
       </div>
 
       <div class="form-group">
         <label for="rst-sent">RST Sent</label>
         <input smartinput type="text" id="rst-sent" autocomplete="off"
-               placeholder="599" ng-model="contact.rst_sent">
+               placeholder="599" ng-model="contact.rst_sent" class="rst">
       </div>
     </div>
 
@@ -37,7 +37,8 @@
       <div class="form-group">
         <label for="gridsquare">Gridsquare</label>
         <input smartinput uppercase type="text" ng-model="contact.gridsquare"
-               id="gridsquare" placeholder="{{callbook.gridsquare}}" autocomplete="off">
+               class="gridsquare" id="gridsquare" autocomplete="off"
+               placeholder="{{callbook.gridsquare}}">
       </div>
     </div>
 
@@ -72,9 +73,8 @@
       <div class="form-group">
         <label for="power">Power</label>
         <div class="input-group">
-          <input type="number" min="0" max="2000"
-                 step="1" ng-model="contact.tx_pwr" id="power"
-                 autocomplete="off">
+          <input type="number" min="0" max="2000" step="1" autocomplete="off"
+                 ng-model="contact.tx_pwr" id="power" class="power">
           <span class="input-addon">
             W
           </span>
@@ -128,9 +128,8 @@
         <div class="form-group">
           <label for="age">Age</label>
           <div class="input-group">
-            <input type="number" min="1" max="150"
-                   step="1" ng-model="contact.age" id="age"
-                   autocomplete="off">
+            <input type="number" min="1" max="150" autocomplete="off"
+                   step="1" ng-model="contact.age" id="age" class="age">
             <span class="input-addon">
               Years
             </span>
@@ -158,7 +157,8 @@
       </div>
 
       <div title="Comment">
-          <input type="text" name="comment" id="comment" ng-model="contact.comment">
+          <input type="text" name="comment" id="comment" class="comment"
+                 ng-model="contact.comment">
       </div>
     </tabs>
 
