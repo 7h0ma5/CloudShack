@@ -1,16 +1,16 @@
 {
   "name": "cloudshack",
   "dependencies": {
-    "angular": "latest",
-    "angular-route": "latest",
-    "angular-resource": "latest",
-    "angular-animate": "latest",
-    "angular-cookies": "latest",
-    "ng-file-upload": "latest",
-    "normalize-css": "latest",
-    "font-awesome": "latest",
-    "socket.io-client": "latest",
-    "angular-hotkeys": "chieffancypants/angular-hotkeys#latest"
+    "angular": "~1.2.23",
+    "angular-route": "~1.2.23",
+    "angular-resource": "~1.2.23",
+    "angular-animate": "~1.2.23",
+    "angular-cookies": "~1.2.23",
+    "ng-file-upload": "~1.6.5",
+    "normalize-css": "~3.0.1",
+    "font-awesome": "~4.2.0",
+    "socket.io-client": "~1.1.0",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.3"
   },
   "overrides": {
     "socket.io-client": {
