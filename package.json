@@ -47,9 +47,6 @@
     "less-brunch": "latest",
     "clean-css-brunch": "latest",
     "auto-reload-brunch": "latest",
-    "ngmin-uglify-js-brunch": "latest",
-    "grunt": "latest",
-    "grunt-download-atom-shell": "latest",
-    "grunt-contrib-copy": "latest"
+    "ngmin-uglify-js-brunch": "latest"
   }
 }
