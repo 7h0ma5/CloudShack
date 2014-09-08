@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var express = require("express"),
     serveStatic = require('serve-static'),
     sockio = require("socket.io"),
