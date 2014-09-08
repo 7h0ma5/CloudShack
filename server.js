@@ -3,19 +3,6 @@ var express = require("express"),
     sockio = require("socket.io"),
     config = require("./lib/config");
 
-function rawBodyParser(req, res, next) {
-    req.rawBody = "";
-    if (req.header("content-type") == "text/plain") {
-        req.on("data", function (chunk) {
-            req.rawBody += chunk;
-        });
-        req.on("end", next);
-    }
-    else {
-        next();
-    }
-};
-
 function jsonParamParser(req, res, next) {
     for (prop in req.query) {
         try {
