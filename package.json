@@ -1,19 +1,30 @@
 {
   "name": "cloudshack",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Amateur Radio logbook server",
   "author": "Thomas Gatzweiler <dl2ic@darc.de>",
+  "license" : "GPL-3.0",
   "main": "server.js",
   "bin": {
-    "cloudshack": "server.js"
+    "cloudshack": "./server.js"
   },
+  "files": [
+    "controllers",
+    "lib",
+    "public",
+    "server.js",
+    "package.json",
+    "LICENSE"
+  ],
+  "preferGlobal": "true",
   "repository": {
     "type": "git",
     "url": "git://github.com/7h0ma5/cloudshack.git"
   },
   "scripts": {
     "start": "node server.js",
-    "build": "npm install && bash build"
+    "build": "npm install && bower install && brunch build",
+    "prepublish": "bower install && brunch build"
   },
   "dependencies": {
     "express": "latest",
