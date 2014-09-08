@@ -1,4 +1,4 @@
-app.factory("Profile", function($resource) {
+app.factory("Profile", function($rootScope, $resource) {
     var Profile = $resource("/profiles/:id/:rev", {id: "@id", rev: "@rev"},
                             {"update": {method: "PUT"}});
 
@@ -31,20 +31,31 @@ app.factory("Profile", function($resource) {
         }
     }
 
-    function getActive() {
-        return active;
-    }
-
-    function setActive(profile) {
-        active = profile;
-    }
-
     return {
         get: Profile.get,
-        save: Profile.save,
-        update: Profile.update,
-        getActive: getActive,
-        setActive: setActive,
+        save: function() {
+            var req = Profile.save.apply(this, arguments);
+            req.$promise.then(function() {
+                $rootScope.$emit("profile:update");
+            });
+            return req;
+        },
+        update: function() {
+            var req = Profile.update.apply(this, arguments);
+            req.$promise.then(function() {
+                $rootScope.$emit("profile:update");
+            });
+            return req;
+        },
+        onUpdate: function(callback) {
+            $rootScope.$on("profile:update", callback);
+        },
+        getActive: function(profile) {
+            active = profile;
+        },
+        setActive: function() {
+            return active;
+        },
         setDefaults: setDefaults
     };
 });
