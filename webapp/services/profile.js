@@ -50,11 +50,11 @@ app.factory("Profile", function($rootScope, $resource) {
         onUpdate: function(callback) {
             $rootScope.$on("profile:update", callback);
         },
-        getActive: function(profile) {
-            active = profile;
-        },
-        setActive: function() {
+        getActive: function() {
             return active;
+        },
+        setActive: function(profile) {
+            active = profile;
         },
         setDefaults: setDefaults
     };
