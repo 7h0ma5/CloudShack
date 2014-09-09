@@ -4,12 +4,11 @@
   <tr>
     <th>Date</th>
     <th>Time</th>
-    <th><!-- Icon --></th>
+    <th><!-- Icons --></th>
     <th>Callsign</th>
     <th>Name</th>
     <th>Mode</th>
     <th>Frequency</th>
-    <th colspan="2"></th>
   </tr>
   <tr ng-repeat="contact in contacts">
     <td>{{contact.value.start|date:"dd.MM.yyyy"}}</td>
@@ -22,12 +21,10 @@
             <i style="color: #27ae60;" class="fa fa-check-circle"></i>
         </span>
     </td>
-    <td><b>{{contact.value.call}}</b></td>
+    <td><b><a ng-href="/#/contact/{{contact.value._id}}">{{contact.value.call}}</a></b></td>
     <td>{{contact.value.name}}</td>
     <td>{{contact.value.mode}}</td>
     <td>{{contact.value.freq}}</td>
-    <td><a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a></td>
-    <td><a ng-click="delete($index)"><i class="fa fa-trash-o fg-lg"></i></a></td>
   </tr>
 </table>
 

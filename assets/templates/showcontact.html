@@ -1,0 +1,42 @@
+<h1>
+    <b>{{contact.call}}</b>
+</h1>
+
+<p>{{contact.start|date:"d. MMMM yyyy &ndash; HH:mm"}}</p>
+
+<table>
+    <tr ng-show="contact.name">
+        <td>Name</td>
+        <td>{{contact.name}}</td>
+    </tr>
+    <tr ng-show="contact.qth">
+        <td>QTH</td>
+        <td>{{contact.qth}}</td>
+    </tr>
+    <tr ng-show="contact.mode">
+        <td>Mode</td>
+        <td>{{contact.mode}}</td>
+    </tr>
+    <tr ng-show="contact.freq">
+        <td>Frequency</td>
+        <td>{{contact.freq}}</td>
+    </tr>
+    <tr ng-show="contact.tx_pwr">
+        <td>Power</td>
+        <td>{{contact.tx_pwr}} W</td>
+    </tr>
+    <tr ng-show="contact.contest_id">
+        <td>Contest</td>
+        <td>{{contact.contest_id}}</td>
+    </tr>
+</table>
+
+
+<p>
+    <button ng-click="qrz()">
+        <i class="fa fa-question-circle"></i> QRZ
+    </button>
+    <button type="button" ng-click="delete()" class="danger">
+      <i class="fa fa-times"></i> Delete
+    </button>
+</p>

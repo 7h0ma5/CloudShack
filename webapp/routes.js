@@ -5,8 +5,8 @@ app.config(function($routeProvider, $locationProvider) {
     });
 
     $routeProvider.when("/contact/:id", {
-        templateUrl: "/templates/editcontact.html",
-        controller: "EditContactCtrl"
+        templateUrl: "/templates/showcontact.html",
+        controller: "ShowContactCtrl"
     });
 
     $routeProvider.when("/profile/new", {
