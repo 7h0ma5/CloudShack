@@ -36,6 +36,25 @@ function createViews(db) {
     }, "_design/logbook");
 }
 
+function initializeDatabase(local, remote) {
+    var couch = nano(local);
+    couch.db.create("contacts");
+    db = couch.db.use("contacts");
+    createViews(db);
+
+    if (remote) {
+        var options = {
+            continuous: true,
+            create_target: true
+        };
+        couch.db.replicate(local + "/contacts", remote + "/contacts", options,
+            function(err) {
+                console.log(err);
+            }
+        );
+    }
+}
+
 function allContacts(req, res) {
     if (!("descending" in req.query)) {
         req.query.descending = true;
@@ -216,23 +235,8 @@ exports.setup = function(config, app, io) {
     config.observe("db", function() {
         var local = config.get("db.local");
         var remote = config.get("db.remote");
-
-        var couch = nano(local);
-        couch.db.create("contacts");
-        db = couch.db.use("contacts");
-        createViews(db);
-
-        if (remote) {
-            var options = {
-                continuous: true,
-                create_target: true
-            };
-            couch.db.replicate(local + "/contacts", remote + "/contacts", options, function(err) {
-                console.log(err);
-            });
-        }
+        initializeDatabase(local, remote);
     }, true);
-
 
     app.get("/contacts", allContacts);
     app.get("/contacts/_stats", statistics);
