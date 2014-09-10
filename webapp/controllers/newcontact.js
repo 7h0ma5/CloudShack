@@ -75,6 +75,8 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
         $scope.contact["start"] = start.toJSON();
         $scope.contact["end"] = end.toJSON();
 
+        Profile.apply($scope.contact);
+
         // remove empty fields
         for (var key in $scope.contact) {
             if (!$scope.contact[key]) {

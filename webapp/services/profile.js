@@ -31,6 +31,16 @@ app.factory("Profile", function($rootScope, $resource) {
         }
     }
 
+    function apply(contact) {
+        if (!active) return;
+        for (key in active) {
+            if (key == "_id") continue;
+            if (key == "_rev") continue;
+            if (key == "name") continue;
+            contact[key] = active[key];
+        }
+    }
+
     return {
         get: Profile.get,
         save: function() {
@@ -56,6 +66,7 @@ app.factory("Profile", function($rootScope, $resource) {
         setActive: function(profile) {
             active = profile;
         },
-        setDefaults: setDefaults
+        setDefaults: setDefaults,
+        apply: apply
     };
 });
