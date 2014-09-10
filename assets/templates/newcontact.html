@@ -169,6 +169,9 @@
       <button type="button" ng-click="reset()" class="danger">
         <i class="fa fa-times"></i> Reset
       </button>
+      <button ng-click="spot()" ng-disabled="!contact.call || !contact.freq">
+        <i class="fa fa-bullhorn"></i> Spot
+      </button>
       <button ng-click="qrz()" ng-disabled="!contact.call">
         <i class="fa fa-question-circle"></i> QRZ
       </button>

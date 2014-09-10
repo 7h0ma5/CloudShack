@@ -1,5 +1,5 @@
 app.controller("NewContactCtrl", function($scope, $filter, $window,
-                                          hotkeys, focus, Flash, Profile,
+                                          hotkeys, focus, Flash, Profile, Spots,
                                           Contact, Callbook, Dxcc, Data, Rig)
 {
     $scope.rig = Rig;
@@ -93,6 +93,18 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
 
     $scope.qrz = function() {
         $window.open("http://www.qrz.com/db/" + $scope.contact.call);
+    };
+
+    $scope.spot = function() {
+        var spot = {
+            call: $scope.contact.call,
+            freq: $scope.contact.freq
+        };
+        Spots.submit(spot, function(res) {
+            Flash.success($scope.contact.call + " spotted.");
+        }, function (req) {
+            Flash.error("Spot failed.");
+        });
     };
 
     $scope.$watch("contact.mode", function(newValue, oldValue) {
