@@ -33,12 +33,16 @@ app.factory("Profile", function($rootScope, $resource) {
 
     function apply(contact) {
         if (!active) return;
-        for (key in active) {
-            if (key == "_id") continue;
-            if (key == "_rev") continue;
-            if (key == "name") continue;
-            contact[key] = active[key];
-        }
+        var fields = [
+            "operator", "my_name", "my_gridsquare", "my_lat", "my_lon",
+            "my_rig", "station_callsign"
+        ];
+
+        angular.forEach(fields, function(field) {
+            if (field in active) {
+                contact[field] = active[field];
+            }
+        });
     }
 
     return {
