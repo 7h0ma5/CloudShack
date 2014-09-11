@@ -1,10 +1,42 @@
 <h1>Import</h1>
 
-<p><input type="file" ng-file-select="onFileSelect($files)"></p>
+<tabs>
+    <div title="File">
+        <p><input type="file" ng-file-select="onFileSelect($files)"></p>
 
-<p>
-    <button class="primary" ng-click="import()" ng-disabled="!file || loading">
-        Import
-    </button>
-    <spinner ng-show="loading"></spinner>
-</p>
+        <p>
+            <button class="primary" ng-click="import()" ng-disabled="!file || loading">
+                Import
+            </button>
+            <spinner ng-show="loading"></spinner>
+        </p>
+    </div>
+    <div title="LotW">
+        <p>
+            Import all LotW confirmations:
+        </p>
+        <p>
+            <button class="primary" ng-click="importLotw()">
+                Import
+            </button>
+            <spinner ng-show="loading"></spinner>
+        </p>
+        <div ng-show="lotwResult">
+            <p>Found {{lotwResult.count}} new confirmations.</p>
+            <p ng-show="lotwResult.fails">Failed matches:
+                <ul>
+                    <li ng-repeat="call in lotwResult.fails  track by $index">
+                        {{call}}
+                    </li>
+                </ul>
+            </p>
+            <p ng-show="lotwResult.matches">Matches:
+                <ul>
+                    <li ng-repeat="call in lotwResult.matches track by $index">
+                        {{call}}
+                    </li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</tabs>

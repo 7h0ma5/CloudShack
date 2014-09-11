@@ -1,4 +1,4 @@
-app.controller("ImportCtrl", function($scope, $upload, Flash) {
+app.controller("ImportCtrl", function($scope, $upload, Flash, Contact) {
     $scope.file = null;
     $scope.progress = null;
     $scope.loading = false;
@@ -28,5 +28,17 @@ app.controller("ImportCtrl", function($scope, $upload, Flash) {
                 $scope.loading = false;
             });
         };
+    };
+
+    $scope.importLotw = function() {
+        $scope.loading = true;
+        Contact.lotw({}, function(res) {
+            Flash.success("LotW import sucessful.");
+            $scope.loading = false;
+            $scope.lotwResult = res;
+        }, function(err) {
+            Flash.error("LotW import failed.");
+            $scope.loading = false;
+        })
     };
 });
