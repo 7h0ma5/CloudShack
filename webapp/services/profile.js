@@ -61,6 +61,13 @@ app.factory("Profile", function($rootScope, $resource) {
             });
             return req;
         },
+        delete: function() {
+            var req = Profile.delete.apply(this, arguments);
+            req.$promise.then(function() {
+                $rootScope.$emit("profile:update");
+            });
+            return req;
+        },
         onUpdate: function(callback) {
             $rootScope.$on("profile:update", callback);
         },

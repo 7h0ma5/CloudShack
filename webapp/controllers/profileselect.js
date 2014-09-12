@@ -1,16 +1,17 @@
 app.controller("ProfileSelectCtrl", function($scope, $location, $cookies, Profile) {
     function reload() {
-        $scope.activeProfile = null;
+        Profile.setActive(null);
 
         $scope.profiles = Profile.get({}, function(data) {
             if (!$cookies.profile) return;
 
             angular.forEach(data.rows, function(profile) {
                 if (profile.id == $cookies.profile) {
-                    $scope.activeProfile = profile.doc;
-                    Profile.setActive($scope.activeProfile);
+                    Profile.setActive(profile.doc);
                 }
             });
+
+            $scope.activeProfile = Profile.getActive();
         });
     }
 

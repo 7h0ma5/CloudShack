@@ -17,9 +17,11 @@ app.controller("ShowContactCtrl", function($scope, $routeParams, $window,
         var id = $scope.contact._id;
         var rev = $scope.contact._rev;
 
-        Contact.delete({id: id, rev: rev}, function(result) {
+        Contact.delete({id: id, rev: rev}, function(res) {
             Flash.success("Contact with " + $scope.contact.call + " deleted.");
             $location.path("/logbook");
+        }, function(res) {
+            Flash.error("Deletion failed.");
         });
     };
 });
