@@ -15,8 +15,9 @@ function jsonParamParser(req, res, next) {
     next();
 }
 
-var Server = exports.Server = function() {
+var Server = exports.Server = function(port) {
     this.config = new config.Config();
+    this.port = port || 3000;
 
     var bodyParser = require("body-parser");
 
@@ -34,7 +35,7 @@ var Server = exports.Server = function() {
 
 Server.prototype.run = function() {
     var self = this;
-    this.server = this.app.listen(3000);
+    this.server = this.app.listen(this.port);
     this.io = sockio.listen(this.server);
 
     ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster", "fldigi", "config"]

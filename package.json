@@ -24,7 +24,8 @@
   "scripts": {
     "start": "node server.js",
     "build": "npm install && bower install && brunch build",
-    "prepublish": "bower install && brunch build"
+    "prepublish": "bower install && brunch build",
+    "test": "mocha --timeout 30000 test/*.js"
   },
   "dependencies": {
     "express": "~4.8.8",
@@ -47,6 +48,8 @@
     "less-brunch": "~1.7.2",
     "clean-css-brunch": "~1.7.1",
     "auto-reload-brunch": "~1.7.3",
-    "ng-annotate-uglify-js-brunch": "~1.7.4"
+    "ng-annotate-uglify-js-brunch": "~1.7.4",
+    "mocha": "^1.21.4",
+    "supertest": "^0.13.0"
   }
 }
