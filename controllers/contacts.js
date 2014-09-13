@@ -65,21 +65,21 @@ function allContacts(req, res) {
     }
 
     db.view("logbook", req.query.view, req.query, function(err, data) {
-        if (err) res.status(500).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
 
 function readContact(req, res) {
     db.get(req.params.id, req.query, function(err, data) {
-        if (err) res.status(404).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
 
 function createContact(req, res) {
     db.insert(req.body, function(err, data) {
-        if (err) res.status(500).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
@@ -89,15 +89,15 @@ function updateContact(req, res) {
 
 function deleteContact(req, res) {
     db.destroy(req.params.id, req.params.rev, function(err, data) {
-        if (err) res.status(404).send(err);
-        else res.status(200).send();
+        if (err) res.status(err.status_code).send(err);
+        else res.send();
     });
 }
 
 function exportAdi(req, res) {
     db.view("logbook", "byDate", req.query, function(err, data) {
         if (err) {
-            res.status(500).send(err);
+            res.status(err.status_code).send(err);
         }
         else {
             var writer = new adif.AdiWriter(data["rows"]);
@@ -113,7 +113,7 @@ function importAdi(req, res) {
 
     db.bulk({docs: contacts}, function(err, data) {
         if (err) {
-            res.status(500).send(err);
+            res.status(err.status_code).send(err);
         }
         else {
             res.send({count: contacts.length});
@@ -140,7 +140,7 @@ function importAdx(req, res) {
 
     db.bulk({docs: contacts}, function(err, data) {
         if (err) {
-            res.status(500).send(err);
+            res.status(err.status_code).send(err);
         }
         else {
             res.send({count: contacts.length});
@@ -154,7 +154,7 @@ function statistics(req, res) {
     }
 
     db.view("logbook", "stats", req.query, function(err, data) {
-        if (err) res.status(500).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }

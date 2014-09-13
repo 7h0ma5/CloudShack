@@ -6,21 +6,21 @@ function allProfiles(req, res) {
         include_docs: true
     };
     db.list(options, function(err, data) {
-        if (err) res.status(500).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
 
 function readProfile(req, res) {
     db.get(req.params.id, req.query, function(err, data) {
-        if (err) res.status(404).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
 
 function createProfile(req, res) {
     db.insert(req.body, function(err, data) {
-        if (err) res.status(500).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
@@ -30,14 +30,14 @@ function updateProfile(req, res) {
     profile["_id"] = req.params.id;
     profile["_rev"] = req.params.rev;
     db.insert(profile, function(err, data) {
-        if (err) res.status(404).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
      });
 }
 
 function deleteProfile(req, res) {
     db.destroy(req.params.id, req.params.rev, function(err, data) {
-        if (err) res.status(404).send(err);
+        if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
 }
