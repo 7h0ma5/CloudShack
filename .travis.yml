@@ -9,7 +9,6 @@ deploy:
   email: thomas.gatzweiler@gmail.com
   on:
     tags: true
-    branch: master
 services:
   - couchdb
 before_script:
