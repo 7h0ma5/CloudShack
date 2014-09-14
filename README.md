@@ -1,5 +1,9 @@
 # CloudShack
 
+  [![NPM Version](https://img.shields.io/npm/v/cloudshack.svg?style=flat)](https://www.npmjs.org/package/cloudshack)
+  [![Build Status](https://img.shields.io/travis/7h0ma5/CloudShack.svg?style=flat)](https://travis-ci.org/7h0ma5/CloudShack)
+  [![Coverage](https://img.shields.io/coveralls/7h0ma5/CloudShack.svg?style=flat)](https://coveralls.io/r/7h0ma5/CloudShack)
+
 CloudShack is an amateur radio logbook server which provides a RESTful API and a
 built-in web interface.
 
@@ -16,16 +20,18 @@ instances when there is a connection available.
 
 ## Installation
 
-There are currently no binary distributions of CloudShack, so you have to build
-it yourself. The only requirement is [node.js](http://www.nodejs.org).
+The only requirement for CloudShack is [node.js](http://www.nodejs.org).
 
-To fetch all libraries and build everything just run the following command:
+You can install the latest release via npm:
 
-    node run build
+    # npm install -g cloudshack
 
-Now the server can be started by running:
+If you want to run the latest source code just run the following 
+commands:
 
-    node start
+    $ cd CloudShack
+    $ npm install
+    $ npm start
 
 ## License
 Copyright (C) 2014 Thomas Gatzweiler, DL2IC
