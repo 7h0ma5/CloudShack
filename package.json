@@ -25,7 +25,7 @@
     "start": "node server.js",
     "build": "npm install && bower install && brunch build",
     "prepublish": "bower install && brunch build",
-    "test": "mocha --check-leaks test/",
+    "test": "mocha test/",
     "test-coverage": "istanbul cover node_modules/mocha/bin/_mocha -- test/",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- test/"
   },
