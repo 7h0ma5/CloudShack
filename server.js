@@ -15,8 +15,8 @@ function jsonParamParser(req, res, next) {
     next();
 }
 
-var Server = exports.Server = function(port) {
-    this.config = new config.Config();
+var Server = exports.Server = function(config, port) {
+    this.config = config;
     this.port = port || 3000;
 
     var bodyParser = require("body-parser");
@@ -60,6 +60,7 @@ Server.prototype.shutdown = function() {
 }
 
 if(require.main === module) {
-    var server = new Server();
+    var conf = new config.Config("config.json");
+    var server = new Server(conf);
     server.run();
 }
