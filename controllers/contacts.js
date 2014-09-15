@@ -10,29 +10,29 @@ function createViews(db) {
     db.insert({
         views: {
             byDate: {
-                map: function(doc) {
-                    emit(doc.start, doc);
-                }
+                map: 'function(doc) {\
+                    emit(doc.start, doc);\
+                }'
             },
             byCall: {
-                map: function(doc) {
-                    emit([doc.call, doc.start], doc);
-                }
+                map: 'function(doc) {\
+                    emit([doc.call, doc.start], doc);\
+                }'
             },
             stats: {
-                map: function(doc) {
-                    var date = doc.start.split("T")[0];
-                    var date_components = date.split("-");
-                    emit(date_components, doc);
-                },
+                map: 'function(doc) {\
+                    var date = doc.start.split("T")[0];\
+                    var date_components = date.split("-");\
+                    emit(date_components, doc);\
+                }',
                 reduce: "_count"
             }
         },
-        validate_doc_update: function(newDoc, oldDoc, userCtx, secObj) {
-            if (newDoc._deleted) return;
-            if (!newDoc.call) throw({forbidden: "call field required"});
-            if (!newDoc.start) throw({forbidden: "start field required"});
-        }
+        validate_doc_update: 'function(newDoc, oldDoc, userCtx, secObj) {\
+            if (newDoc._deleted) return;\
+            if (!newDoc.call) throw({forbidden: "call field required"});\
+            if (!newDoc.start) throw({forbidden: "start field required"});\
+        }'
     }, "_design/logbook");
 }
 
