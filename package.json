@@ -25,7 +25,9 @@
     "start": "node server.js",
     "build": "npm install && bower install && brunch build",
     "prepublish": "bower install && brunch build",
-    "test": "mocha --timeout 30000 test/*.js"
+    "test": "mocha --check-leaks test/",
+    "test-coverage": "istanbul cover node_modules/mocha/bin/_mocha -- test/",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- test/"
   },
   "dependencies": {
     "express": "~4.8.8",
@@ -50,6 +52,7 @@
     "auto-reload-brunch": "~1.7.3",
     "ng-annotate-uglify-js-brunch": "~1.7.4",
     "mocha": "^1.21.4",
-    "supertest": "^0.13.0"
+    "supertest": "^0.13.0",
+    "istanbul": "^0.3.2"
   }
 }

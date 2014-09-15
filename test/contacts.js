@@ -1,6 +1,6 @@
 var server = require("../server");
 var request = require("supertest");
-var app;
+var testServer, app;
 
 describe("Contact API", function() {
     before(function(done) {
