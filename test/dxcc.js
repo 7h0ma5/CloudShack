@@ -44,4 +44,9 @@ describe("DXCC Library", function() {
         assert.equal(result.name, "Auckland & Campbell Is.");
         assert.equal(result.cont, "OC");
     });
+
+    it("should not find Q0A", function() {
+        var result = dxcc.lookup("Q0A");
+        assert.equal(result, null);
+    });
 });
