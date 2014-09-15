@@ -37,17 +37,17 @@ function createViews(db) {
 }
 
 function initializeDatabase(local, remote) {
-    var couch = nano(local);
-    couch.db.create("contacts");
-    db = couch.db.use("contacts");
+    var couch = nano(local.address);
+    couch.db.create(local.name);
+    db = couch.db.use(local.name);
     createViews(db);
 
-    if (remote) {
+    if (remote.address) {
         var options = {
             continuous: true,
             create_target: true
         };
-        couch.db.replicate(local + "/contacts", remote + "/contacts", options,
+        couch.db.replicate(local.address + local.name, remote.address + remote, options,
             function(err) {
                 console.log(err);
             }

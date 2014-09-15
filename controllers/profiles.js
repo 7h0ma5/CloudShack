@@ -44,9 +44,10 @@ function deleteProfile(req, res) {
 
 exports.setup = function(config, app, io) {
     config.observe("db", function() {
-        var couch = nano(config.get("db.local"));
-        couch.db.create("profiles");
-        db = couch.db.use("profiles");
+        var local = config.get("db.local");
+        var couch = nano(local.address);
+        couch.db.create(local.name);
+        db = couch.db.use(local.name);
     }, true);
 
     app.get("/profiles", allProfiles);

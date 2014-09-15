@@ -32,14 +32,28 @@
         </div>
     </div>
     <div title="Database">
-        <div class="form-group">
-          <label for="db-local">Local</label>
-          <input type="text" id="db-local" ng-model="config.db.local" />
-        </div>
-        <div class="form-group">
-          <label for="db-remote">Remote</label>
-          <input type="text" id="db-remote" ng-model="config.db.remote" />
-        </div>
+        <h2>Local</h2>
+        <p>
+            <div class="form-group">
+              <label for="db-local-address">Address</label>
+              <input type="text" id="db-local-address" ng-model="config.db.local.address" />
+            </div>
+            <div class="form-group">
+              <label for="db-local-name">Name</label>
+              <input type="text" id="db-local-name" ng-model="config.db.local.name" />
+            </div>
+        </p>
+        <h2>Remote</h2>
+        <p>
+            <div class="form-group">
+              <label for="db-remote-address">Address</label>
+              <input type="text" id="db-remote-address" ng-model="config.db.remote.address" />
+            </div>
+            <div class="form-group">
+              <label for="db-remote-name">Name</label>
+              <input type="text" id="db-remote-name" ng-model="config.db.remote.name" />
+            </div>
+        </p>
     </div>
     <div title="DX Cluster">
         <div class="form-group">

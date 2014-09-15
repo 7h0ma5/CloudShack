@@ -133,6 +133,6 @@ exports.setup = function(config, app, io) {
 
     config.observe("db", function() {
         var local = config.get("db.local");
-        db = nano(local).use("contacts");
+        db = nano(local.address).use(local.name);
     }, true);
 }

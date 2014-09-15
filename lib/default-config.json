@@ -8,8 +8,14 @@
         "password": ""
     },
     "db": {
-        "local": "http://127.0.0.1:5984",
-        "remote": ""
+        "local": {
+            "address": "http://127.0.0.1:5984",
+            "name": "contacts"
+        },
+        "remote": {
+            "address": "",
+            "name": "contacts"
+        }
     },
     "rig": {
         "host": "127.0.0.1",
