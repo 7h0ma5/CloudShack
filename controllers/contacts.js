@@ -1,7 +1,8 @@
 var adif = require("../lib/adif"),
     lotwlib = require("../lib/lotw"),
     nano = require("nano"),
-    async = require("async");
+    async = require("async")
+    url = require("url");
 
 var db;
 var lotw;
@@ -47,7 +48,10 @@ function initializeDatabase(local, remote) {
             continuous: true,
             create_target: true
         };
-        couch.db.replicate(local.address + local.name, remote.address + remote, options,
+
+        var local_url = url.resolve(local.address, local.name);
+        var remote_url = url.resolve(remote.address, remote.name);
+        couch.db.replicate(local_url, remote_url, options,
             function(err) {
                 console.log(err);
             }
