@@ -46,8 +46,8 @@ exports.setup = function(config, app, io) {
     config.observe("db", function() {
         var local = config.get("db.local");
         var couch = nano(local.address);
-        couch.db.create(local.name);
-        db = couch.db.use(local.name);
+        couch.db.create("profiles");
+        db = couch.db.use("profiles");
     }, true);
 
     app.get("/profiles", allProfiles);
