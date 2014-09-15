@@ -30,14 +30,9 @@ var Server = exports.Server = function(port) {
     this.app.use(bodyParser.text({type: "text/xml", limit: 1*1024*1024}))
     this.app.use(jsonParamParser);
 
-    return this;
-}
+    this.io = new sockio();
 
-Server.prototype.run = function() {
     var self = this;
-    this.server = this.app.listen(this.port);
-    this.io = sockio.listen(this.server);
-
     ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster", "fldigi", "config"]
         .map(function(controllerName) {
             var controller = require("./controllers/" + controllerName);
@@ -49,6 +44,11 @@ Server.prototype.run = function() {
         setTimeout(function() { self.shutdown() }, 1000);
         res.status(200).send({status: "OK"});
     });
+}
+
+Server.prototype.run = function() {
+    this.server = this.app.listen(this.port);
+    this.io.attach(this.server);
 }
 
 Server.prototype.shutdown = function() {

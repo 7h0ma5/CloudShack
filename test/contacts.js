@@ -1,17 +1,12 @@
 var server = require("../server");
 var request = require("supertest");
-var testServer, app;
 
 describe("Contact API", function() {
-    before(function(done) {
-        testServer = new server.Server();
-        testServer.run();
-        app = testServer.app;
-        done();
-    });
+    var app;
 
-    after(function(done) {
-        testServer.server.close();
+    before(function(done) {
+        var testServer = new server.Server();
+        app = testServer.app;
         done();
     });
 
