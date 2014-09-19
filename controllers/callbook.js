@@ -13,7 +13,11 @@ function lookup(req, res) {
 }
 
 exports.setup = function(config, app, io) {
-    callbook = new HamQTH(config.get("callbook.username"),
-                          config.get("callbook.password"));
+    config.observe("callbook", function() {
+        var username = config.get("callbook.username");
+        var password = config.get("callbook.password");
+        callbook = new HamQTH(username, password);
+    }, true);
+
     app.get("/callbook/:callsign", lookup);
 }
