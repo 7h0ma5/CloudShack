@@ -5,10 +5,23 @@
         <p><input type="file" ng-file-select="onFileSelect($files)"></p>
 
         <p>
-            <button class="primary" ng-click="import()" ng-disabled="!file || loading">
-                Import
-            </button>
-            <spinner ng-show="loading"></spinner>
+          <input type="checkbox" ng-model="dateRange"> Date Range:
+          <input type="datetime-local" ng-model="start" ng-disabled="!dateRange">
+          <input type="datetime-local" ng-model="end" ng-disabled="!dateRange">
+        </p>
+
+        <p>
+          Profile:
+          <select ng-model="profile" ng-options="p.id as p.doc.name for p in profiles.rows">
+            <option></option>
+          </select>
+        </p>
+
+        <p>
+          <button class="primary" ng-click="import()" ng-disabled="!file || loading">
+            Import
+          </button>
+          <spinner ng-show="loading"></spinner>
         </p>
     </div>
     <div title="LotW">
