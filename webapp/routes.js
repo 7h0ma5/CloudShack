@@ -27,7 +27,12 @@ app.config(function($routeProvider, $locationProvider) {
     $routeProvider.when("/import", {
         templateUrl: "/templates/import.html",
         controller: "ImportCtrl"
-    })
+    });
+
+    $routeProvider.when("/export", {
+        templateUrl: "/templates/export.html",
+        controller: "ExportCtrl"
+    });
 
     $routeProvider.when("/cluster", {
         templateUrl: "/templates/cluster.html",
