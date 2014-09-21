@@ -16,6 +16,7 @@ function addRecord(doc, res) {
     var value = doc.get("//value");
     if (!value) {
         res.status(400).send();
+        return;
     }
 
     var data = value.text();
@@ -37,6 +38,7 @@ function getRecord(doc, res) {
     var value = doc.get("//value");
     if (!value) {
         res.status(404).send();
+        return;
     }
 
     var resDoc = createResponse();
@@ -54,7 +56,6 @@ function getRecord(doc, res) {
         else {
             var writer = new adif.AdiWriter(data.rows);
             var data = writer.writeFldigiLine();
-            console.log(data);
 
             resDoc.get("//value").text(data);
             res.send(resDoc.toString());
@@ -97,16 +98,18 @@ function rpc(req, res) {
     }
     catch (err) {
         res.status(400).send();
+        return;
     }
 
     var methodName = doc.get("//methodName");
     if (!methodName) {
         res.status(400).send();
+        return;
     }
 
     var method = methodName.text();
     res.header("transfer-encoding", "");
-    res.contentType("text/xml");;
+    res.contentType("text/xml");
 
     if (method == "log.add_record") {
         addRecord(doc, res);
