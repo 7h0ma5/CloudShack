@@ -1,6 +1,6 @@
 var server = require("../server");
 var config = require("../lib/config");
-var adif = require("../lib/adif");
+var adif = require("adif");
 var libxml = require("libxmljs");
 var request = require("supertest");
 var assert = require("assert");

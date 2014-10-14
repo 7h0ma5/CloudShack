@@ -1,4 +1,4 @@
-var adif = require("../lib/adif"),
+var adif = require("adif"),
     lotwlib = require("../lib/lotw"),
     nano = require("nano"),
     async = require("async")

@@ -1,7 +1,7 @@
 var http = require("http"),
     libxml = require("libxmljs"),
     util = require("util"),
-    adif = require("../lib/adif"),
+    adif = require("adif"),
     nano = require("nano");
 
 var db;
