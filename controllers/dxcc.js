@@ -2,7 +2,8 @@ var Dxcc = require("../lib/dxcc").Dxcc;
 var dxcc;
 
 function lookup(req, res) {
-    var result = dxcc.lookup(req.params.callsign);
+    var date = req.query.date ? new Date(req.query.date) : null;
+    var result = dxcc.lookup(req.params.callsign, date);
 
     if (result) {
         res.send(result);

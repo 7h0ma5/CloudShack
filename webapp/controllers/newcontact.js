@@ -133,6 +133,14 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
 
         Dxcc.get({"call": newValue}, function(result) {
             $scope.dxcc = result;
+            $scope.contact.cqz = result.cqz;
+            $scope.contact.dxcc = result.dxcc;
+            $scope.contact.country = result.country;
+        }, function(err) {
+            delete $scope.dxcc;
+            delete $scope.contact.cqz;
+            delete $scope.contact.dxcc;
+            delete $scope.contact.country;
         });
 
         if (newValue.length < 3) return;
