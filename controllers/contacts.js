@@ -104,9 +104,14 @@ function exportAdi(req, res) {
             res.status(err.status_code).send(err);
         }
         else {
-            var writer = new adif.AdiWriter(data["rows"]);
+            var writer = new adif.AdiWriter("CloudShack", "1.0");
+
+            for (var i = 0; i < data.rows.length; i++) {
+                writer.writeContact(data.rows[i].value);
+            }
+
             res.contentType("application/octet-stream");
-            res.send(writer.writeAll());
+            res.send(writer.getData());
         }
     });
 }
@@ -131,9 +136,14 @@ function exportAdx(req, res) {
             res.status(500).send(err);
         }
         else {
-            var writer = new adif.AdxWriter(data["rows"]);
+            var writer = new adif.AdxWriter("CloudShack", "1.0");
+
+            for (var i = 0; i < data.rows.length; i++) {
+                writer.writeContact(data.rows[i].value);
+            }
+
             res.contentType("application/octet-stream");
-            res.send(writer.writeAll());
+            res.send(writer.getData());
         }
     });
 }

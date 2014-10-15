@@ -69,8 +69,8 @@ describe("Fldigi API", function() {
     });
 
     it("POST /RPC2 <log.add_record> should return 200", function(done) {
-        var writer = new adif.AdiWriter([{"value": testContact}]);
-        var data = writer.writeFldigiLine();
+        var writer = new adif.AdiWriter();
+        var data = writer.writeFldigiLine(testContact);
 
         var req = makeRequest("log.add_record", data);
         request(app)
