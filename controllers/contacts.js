@@ -43,13 +43,36 @@ function initializeDatabase(local, remote) {
     db = couch.db.use(local.name);
     createViews(db);
 
-    if (remote.address) {
+    var local_url = url.resolve(local.address, local.name);
+
+    if (remote.usecsdb && remote.cs && remote.cs.user && remote.cs.password) {
+      var options = {
+          continuous: true,
+          create_target: false
+      };
+
+      var remote_url = url.format({
+        protocol: "https",
+        auth: remote.cs.user + ":" + remote.cs.password,
+        hostname: "cloudshack.org",
+        port: 6984,
+        pathname: "user_" + remote.cs.user.toLowerCase()
+      });
+
+      console.log(remote_url);
+
+      couch.db.replicate(local_url, remote_url, options,
+          function(err) {
+              console.log(err);
+          }
+      );
+    }
+    else if (remote.address && remote.name) {
         var options = {
             continuous: true,
             create_target: true
         };
 
-        var local_url = url.resolve(local.address, local.name);
         var remote_url = url.resolve(remote.address, remote.name);
         couch.db.replicate(local_url, remote_url, options,
             function(err) {
