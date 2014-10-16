@@ -1,4 +1,4 @@
-var Dxcc = require("../lib/dxcc").Dxcc;
+var Dxcc = require("../lib/dxcc");
 var assert = require("assert");
 
 describe("DXCC Library", function() {
@@ -32,7 +32,7 @@ describe("DXCC Library", function() {
     });
 
     it("should recognize TX5K as Clipperton Island", function() {
-        var result = dxcc.lookup("TX5K");
+        var result = dxcc.lookup("TX5K", new Date("2013-03-04T15:33:00.000Z"));
         assert(result);
         assert.equal(result.country, "CLIPPERTON ISLAND");
         assert.equal(result.cont, "NA");

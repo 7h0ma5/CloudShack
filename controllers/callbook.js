@@ -1,4 +1,4 @@
-var HamQTH = require("../lib/hamqth").HamQTH;
+var HamQTH = require("../lib/hamqth");
 var callbook;
 
 function lookup(req, res) {

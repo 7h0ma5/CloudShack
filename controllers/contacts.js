@@ -1,5 +1,5 @@
 var adif = require("adif"),
-    lotwlib = require("../lib/lotw"),
+    LotW = require("../lib/lotw"),
     nano = require("nano"),
     async = require("async")
     url = require("url");
@@ -261,7 +261,7 @@ function importLotw(req, res) {
 }
 
 exports.setup = function(config, app, io) {
-    lotw = new lotwlib.LOTW(null, null);
+    lotw = new LotW();
 
     config.observe("lotw", function() {
         var user = config.get("lotw.username");

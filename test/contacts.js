@@ -1,5 +1,5 @@
 var server = require("../server");
-var config = require("../lib/config");
+var Config = require("../lib/config");
 var request = require("supertest");
 var assert = require("assert");
 
@@ -14,7 +14,7 @@ describe("Contact API", function() {
     before(function(done) {
         this.timeout(10000);
 
-        var conf = new config.Config("test-config.json");
+        var conf = new Config("test-config.json");
         var local = {address: "http://127.0.0.1:5984", name: "test_contacts"};
         conf.set("db.local", local)
 

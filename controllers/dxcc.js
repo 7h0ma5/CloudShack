@@ -1,4 +1,4 @@
-var Dxcc = require("../lib/dxcc").Dxcc;
+var Dxcc = require("../lib/dxcc");
 var dxcc;
 
 function lookup(req, res) {

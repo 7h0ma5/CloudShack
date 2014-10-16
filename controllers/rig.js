@@ -1,8 +1,8 @@
-var rigctl = require("../lib/rigctl");
+var RigCtl = require("../lib/rigctl");
 
 exports.setup = function(config, app, io) {
-    var rig = new rigctl.RigCtl(config.get("rig.host"),
-                                config.get("rig.port"));
+    var rig = new RigCtl(config.get("rig.host"),
+                         config.get("rig.port"));
 
     config.observe("rig", function() {
         // todo: reconnect

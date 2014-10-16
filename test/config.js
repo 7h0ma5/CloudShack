@@ -1,4 +1,4 @@
-var config = require("../lib/config");
+var Config = require("../lib/config");
 var request = require("supertest");
 var assert = require("assert");
 
@@ -22,7 +22,7 @@ describe("Config Lib", function() {
     var conf;
 
     before(function() {
-        conf = new config.Config(testFile);
+        conf = new Config(testFile);
     });
 
     beforeEach(function() {
@@ -35,7 +35,7 @@ describe("Config Lib", function() {
 
     it("should load the config", function() {
         conf.save();
-        var loadConf = new config.Config(testFile);
+        var loadConf = new Config(testFile);
         assert.deepEqual(loadConf.getAll(), testConfig);
     });
 

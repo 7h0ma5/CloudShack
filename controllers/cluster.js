@@ -1,4 +1,4 @@
-var cluster = require("../lib/cluster");
+var Cluster = require("../lib/cluster");
 
 var spots = [];
 var dx;
@@ -18,9 +18,9 @@ function submitSpot(req, res) {
 }
 
 exports.setup = function(config, app, io) {
-    dx = new cluster.Cluster(config.get("cluster.host"),
-                             config.get("cluster.port"),
-                             config.get("cluster.username"));
+    dx = new Cluster(config.get("cluster.host"),
+                     config.get("cluster.port"),
+                     config.get("cluster.username"));
 
     app.get("/spots", allSpots);
     app.post("/spots", submitSpot);
