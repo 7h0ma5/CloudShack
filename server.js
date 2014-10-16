@@ -3,7 +3,7 @@
 var express = require("express"),
     serveStatic = require('serve-static'),
     sockio = require("socket.io"),
-    config = require("./lib/config");
+    Config = require("./lib/config");
 
 function jsonParamParser(req, res, next) {
     for (prop in req.query) {
@@ -60,7 +60,7 @@ Server.prototype.shutdown = function() {
 }
 
 if(require.main === module) {
-    var conf = new config.Config("config.json");
+    var conf = new Config("config.json");
     var server = new Server(conf);
     server.run();
 }

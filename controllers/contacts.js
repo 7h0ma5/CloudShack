@@ -59,8 +59,6 @@ function initializeDatabase(local, remote) {
         pathname: "user_" + remote.cs.user.toLowerCase()
       });
 
-      console.log(remote_url);
-
       couch.db.replicate(local_url, remote_url, options,
           function(err) {
               console.log(err);
