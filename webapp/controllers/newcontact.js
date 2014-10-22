@@ -147,8 +147,10 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
 
         Callbook.get({"call": newValue}, function(result) {
             $scope.callbook = result;
+            $scope.contact.ituz = result.ituz;
         }, function(err) {
             $scope.callbook = null;
+            delete $scope.contact.ituz;
         });
 
         var queryOptions = {
