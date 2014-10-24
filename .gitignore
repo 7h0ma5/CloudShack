@@ -32,6 +32,11 @@ public/
 bower_components/
 
 cty.dat
-config.json
+cty.json
+
 bin/
 coverage/
+
+config.json
+test-config-lib.json
+test-config.json
