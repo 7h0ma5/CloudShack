@@ -2,24 +2,16 @@ var adif = require("adif"),
     LotW = require("../lib/lotw"),
     nano = require("nano"),
     async = require("async")
-    url = require("url");
+    url = require("url"),
+    _ = require("lodash");
 
-var db;
-var lotw;
+var db, lotw;
 
-function createViews(db) {
-    db.insert({
+function createViews() {
+    var doc = {
         views: {
-            byDate: {
-                map: 'function(doc) {\
-                    emit(doc.start, doc);\
-                }'
-            },
-            byCall: {
-                map: 'function(doc) {\
-                    emit([doc.call, doc.start], doc);\
-                }'
-            },
+            byDate: { map: "function(doc) { emit(doc.start, doc); }" },
+            byCall: { map: "function(doc) { emit([doc.call, doc.start], doc); }" },
             stats: {
                 map: 'function(doc) {\
                     var date = doc.start.split("T")[0];\
@@ -34,49 +26,36 @@ function createViews(db) {
             if (!newDoc.call) throw({forbidden: "call field required"});\
             if (!newDoc.start) throw({forbidden: "start field required"});\
         }'
-    }, "_design/logbook");
+    };
+
+    db.insert(doc, "_design/logbook");
 }
 
 function initializeDatabase(local, remote) {
     var couch = nano(local.address);
     couch.db.create(local.name);
     db = couch.db.use(local.name);
-    createViews(db);
+    createViews();
 
     var local_url = url.resolve(local.address, local.name);
+    var remote_url = null;
+    var options = {continous: true, create_target: false};
 
     if (remote.usecsdb && remote.cs && remote.cs.user && remote.cs.password) {
-      var options = {
-          continuous: true,
-          create_target: false
-      };
-
-      var remote_url = url.format({
-        protocol: "https",
-        auth: remote.cs.user + ":" + remote.cs.password,
-        hostname: "cloudshack.org",
-        port: 6984,
-        pathname: "user_" + remote.cs.user.toLowerCase()
-      });
-
-      couch.db.replicate(local_url, remote_url, options,
-          function(err) {
-              console.log(err);
-          }
-      );
+        remote_url = url.format({
+            auth: remote.cs.user + ":" + remote.cs.password,
+            protocol: "https",
+            hostname: "cloudshack.org", port: 6984,
+            pathname: "user_" + remote.cs.user.toLowerCase()
+        });
     }
     else if (remote.address && remote.name) {
-        var options = {
-            continuous: true,
-            create_target: true
-        };
+        options.create_target = true;
+        remote_url = url.resolve(remote.address, remote.name);
+    }
 
-        var remote_url = url.resolve(remote.address, remote.name);
-        couch.db.replicate(local_url, remote_url, options,
-            function(err) {
-                console.log(err);
-            }
-        );
+    if (remote_url) {
+        couch.db.replicate(local_url, remote_url, options);
     }
 }
 
@@ -85,11 +64,9 @@ function allContacts(req, res) {
         req.query.descending = true;
     }
 
-    if (!("view" in req.query)) {
-        req.query.view = "byDate";
-    }
+    var view = req.query.view || "byDate";
 
-    db.view("logbook", req.query.view, req.query, function(err, data) {
+    db.view("logbook", view, req.query, function(err, data) {
         if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
@@ -121,15 +98,13 @@ function deleteContact(req, res) {
 
 function exportAdi(req, res) {
     db.view("logbook", "byDate", req.query, function(err, data) {
-        if (err) {
-            res.status(err.status_code).send(err);
-        }
+        if (err) res.status(err.status_code).send(err);
         else {
             var writer = new adif.AdiWriter("CloudShack", "1.0");
 
-            for (var i = 0; i < data.rows.length; i++) {
-                writer.writeContact(data.rows[i].value);
-            }
+            _.each(data.rows, function(doc) {
+                writer.writeContact(doc.value)
+            });
 
             res.contentType("application/octet-stream");
             res.send(writer.getData());
@@ -142,26 +117,20 @@ function importAdi(req, res) {
     var contacts = reader.readAll();
 
     db.bulk({docs: contacts}, function(err, data) {
-        if (err) {
-            res.status(err.status_code).send(err);
-        }
-        else {
-            res.send({count: contacts.length});
-        }
+        if (err) res.status(err.status_code).send(err);
+        else res.send({count: contacts.length});
     });
 }
 
 function exportAdx(req, res) {
     db.view("logbook", "byDate", req.query, function(err, data) {
-        if (err) {
-            res.status(500).send(err);
-        }
+        if (err)  res.status(err.status_code).send(err);
         else {
             var writer = new adif.AdxWriter("CloudShack", "1.0");
 
-            for (var i = 0; i < data.rows.length; i++) {
-                writer.writeContact(data.rows[i].value);
-            }
+            _.each(data.rows, function(doc) {
+                writer.writeContact(doc.value)
+            });
 
             res.contentType("application/octet-stream");
             res.send(writer.getData());
@@ -174,12 +143,8 @@ function importAdx(req, res) {
     var contacts = reader.readAll();
 
     db.bulk({docs: contacts}, function(err, data) {
-        if (err) {
-            res.status(err.status_code).send(err);
-        }
-        else {
-            res.send({count: contacts.length});
-        }
+        if (err) res.status(err.status_code).send(err);
+        else res.send({count: contacts.length});
     });
 }
 
@@ -208,15 +173,11 @@ function searchContact(ref, callback) {
     db.view("logbook", "byDate", function(err, data) {
         if (err) callback(null);
 
-        for (var i = 0; i < data.rows.length; i++) {
-            var contact = data.rows[i];
-            if (contact.value.call == ref.call) {
-                callback(contact.value);
-                return;
-            }
-        }
+        var result = _.find(data.rows, function(doc) {
+            return doc.value.call == ref.call;
+        });
 
-        callback(null);
+        callback(result ? result.value : null);
     });
 }
 
@@ -242,15 +203,12 @@ function importLotw(req, res) {
             });
         }, function(err) {
             db.bulk({docs: updates}, function(err, data) {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                else {
-                    res.send({count: data.length,
-                              matches: matches,
-                              fails: fails,
-                              result: data});
-                }
+                if (err) return res.status(500).send(err);
+
+                res.send({count: data.length,
+                          matches: matches,
+                          fails: fails,
+                          result: data});
             });
         });
     }, function(err) {
