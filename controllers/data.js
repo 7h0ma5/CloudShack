@@ -22,7 +22,7 @@ function getFlag(req, res) {
     }
 
     var basepath = path.join(__dirname, "../public/images/flags");
-    var flag = (entity && entity.flag) ? entity.flag : unknown;
+    var flag = (entity && entity.flag) ? entity.flag : "unknown";
 
     res.setHeader("Cache-Control", "public, max-age=86400000");
 
