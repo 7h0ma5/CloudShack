@@ -2,15 +2,17 @@
 
 <table>
   <tr>
-    <th>Time</th>
     <th>Callsign</th>
+    <th><!-- Flag --></th>
+    <th>Time</th>
     <th>Spotter</th>
     <th>Frequency</th>
     <th>Comment</th>
   </tr>
   <tr ng-repeat="spot in spots">
-    <td>{{spot.time}}</td>
     <td><b>{{spot.dxcall}}</b></td>
+    <td class="flag"><img src="/flag/24/{{spot.dxcc.dxcc}}" /></td>
+    <td>{{spot.time}}</td>
     <td>{{spot.spotter}}</td>
     <td><a ng-click="tune($index)">{{spot.freq}}</a></td>
     <td>{{spot.comment}}</td>
