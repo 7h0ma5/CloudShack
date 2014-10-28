@@ -3,7 +3,8 @@
 var express = require("express"),
     serveStatic = require('serve-static'),
     sockio = require("socket.io"),
-    Config = require("./lib/config");
+    Config = require("./lib/config")
+    lotw = require("./lib/lotw");
 
 function jsonParamParser(req, res, next) {
     for (prop in req.query) {
@@ -24,7 +25,7 @@ var Server = exports.Server = function(config, port) {
     this.app = express();
     this.app.use(require("errorhandler")());
     this.app.use(require("morgan")("dev"));
-    this.app.use(serveStatic(__dirname + "/public"));
+    this.app.use(serveStatic(__dirname + "/public",  { maxAge: "1d" }));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.text({type: "text/plain", limit: 10*1024*1024}));
     this.app.use(bodyParser.text({type: "text/xml", limit: 1*1024*1024}))
@@ -33,7 +34,8 @@ var Server = exports.Server = function(config, port) {
     this.io = new sockio();
 
     var self = this;
-    ["contacts", "profiles", "callbook", "dxcc", "data", "rig", "cluster", "fldigi", "config"]
+    ["contacts", "profiles", "callbook", "dxcc", "data",
+     "rig", "cluster", "fldigi", "config"]
         .map(function(controllerName) {
             var controller = require("./controllers/" + controllerName);
             controller.setup(self.config, self.app, self.io);
@@ -44,6 +46,13 @@ var Server = exports.Server = function(config, port) {
         setTimeout(function() { self.shutdown() }, 1000);
         res.status(200).send({status: "OK"});
     });
+
+
+    config.observe("lotw", function() {
+        var user = config.get("lotw.username");
+        var pass = config.get("lotw.password");
+        lotw.setCredentials(user, pass);
+    }, true);
 }
 
 Server.prototype.run = function() {

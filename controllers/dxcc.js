@@ -1,5 +1,4 @@
-var Dxcc = require("../lib/dxcc");
-var dxcc;
+var dxcc = require("../lib/dxcc");
 
 function lookup(req, res) {
     var date = req.query.date ? new Date(req.query.date) : null;
@@ -14,6 +13,5 @@ function lookup(req, res) {
 }
 
 exports.setup = function(config, app, io) {
-    dxcc = new Dxcc();
     app.get("/dxcc/:callsign", lookup);
 }

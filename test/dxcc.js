@@ -1,12 +1,10 @@
-var Dxcc = require("../lib/dxcc");
+var dxcc = require("../lib/dxcc");
 var assert = require("assert");
 
 describe("DXCC Library", function() {
-    var dxcc;
-
     before(function(done) {
-        this.timeout(20000);
-        dxcc = new Dxcc(done);
+        this.timeout(10000);
+        setTimeout(done, 5000);
     });
 
     it("should recognize FT5ZM as Amsterdam Island", function() {

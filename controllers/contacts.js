@@ -1,5 +1,5 @@
 var adif = require("adif"),
-    LotW = require("../lib/lotw"),
+    lotw = require("../lib/lotw"),
     nano = require("nano"),
     async = require("async")
     url = require("url"),
@@ -217,14 +217,6 @@ function importLotw(req, res) {
 }
 
 exports.setup = function(config, app, io) {
-    lotw = new LotW();
-
-    config.observe("lotw", function() {
-        var user = config.get("lotw.username");
-        var pass = config.get("lotw.password");
-        lotw.setCredentials(user, pass);
-    }, true);
-
     config.observe("db", function() {
         var local = config.get("db.local");
         var remote = config.get("db.remote");
