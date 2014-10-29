@@ -10,7 +10,8 @@
     "normalize-css": "~3.0.1",
     "font-awesome": "~4.2.0",
     "socket.io-client": "~1.1.0",
-    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.3"
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.3",
+    "leaflet": "~0.7.3"
   },
   "overrides": {
     "socket.io-client": {
@@ -23,7 +24,7 @@
       ]
     },
     "angular-hotkeys": {
-        "main": "build/hotkeys.js"
+      "main": "build/hotkeys.js"
     }
   }
 }

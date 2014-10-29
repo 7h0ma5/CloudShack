@@ -136,11 +136,16 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
             $scope.contact.cqz = result.cqz;
             $scope.contact.dxcc = result.dxcc;
             $scope.contact.country = result.country;
+            $scope.maptarget = {
+                lat: result.lat,
+                lon: result.lon
+            };
         }, function(err) {
             delete $scope.dxcc;
             delete $scope.contact.cqz;
             delete $scope.contact.dxcc;
             delete $scope.contact.country;
+            delete $scope.maptarget;
         });
 
         if (newValue.length < 3) {
