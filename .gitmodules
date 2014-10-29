@@ -1,3 +1,6 @@
 [submodule "assets/map"]
 	path = assets/map
 	url = https://github.com/7h0ma5/CloudShack-MapTiles
+[submodule "assets/images/flags"]
+	path = assets/images/flags
+	url = https://github.com/7h0ma5/CloudShack-Flags
