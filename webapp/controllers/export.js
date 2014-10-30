@@ -1,5 +1,5 @@
-app.controller("ExportCtrl", function($scope, $window) {
-    var date = $scope.dateToIso($scope.dateToUTC(new Date()));
+app.controller("ExportCtrl", function($scope, $window, Toolkit) {
+    var date = Toolkit.nowToIso();
     $scope.start = $scope.end = date;
 
     $scope.format = "adi";

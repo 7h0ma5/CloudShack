@@ -1,10 +1,10 @@
-app.controller("ImportCtrl", function($scope, $upload, Flash, Contact, Profile) {
+app.controller("ImportCtrl", function($scope, $upload, Flash, Toolkit, Contact, Profile) {
     $scope.file = null;
     $scope.progress = null;
     $scope.loading = false;
     $scope.profiles = Profile.get();
 
-    var date = $scope.dateToIso($scope.dateToUTC(new Date()));
+    var date = Toolkit.nowToIso();
     $scope.start = $scope.end = date;
 
     $scope.onFileSelect = function($files) {

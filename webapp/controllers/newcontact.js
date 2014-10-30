@@ -1,4 +1,4 @@
-app.controller("NewContactCtrl", function($scope, $filter, $window,
+app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
                                           hotkeys, focus, Flash, Profile, Spots,
                                           Contact, Callbook, Dxcc, Data, Rig)
 {
@@ -35,13 +35,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window,
     }
 
     $scope.resetStart = function() {
-        var utc = $scope.dateToUTC(new Date());
-        $scope.startDate = $scope.dateToIso(utc);
+        $scope.startDate = Toolkit.nowToIso();
     };
 
     $scope.resetEnd = function() {
-        var utc = $scope.dateToUTC(new Date());
-        $scope.endDate = $scope.dateToIso(utc);
+        $scope.endDate = Toolkit.nowToIso();
     };
 
     $scope.reset = function() {

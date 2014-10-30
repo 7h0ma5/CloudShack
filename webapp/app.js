@@ -5,17 +5,7 @@ app.config(function(hotkeysProvider) {
     hotkeysProvider.includeCheatSheet = false;
 });
 
-// this function is also here to always initialize the rig service
-app.run(function(Rig, $rootScope, dateFilter) {
-    $rootScope.dateToUTC = function(local) {
-        return new Date(local.getUTCFullYear(), local.getUTCMonth(),
-                        local.getUTCDate(), local.getUTCHours(),
-                        local.getUTCMinutes(), local.getUTCSeconds(), 0);
-    }
-
-    $rootScope.dateToIso = function(date) {
-        return dateFilter(date, "yyyy-MM-ddTHH:mm:ss");
-    }
-
+// this function is here to always initialize the rig service
+app.run(function(Rig) {
     console.log("CloudShack is ready.");
 });
