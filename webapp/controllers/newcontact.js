@@ -124,14 +124,31 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
 
     var mapTargets = [null, null, null];
 
+    function updateMapTarget(coord) {
+        var profile = Profile.getActive();
+        var myPos = profile ? Toolkit.gridToCoord(profile.my_gridsquare) : null;
+
+        $scope.maptarget = coord;
+
+        if (coord && myPos) {
+            $scope.distance = Toolkit.coordDistance(myPos, coord);
+            $scope.bearing = Toolkit.coordBearing(myPos, coord);
+        }
+        else {
+            $scope.distance = null;
+            $scope.bearing = null;
+        }
+    }
+
     function setMapTarget(coord, priority) {
         mapTargets[priority] = coord;
         for (var i = 0; i < mapTargets.length; i++) {
             if (mapTargets[i]) {
-                $scope.maptarget = mapTargets[i];
-                break;
+                updateMapTarget(mapTargets[i]);
+                return;
             }
         }
+        updateMapTarget(null);
     }
 
     $scope.$watch("contact.gridsquare", function(newValue, oldValue) {

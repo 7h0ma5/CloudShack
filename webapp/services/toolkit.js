@@ -24,7 +24,7 @@ app.factory("Toolkit", function(dateFilter) {
 
             var R = 6371; // earth radius in km
 
-            return R * c;
+            return Math.round(R * c);
         },
         coordBearing: function(A, B) {
             if (!this.coordValidate(A) || !this.coordValidate(B)) return 0;
