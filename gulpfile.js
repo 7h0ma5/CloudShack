@@ -91,5 +91,12 @@ gulp.task("default", [
     "fonts",
     "images",
     "map",
-    "templates"
+    "templates",
+    "index"
 ]);
+
+gulp.task("watch", function() {
+    gulp.watch("webapp/**/*.js", ["app.js"]);
+    gulp.watch("webapp/app.less", ["app.css"]);
+    gulp.watch("assets/templates/**/*.*", ["templates"]);
+});
