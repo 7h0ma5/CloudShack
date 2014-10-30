@@ -12,19 +12,5 @@
     "socket.io-client": "~1.1.0",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.3",
     "leaflet": "~0.7.3"
-  },
-  "overrides": {
-    "socket.io-client": {
-      "main": "socket.io.js"
-    },
-    "font-awesome": {
-      "main": [
-        "fonts",
-        "css/font-awesome.css"
-      ]
-    },
-    "angular-hotkeys": {
-      "main": "build/hotkeys.js"
-    }
   }
 }
