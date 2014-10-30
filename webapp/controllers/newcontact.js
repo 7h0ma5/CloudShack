@@ -122,6 +122,28 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         });
     });
 
+    var mapTargets = [null, null, null];
+
+    function setMapTarget(coord, priority) {
+        mapTargets[priority] = coord;
+        for (var i = 0; i < mapTargets.length; i++) {
+            if (mapTargets[i]) {
+                $scope.maptarget = mapTargets[i];
+                break;
+            }
+        }
+    }
+
+    $scope.$watch("contact.gridsquare", function(newValue, oldValue) {
+        if (newValue && (newValue.length == 4 || newValue.length == 6)) {
+            console.log("set gridsquare");
+            setMapTarget(Toolkit.gridToCoord(newValue), 0);
+        }
+        else {
+            setMapTarget(null, 0);
+        }
+    });
+
     $scope.$watch("contact.call", function(newValue, oldValue) {
         if (!newValue) {
             $scope.resetStart();
@@ -134,30 +156,30 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             $scope.contact.cqz = result.cqz;
             $scope.contact.dxcc = result.dxcc;
             $scope.contact.country = result.country;
-            $scope.maptarget = {
-                lat: result.lat,
-                lon: result.lon
-            };
+            setMapTarget([result.lat, result.lon], 2);
         }, function(err) {
             delete $scope.dxcc;
             delete $scope.contact.cqz;
             delete $scope.contact.dxcc;
             delete $scope.contact.country;
-            delete $scope.maptarget;
+            setMapTarget(null, 2);
         });
 
         if (newValue.length < 3) {
             delete $scope.callbook;
             delete $scope.contact.ituz;
+            setMapTarget(null, 1);
             return;
         }
 
         Callbook.get({"call": newValue}, function(result) {
             $scope.callbook = result;
             $scope.contact.ituz = result.ituz;
+            setMapTarget(Toolkit.gridToCoord(result.gridsquare), 1);
         }, function(err) {
             delete $scope.callbook;
             delete $scope.contact.ituz;
+            setMapTarget(null, 1);
         });
 
         var queryOptions = {

@@ -50,7 +50,7 @@ app.factory("Toolkit", function(dateFilter) {
             return /^[A-Za-z]{2}[0-9]{2}([A-Za-z]{2})?$/.test(grid);
         },
         gridToCoord: function(grid) {
-            if (!this.gridValidate(grid)) return [0, 0];
+            if (!this.gridValidate(grid)) return null;
 
             grid = grid.toUpperCase();
 
@@ -77,7 +77,7 @@ app.factory("Toolkit", function(dateFilter) {
             return [lat, lon];
         },
         coordToGrid: function(coord) {
-            if (!this.coordValidate(coord)) coord = [0, 0];
+            if (!this.coordValidate(coord)) return null;
 
             var lat = coord[0] + 90,
                 lon = coord[1] + 180;
