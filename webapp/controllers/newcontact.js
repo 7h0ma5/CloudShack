@@ -117,6 +117,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             angular.forEach(modes, function(mode) {
                 if (mode.name == newValue) {
                     $scope.submodes = mode.submodes;
+                    $scope.rst = mode.rst || "599";
                 }
             });
         });
