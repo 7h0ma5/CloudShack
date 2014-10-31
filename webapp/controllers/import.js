@@ -4,8 +4,8 @@ app.controller("ImportCtrl", function($scope, $upload, Flash, Toolkit, Contact, 
     $scope.loading = false;
     $scope.profiles = Profile.get();
 
-    var date = Toolkit.nowToIso();
-    $scope.start = $scope.end = date;
+    $scope.start = Toolkit.nowUTC();
+    $scope.end = Toolkit.nowUTC();
 
     $scope.onFileSelect = function($files) {
         if ($files.length > 0) {
@@ -19,10 +19,8 @@ app.controller("ImportCtrl", function($scope, $upload, Flash, Toolkit, Contact, 
         var params = {};
 
         if ($scope.dateRange) {
-            var start = new Date(Date.parse($scope.start));
-            var end = new Date(Date.parse($scope.end));
-            params["start"] = start.toJSON();
-            params["end"] = end.toJSON();
+            params["start"] = $scope.start.toJSON();
+            params["end"] = $scope.end.toJSON();
         }
 
         if ($scope.profile) {

@@ -35,11 +35,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
     }
 
     $scope.resetStart = function() {
-        $scope.startDate = Toolkit.nowToIso();
+        $scope.startDate = Toolkit.nowUTC();
     };
 
     $scope.resetEnd = function() {
-        $scope.endDate = Toolkit.nowToIso();
+        $scope.endDate = Toolkit.nowUTC();
     };
 
     $scope.reset = function() {
@@ -68,10 +68,8 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
     };
 
     $scope.save = function() {
-        var start = new Date(Date.parse($scope.startDate));
-        var end = new Date(Date.parse($scope.endDate));
-        $scope.contact["start"] = start.toJSON();
-        $scope.contact["end"] = end.toJSON();
+        $scope.contact["start"] = $scope.startDate.toJSON();
+        $scope.contact["end"] = $scope.endDate.toJSON();
 
         Profile.apply($scope.contact);
 

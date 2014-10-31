@@ -1,6 +1,6 @@
 app.controller("ExportCtrl", function($scope, $window, Toolkit) {
-    var date = Toolkit.nowToIso();
-    $scope.start = $scope.end = date;
+    $scope.start = Toolkit.nowUTC();
+    $scope.end = Toolkit.nowUTC();
 
     $scope.format = "adi";
 
@@ -13,10 +13,10 @@ app.controller("ExportCtrl", function($scope, $window, Toolkit) {
         var query = "";
 
         if ($scope.dateRange) {
-            var start = new Date(Date.parse($scope.start));
-            var end = new Date(Date.parse($scope.end));
-            var startkey = encodeURIComponent(JSON.stringify(start.toJSON()));
-            var endkey = encodeURIComponent(JSON.stringify(end.toJSON()));
+            var start = $scope.start.toJSON();
+            var end = $scope.end.toJSON();
+            var startkey = encodeURIComponent(JSON.stringify(start));
+            var endkey = encodeURIComponent(JSON.stringify(end));
 
             query = "?startkey=" + startkey + "&endkey=" + endkey;
         }

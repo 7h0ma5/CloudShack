@@ -107,6 +107,9 @@ app.factory("Toolkit", function(dateFilter) {
                             local.getUTCDate(), local.getUTCHours(),
                             local.getUTCMinutes(), local.getUTCSeconds(), 0);
         },
+        nowUTC: function() {
+            return this.dateToUTC(new Date());
+        },
         dateToIso: function(date) {
             return dateFilter(date, "yyyy-MM-ddTHH:mm:ss");
         },
