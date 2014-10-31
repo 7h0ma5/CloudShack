@@ -45,11 +45,11 @@ gulp.task("vendor.js", function() {
     return gulp.src([
                 config.bowerDir + "/angular/angular.js",
                 config.bowerDir + "/angular-animate/angular-animate.js",
-                config.bowerDir + "/angular-cookies/angular-cookies.js",
                 config.bowerDir + "/angular-hotkeys/build/hotkeys.js",
                 config.bowerDir + "/angular-resource/angular-resource.js",
                 config.bowerDir + "/angular-route/angular-route.js",
                 config.bowerDir + "/ng-file-upload/angular-file-upload.js",
+                config.bowerDir + "/angular-local-storage/dist/angular-local-storage.js",
                 config.bowerDir + "/leaflet/dist/leaflet-src.js",
                 config.bowerDir + "/socket.io-client/socket.io.js"
             ]).pipe(sourcemaps.init())

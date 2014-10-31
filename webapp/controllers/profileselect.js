@@ -1,12 +1,13 @@
-app.controller("ProfileSelectCtrl", function($scope, $location, $cookies, Profile) {
+app.controller("ProfileSelectCtrl", function($scope, $location, localStorageService, Profile) {
     function reload() {
         Profile.setActive(null);
 
         $scope.profiles = Profile.get({}, function(data) {
-            if (!$cookies.profile) return;
+            var savedProfile = localStorageService.get("profile");
+            if (!savedProfile) return;
 
             angular.forEach(data.rows, function(profile) {
-                if (profile.id == $cookies.profile) {
+                if (profile.id == savedProfile) {
                     Profile.setActive(profile.doc);
                 }
             });
@@ -18,7 +19,7 @@ app.controller("ProfileSelectCtrl", function($scope, $location, $cookies, Profil
     $scope.activate = function(idx) {
         $scope.activeProfile = $scope.profiles.rows[idx].doc;
         Profile.setActive($scope.activeProfile);
-        $cookies.profile = $scope.activeProfile._id;
+        localStorageService.set("profile", $scope.activeProfile._id);
     };
 
     $scope.edit = function(idx) {
