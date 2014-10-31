@@ -39,7 +39,7 @@ function initializeDatabase(local, remote) {
 
     var local_url = url.resolve(local.address, local.name);
     var remote_url = null;
-    var options = {continous: true, create_target: false};
+    var options = {continuous: true, create_target: false};
 
     if (remote.usecsdb && remote.cs && remote.cs.user && remote.cs.password) {
         remote_url = url.format({
