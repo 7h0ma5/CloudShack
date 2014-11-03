@@ -10,9 +10,13 @@
     <script src="/js/vendor.js"></script>
     <script src="/js/app.js"></script>
   </head>
-  <body>
+  <body ng-class="{'toggle-sidebar': toggleSidebar}">
     <header>
-      <h1><a href="/#/">CloudShack</a></h1>
+      <div class="sidebar-toggle-button">
+        <a ng-click="toggleSidebar = toggleSidebar ? false : true">
+          <i class="fa fa-bars fa-2x"></i>
+        </a>
+      </div>
       <div class="ticker" ng-controller="TickerCtrl">
           <div class="ticker-text" ng-show="show">
               <i class="fa fa-globe fa-lg"></i>
@@ -24,12 +28,12 @@
       <div class="profile-select" ng-controller="ProfileSelectCtrl">
           <a>
               <span ng-if="activeProfile">{{activeProfile.name}}</span>
-              <span ng-if="!activeProfile">No Profile</span>
-              <i class="fa fa-caret-down fa-lg"></i>
+              <span ng-if="!activeProfile">No Profile</span>&nbsp;
+              <i class="fa fa-angle-down"></i>
           </a>
           <ul>
               <li ng-repeat="profile in profiles.rows">
-                  <a ng-click="activate($index)">{{profile.doc.name}}</a> <a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a>
+                  <a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a> <a ng-click="activate($index)">{{profile.doc.name}}</a>
               </li>
               <li>
                   <a href="/#/profile/new">
@@ -41,27 +45,33 @@
     </header>
 
     <aside>
+      <div class="brand">
+        <h1><a href="/#/">CloudShack</a></h1>
+      </div>
+
       <div class="clock" clock></div>
       <nav nav-menu>
         <ul>
-          <li><a href="/#/"><i class="fa fa-home fa-lg"></i> Home</a></li>
-          <li><a href="/#/logbook"><i class="fa fa-book fa-lg"></i> Logbook</a></li>
-          <li><a href="/#/contact/new"><i class="fa fa-plus fa-lg"></i> New Contact</a></li>
-          <li><a href="/#/cluster"><i class="fa fa-globe fa-lg"></i> DX Cluster</a></li>
-          <li><a href="/#/import"><i class="fa fa-cloud-upload fa-lg"></i> Import</a></li>
-          <li><a href="/#/export"><i class="fa fa-cloud-download fa-lg"></i> Export</a></li>
-          <li><a href="/#/settings"><i class="fa fa-wrench fa-lg"></i> Settings</a></li>
+          <li><a href="/#/"><i class="fa fa-home"></i> Home</a></li>
+          <li><a href="/#/logbook"><i class="fa fa-book"></i> Logbook</a></li>
+          <li><a href="/#/contact/new"><i class="fa fa-plus"></i> New Contact</a></li>
+          <li><a href="/#/cluster"><i class="fa fa-globe"></i> DX Cluster</a></li>
+          <li><a href="/#/import"><i class="fa fa-cloud-upload"></i> Import</a></li>
+          <li><a href="/#/export"><i class="fa fa-cloud-download"></i> Export</a></li>
+          <li><a href="/#/settings"><i class="fa fa-wrench"></i> Settings</a></li>
         </ul>
       </nav>
     </aside>
 
-    <section id="page">
+    <div class="page-wrapper">
+      <div class="page">
         <div ng-controller="FlashCtrl">
             <div class="flash {{message.level}}" ng-show="show">
                 <span>{{message.text}}</span>
             </div>
         </div>
         <div ng-view></div>
-    </section>
+      </div>
+    </div>
   </body>
 </html>

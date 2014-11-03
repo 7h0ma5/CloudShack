@@ -23,6 +23,7 @@ gulp.task("vendor.css", function() {
     return gulp.src([
                 config.bowerDir + "/normalize-css/normalize.css",
                 config.bowerDir + "/font-awesome/css/font-awesome.css",
+                config.bowerDir + "/open-sans/css/open-sans.css",
                 config.bowerDir + "/leaflet/dist/leaflet.css",
             ]).pipe(sourcemaps.init())
               .pipe(minify())
@@ -60,15 +61,17 @@ gulp.task("vendor.js", function() {
 })
 
 gulp.task("fonts", function() { 
-    return gulp.src(config.bowerDir + "/font-awesome/fonts/*.*") 
-           .pipe(gulp.dest("public/fonts")); 
+    return gulp.src([
+                config.bowerDir + "/font-awesome/fonts/*.*",
+                config.bowerDir + "/open-sans/fonts/**/*.*"
+            ]) .pipe(gulp.dest("public/fonts")); 
 });
 
 gulp.task("images", function() { 
     return gulp.src([
-               config.bowerDir + "/leaflet/dist/images/*.png",
-               "assets/images/**/*"
-        ]).pipe(gulp.dest("public/images")); 
+                config.bowerDir + "/leaflet/dist/images/*.png",
+                "assets/images/**/*"
+            ]).pipe(gulp.dest("public/images")); 
 });
 
 gulp.task("map", function() { 
@@ -98,5 +101,6 @@ gulp.task("default", [
 gulp.task("watch", function() {
     gulp.watch("webapp/**/*.js", ["app.js"]);
     gulp.watch("webapp/app.less", ["app.css"]);
+    gulp.watch("assets/index.html", ["index"]);
     gulp.watch("assets/templates/**/*.*", ["templates"]);
 });

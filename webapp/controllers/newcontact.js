@@ -10,7 +10,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
 
     function loadDefaults() {
         var profile = Profile.getActive();
-        if (!profile) return;
+        if (!profile) return;nnn
 
         angular.forEach(preserve, function(key) {
             if (key in profile) {
@@ -160,10 +160,32 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         }
     });
 
+    function resetDxcc() {
+        delete $scope.dxcc;
+        delete $scope.contact.cqz;
+        delete $scope.contact.dxcc;
+        delete $scope.contact.country;
+        setMapTarget(null, 2);
+    }
+
+    function resetCallbook() {
+        delete $scope.callbook;
+        delete $scope.contact.ituz;
+        setMapTarget(null, 1);
+    }
+
+    function resetPrevious() {
+        $scope.previous = null;
+    }
+
     $scope.$watch("contact.call", function(newValue, oldValue) {
+        console.log("new Value", newValue);
         if (!newValue) {
             $scope.resetStart();
             $scope.resetEnd();
+            resetDxcc();
+            resetCallbook();
+            resetPrevious();
             return;
         }
 
@@ -173,18 +195,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             $scope.contact.dxcc = result.dxcc;
             $scope.contact.country = result.country;
             setMapTarget([result.lat, result.lon], 2);
-        }, function(err) {
-            delete $scope.dxcc;
-            delete $scope.contact.cqz;
-            delete $scope.contact.dxcc;
-            delete $scope.contact.country;
-            setMapTarget(null, 2);
-        });
+        }, resetDxcc);
 
         if (newValue.length < 3) {
-            delete $scope.callbook;
-            delete $scope.contact.ituz;
-            setMapTarget(null, 1);
+            resetCallbook();
+            resetPrevious();
             return;
         }
 
@@ -192,11 +207,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             $scope.callbook = result;
             $scope.contact.ituz = result.ituz;
             setMapTarget(Toolkit.gridToCoord(result.gridsquare), 1);
-        }, function(err) {
-            delete $scope.callbook;
-            delete $scope.contact.ituz;
-            setMapTarget(null, 1);
-        });
+        }, resetCallbook);
 
         var queryOptions = {
             view: "byCall",
@@ -205,12 +216,9 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             descending: false
         };
 
-        Contact.get(queryOptions,
-           function(result) {
-            $scope.previous = result.rows;
-        }, function(err) {
-            $scope.previous = null;
-        });
+        Contact.get(queryOptions, function(result) {
+            $scope.previous = result.rows.length ? result.rows : null;
+        }, resetPrevious);
     });
 
     $scope.qsl_rcvd = [

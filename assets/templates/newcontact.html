@@ -1,168 +1,173 @@
 <h1>New Contact</h1>
 
-<div style="float: left; width: 70%;">
-    <div class="form-row">
-      <div class="form-group">
-        <label for="call">Callsign</label>
-        <input required uppercase type="text" autocomplete="off" id="call"
-               ng-model="contact.call"  class="callsign" focus-on="call">
-      </div>
-
-      <div class="form-group">
-        <label for="rst-rcvd">RST Rcvd</label>
-        <input smartinput type="text" id="rst-rcvd" autocomplete="off"
-               placeholder="{{rst}}" ng-model="contact.rst_rcvd" class="rst">
-      </div>
-
-      <div class="form-group">
-        <label for="rst-sent">RST Sent</label>
-        <input smartinput type="text" id="rst-sent" autocomplete="off"
-               placeholder="{{rst}}" ng-model="contact.rst_sent" class="rst">
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input smartinput type="text" ng-model="contact.name" id="name"
-               placeholder="{{callbook.name}}" autocomplete="off">
-      </div>
-
-      <div class="form-group">
-        <label for="qth">QTH</label>
-        <input smartinput type="text" ng-model="contact.qth" id="qth"
-               placeholder="{{callbook.qth}}" autocomplete="off">
-      </div>
-
-      <div class="form-group">
-        <label for="gridsquare">Gridsquare</label>
-        <input smartinput uppercase type="text" ng-model="contact.gridsquare"
-               class="gridsquare" id="gridsquare" autocomplete="off"
-               placeholder="{{callbook.gridsquare}}">
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label for="freq">Freq</label>
-        <div class="input-group">
-          <input type="number" min="0.0" max="100000.0"
-                 step="0.001" ng-model="contact.freq" id="freq"
-                 autocomplete="off">
-          <span class="input-addon">
-            MHz
-          </span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="mode">Mode</label>
-        <select name="mode" id="mode" ng-model="contact.mode"
-                ng-options="mode.name as mode.name for mode in modes">
-        </select>
-      </div>
-
-      <div class="form-group" ng-show="submodes">
-          <label for="submode">Submode</label>
-          <select name="submode" id="submode" ng-model="contact.submode"
-                  ng-options="mode.name as mode.name for mode in submodes">
-                  <option value=""></option>
-          </select>
-      </div>
-
-      <div class="form-group">
-        <label for="power">Power</label>
-        <div class="input-group">
-          <input type="number" min="0" max="2000" step="1" autocomplete="off"
-                 ng-model="contact.tx_pwr" id="power" class="power">
-          <span class="input-addon">
-            W
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label for="start">Start</label>
-        <div class="input-group">
-          <input type="datetime-local" step="1" ng-model="startDate"
-                 id="start" required>
-            <a class="input-addon" ng-click="resetStart()">Now</a>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="end">End</label>
-        <div class="input-group">
-          <input type="datetime-local" step="1" ng-model="endDate"
-                 id="end" required>
-          <a class="input-addon" ng-click="resetEnd()">Now</a>
-        </div>
-      </div>
-    </div>
-
-    <tabs>
-      <div title="QSL">
+<div class="newcontact-main">
+  <div class="box">
+    <div class="box-content">
+      <div class="form-row">
         <div class="form-group">
-          <label for="qsl_via">QSL via: </label>
-          <input uppercase type="text" name="qsl_via" id="qsl_via"
-                 ng-model="contact.qsl_via" autocomplete="off" />
+          <label for="call">Callsign</label>
+          <input required uppercase type="text" autocomplete="off" id="call"
+                 ng-model="contact.call"  class="callsign" focus-on="call">
         </div>
+
         <div class="form-group">
-          <label for="qsl_sent">QSL sent: </label>
-          <select name="qsl_sent" id="qsl_sent" ng-model="contact.qsl_sent"
-                  ng-options="o.id as o.name for o in qsl_sent">
-            <option value=""></option>
-          </select>
+          <label for="rst-rcvd">RST Rcvd</label>
+          <input smartinput type="text" id="rst-rcvd" autocomplete="off"
+                 placeholder="{{rst}}" ng-model="contact.rst_rcvd" class="rst">
         </div>
+
         <div class="form-group">
-          <label for="qsl_rcvd">QSL received: </label>
-          <select name="qsl_rcvd" id="qsl_rcvd" ng-model="contact.qsl_rcvd"
-                  ng-options="o.id as o.name for o in qsl_rcvd">
-            <option value=""></option>
-          </select>
+          <label for="rst-sent">RST Sent</label>
+          <input smartinput type="text" id="rst-sent" autocomplete="off"
+                 placeholder="{{rst}}" ng-model="contact.rst_sent" class="rst">
         </div>
       </div>
 
-      <div title="Contact">
+      <div class="form-row">
         <div class="form-group">
-          <label for="age">Age</label>
+          <label for="name">Name</label>
+          <input smartinput type="text" ng-model="contact.name" id="name"
+                 placeholder="{{callbook.name}}" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="qth">QTH</label>
+          <input smartinput type="text" ng-model="contact.qth" id="qth"
+                 placeholder="{{callbook.qth}}" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="gridsquare">Gridsquare</label>
+          <input smartinput uppercase type="text" ng-model="contact.gridsquare"
+                 class="gridsquare" id="gridsquare" autocomplete="off"
+                 placeholder="{{callbook.gridsquare}}">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="freq">Freq</label>
           <div class="input-group">
-            <input type="number" min="1" max="150" autocomplete="off"
-                   step="1" ng-model="contact.age" id="age" class="age">
+            <input type="number" min="0.0" max="100000.0"
+                   step="0.001" ng-model="contact.freq" id="freq"
+                   autocomplete="off">
             <span class="input-addon">
-              Years
+              MHz
             </span>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="email">E-Mail</label>
-          <input type="text" name="email" id="email" ng-model="contact.email" autocomplete="off">
-        </div>
-
-        <div class="form-group">
-          <label for="rig">Equipment</label>
-          <input type="text" name="rig" id="rig" ng-mode="contact.rig">
-        </div>
-      </div>
-
-      <div title="Contest">
-        <div class="form-group">
-          <label for="contest_id">Contest</label>
-          <select name="contest_id" id="contest_id" ng-model="contact.contest_id"
-                  ng-options="contest.id as contest.desc for contest in contests | orderBy:'desc'">
+          <label for="mode">Mode</label>
+          <select name="mode" id="mode" ng-model="contact.mode"
+                  ng-options="mode.name as mode.name for mode in modes">
           </select>
         </div>
+
+        <div class="form-group" ng-show="submodes">
+            <label for="submode">Submode</label>
+            <select name="submode" id="submode" ng-model="contact.submode"
+                    ng-options="mode.name as mode.name for mode in submodes">
+                    <option value=""></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label for="power">Power</label>
+          <div class="input-group">
+            <input type="number" min="0" max="2000" step="1" autocomplete="off"
+                   ng-model="contact.tx_pwr" id="power" class="power">
+            <span class="input-addon">
+              W
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div title="Comment">
-          <input type="text" name="comment" id="comment" class="comment"
-                 ng-model="contact.comment">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="start">Start</label>
+          <div class="input-group">
+            <input type="datetime-local" step="1" ng-model="startDate"
+                   id="start" required>
+              <a class="input-addon" ng-click="resetStart()">Now</a>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="end">End</label>
+          <div class="input-group">
+            <input type="datetime-local" step="1" ng-model="endDate"
+                   id="end" required>
+            <a class="input-addon" ng-click="resetEnd()">Now</a>
+          </div>
+        </div>
       </div>
-    </tabs>
+    </div>
+  </div>
 
-    <p>
+  <tabs>
+    <div title="QSL">
+      <div class="form-group">
+        <label for="qsl_via">QSL via: </label>
+        <input uppercase type="text" name="qsl_via" id="qsl_via"
+               ng-model="contact.qsl_via" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label for="qsl_sent">QSL sent: </label>
+        <select name="qsl_sent" id="qsl_sent" ng-model="contact.qsl_sent"
+                ng-options="o.id as o.name for o in qsl_sent">
+          <option value=""></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="qsl_rcvd">QSL received: </label>
+        <select name="qsl_rcvd" id="qsl_rcvd" ng-model="contact.qsl_rcvd"
+                ng-options="o.id as o.name for o in qsl_rcvd">
+          <option value=""></option>
+        </select>
+      </div>
+    </div>
+
+    <div title="Contact">
+      <div class="form-group">
+        <label for="age">Age</label>
+        <div class="input-group">
+          <input type="number" min="1" max="150" autocomplete="off"
+                 step="1" ng-model="contact.age" id="age" class="age">
+          <span class="input-addon">
+            Years
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="text" name="email" id="email" ng-model="contact.email" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="rig">Equipment</label>
+        <input type="text" name="rig" id="rig" ng-mode="contact.rig">
+      </div>
+    </div>
+
+    <div title="Contest">
+      <div class="form-group">
+        <label for="contest_id">Contest</label>
+        <select name="contest_id" id="contest_id" ng-model="contact.contest_id"
+                ng-options="contest.id as contest.desc for contest in contests | orderBy:'desc'">
+        </select>
+      </div>
+    </div>
+
+    <div title="Comment">
+        <input type="text" name="comment" id="comment" class="comment"
+               ng-model="contact.comment">
+    </div>
+  </tabs>
+
+  <div class="box transparent"  style="float: left; min-width: 700px; max-width: 1000px;">
+    <div class="box-content">
       <button type="button" ng-click="save()" class="primary">
         <i class="fa fa-check"></i> Save
       </button>
@@ -175,68 +180,68 @@
       <button ng-click="qrz()" ng-disabled="!contact.call">
         <i class="fa fa-question-circle"></i> QRZ
       </button>
-    </p>
+    </div>
+  </div>
 </div>
 
-<div style="float: right; width: 30%;">
-    <div class="box">
-        <div class="title">
-          <i class="fa fa-circle" ng-class="{green: rig.connected, red: !rig.connected}"></i>
-          Radio
-        </div>
-        <div class="content">
-            <b>{{rig.freq}} MHz</b> {{rig.mode}}
-        </div>
-    </div>
-    <div class="box" ng-show="dxcc">
-      <div class="title">Country</div>
-      <div class="content">
-         <img src="/flag/64/{{dxcc.dxcc}}" style="float: right" />
-         <b>{{dxcc.country}}</b> ({{dxcc.cont}})
-         <div class="form-row">
-             <div class="form-group">
-               <label for="cqz">CQ</label>
-               <input class="cqz" type="text" ng-model="contact.cqz" id="cqz"
-                      autocomplete="off">
-             </div>
+<div class="newcontact-side">
+  <div class="box">
+      <div class="box-title">
+        <i class="fa fa-circle" ng-class="{green: rig.connected, red: !rig.connected}"></i>
+        Radio
+      </div>
+      <div class="box-content">
+          <b>{{rig.freq}} MHz</b> {{rig.mode}}
+      </div>
+  </div>
 
-             <div class="form-group">
-               <label for="ituz">ITU</label>
-               <input class="ituz" type="text" ng-model="contact.ituz" id="ituz"
-                      autocomplete="off">
-             </div>
-         </div>
-      </div>
+  <div class="box" ng-show="dxcc">
+    <div class="box-title">Country</div>
+    <div class="box-content">
+       <img src="/flag/64/{{dxcc.dxcc}}" style="float: right" />
+       <b>{{dxcc.country}}</b> ({{dxcc.cont}})
+       <div class="form-row">
+           <div class="form-group">
+             <label for="cqz">CQ</label>
+             <input class="cqz" type="text" ng-model="contact.cqz" id="cqz"
+                    autocomplete="off">
+           </div>
+
+           <div class="form-group">
+             <label for="ituz">ITU</label>
+             <input class="ituz" type="text" ng-model="contact.ituz" id="ituz"
+                    autocomplete="off">
+           </div>
+       </div>
     </div>
-    <div class="box" ng-show="maptarget">
-      <div class="title">
-          Map
-          <span ng-show="distance != null">
-              &ndash; {{distance}} km / {{bearing}}°
-          </span>
-      </div>
-      <worldmap maptarget="maptarget" style="display: block; width: 100%; height: 400px;">
-      </worldmap>
+  </div>
+
+  <div class="box" ng-show="maptarget">
+    <div class="box-title">
+        Map
+        <span ng-show="distance != null">
+            &ndash; {{distance}} km / {{bearing}}°
+        </span>
     </div>
-    <div class="box" ng-show="previous">
-      <div class="title">Previous Contacts</div>
-      <div class="content">
-        <table>
-          <tr>
-            <th>Call</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Freq</th>
-          </tr>
-          <tr ng-repeat="row in previous">
-            <td>{{row.value.call}}</td>
-            <td>{{row.value.start|date:"dd.MM.yyyy"}}</td>
-            <td>{{row.value.start|date:"HH:mm"}}</td>
-            <td>{{row.value.freq}}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+    <worldmap maptarget="maptarget" style="display: block; width: 100%; height: 400px;">
+    </worldmap>
+  </div>
+
+  <div class="box" ng-show="previous">
+    <div class="box-title">Previous Contacts ({{previous.length}})</div>
+    <table class="box-table">
+      <tr>
+        <th>Call</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Freq</th>
+      </tr>
+      <tr ng-repeat="row in previous">
+        <td>{{row.value.call}}</td>
+        <td>{{row.value.start|date:"dd.MM.yyyy":"UTC"}}</td>
+        <td>{{row.value.start|date:"HH:mm":"UTC"}}</td>
+        <td>{{row.value.freq}}</td>
+      </tr>
+    </table>
+  </div>
 </div>
-
-<div style="clear: both"></div>

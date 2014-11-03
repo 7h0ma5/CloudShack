@@ -22,8 +22,12 @@ app.directive("worldmap", function($window, $timeout) {
             scope.$watch("maptarget", function(newValue, oldValue) {
                 if (!newValue || newValue == oldValue) return;
                 var pos = L.latLng(newValue);
-                marker.setLatLng(pos);
                 map.panTo(pos);
+                marker.setLatLng(pos);
+
+                $timeout(function() {
+                    map.invalidateSize(true);
+                }, 200);
             });
       }}
 });
