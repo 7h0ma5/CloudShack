@@ -18,6 +18,10 @@ app.controller("ImportCtrl", function($scope, $upload, Flash, Toolkit, Contact, 
 
         var params = {};
 
+        if ($scope.dxcc) {
+            params["dxcc"] = true;
+        }
+
         if ($scope.dateRange) {
             params["start"] = $scope.start.toJSON();
             params["end"] = $scope.end.toJSON();

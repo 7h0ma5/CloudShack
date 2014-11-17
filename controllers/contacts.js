@@ -1,5 +1,6 @@
 var adif = require("adif"),
     lotw = require("../lib/lotw"),
+    dxcc = require("../lib/dxcc"),
     nano = require("nano"),
     async = require("async")
     url = require("url"),
@@ -87,6 +88,7 @@ function createContact(req, res) {
 }
 
 function updateContact(req, res) {
+
 }
 
 function deleteContact(req, res) {
@@ -94,6 +96,14 @@ function deleteContact(req, res) {
         if (err) res.status(err.status_code).send(err);
         else res.send();
     });
+}
+
+function updateDxcc(contact) {
+    var result = dxcc.lookup(contact.call);
+    if (!result) return;
+
+    contact.dxcc = result.dxcc;
+    contact.cqz = result.cqz;
 }
 
 function exportAdi(req, res) {
@@ -115,6 +125,10 @@ function exportAdi(req, res) {
 function importAdi(req, res) {
     var reader = new adif.AdiReader(req.body);
     var contacts = reader.readAll();
+
+    if (req.query.dxcc) {
+        _.each(contacts, updateDxcc);
+    }
 
     db.bulk({docs: contacts}, function(err, data) {
         if (err) res.status(err.status_code).send(err);
