@@ -4,7 +4,8 @@ var express = require("express"),
     serveStatic = require('serve-static'),
     sockio = require("socket.io"),
     Config = require("./lib/config")
-    lotw = require("./lib/lotw");
+    lotw = require("./lib/lotw")
+    db = require("./lib/database");
 
 function jsonParamParser(req, res, next) {
     for (prop in req.query) {
@@ -52,6 +53,12 @@ var Server = exports.Server = function(config, port) {
         var user = config.get("lotw.username");
         var pass = config.get("lotw.password");
         lotw.setCredentials(user, pass);
+    }, true);
+
+    config.observe("db", function() {
+        var local = config.get("db.local");
+        var remote = config.get("db.remote");
+        db.init(local, remote);
     }, true);
 }
 
