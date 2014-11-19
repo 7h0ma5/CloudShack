@@ -54,6 +54,19 @@ function updateDxcc(contact) {
     contact.cqz = result.cqz;
 }
 
+function applyProfile(profile, contact) {
+    var fields = [
+        "operator", "my_name", "my_gridsquare", "my_lat", "my_lon",
+        "my_rig", "station_callsign"
+    ];
+
+    _.each(fields, function(field) {
+        if (field in profile) {
+            contact[field] = profile[field];
+        }
+    });
+}
+
 function exportAdi(req, res) {
     db.contacts.view("logbook", "byDate", req.query, function(err, data) {
         if (err) res.status(err.status_code).send(err);
@@ -78,10 +91,24 @@ function importAdi(req, res) {
         _.each(contacts, updateDxcc);
     }
 
-    db.contacts.bulk({docs: contacts}, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
-        else res.send({count: contacts.length});
-    });
+    async.series([
+        function(callback) {
+            if (!req.query.profile) return callback();
+            db.profiles.get(req.query.profile, function(err, data) {
+                if (err) return callback(err);
+                if (data.length < 1) return callback();
+                _.each(contacts, _.partial(applyProfile, data));
+                callback();
+            });
+        }
+    ], function(err) {
+        if (err) res.status(500).send();
+
+        db.contacts.bulk({docs: contacts}, function(err, data) {
+            if (err) res.status(err.status_code).send(err);
+            else res.send({count: contacts.length});
+        });
+    })
 }
 
 function exportAdx(req, res) {
