@@ -67,12 +67,22 @@ function applyProfile(profile, contact) {
     });
 }
 
-function exportAdi(req, res) {
+function exportContacts(req, res) {
+    var writer;
+
+    if (req.params.format == "adi") {
+        writer = new adif.AdiWriter("CloudShack", "1.0");
+    }
+    else if (req.params.format == "adx") {
+        writer = new adif.AdxWriter("CloudShack", "1.0");
+    }
+    else {
+        return res.status(404).send();
+    }
+
     db.contacts.view("logbook", "byDate", req.query, function(err, data) {
         if (err) res.status(err.status_code).send(err);
         else {
-            var writer = new adif.AdiWriter("CloudShack", "1.0");
-
             _.each(data.rows, function(doc) {
                 writer.writeContact(doc.value)
             });
@@ -83,9 +93,20 @@ function exportAdi(req, res) {
     });
 }
 
-function importAdi(req, res) {
-    var reader = new adif.AdiReader(req.body);
-    var contacts = reader.readAll();
+function importContacts(req, res) {
+    var contacts;
+
+    if (req.params.format == "adi") {
+        var reader = new adif.AdiReader(req.body);
+        contacts = reader.readAll();
+    }
+    else if (req.params.format == "adx") {
+        var reader = new adif.AdxReader(req.body);
+        contacts = reader.readAll();
+    }
+    else {
+        return res.status(404).send();
+    }
 
     if (req.query.dxcc) {
         _.each(contacts, updateDxcc);
@@ -109,32 +130,6 @@ function importAdi(req, res) {
             else res.send({count: contacts.length});
         });
     })
-}
-
-function exportAdx(req, res) {
-    db.contacts.view("logbook", "byDate", req.query, function(err, data) {
-        if (err)  res.status(err.status_code).send(err);
-        else {
-            var writer = new adif.AdxWriter("CloudShack", "1.0");
-
-            _.each(data.rows, function(doc) {
-                writer.writeContact(doc.value)
-            });
-
-            res.contentType("application/octet-stream");
-            res.send(writer.getData());
-        }
-    });
-}
-
-function importAdx(req, res) {
-    var reader = new adif.AdxReader(req.body);
-    var contacts = reader.readAll();
-
-    db.contacts.bulk({docs: contacts}, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
-        else res.send({count: contacts.length});
-    });
 }
 
 function statistics(req, res) {
@@ -209,12 +204,10 @@ exports.setup = function(config, app, io) {
     app.get("/contacts", allContacts);
     app.get("/contacts/_stats", statistics);
     app.get("/contacts/:id", readContact);
+    app.get("/contacts.:format", exportContacts);
+    app.post("/contacts.:format", importContacts);
     app.post("/contacts", createContact);
     app.put("/contacts/:id/:rev", updateContact);
     app.delete("/contacts/:id/:rev", deleteContact);
-    app.get("/contacts.adi", exportAdi);
-    app.post("/contacts.adi", importAdi);
-    app.get("/contacts.adx", exportAdx);
-    app.post("/contacts.adx", importAdx);
     app.post("/contacts/_lotw", importLotw);
 }
