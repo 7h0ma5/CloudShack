@@ -5,8 +5,8 @@ app.factory("CW", function($rootScope, Socket) {
         Socket.emit("cw-send", text);
     };
 
-    Socket.on("cw-status", function(state) {
-        cw.status = state;
+    Socket.on("cw-status", function(status) {
+        cw.status = status;
     });
 
     return cw;

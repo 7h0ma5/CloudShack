@@ -12,6 +12,8 @@ exports.setup = function(config, app, io) {
     });
 
     io.on("connection", function(socket) {
+        socket.emit("cw-status", keyer.status);
+
         socket.on("cw-set-speed", function(freq) {
             keyer.setSpeed(speed);
         });

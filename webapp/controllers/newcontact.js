@@ -262,6 +262,8 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         }
     });
 
+    $scope.cw = CW;
+
     $scope.sendCW = function() {
         CW.sendText($scope.cwtext);
         $scope.cwtext = "";
