@@ -6,7 +6,7 @@ app.config(function(hotkeysProvider, localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix("CloudShack");
 });
 
-// this function is here to always initialize the rig service
-app.run(function(Rig) {
+// this function is here to always initialize the rig and services
+app.run(function(CW, Rig) {
     console.log("CloudShack is ready.");
 });

@@ -1,6 +1,6 @@
 app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
                                           hotkeys, focus, Flash, Profile, Spots,
-                                          Contact, Callbook, Dxcc, Data, Rig)
+                                          Contact, Callbook, Dxcc, Data, Rig, CW)
 {
     $scope.rig = Rig;
     $scope.modes = Data.get("modes");
@@ -261,6 +261,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             $scope.qrz();
         }
     });
+
+    $scope.sendCW = function() {
+        CW.sendText($scope.cwtext);
+        $scope.cwtext = "";
+    };
 
     $scope.reset();
 });

@@ -25,5 +25,8 @@
         "host": "",
         "port": 23,
         "username": ""
+    },
+    "keyer": {
+        "port": ""
     }
 }
