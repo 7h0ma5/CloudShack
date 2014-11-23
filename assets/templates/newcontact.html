@@ -216,14 +216,14 @@
        <div class="form-row">
            <div class="form-group">
              <label for="cqz">CQ</label>
-             <input class="cqz" type="text" ng-model="contact.cqz" id="cqz"
-                    autocomplete="off">
+             <input class="cqz" type="number" ng-model="contact.cqz" id="cqz"
+                    autocomplete="off" min="1" max="40" step="1">
            </div>
 
            <div class="form-group">
              <label for="ituz">ITU</label>
-             <input class="ituz" type="text" ng-model="contact.ituz" id="ituz"
-                    autocomplete="off">
+             <input class="ituz" type="number" ng-model="contact.ituz" id="ituz"
+                    autocomplete="off" min="1" max="90" step="1">
            </div>
        </div>
     </div>

@@ -10,7 +10,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
 
     function loadDefaults() {
         var profile = Profile.getActive();
-        if (!profile) return;nnn
+        if (!profile) return;
 
         angular.forEach(preserve, function(key) {
             if (key in profile) {
@@ -179,7 +179,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
     }
 
     $scope.$watch("contact.call", function(newValue, oldValue) {
-        console.log("new Value", newValue);
         if (!newValue) {
             $scope.resetStart();
             $scope.resetEnd();
