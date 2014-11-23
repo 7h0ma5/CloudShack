@@ -28,7 +28,7 @@
     <td><b><a ng-href="/#/contact/{{contact.value._id}}">{{contact.value.call}}</a></b></td>
     <td>{{contact.value.name}}</td>
     <td>{{contact.value.mode}}</td>
-    <td>{{contact.value.freq}}</td>
+    <td>{{contact.value.freq|number:3}} MHz</td>
   </tr>
 </table>
 

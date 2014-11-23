@@ -21,7 +21,7 @@
           <div class="ticker-text" ng-show="show">
               <i class="fa fa-globe fa-lg"></i>
               <b>{{spot.dxcall}}</b> on
-              {{spot.freq}} by
+              {{spot.freq|number:3}} by
               {{spot.spotter}}
           </div>
       </div>
