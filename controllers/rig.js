@@ -1,12 +1,16 @@
 var RigCtl = require("../lib/rigctl");
 
 exports.setup = function(config, app, io) {
-    var rig = new RigCtl(config.get("rig.host"),
-                         config.get("rig.port"));
+    var rig = new RigCtl();
 
     config.observe("rig", function() {
-        // todo: reconnect
-    });
+        var host = config.get("rig.host");
+        var port = config.get("rig.port");
+
+        if (host && port) {
+            rig.connect(host, port);
+        }
+    }, true);
 
     rig.on("update", function(rig) {
         io.sockets.emit("rig-update", rig);

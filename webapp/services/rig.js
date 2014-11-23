@@ -16,7 +16,7 @@ app.factory("Rig", function($rootScope, Socket) {
     }
 
     Socket.on("rig-update", function(rigState) {
-        rig.freq = parseFloat(rigState.frequency/1e6).toFixed(4);
+        rig.freq = rigState.frequency;
         rig.mode = rigState.mode;
         rig.passband = rigState.passband;
         rig.connected = rigState.connected;
