@@ -71,6 +71,29 @@ function applyProfile(profile, contact) {
     });
 }
 
+function updateBand(contact) {
+    if (contact.band || !contact.freq) return;
+
+    _.each(data.bands, function(band) {
+        console.log(band.name);
+        if (contact.freq >= band.start && contact.freq <= band.end) {
+            console.log("found!");
+            contact.band = band.name.toUpperCase();
+            return false;
+        }
+    });
+}
+
+function migrateMode(contact) {
+    if (contact.submode || !contact.mode) return;
+
+    var result = data.legacyModes[contact.mode];
+
+    if (result) {
+        _.merge(contact, result);
+    }
+}
+
 function exportContacts(req, res) {
     var writer;
 
@@ -115,6 +138,9 @@ function importContacts(req, res) {
     if (req.query.dxcc) {
         _.each(contacts, updateDxcc);
     }
+
+    _.each(contacts, updateBand);
+    _.each(contacts, migrateMode);
 
     async.series([
         function(callback) {
