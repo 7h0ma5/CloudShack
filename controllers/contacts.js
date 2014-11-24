@@ -1,6 +1,7 @@
 var adif = require("adif"),
     lotw = require("../lib/lotw"),
     dxcc = require("../lib/dxcc"),
+    data = require("../lib/data"),
     db = require("../lib/database"),
     async = require("async")
     url = require("url"),
@@ -29,7 +30,10 @@ function readContact(req, res) {
 }
 
 function createContact(req, res) {
-    db.contacts.insert(req.body, function(err, data) {
+    var contact = req.body;
+    updateBand(contact);
+
+    db.contacts.insert(contact, function(err, data) {
         if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
