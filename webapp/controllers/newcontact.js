@@ -209,13 +209,12 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         }, resetCallbook);
 
         var queryOptions = {
-            view: "byCall",
             startkey: JSON.stringify([newValue]),
             endkey: JSON.stringify([newValue, {}]),
             descending: false
         };
 
-        Contact.get(queryOptions, function(result) {
+        Contact.byCall(queryOptions, function(result) {
             $scope.previous = result.rows.length ? result.rows : null;
         }, resetPrevious);
     });

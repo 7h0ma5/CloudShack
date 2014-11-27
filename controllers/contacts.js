@@ -10,13 +10,16 @@ var adif = require("adif"),
 var lotw;
 
 function allContacts(req, res) {
-    if (!("descending" in req.query)) {
-        req.query.descending = true;
-    }
+    var view = req.params.view || "byDate";
+    var options = {
+        descending: true,
+        include_docs: true,
+        limit: 50
+    };
 
-    var view = req.query.view || "byDate";
+    _.merge(options, req.query);
 
-    db.contacts.view("logbook", view, req.query, function(err, data) {
+    db.contacts.view("logbook", view, options, function(err, data) {
         if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
@@ -96,22 +99,25 @@ function migrateMode(contact) {
 
 function exportContacts(req, res) {
     var writer;
+    var options = { "include_docs": true };
+    _.merge(options, req.query);
 
-    if (req.params.format == "adi") {
-        writer = new adif.AdiWriter("CloudShack", "1.0");
-    }
-    else if (req.params.format == "adx") {
-        writer = new adif.AdxWriter("CloudShack", "1.0");
-    }
-    else {
-        return res.status(404).send();
+    switch (req.params.format) {
+        case "adi":
+            writer = new adif.AdiWriter("CloudShack", "1.0");
+            break;
+        case "adx":
+            writer = new adif.AdxWriter("CloudShack", "1.0");
+            break;
+        default:
+            return res.status(404).send();
     }
 
-    db.contacts.view("logbook", "byDate", req.query, function(err, data) {
+    db.contacts.view("logbook", "byDate", options, function(err, data) {
         if (err) res.status(err.status_code).send(err);
         else {
-            _.each(data.rows, function(doc) {
-                writer.writeContact(doc.value)
+            _.each(data.rows, function(row) {
+                writer.writeContact(row.doc)
             });
 
             res.contentType("application/octet-stream");
@@ -123,16 +129,17 @@ function exportContacts(req, res) {
 function importContacts(req, res) {
     var contacts;
 
-    if (req.params.format == "adi") {
-        var reader = new adif.AdiReader(req.body);
-        contacts = reader.readAll();
-    }
-    else if (req.params.format == "adx") {
-        var reader = new adif.AdxReader(req.body);
-        contacts = reader.readAll();
-    }
-    else {
-        return res.status(404).send();
+    switch (req.params.format) {
+        case "adi":
+            var reader = new adif.AdiReader(req.body);
+            contacts = reader.readAll();
+            break;
+        case "adx":
+            var reader = new adif.AdxReader(req.body);
+            contacts = reader.readAll();
+            break;
+        default:
+            return res.status(404).send();
     }
 
     if (req.query.dxcc) {
@@ -163,11 +170,10 @@ function importContacts(req, res) {
 }
 
 function statistics(req, res) {
-    if (!("group_level" in req.query)) {
-        req.query.group_level = 3;
-    }
+    var options = { group_level: 3 };
+    _.merge(options, req.query);
 
-    db.contacts.view("logbook", "stats", req.query, function(err, data) {
+    db.contacts.view("logbook", "stats", options, function(err, data) {
         if (err) res.status(err.status_code).send(err);
         else res.send(data);
     });
@@ -184,14 +190,14 @@ function searchContact(ref, callback) {
         startkey: start.toJSON(), endkey: end.toJSON(), include_docs: true
     };
 
-    db.contacts.view("logbook", "byDate", function(err, data) {
+    db.contacts.view("logbook", "byDate", {include_docs: true}, function(err, data) {
         if (err) callback(null);
 
-        var result = _.find(data.rows, function(doc) {
-            return doc.value.call == ref.call;
+        var result = _.find(data.rows, function(row) {
+            return row.doc.call == ref.call;
         });
 
-        callback(result ? result.value : null);
+        callback(result ? result.doc : null);
     });
 }
 
@@ -233,6 +239,7 @@ function importLotw(req, res) {
 exports.setup = function(config, app, io) {
     app.get("/contacts", allContacts);
     app.get("/contacts/_stats", statistics);
+    app.get("/contacts/_:view", allContacts);
     app.get("/contacts/:id", readContact);
     app.get("/contacts.:format", exportContacts);
     app.post("/contacts.:format", importContacts);

@@ -46,7 +46,9 @@ function getRecord(doc, res) {
 
     var query = {
         startkey: [call, {}], endkey: [call],
-        descending: true, limit: 1
+        descending: true,
+        limit: 1,
+        include_docs: true
     };
 
     db.view("logbook", "byCall", query, function(err, data) {
@@ -55,7 +57,7 @@ function getRecord(doc, res) {
         }
         else {
             var writer = new adif.AdiWriter();
-            var data = writer.writeFldigiLine(data.rows[0].value);
+            var data = writer.writeFldigiLine(data.rows[0].doc);
 
             resDoc.get("//value").text(data);
             res.send(resDoc.toString());

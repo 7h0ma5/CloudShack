@@ -244,16 +244,16 @@
     <div class="box-title">Previous Contacts ({{previous.length}})</div>
     <table class="box-table">
       <tr>
-        <th>Call</th>
         <th>Date</th>
         <th>Time</th>
+        <th>Mode</th>
         <th>Freq</th>
       </tr>
       <tr ng-repeat="row in previous">
-        <td>{{row.value.call}}</td>
-        <td>{{row.value.start|date:"dd.MM.yyyy":"UTC"}}</td>
-        <td>{{row.value.start|date:"HH:mm":"UTC"}}</td>
-        <td>{{row.value.freq}}</td>
+        <td>{{row.doc.start|date:"dd.MM.yyyy":"UTC"}}</td>
+        <td>{{row.doc.start|date:"HH:mm":"UTC"}}</td>
+        <td>{{row.doc.mode}}</td>
+        <td>{{row.doc.freq|number:3}}</td>
       </tr>
     </table>
   </div>
