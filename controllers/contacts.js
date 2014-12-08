@@ -78,9 +78,7 @@ function updateBand(contact) {
     if (contact.band || !contact.freq) return;
 
     _.each(data.bands, function(band) {
-        console.log(band.name);
         if (contact.freq >= band.start && contact.freq <= band.end) {
-            console.log("found!");
             contact.band = band.name.toUpperCase();
             return false;
         }

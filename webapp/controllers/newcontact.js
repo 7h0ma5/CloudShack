@@ -152,7 +152,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
 
     $scope.$watch("contact.gridsquare", function(newValue, oldValue) {
         if (newValue && (newValue.length == 4 || newValue.length == 6)) {
-            console.log("set gridsquare");
             setMapTarget(Toolkit.gridToCoord(newValue), 0);
         }
         else {

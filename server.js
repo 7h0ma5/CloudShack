@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
 var express = require("express"),
-    serveStatic = require('serve-static'),
+    serveStatic = require("serve-static"),
     sockio = require("socket.io"),
-    Config = require("./lib/config")
-    lotw = require("./lib/lotw")
-    db = require("./lib/database");
+    Config = require("./lib/config"),
+    lotw = require("./lib/lotw"),
+    db = require("./lib/database"),
+    log = require("./lib/log");
 
 function jsonParamParser(req, res, next) {
     for (prop in req.query) {
@@ -25,7 +26,6 @@ var Server = function(config, port) {
 
     this.app = express();
     this.app.use(require("errorhandler")());
-    this.app.use(require("morgan")("dev"));
     this.app.use(serveStatic(__dirname + "/public",  { maxAge: "1d" }));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.text({type: "text/plain", limit: 10*1024*1024}));
@@ -63,6 +63,7 @@ var Server = function(config, port) {
 }
 
 Server.prototype.run = function() {
+    log.info("Listening on port %d", this.port);
     this.server = this.app.listen(this.port);
     this.io.attach(this.server);
 }
