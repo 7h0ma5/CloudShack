@@ -17,7 +17,7 @@ function jsonParamParser(req, res, next) {
     next();
 }
 
-var Server = exports.Server = function(config, port) {
+var Server = function(config, port) {
     this.config = config;
     this.port = port || 3000;
 
@@ -80,3 +80,6 @@ if(require.main === module) {
     var server = new Server(conf);
     server.run();
 }
+
+exports.Server = Server;
+exports.Config = Config;
