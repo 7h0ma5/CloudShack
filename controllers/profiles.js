@@ -5,21 +5,21 @@ function allProfiles(req, res) {
         include_docs: true
     };
     db.profiles.list(options, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
 
 function readProfile(req, res) {
     db.profiles.get(req.params.id, req.query, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
 
 function createProfile(req, res) {
     db.profiles.insert(req.body, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
@@ -29,14 +29,14 @@ function updateProfile(req, res) {
     profile["_id"] = req.params.id;
     profile["_rev"] = req.params.rev;
     db.profiles.insert(profile, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
      });
 }
 
 function deleteProfile(req, res) {
     db.profiles.destroy(req.params.id, req.params.rev, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }

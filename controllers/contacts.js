@@ -20,14 +20,14 @@ function allContacts(req, res) {
     _.merge(options, req.query);
 
     db.contacts.view("logbook", view, options, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
 
 function readContact(req, res) {
     db.contacts.get(req.params.id, req.query, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
@@ -37,7 +37,7 @@ function createContact(req, res) {
     updateBand(contact);
 
     db.contacts.insert(contact, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
@@ -48,7 +48,7 @@ function updateContact(req, res) {
 
 function deleteContact(req, res) {
     db.contacts.destroy(req.params.id, req.params.rev, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send();
     });
 }
@@ -112,7 +112,7 @@ function exportContacts(req, res) {
     }
 
     db.contacts.view("logbook", "byDate", options, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else {
             _.each(data.rows, function(row) {
                 writer.writeContact(row.doc)
@@ -161,7 +161,7 @@ function importContacts(req, res) {
         if (err) res.status(500).send();
 
         db.contacts.bulk({docs: contacts}, function(err, data) {
-            if (err) res.status(err.status_code).send(err);
+            if (err) res.status(err.statusCode).send(err);
             else res.send({count: contacts.length});
         });
     })
@@ -172,7 +172,7 @@ function statistics(req, res) {
     _.merge(options, req.query);
 
     db.contacts.view("logbook", "stats", options, function(err, data) {
-        if (err) res.status(err.status_code).send(err);
+        if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
 }
