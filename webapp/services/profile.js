@@ -71,11 +71,15 @@ app.factory("Profile", function($rootScope, $resource) {
         onUpdate: function(callback) {
             $rootScope.$on("profile:update", callback);
         },
+        onChange: function(callback) {
+            $rootScope.$on("profile:change", callback);
+        },
         getActive: function() {
             return active;
         },
         setActive: function(profile) {
             active = profile;
+            $rootScope.$emit("profile:change");
         },
         setDefaults: setDefaults,
         apply: apply
