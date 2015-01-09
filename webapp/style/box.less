@@ -1,0 +1,48 @@
+.box {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid @border-color;
+    margin: 5px 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    background-color: #fff;
+
+    &.transparent {
+        background-color: transparent ! important;
+        box-shadow: none;
+        border: none;
+    }
+
+    .box-title {
+        font-weight: bold;
+        font-size: 0.8em;
+        padding: 7px 10px;
+        border-bottom: 1px solid @border-color;
+    }
+
+    .box-content {
+        padding: 10px;
+
+        > :first-child {
+            margin-top: 0;
+        }
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        td {
+            overflow:hidden;
+            white-space:nowrap;
+        }
+    }
+
+    .box-table {
+        width: 100%;
+        border: none;
+        margin: 0;
+    }
+}

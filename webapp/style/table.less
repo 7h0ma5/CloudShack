@@ -1,0 +1,28 @@
+table {
+    background-color: #fff;
+    border: 1px solid @border-color;
+    margin: 1em 0px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+
+    td, th {
+        padding: 5px 10px;
+    }
+
+    td.flag {
+        padding-top: 0;
+        padding-bottom: 0;
+        img {
+            vertical-align: middle;
+        }
+
+        text-align: center;
+    }
+
+    th {
+        border-bottom: 1px solid @border-color;
+    }
+
+    tr:nth-child(even) {
+        background-color: #ecf0f2;
+    }
+}

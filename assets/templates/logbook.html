@@ -33,7 +33,13 @@
 </table>
 
 <p>
-    <button ng-disabled="!hasPrevPage()" ng-click="prevPage()">Previous Page</button>
-    <button ng-disabled="!hasNextPage()" ng-click="nextPage()">Next Page</button>
+    <button ng-disabled="!hasPrevPage()" ng-click="prevPage()">
+      <i class="fa fa-arrow-left"></i>
+      Previous Page
+    </button>
+    <button ng-disabled="!hasNextPage()" ng-click="nextPage()">
+      Next Page
+      <i class="fa fa-arrow-right"></i>
+    </button>
     <span>Page {{page}} of {{total_pages}}</span>
 </p>

@@ -100,7 +100,7 @@ gulp.task("default", [
 
 gulp.task("watch", function() {
     gulp.watch("webapp/**/*.js", ["app.js"]);
-    gulp.watch("webapp/app.less", ["app.css"]);
+    gulp.watch("webapp/**/*.less", ["app.css"]);
     gulp.watch("assets/index.html", ["index"]);
     gulp.watch("assets/templates/**/*.*", ["templates"]);
 });

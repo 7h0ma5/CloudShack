@@ -1,0 +1,113 @@
+aside {
+    position: fixed;
+    float: left;
+    width: @sidebar-width;
+    background-color: @sidebar-background;
+    height: 100%;
+    z-index: 200;
+    .user-select(none);
+    transition: margin-left 0.5s ease;
+
+    .brand {
+        text-align: center;
+        background-color: @sidebar-active;
+        width: @sidebar-width;
+        max-width: @sidebar-width;
+        min-width: @sidebar-width;
+
+        display: table-cell;
+        vertical-align: middle;
+        height: @header-height;
+
+        h1 {
+            font-weight: bold;
+            font-size: 25px;
+            padding: 0 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    nav {
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 0;
+            padding: 0;
+            display: inline;
+        }
+
+        ul li i {
+            color: #8B91A0;
+            margin-right: 10px;
+        }
+
+        ul li a {
+            display: block;
+            color: @sidebar-foreground;
+            padding: 13px 10px 13px 13px;
+            text-decoration: none;
+            font-weight: bold;
+            border-left: 5px solid transparent;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: @sidebar-hover;
+            }
+
+            &.active {
+                border-left-color: #fff;
+                background-color: @sidebar-active;
+            }
+        }
+    }
+
+    .clock {
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .status-select {
+        margin: 0 auto;
+        display: table;
+        margin-bottom: 20px;
+        color: #fff;
+
+        .icon {
+            display: table-cell;
+            vertical-align: middle;
+            padding-right: 10px;
+        }
+
+        .text {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .operator {
+            clear: right;
+            font-weight: bold;
+        }
+
+        .status {
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+}

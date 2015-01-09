@@ -1,0 +1,57 @@
+button, .btn, input[type=submit] {
+    border: 1px solid @border-color;
+    background-color: #f7f7f7; //#aab2bd;
+    color: @text-color;
+    outline: 0 ! important;
+    padding: 4px 10px;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+
+    &:hover {
+        border-color: #999;
+        background-color: #fafafa;
+    }
+
+    &:active {
+        background-color: #eee;
+        border-color: #999;
+        box-shadow: inset 0 1px 0 rgba(0,0,0,.1);
+    }
+
+    &:disabled {
+        color: #aaa ! important;
+        border-color: #ddd ! important;
+        background-color: #f7f7f7 ! important;
+    }
+
+    &.primary, &.danger {
+        color: white;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    &.primary {
+        border-color: #2b9fca ! important;
+        background-color: #3bafda;
+
+        &:hover {
+            background-color: #4bbfea;
+        }
+
+        &:active {
+            background-color: #2b9fca;
+        }
+    }
+
+    &.danger {
+        border-color: #ca3443 ! important;
+        background-color: #da4453;
+
+        &:hover {
+            background-color: #ed5565;
+        }
+
+        &:active {
+            background-color: #ca3443;
+        }
+    }
+}
