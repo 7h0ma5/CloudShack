@@ -16,22 +16,31 @@ instances when there is a connection available.
 - ADIF import/export
 - LotW QSL import
 - DX cluster integration
+- HamQTH callbook integration
 - Remote rig control via the hamlib rigctld
 
 ## Installation
 
-The only requirement for CloudShack is [node.js](http://www.nodejs.org).
+The only requirement for CloudShack is [node.js](http://www.nodejs.org) and
+a running instance of [CouchDB](http://couchdb.apache.org).
 
-You can install the latest release via npm:
+### With npm
 
     # npm install -g cloudshack
 
-If you want to run the latest source code just run the following 
-commands:
+### From source
 
     $ cd CloudShack
     $ npm install
     $ npm start
+
+### Arch Linux
+
+There is a [CloudShack AUR package](https://aur.archlinux.org/packages/cloudshack-git/) available.
+
+    $ yaourt -S cloudshack-git couchdb
+    $ systemctl start couchdb
+    $ systemctl start cloudshack
 
 ## License
 Copyright (C) 2014 Thomas Gatzweiler, DL2IC
