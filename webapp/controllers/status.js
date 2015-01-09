@@ -1,10 +1,5 @@
-app.controller("StatusCtrl", function($scope, Profile) {
-    $scope.profile = Profile.getActive();
+app.controller("StatusCtrl", function($scope) {
     $scope.onAir = false;
-
-    Profile.onChange(function() {
-        $scope.profile = Profile.getActive();
-    });
 
     $scope.toggle = function() {
         $scope.onAir = !$scope.onAir;

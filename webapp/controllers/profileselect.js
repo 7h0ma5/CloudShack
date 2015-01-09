@@ -11,15 +11,13 @@ app.controller("ProfileSelectCtrl", function($scope, $location, localStorageServ
                     Profile.setActive(profile.doc);
                 }
             });
-
-            $scope.activeProfile = Profile.getActive();
         });
     }
 
     $scope.activate = function(idx) {
-        $scope.activeProfile = $scope.profiles.rows[idx].doc;
-        Profile.setActive($scope.activeProfile);
-        localStorageService.set("profile", $scope.activeProfile._id);
+        var profile = $scope.profiles.rows[idx].doc;
+        Profile.setActive(profile);
+        localStorageService.set("profile", profile._id);
     };
 
     $scope.edit = function(idx) {

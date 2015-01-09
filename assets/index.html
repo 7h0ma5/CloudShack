@@ -56,7 +56,7 @@
           <i class="fa fa-2x" ng-class="{'fa-wifi': onAir, 'fa-moon-o': !onAir}"></i>
         </div>
         <div class="text">
-          <div class="operator" ng-if="profile.operator">{{profile.operator}}</div>
+          <div class="operator" ng-if="activeProfile.operator">{{activeProfile.operator}}</div>
           <div class="status" ng-click="toggle()">{{status}}</div>
         </div>
       </div>
