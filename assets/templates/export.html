@@ -1,19 +1,23 @@
 <h1>Export</h1>
 
-<p>
-  <select ng-options="format.id as format.name for format in formats"
-          ng-model="format">
-  </select>
-</p>
+<div class="box">
+  <div class="box-content">
+    <p>
+      <select ng-options="format.id as format.name for format in formats"
+              ng-model="format">
+      </select>
+    </p>
 
-<p>
-  <input type="checkbox" ng-model="dateRange"> Date Range:
-  <input type="datetime-local" ng-model="start" ng-disabled="!dateRange">
-  <input type="datetime-local" ng-model="end" ng-disabled="!dateRange">
-</p>
+    <p>
+      <input type="checkbox" ng-model="dateRange"> Date Range:
+      <input type="datetime-local" ng-model="start" ng-disabled="!dateRange">
+      <input type="datetime-local" ng-model="end" ng-disabled="!dateRange">
+    </p>
 
-<p>
-  <button class="primary" ng-click="export()">
-    Export
-  </button>
-</p>
+    <p>
+      <button class="primary" ng-click="export()">
+        Export
+      </button>
+    </p>
+  </div>
+</div>
