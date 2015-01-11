@@ -48,7 +48,6 @@ var Server = function(config, port) {
         res.status(200).send({status: "OK"});
     });
 
-
     config.observe("lotw", function() {
         var user = config.get("lotw.username");
         var pass = config.get("lotw.password");

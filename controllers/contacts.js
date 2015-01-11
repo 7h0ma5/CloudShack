@@ -178,11 +178,11 @@ function statistics(req, res) {
 }
 
 function searchContact(ref, callback) {
+    var interval = 5;
     var start = new Date(ref["start"]);
-    start.setMinutes(start.getHours() - 15);
-
     var end = new Date(ref["end"] ? ref["end"] : ref["start"]);
-    end.setMinutes(start.getHours() + 15);
+    start.setMinutes(start.getHours() - interval);
+    end.setMinutes(start.getHours() + interval);
 
     var params = {
         startkey: start.toJSON(), endkey: end.toJSON(), include_docs: true
@@ -192,7 +192,12 @@ function searchContact(ref, callback) {
         if (err) callback(null);
 
         var result = _.find(data.rows, function(row) {
-            return row.doc.call == ref.call;
+            // we can stop instantly if the bands are not the same
+            if (row.doc.band && ref.band && row.doc.band.toUpperCase() != ref.band.toUpperCase()) {
+                return false;
+            }
+
+            return row.doc.call.toUpperCase() == ref.call.toUpperCase();
         });
 
         callback(result ? result.doc : null);
@@ -200,33 +205,24 @@ function searchContact(ref, callback) {
 }
 
 function importLotw(req, res) {
-    lotw.getQSL(function(data) {
-        var updates = [];
-        var matches = [];
-        var fails = [];
+    lotw.query({qso_query: 1, qso_qsl: "no", qso_qsldetail: "yes"}, function(data) {
+        var updates = [], fails = [];
 
-        async.each(data, function(entry, callback) {
+        async.eachLimit(data, 10, function(entry, callback) {
             searchContact(entry, function(contact) {
-                if (contact) {
-                    if (entry.qsl_rcvd == "Y" && contact.lotw_qsl_rcvd != "Y") {
-                        contact.lotw_qsl_rcvd = "Y";
-                        updates.push(contact);
-                    }
-                    matches.push(contact.call);
-                }
-                else {
+                if (!contact) {
                     fails.push(entry.call);
+                }
+                else if (lotw.updateContact(contact, entry)) {
+                    updates.push(contact);
                 }
                 callback(null);
             });
         }, function(err) {
+            if (!updates) return;
             db.contacts.bulk({docs: updates}, function(err, data) {
                 if (err) return res.status(500).send(err);
-
-                res.send({count: data.length,
-                          matches: matches,
-                          fails: fails,
-                          result: data});
+                res.send({updates: updates.length, fails: fails, result: data});
             });
         });
     }, function(err) {

@@ -39,17 +39,12 @@
             <spinner ng-show="loading"></spinner>
         </p>
         <div ng-show="lotwResult">
-            <p>Found {{lotwResult.count}} new confirmations.</p>
+            <p>
+              Updated <b>{{lotwResult.updates}}</b> contacts.
+            </p>
             <p ng-show="lotwResult.fails">Failed matches:
                 <ul>
-                    <li ng-repeat="call in lotwResult.fails  track by $index">
-                        {{call}}
-                    </li>
-                </ul>
-            </p>
-            <p ng-show="lotwResult.matches">Matches:
-                <ul>
-                    <li ng-repeat="call in lotwResult.matches track by $index">
+                    <li ng-repeat="call in lotwResult.fails track by $index">
                         {{call}}
                     </li>
                 </ul>
