@@ -1,54 +1,54 @@
 <h1>Import</h1>
 
 <tabs>
-    <div title="File">
-        <p><input type="file" ng-file-select="onFileSelect($files)"></p>
+  <div title="File">
+    <p><input type="file" ng-file-select="onFileSelect($files)"></p>
 
-        <p>
-          <input type="checkbox" ng-model="dateRange"> Date Range:
-          <input type="datetime-local" ng-model="start" ng-disabled="!dateRange">
-          <input type="datetime-local" ng-model="end" ng-disabled="!dateRange">
-        </p>
+    <p>
+      <input type="checkbox" ng-model="dateRange"> Date Range:
+      <input type="datetime-local" ng-model="start" ng-disabled="!dateRange">
+      <input type="datetime-local" ng-model="end" ng-disabled="!dateRange">
+    </p>
 
-        <p>
-          <input type="checkbox" ng-model="dxcc"> Update DXCC
-        </p>
+    <p>
+      <input type="checkbox" ng-model="dxcc"> Update DXCC
+    </p>
 
-        <p>
-          Apply profile:
-          <select ng-model="profile" ng-options="p.id as p.doc.name for p in profiles.rows">
-            <option></option>
-          </select>
-        </p>
+    <p>
+      Apply profile:
+      <select ng-model="profile" ng-options="p.id as p.doc.name for p in profiles.rows">
+        <option></option>
+      </select>
+    </p>
 
-        <p>
-          <button class="primary" ng-click="import()" ng-disabled="!file || loading">
-            Import
-          </button>
-          <spinner ng-show="loading"></spinner>
-        </p>
+    <p>
+      <button class="btn-primary" ng-click="import()" ng-disabled="!file || loading">
+        Import
+      </button>
+      <spinner ng-show="loading"></spinner>
+    </p>
+  </div>
+  <div title="LotW">
+    <p>
+      Import all LotW confirmations:
+    </p>
+    <p>
+      <button class="btn-primary" ng-click="importLotw()">
+        Import
+      </button>
+      <spinner ng-show="loading"></spinner>
+    </p>
+    <div ng-show="lotwResult">
+      <p>
+        Updated <b>{{lotwResult.updates}}</b> contacts.
+      </p>
+      <p ng-show="lotwResult.fails">Failed matches:
+        <ul>
+          <li ng-repeat="call in lotwResult.fails track by $index">
+            {{call}}
+          </li>
+        </ul>
+      </p>
     </div>
-    <div title="LotW">
-        <p>
-            Import all LotW confirmations:
-        </p>
-        <p>
-            <button class="primary" ng-click="importLotw()">
-                Import
-            </button>
-            <spinner ng-show="loading"></spinner>
-        </p>
-        <div ng-show="lotwResult">
-            <p>
-              Updated <b>{{lotwResult.updates}}</b> contacts.
-            </p>
-            <p ng-show="lotwResult.fails">Failed matches:
-                <ul>
-                    <li ng-repeat="call in lotwResult.fails track by $index">
-                        {{call}}
-                    </li>
-                </ul>
-            </p>
-        </div>
-    </div>
+  </div>
 </tabs>

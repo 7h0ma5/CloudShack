@@ -7,19 +7,19 @@
         <div class="form-group">
           <label for="call">Callsign</label>
           <input required uppercase type="text" autocomplete="off" id="call"
-                 ng-model="contact.call"  class="callsign" focus-on="call">
+                 ng-model="contact.call" class="input-callsign" focus-on="call">
         </div>
 
         <div class="form-group">
           <label for="rst-rcvd">RST Rcvd</label>
           <input smartinput type="text" id="rst-rcvd" autocomplete="off"
-                 placeholder="{{rst}}" ng-model="contact.rst_rcvd" class="rst">
+                 placeholder="{{rst}}" ng-model="contact.rst_rcvd" class="input-rst">
         </div>
 
         <div class="form-group">
           <label for="rst-sent">RST Sent</label>
           <input smartinput type="text" id="rst-sent" autocomplete="off"
-                 placeholder="{{rst}}" ng-model="contact.rst_sent" class="rst">
+                 placeholder="{{rst}}" ng-model="contact.rst_sent" class="input-rst">
         </div>
       </div>
 
@@ -39,7 +39,7 @@
         <div class="form-group">
           <label for="gridsquare">Gridsquare</label>
           <input smartinput uppercase type="text" ng-model="contact.gridsquare"
-                 class="gridsquare" id="gridsquare" autocomplete="off"
+                 class="input-gridsquare" id="gridsquare" autocomplete="off"
                  placeholder="{{callbook.gridsquare}}">
         </div>
       </div>
@@ -76,7 +76,7 @@
           <label for="power">Power</label>
           <div class="input-group">
             <input type="number" min="0" max="2000" step="1" autocomplete="off"
-                   ng-model="contact.tx_pwr" id="power" class="power">
+                   ng-model="contact.tx_pwr" id="power" class="input-power">
             <span class="input-addon">
               W
             </span>
@@ -133,7 +133,7 @@
         <label for="age">Age</label>
         <div class="input-group">
           <input type="number" min="1" max="150" autocomplete="off"
-                 step="1" ng-model="contact.age" id="age" class="age">
+                 step="1" ng-model="contact.age" id="age" class="input-age">
           <span class="input-addon">
             Years
           </span>
@@ -161,17 +161,17 @@
     </div>
 
     <div title="Comment">
-        <input type="text" name="comment" id="comment" class="comment"
+        <input type="text" name="comment" id="comment" class="input-comment"
                ng-model="contact.comment">
     </div>
   </tabs>
 
-  <div class="box transparent"  style="float: left; min-width: 700px; max-width: 1000px;">
+  <div class="box-transparent" style="float: left; min-width: 700px; max-width: 1000px;">
     <div class="box-content">
-      <button type="button" ng-click="save()" class="primary">
+      <button ng-click="save()" class="btn-primary">
         <i class="fa fa-check"></i> Save
       </button>
-      <button type="button" ng-click="reset()" class="danger">
+      <button ng-click="reset()" class="btn-danger">
         <i class="fa fa-times"></i> Reset
       </button>
       <button ng-click="spot()" ng-disabled="!contact.call || !contact.freq">
@@ -216,13 +216,13 @@
        <div class="form-row">
            <div class="form-group">
              <label for="cqz">CQ</label>
-             <input class="cqz" type="number" ng-model="contact.cqz" id="cqz"
+             <input class="cqz" type="number" ng-model="contact.cqz" id="input-zone"
                     autocomplete="off" min="1" max="40" step="1">
            </div>
 
            <div class="form-group">
              <label for="ituz">ITU</label>
-             <input class="ituz" type="number" ng-model="contact.ituz" id="ituz"
+             <input class="ituz" type="number" ng-model="contact.ituz" id="input-zone"
                     autocomplete="off" min="1" max="90" step="1">
            </div>
        </div>

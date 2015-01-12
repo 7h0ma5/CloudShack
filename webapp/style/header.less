@@ -1,18 +1,18 @@
 header {
     position: fixed;
-    display: table;
     z-index: 100;
-    background-color: @header-background;
-    color: @header-foreground;
+    display: table;
     height: @header-height;
     padding-left: @sidebar-width;
+    color: @header-foreground;
+    background-color: @header-background;
     transition: padding-left 0.5s ease;
     .user-select(none);
 
     > div {
         display: table-cell;
+        white-space: nowrap;
         vertical-align: middle;
-        white-space:nowrap;
     }
 
     .sidebar-toggle-button {
@@ -25,20 +25,22 @@ header {
 
     .ticker {
         width: 100%;
-        text-align: center;
         padding: 0 20px;
         font-size: 1.5em;
+        text-align: center;
     }
 
     .ticker-text {
         opacity: 1;
 
-        &.ng-hide-add, &.ng-hide-remove {
+        &.ng-hide-add,
+        &.ng-hide-remove {
             display: block ! important;
             transition: all 1s ease;
         }
 
-        &.ng-hide-remove, &.ng-hide-add.ng-hide-add-active {
+        &.ng-hide-remove,
+        &.ng-hide-add.ng-hide-add-active {
             opacity: 0;
         }
 
@@ -48,26 +50,26 @@ header {
     }
 
     .profile-select {
+        position: relative;
+        width: 200px;
         padding: 0 25px;
         font-weight: bold;
-        position: relative;
         text-align: right;
-        width: 200px;
 
         a {
             color: @header-foreground;
         }
 
         ul {
-            text-align: left;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            background-color: @header-background;
             position: absolute;
             top: @header-height;
             right: 0;
             z-index: 100;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            list-style: none;
+            background-color: @header-background;
         }
 
         li {

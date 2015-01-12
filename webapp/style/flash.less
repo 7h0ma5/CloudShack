@@ -1,39 +1,22 @@
 .flash {
     position: fixed;
     top: @header-height + 20px;
-    left: @sidebar-width;
     right: 0;
+    left: @sidebar-width;
     margin: 0 auto;
-    color: #fff;
     font-weight: bold;
+    color: #fff;
     text-align: center;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 
     span {
         display: inline-block;
-        margin: 0 auto;
-        box-shadow: 0 0 5px #ccc;
         padding: 8px 20px;
-        opacity: 1;
+        margin: 0 auto;
         border-radius: 3px;
+        opacity: 1;
+        box-shadow: 0 0 5px #ccc;
     }
-
-    &.info span {
-        background-color: #3498db;
-    }
-
-    &.success span {
-        background-color: #2ecc71;
-    }
-
-    &.warning span {
-        background-color: #e67e22;
-    }
-
-    &.error span {
-        background-color: #e74c3c;
-    }
-
 
     &.ng-hide-add, &.ng-hide-remove {
         display: block ! important;
@@ -47,4 +30,20 @@
     &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
         opacity: 1;
     }
+}
+
+.flash-info {
+    background-color: #3498db;
+}
+
+.flash-success {
+    background-color: #2ecc71;
+}
+
+.flash-warning {
+    background-color: #e67e22;
+}
+
+.flash-error {
+    background-color: #e74c3c;
 }

@@ -52,12 +52,16 @@
       <div class="clock" clock></div>
 
       <div class="status-select" ng-controller="StatusCtrl">
-        <div class="icon">
+        <div class="status-icon">
           <i class="fa fa-2x" ng-class="{'fa-wifi': onAir, 'fa-moon-o': !onAir}"></i>
         </div>
-        <div class="text">
-          <div class="operator" ng-if="activeProfile.operator">{{activeProfile.operator}}</div>
-          <div class="status" ng-click="toggle()">{{status}}</div>
+        <div class="status-text">
+          <div class="status-operator" ng-if="activeProfile.operator">
+            {{activeProfile.operator}}
+          </div>
+          <div class="status-message" ng-click="toggle()">
+            {{status}}
+          </div>
         </div>
       </div>
 
@@ -77,8 +81,8 @@
     <div class="page-wrapper">
       <div class="page">
         <div ng-controller="FlashCtrl">
-          <div class="flash {{message.level}}" ng-show="show">
-            <span>{{message.text}}</span>
+          <div class="flash" ng-show="show">
+            <span class="flash-{{message.level}}">{{message.text}}</span>
           </div>
         </div>
         <div ng-view></div>

@@ -1,49 +1,49 @@
 .box {
     display: inline-block;
     width: 100%;
-    border: 1px solid @border-color;
     margin: 5px 0;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     background-color: #fff;
+    border: 1px solid @border-color;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+}
 
-    &.transparent {
-        background-color: transparent ! important;
-        box-shadow: none;
-        border: none;
+.box-transparent {
+    display: inline-block;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.box-title {
+    padding: 7px 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #222;
+    border-bottom: 2px solid lighten(@border-color, 5%);
+}
+
+.box-content {
+    padding: 10px;
+
+    > :first-child {
+        margin-top: 0;
     }
 
-    .box-title {
-        font-weight: bold;
-        font-size: 0.8em;
-        padding: 7px 10px;
-        color: #222;
-        border-bottom: 2px solid lighten(@border-color, 5%);
+    > :last-child {
+        margin-bottom: 0;
     }
 
-    .box-content {
-        padding: 10px;
-
-        > :first-child {
-            margin-top: 0;
-        }
-
-        > :last-child {
-            margin-bottom: 0;
-        }
-
-        table {
-            max-width: 100%;
-        }
-
-        td {
-            overflow:hidden;
-            white-space:nowrap;
-        }
+    table {
+        max-width: 100%;
     }
 
-    .box-table {
-        width: 100%;
-        border: none;
-        margin: 0;
+    td {
+        overflow:hidden;
+        white-space:nowrap;
     }
+}
+
+.box-table {
+    width: 100%;
+    margin: 0;
+    border: none;
 }

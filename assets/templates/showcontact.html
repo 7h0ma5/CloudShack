@@ -1,6 +1,6 @@
 <h1>
     <img src="/flag/24/{{contact.dxcc}}" />
-    {{contact.call}}<span ng-if="contact.name">: {{contact.name}}</span>
+    <b>{{contact.call}}</b><span ng-if="contact.name"> {{contact.name}}</span>
     <small>{{contact.start|date:"d. MMMM yyyy &ndash; HH:mm":"UTC"}}</small>
 </h1>
 <br />
@@ -141,7 +141,7 @@
     <button ng-click="qrz()">
         <i class="fa fa-question-circle"></i> QRZ
     </button>
-    <button type="button" ng-click="delete()" class="danger">
+    <button ng-click="delete()" class="btn-danger">
       <i class="fa fa-trash"></i> Delete
     </button>
 </p>

@@ -1,28 +1,29 @@
 table {
+    margin: 1em 0;
     background-color: #fff;
     border: 1px solid @border-color;
-    margin: 1em 0px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+}
 
-    td, th {
-        padding: 5px 10px;
-    }
+td,
+th {
+    padding: 5px 10px;
+}
 
-    td.flag {
-        padding-top: 0;
-        padding-bottom: 0;
-        img {
-            vertical-align: middle;
-        }
+th {
+    border-bottom: 1px solid @border-color;
+}
 
-        text-align: center;
-    }
+tr:nth-child(even) {
+    background-color: lighten(@page-background, 5%);
+}
 
-    th {
-        border-bottom: 1px solid @border-color;
-    }
+.flag-cell {
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: center;
 
-    tr:nth-child(even) {
-        background-color: lighten(@page-background, 5%);
+    img {
+        vertical-align: middle;
     }
 }

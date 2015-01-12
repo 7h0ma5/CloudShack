@@ -1,15 +1,17 @@
-button, .btn, input[type=submit] {
-    border: 1px solid @border-color;
-    background-color: #f7f7f7; //#aab2bd;
-    color: @text-color;
-    outline: 0 ! important;
+button,
+input[type=submit],
+.btn {
     padding: 4px 10px;
+    color: @text-color;
+    background-color: #f7f7f7; //#aab2bd;
+    border: 1px solid @border-color;
     border-radius: 3px;
+    outline: 0 ! important;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
 
     &:hover {
-        border-color: #999;
         background-color: #fafafa;
+        border-color: #999;
     }
 
     &:active {
@@ -20,38 +22,37 @@ button, .btn, input[type=submit] {
 
     &:disabled {
         color: #aaa ! important;
-        border-color: #ddd ! important;
         background-color: #f7f7f7 ! important;
+        border-color: #ddd ! important;
+    }
+}
+
+.btn-primary {
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background-color: #3bafda;
+    border-color: #2b9fca;
+
+    &:hover {
+        background-color: #4bbfea;
     }
 
-    &.primary, &.danger {
-        color: white;
-        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    &:active {
+        background-color: #2b9fca;
+    }
+}
+
+.btn-danger {
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background-color: #da4453;
+    border-color: #ca3443;
+
+    &:hover {
+        background-color: #ed5565;
     }
 
-    &.primary {
-        border-color: #2b9fca;
-        background-color: #3bafda;
-
-        &:hover {
-            background-color: #4bbfea;
-        }
-
-        &:active {
-            background-color: #2b9fca;
-        }
-    }
-
-    &.danger {
-        border-color: #ca3443;
-        background-color: #da4453;
-
-        &:hover {
-            background-color: #ed5565;
-        }
-
-        &:active {
-            background-color: #ca3443;
-        }
+    &:active {
+        background-color: #ca3443;
     }
 }

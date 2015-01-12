@@ -11,7 +11,9 @@
 @import "style/flash.less";
 @import "style/spinner.less";
 
-*, *:after, *:before {
+*,
+*:after,
+*:before {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -19,13 +21,13 @@
 
 body {
     height: 100%;
-    color: @text-color;
     font-family: "Open Sans", sans-serif;
-    background-color: @page-background;
     -webkit-font-smoothing: subpixel-antialiased;
+    color: @text-color;
+    background-color: @page-background;
 }
 
-body.toggle-sidebar {
+.toggle-sidebar {
     aside {
         margin-left: -@sidebar-width;
     }
@@ -40,21 +42,28 @@ body.toggle-sidebar {
 }
 
 a {
-    outline: 0 ! important;
-    cursor: pointer;
-    text-decoration: none;
     color: @link-color;
+    text-decoration: none;
+    cursor: pointer;
+    outline: 0 ! important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
+    font-weight: normal;
     color: @text-color;
 
     small {
-        color: lighten(@text-color, 10%);
+        padding-left: 5px;
         font-size: 0.5em;
-        vertical-align: middle;
         font-weight: normal;
+        color: lighten(@text-color, 10%);
+        vertical-align: middle;
     }
 }
 
@@ -65,17 +74,17 @@ h5 { font-size: .83em; }
 h6 { font-size: .75em; }
 
 .page-wrapper {
-    padding-left: @sidebar-width;
-    padding-top: @header-height;
     height: 100%;
     min-height: 100%;
+    padding-top: @header-height;
+    padding-left: @sidebar-width;
     transition: padding-left 0.5s ease;
 }
 
 .page {
     padding: 20px;
-    opacity: 1;
     overflow: auto;
+    opacity: 1;
 }
 
 .left {

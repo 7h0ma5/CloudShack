@@ -19,7 +19,7 @@ app.directive("tabs", function() {
             var tab = angular.element("<li>").append(link);
 
             tab.addClass("tab");
-            tab.attr("ng-class", '{active: current == ' + index + '}');
+            tab.attr("ng-class", '{"tab-active": current == ' + index + '}');
 
             link.attr("ng-click", "show(" + index + ")");
             link.text(child.attr("title"));
