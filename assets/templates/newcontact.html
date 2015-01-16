@@ -191,7 +191,34 @@
         Radio
       </div>
       <div class="box-content">
-          <b>{{rig.freq|number:4}} MHz</b> {{rig.mode}}
+        <b>{{rig.freq|number:4}} MHz</b> {{rig.mode}}
+        <div class="dropdown" dropdown>
+          <button dropdown-toggle>Band</button>
+          <ul class="dropdown-menu">
+            <li><a ng-click="rig.setFrequency(1.800)">160m</a></li>
+            <li><a ng-click="rig.setFrequency(3.5)">80m</a></li>
+            <li><a ng-click="rig.setFrequency(7)">40m</a></li>
+            <li><a ng-click="rig.setFrequency(10.1)">30m</a></li>
+            <li><a ng-click="rig.setFrequency(14)">20m</a></li>
+            <li><a ng-click="rig.setFrequency(18.068)">17m</a></li>
+            <li><a ng-click="rig.setFrequency(21)">15m</a></li>
+            <li><a ng-click="rig.setFrequency(24.89)">12m</a></li>
+            <li><a ng-click="rig.setFrequency(28)">10m</a></li>
+            <li><a ng-click="rig.setFrequency(50)">6m</a></li>
+            <li><a ng-click="rig.setFrequency(144)">2m</a></li>
+            <li><a ng-click="rig.setFrequency(430)">70cm</a></li>
+          </ul>
+        </div>
+        <div class="dropdown" dropdown>
+          <button dropdown-toggle>Mode</button>
+          <ul class="dropdown-menu">
+            <li><a ng-click="rig.setMode('LSB', 3000)">LSB</a></li>
+            <li><a ng-click="rig.setMode('USB', 3000)">USB</a></li>
+            <li><a ng-click="rig.setMode('CW', 500)">CW</a></li>
+            <li><a ng-click="rig.setMode('FM', 12000)">FM</a></li>
+            <li><a ng-click="rig.setMode('AM', 6000)">AM</a></li>
+          </ul>
+        </div>
       </div>
   </div>
 

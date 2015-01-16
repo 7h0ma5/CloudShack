@@ -56,3 +56,50 @@ input[type=submit],
         background-color: #ca3443;
     }
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+    > button {
+        &:after {
+            font-family: FontAwesome;
+            content: " \f0d7";
+        }
+    }
+
+    &.open > ul {
+        display: block;
+    }
+
+    > ul {
+        position: absolute;
+        z-index: 1000;
+        display: none;
+        padding: 5px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        box-shadow: 0 6px 12px rgba(0,0,0,.175)
+    }
+
+    > ul > li > a {
+        display: block;
+        padding: 3px 20px;
+        color: #333;
+
+        &:hover {
+            color: #262626;
+            background-color: #f5f5f5;
+        }
+    }
+}
+
+.btn-dropdown {
+    &:after {
+        font-family: FontAwesome;
+        content: "test \f095";
+    }
+}
