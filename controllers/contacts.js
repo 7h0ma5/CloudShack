@@ -5,6 +5,7 @@ var adif = require("adif"),
     db = require("../lib/database"),
     async = require("async")
     url = require("url"),
+    fs = require("fs"),
     _ = require("lodash");
 
 var lotw;
@@ -35,6 +36,8 @@ function readContact(req, res) {
 function createContact(req, res) {
     var contact = req.body;
     updateBand(contact);
+
+    fs.appendFile("contacts.log", JSON.stringify(contact) + "\n");
 
     db.contacts.insert(contact, function(err, data) {
         if (err) res.status(err.statusCode).send(err);
