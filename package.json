@@ -1,6 +1,6 @@
 {
   "name": "cloudshack",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Amateur Radio logbook server",
   "author": "Thomas Gatzweiler <dl2ic@darc.de>",
   "license": "GPL-3.0",
