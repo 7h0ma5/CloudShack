@@ -60,29 +60,30 @@ header {
             color: @header-foreground;
         }
 
+        ul a:hover {
+            color: #00a2ff;
+        }
+
         ul {
             position: absolute;
             top: @header-height;
             right: 0;
             z-index: 100;
+            display: none;
             padding: 0;
             margin: 0;
             text-align: left;
             list-style: none;
             background-color: @header-background;
+            box-shadow: 0 1px 1px rgba(55, 55, 55, .55);
+        }
+
+        &.open ul {
+            display: block;
         }
 
         li {
             padding: 10px;
-        }
-
-        ul {
-            display: none;
-            box-shadow: 0 1px 1px rgba(55, 55, 55, .55);
-        }
-
-        &:hover ul {
-            display: block;
         }
     }
 }

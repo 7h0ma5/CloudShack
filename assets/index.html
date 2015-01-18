@@ -25,15 +25,16 @@
           {{spot.spotter}}
         </div>
       </div>
-      <div class="profile-select" ng-controller="ProfileSelectCtrl">
-        <a>
+      <div dropdown class="profile-select" ng-controller="ProfileSelectCtrl">
+        <a dropdown-toggle>
           <span ng-if="activeProfile">{{activeProfile.name}}</span>
           <span ng-if="!activeProfile">No Profile</span>&nbsp;
           <i class="fa fa-angle-down"></i>
         </a>
         <ul>
           <li ng-repeat="profile in profiles.rows">
-            <a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a> <a ng-click="activate($index)">{{profile.doc.name}}</a>
+            <a ng-click="edit($index)"><i class="fa fa-pencil fg-lg"></i></a>
+            <a ng-click="activate($index)">{{profile.doc.name}}</a>
           </li>
           <li>
             <a href="/#/profile/new">
