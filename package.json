@@ -28,7 +28,8 @@
     "test": "mocha test/",
     "test-coverage": "istanbul cover node_modules/mocha/bin/_mocha -- test/",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- test/",
-    "doc": "jsdoc -p -d docs -r lib/"
+    "doc": "jsdoc -p -d docs -r lib/",
+    "recess": "recess --noOverqualifying false webapp/app.less"
   },
   "dependencies": {
     "adif": "^0.2.3",
@@ -58,6 +59,7 @@
     "istanbul": "^0.3.2",
     "jsdoc": "^3.3.0-alpha10",
     "mocha": "^2.1.0",
+    "recess": "^1.1.9",
     "supertest": "^0.15.0"
   }
 }
