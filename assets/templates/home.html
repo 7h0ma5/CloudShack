@@ -1,17 +1,29 @@
 <h1>Welcome to CloudShack!</h1>
 
-<div ng-if="contactCount > 0">
-    <p>There are <b>{{contactCount}}</b> contacts in the log!</p>
-    <p>
-        <i class="fa fa-hand-o-right"></i>
-        <a href="/#/contact/new">Log a new contact</a>
-    </p>
+<div class="box" style="width: auto; margin: 1em 0;">
+  <div class="box-title">
+    <i class="fa fa-globe"></i>
+    QSO Statistics
+  </div>
+  <div class="box-content">
+    <div style="float: left; display: inline-block; padding-right: 20px;">
+      <small>Total</small>
+      <h2>{{qso_stats.total}}</h2>
+    </div>
+    <div style="float: left; display: inline-block; padding-right: 20px;">
+      <small>This Year</small>
+      <h2>{{qso_stats.year}}</h2>
+    </div>
+    <div style="float: left; display: inline-block;">
+      <small>This Month</small>
+      <h2>{{qso_stats.month}}</h2>
+    </div>
+    <div style="clear: both;"></div>
+  </div>
 </div>
 
-<div ng-if="contactCount == 0">
-    <p>There are no contacts in the log yet.</p>
-    <p>
-        <i class="fa fa-hand-o-right"></i>
-        <a href="/#/contact/new">Log your first contact!</a>
-    </p>
-</div>
+<p>
+  <i class="fa fa-hand-o-right"></i>
+  <a ng-if="qso_stats.total == 0" href="/#/contact/new">Log your first contact!</a>
+  <a ng-if="qso_stats.total > 0" href="/#/contact/new">Log a new contact</a>
+</p>
