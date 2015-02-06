@@ -8,6 +8,10 @@ app.controller("ShowContactCtrl", function($scope, $routeParams, $window,
         $window.open("http://www.qrz.com/db/" + $scope.contact.call);
     };
 
+    $scope.edit = function() {
+        $location.path("/contact/" + id + "/edit");
+    };
+
     $scope.delete = function() {
         var msg = "Delete contact with " + $scope.contact.call + "?";
         var permission = $window.confirm(msg);

@@ -1,0 +1,224 @@
+<h1>Edit contact with {{contact.call}}</h1>
+
+<tabs>
+  <div title="General">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="call">Callsign</label>
+        <input type="text" id="call" class="input-callsign"
+               ng-model="contact.call" uppercase>
+      </div>
+
+      <div class="form-group">
+        <label for="rst-rcvd">RST Rcvd</label>
+        <input type="text" id="rst-rcvd"  class="input-rst"
+               ng-model="contact.rst_rcvd">
+      </div>
+
+      <div class="form-group">
+        <label for="rst-sent">RST Sent</label>
+        <input type="text" id="rst-sent" class="input-rst"
+               ng-model="contact.rst_sent">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="freq">Freq</label>
+        <div class="input-group">
+          <input type="number" min="0.0" max="100000.0"
+                 step="0.001" ng-model="contact.freq" id="freq">
+          <span class="input-addon">
+            MHz
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="band">Band</label>
+        <div class="input-group">
+          <input type="text" id="band" class="input-band"
+                 ng-model="contact.band">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="mode">Mode</label>
+        <input type="text" id="mode" class="input-mode"
+               ng-model="contact.mode">
+      </div>
+
+      <div class="form-group">
+        <label for="submode">Submode</label>
+        <input type="text" id="submode" class="input-mode"
+              ng-model="contact.submode">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="start">Start</label>
+        <input type="text" ng-model="contact.start" id="start">
+      </div>
+      <div class="form-group">
+        <label for="end">End</label>
+        <input type="text" ng-model="contact.end" id="end">
+      </div>
+    </div>
+  </div>
+
+  <div title="Contact">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" ng-model="contact.name">
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <div class="input-group">
+          <input type="number" min="1" max="150" step="1"
+                 ng-model="contact.age" id="age" class="input-age">
+          <span class="input-addon">
+            Years
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address" ng-model="contact.address">
+      </div>
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="text" name="email" id="email" ng-model="contact.email">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="rig">Rig</label>
+        <input type="text" name="rig" id="rig" ng-mode="contact.rig">
+      </div>
+    </div>
+  </div>
+
+  <div title="Location">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="qth">QTH</label>
+        <input type="text" id="qth" ng-model="contact.qth">
+      </div>
+
+      <div class="form-group">
+        <label for="gridsquare">Gridsquare</label>
+        <input type="text" id="gridsquare" class="input-gridsquare"
+               ng-model="contact.gridsquare">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" ng-model="contact.country" id="country">
+      </div>
+
+      <div class="form-group">
+        <label for="dxcc">DXCC</label>
+        <input type="number" id="dxcc" class="input-dxcc"
+               ng-model="contact.dxcc" start="1" step="1">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="cont">Continent</label>
+        <input type="text" id="cont" class="input-cont" ng-model="contact.cont"
+               uppercase>
+      </div>
+
+      <div class="form-group">
+        <label for="cqz">CQ Zone</label>
+        <input class="input-zone" type="number" id="cqz"
+               ng-model="contact.cqz" min="1" max="40" step="1">
+      </div>
+
+      <div class="form-group">
+        <label for="ituz">ITU Zone</label>
+        <input class="input-zone" type="number" id="ituz"
+               ng-model="contact.ituz" min="1" max="90" step="1">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="lat">Latitude</label>
+        <input type="text" id="lat" ng-model="contact.lat">
+      </div>
+
+      <div class="form-group">
+        <label for="lon">Longitude</label>
+        <input type="text" id="lon" ng-model="contact.lon">
+      </div>
+    </div>
+  </div>
+
+  <div title="QSL">
+
+  </div>
+
+  <div title="My Station">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="operator">Operator</label>
+        <input type="text" id="operator" ng-model="contact.operator">
+      </div>
+
+      <div class="form-group">
+        <label for="station_call">Station Callsign</label>
+        <input type="text" id="station_callsign"
+               ng-model="contact.station_callsign">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="my_rig">Rig</label>
+        <input type="text" id="my_rig" ng-model="contact.my_rig">
+      </div>
+
+      <div class="form-group">
+        <label for="tx_pwr">Power</label>
+        <input class="input-power" type="number" id="tx_pwr"
+               ng-model="contact.tx_pwr">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="my_gridsquare">Gridsquare</label>
+        <input type="text" id="my_gridsquare" class="input-gridsquare"
+               ng-model="contact.my_gridsquare">
+      </div>
+    </div>
+  </div>
+</tabs>
+
+<div class="box-transparent">
+  <div class="box-content">
+    <button ng-click="save()" class="btn-primary">
+      <i class="fa fa-check"></i> Save
+    </button>
+    <button ng-click="discard()" class="btn-danger">
+      <i class="fa fa-times"></i> Discard
+    </button>
+    <button ng-click="queryCallbook()">
+      <i class="fa fa-download"></i> Query Callbook
+    </button>
+  </div>
+</div>
+
+{{contact}}
