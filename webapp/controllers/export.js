@@ -1,6 +1,6 @@
-app.controller("ExportCtrl", function($scope, $window, Toolkit) {
-    $scope.start = Toolkit.nowUTC();
-    $scope.end = Toolkit.nowUTC();
+app.controller("ExportCtrl", function($scope, $window) {
+    $scope.start = new Date();
+    $scope.end = new Date();
 
     $scope.format = "adi";
 

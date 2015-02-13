@@ -1,4 +1,4 @@
-app.factory("Toolkit", function(dateFilter) {
+app.factory("Toolkit", function() {
     return {
         //
         // Coordinate functions
@@ -97,24 +97,6 @@ app.factory("Toolkit", function(dateFilter) {
             }
 
             return grid;
-        },
-
-        //
-        // Date functions
-        //
-        dateToUTC: function(local) {
-            return new Date(local.getUTCFullYear(), local.getUTCMonth(),
-                            local.getUTCDate(), local.getUTCHours(),
-                            local.getUTCMinutes(), local.getUTCSeconds(), 0);
-        },
-        nowUTC: function() {
-            return this.dateToUTC(new Date());
-        },
-        dateToIso: function(date) {
-            return dateFilter(date, "yyyy-MM-ddTHH:mm:ss");
-        },
-        nowToIso: function() {
-            return this.dateToIso(this.dateToUTC(new Date()));
         }
     };
 });

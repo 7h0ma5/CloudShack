@@ -6,8 +6,10 @@
 
     <p>
       <input type="checkbox" ng-model="dateRange"> Date Range:
-      <input type="datetime-local" ng-model="start" ng-disabled="!dateRange">
-      <input type="datetime-local" ng-model="end" ng-disabled="!dateRange">
+      <input type="datetime-local" ng-model="start" ng-disabled="!dateRange"
+             ng-model-options="{timezone: 'UTC'}">
+      <input type="datetime-local" ng-model="end" ng-disabled="!dateRange"
+             ng-model-options="{timezone: 'UTC'}">
     </p>
 
     <p>
