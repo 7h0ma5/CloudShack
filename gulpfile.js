@@ -1,89 +1,94 @@
 var gulp = require("gulp"),
-    less = require("gulp-less"),
-    uglify = require("gulp-uglify"),
-    minify = require('gulp-minify-css'),
-    concat = require("gulp-concat"),
-    sourcemaps = require('gulp-sourcemaps'),
-    ngAnnotate = require("gulp-ng-annotate");
+    $ = require("gulp-load-plugins")();
 
-var config = {
-     bowerDir: 'bower_components' 
-}
+var BOWER_DIR = "bower_components"
+
+gulp.task("app.js", function() {
+    return gulp.src("webapp/**/*.js")
+        .pipe($.plumber())
+        .pipe($.sourcemaps.init())
+        .pipe($.ngAnnotate())
+        .pipe($.uglify())
+        .pipe($.concat("app.js"))
+        .pipe($.sourcemaps.write())
+        .pipe(gulp.dest("public/js"))
+        .pipe($.livereload());
+});
 
 gulp.task("app.css", function() {
     return gulp.src("webapp/app.less")
-           .pipe(sourcemaps.init())
-           .pipe(less())
-           .pipe(minify())
-           .pipe(sourcemaps.write())
-           .pipe(gulp.dest("public/css"));
+        .pipe($.plumber())
+        .pipe($.sourcemaps.init())
+        .pipe($.less())
+        .pipe($.minifyCss())
+        .pipe($.sourcemaps.write())
+        .pipe(gulp.dest("public/css"))
+        .pipe($.livereload());
 });
 
 gulp.task("vendor.css", function() {
     return gulp.src([
-                config.bowerDir + "/normalize-css/normalize.css",
-                config.bowerDir + "/font-awesome/css/font-awesome.css",
-                config.bowerDir + "/open-sans/css/open-sans.css",
-                config.bowerDir + "/leaflet/dist/leaflet.css",
-            ]).pipe(sourcemaps.init())
-              .pipe(minify())
-              .pipe(concat("vendor.css"))
-              .pipe(sourcemaps.write())
-              .pipe(gulp.dest("public/css"));
-});
-
-gulp.task("app.js", function() {
-    return gulp.src("webapp/**/*.js")
-           .pipe(sourcemaps.init())
-           .pipe(ngAnnotate())
-           .pipe(uglify())
-           .pipe(concat("app.js"))
-           .pipe(sourcemaps.write())
-           .pipe(gulp.dest("public/js"));
+            BOWER_DIR + "/normalize-css/normalize.css",
+            BOWER_DIR + "/font-awesome/css/font-awesome.css",
+            BOWER_DIR + "/open-sans/css/open-sans.css",
+            BOWER_DIR + "/leaflet/dist/leaflet.css",
+    ])
+        .pipe($.minifyCss())
+        .pipe($.concat("vendor.css"))
+        .pipe(gulp.dest("public/css"));
 });
 
 gulp.task("vendor.js", function() {
     return gulp.src([
-                config.bowerDir + "/angular/angular.js",
-                config.bowerDir + "/angular-animate/angular-animate.js",
-                config.bowerDir + "/angular-hotkeys/build/hotkeys.js",
-                config.bowerDir + "/angular-resource/angular-resource.js",
-                config.bowerDir + "/angular-route/angular-route.js",
-                config.bowerDir + "/ng-file-upload/angular-file-upload.js",
-                config.bowerDir + "/angular-local-storage/dist/angular-local-storage.js",
-                config.bowerDir + "/leaflet/dist/leaflet-src.js",
-                config.bowerDir + "/socket.io-client/socket.io.js"
-            ]).pipe(sourcemaps.init())
-              .pipe(uglify())
-              .pipe(concat("vendor.js"))
-              .pipe(sourcemaps.write())
-              .pipe(gulp.dest("public/js"));
-})
+        BOWER_DIR + "/angular/angular.js",
+        BOWER_DIR + "/angular-animate/angular-animate.js",
+        BOWER_DIR + "/angular-hotkeys/build/hotkeys.js",
+        BOWER_DIR + "/angular-resource/angular-resource.js",
+        BOWER_DIR + "/angular-route/angular-route.js",
+        BOWER_DIR + "/ng-file-upload/angular-file-upload.js",
+        BOWER_DIR + "/angular-local-storage/dist/angular-local-storage.js",
+        BOWER_DIR + "/leaflet/dist/leaflet-src.js",
+        BOWER_DIR + "/socket.io-client/socket.io.js"
+    ])
+        .pipe($.uglify())
+        .pipe($.concat("vendor.js"))
+        .pipe(gulp.dest("public/js"));
+});
 
 gulp.task("fonts", function() { 
     return gulp.src([
-                config.bowerDir + "/font-awesome/fonts/*.*",
-                config.bowerDir + "/open-sans/fonts/**/*.*"
-            ]) .pipe(gulp.dest("public/fonts")); 
+            BOWER_DIR + "/font-awesome/fonts/*.*",
+            BOWER_DIR + "/open-sans/fonts/**/*.*"
+    ])
+        .pipe($.changed("public/fonts"))
+        .pipe(gulp.dest("public/fonts")); 
 });
 
 gulp.task("images", function() { 
     return gulp.src([
-                config.bowerDir + "/leaflet/dist/images/*.png",
-                "assets/images/**/*"
-            ]).pipe(gulp.dest("public/images")); 
+            BOWER_DIR + "/leaflet/dist/images/*.png",
+            "assets/images/**/*"
+        ])
+        .pipe($.changed("public/images"))
+        .pipe(gulp.dest("public/images")); 
 });
 
 gulp.task("map", function() { 
-    return gulp.src("assets/map/**/*").pipe(gulp.dest("public/map")); 
+    return gulp.src("assets/map/**/*")
+        .pipe($.changed("public/map"))
+        .pipe(gulp.dest("public/map")); 
 });
 
 gulp.task("templates", function() { 
-    return gulp.src("assets/templates/**/*").pipe(gulp.dest("public/templates")); 
+    return gulp.src("assets/templates/**/*")
+        .pipe($.changed("public/templates"))
+        .pipe(gulp.dest("public/templates")); 
 });
 
 gulp.task("index", function() { 
-    return gulp.src("assets/index.html").pipe(gulp.dest("public")); 
+    return gulp.src("assets/index.html")
+        .pipe($.changed("public"))
+        .pipe(gulp.dest("public")); 
 });
 
 gulp.task("default", [
@@ -99,6 +104,8 @@ gulp.task("default", [
 ]);
 
 gulp.task("watch", function() {
+    $.livereload.listen();
+
     gulp.watch("webapp/**/*.js", ["app.js"]);
     gulp.watch("webapp/**/*.less", ["app.css"]);
     gulp.watch("assets/index.html", ["index"]);
