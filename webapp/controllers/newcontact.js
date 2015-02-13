@@ -202,6 +202,9 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         }
 
         Callbook.get({"call": newValue}, function(result) {
+            // ignore this result if the call has already been changed
+            if (result.call != $scope.contact.call) return;
+
             $scope.callbook = result;
             $scope.contact.ituz = result.ituz;
             setMapTarget(Toolkit.gridToCoord(result.gridsquare), 1);
