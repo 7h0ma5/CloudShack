@@ -6,6 +6,7 @@ var BOWER_DIR = "bower_components";
 gulp.task("app.js", function() {
     return gulp.src("webapp/**/*.js")
         .pipe($.plumber())
+        .pipe($.order(["webapp/app.js", "webapp/**/*.js"]))
         .pipe($.sourcemaps.init())
         .pipe($.ngAnnotate())
         .pipe($.uglify())
