@@ -59,14 +59,14 @@
 
         <div class="form-group">
           <label for="mode">Mode</label>
-          <select name="mode" id="mode" ng-model="contact.mode"
+          <select id="mode" ng-model="contact.mode"
                   ng-options="mode.name as mode.name for mode in modes">
           </select>
         </div>
 
         <div class="form-group" ng-show="submodes">
             <label for="submode">Submode</label>
-            <select name="submode" id="submode" ng-model="contact.submode"
+            <select id="submode" ng-model="contact.submode"
                     ng-options="mode.name as mode.name for mode in submodes">
                     <option value=""></option>
             </select>
@@ -109,19 +109,19 @@
     <div title="QSL">
       <div class="form-group">
         <label for="qsl_via">QSL via: </label>
-        <input uppercase type="text" name="qsl_via" id="qsl_via"
+        <input uppercase type="text" id="qsl_via"
                ng-model="contact.qsl_via" autocomplete="off" />
       </div>
       <div class="form-group">
         <label for="qsl_sent">QSL sent: </label>
-        <select name="qsl_sent" id="qsl_sent" ng-model="contact.qsl_sent"
+        <select id="qsl_sent" ng-model="contact.qsl_sent"
                 ng-options="o.id as o.name for o in qsl_sent">
           <option value=""></option>
         </select>
       </div>
       <div class="form-group">
         <label for="qsl_rcvd">QSL received: </label>
-        <select name="qsl_rcvd" id="qsl_rcvd" ng-model="contact.qsl_rcvd"
+        <select id="qsl_rcvd" ng-model="contact.qsl_rcvd"
                 ng-options="o.id as o.name for o in qsl_rcvd">
           <option value=""></option>
         </select>
@@ -142,26 +142,26 @@
 
       <div class="form-group">
         <label for="email">E-Mail</label>
-        <input type="text" name="email" id="email" ng-model="contact.email" autocomplete="off">
+        <input type="text" id="email" ng-model="contact.email" autocomplete="off">
       </div>
 
       <div class="form-group">
-        <label for="rig">Equipment</label>
-        <input type="text" name="rig" id="rig" ng-mode="contact.rig">
+        <label for="rig">Rig</label>
+        <input type="text" id="rig" ng-mode="contact.rig">
       </div>
     </div>
 
     <div title="Contest">
       <div class="form-group">
         <label for="contest_id">Contest</label>
-        <select name="contest_id" id="contest_id" ng-model="contact.contest_id"
+        <select id="contest_id" ng-model="contact.contest_id"
                 ng-options="contest.id as contest.desc for contest in contests | orderBy:'desc'">
         </select>
       </div>
     </div>
 
     <div title="Comment">
-        <input type="text" name="comment" id="comment" class="input-comment"
+        <input type="text" id="comment" class="input-comment"
                ng-model="contact.comment">
     </div>
   </tabs>

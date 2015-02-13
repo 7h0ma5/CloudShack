@@ -1,4 +1,4 @@
-<h1>Edit contact with {{contact.call}}</h1>
+<h1>Edit contact with <b>{{contact.call}}</b></h1>
 
 <tabs>
   <div title="General">
@@ -67,6 +67,14 @@
         <label for="end">End</label>
         <input type="datetime-local" step="1" ng-model="endDate"
                id="start" ng-model-options="{timezone: 'UTC'}" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <input type="text" id="comment" class="input-comment"
+               ng-model="contact.comment">
       </div>
     </div>
   </div>
@@ -168,8 +176,159 @@
     </div>
   </div>
 
-  <div title="QSL">
+  <div title="Contest">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="contest_id">Contest ID</label>
+        <input type="text" id="contest_id" ng-model="contact.contest_id">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="srx"># rcvd</label>
+        <input type="number" id="srx" class="input-contest-serial"
+               ng-model="contact.srx" step="1">
+      </div>
+      <div class="form-group">
+        <label for="srx_string">Exchange rcvd</label>
+        <input type="text" id="srx_string" ng-model="contact.srx_string">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="stx"># sent</label>
+        <input type="number" id="stx" class="input-contest-serial"
+               ng-model="contact.stx" step="1">
+      </div>
+      <div class="form-group">
+        <label for="stx_string">Exchange sent</label>
+        <input type="text" id="stx_string" ng-model="contact.stx_string">
+      </div>
+    </div>
+  </div>
 
+  <div title="QSL">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="qsl_via">QSL via</label>
+        <input type="text" id="qsl_via" ng-model="contact.qsl_via">
+      </div>
+    </div>
+
+    <h3>QSL card</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="qsl_sent">QSL sent</label>
+        <input type="text" id="qsl_sent" class="input-qsl-status"
+               ng-model="contact.qsl_sent">
+      </div>
+      <div class="form-group">
+        <label for="qsl_sent_via">QSL sent via</label>
+        <input type="text" id="qsl_sent_via" ng-model="contact.qsl_sent_via">
+      </div>
+      <div class="form-group">
+        <label for="qslsdate">QSL sent date</label>
+        <input type="text" id="qslsdate" ng-model="contact.qslsdate">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="qsl_rcvd">QSL rcvd</label>
+        <input type="text" id="qsl_rcvd" class="input-qsl-status"
+               ng-model="contact.qsl_received">
+      </div>
+      <div class="form-group">
+        <label for="qsl_rcvd_via">QSL received via</label>
+        <input type="text" id="qsl_rcvd_via" ng-model="qslrvia">
+      </div>
+      <div class="form-group">
+        <label for="qslrdate">QSL received date</label>
+        <input type="text" id="qslrdate" ng-model="contact.qslrdate">
+      </div>
+    </div>
+
+    <h3>LotW</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="lotw_qsl_sent">QSL sent</label>
+        <input type="text" id="lotw_qsl_sent" class="input-qsl-status"
+               ng-model="contact.lotw_sent">
+      </div>
+      <div class="form-group">
+        <label for="lotw_qslsdate">QSL sent date</label>
+        <input type="text" id="lotw_qslsdate" ng-model="contact.lotw_qslsdate">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="lotw_qsl_rcvd">QSL rcvd</label>
+        <input type="text" id="lotw_qsl_rcvd" class="input-qsl-status"
+               ng-model="contact.lotw_qsl_rcvd">
+      </div>
+      <div class="form-group">
+        <label for="lotw_qslrdate">QSL received date</label>
+        <input type="text" id="lotw_qslrdate" ng-model="contact.qslradate">
+      </div>
+    </div>
+  </div>
+
+  <div title="Propagation">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="prop_mode">Propagation mode</label>
+        <input type="text" id="prop_mode" ng-model="contact.prop_mode">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sfi">SFI</label>
+        <input type="number" id="sfi" class="input-sun-index"
+               ng-model="contact.sfi" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label for="a_index">A index</label>
+        <input type="number" id="a_index" class="input-sun-index"
+               ng-model="contact.a_index" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label for="k_index">K index</label>
+        <input type="number" id="k_index" class="input-sun-index"
+               ng-model="contact.k_index" min="0" step="1">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sat_mode">Satellite mode</label>
+        <input type="text" id="sat_mode" ng-model="contact.sat_mode">
+      </div>
+      <div class="form-group">
+        <label for="sat_name">Satellite name</label>
+        <input type="text" id="sat_name" ng-model="contact.sat_name">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="ms_shower">Meteor Shower</label>
+        <input type="text" id="ms_shower" ng-model="contact.ms_shower">
+      </div>
+      <div class="form-group">
+        <label for="nr_bursts"># Bursts</label>
+        <input type="number" id="nr_bursts" class="input-nr-bursts"
+               ng-model="contact.nr_bursts" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label for="nr_pings"># Pings</label>
+        <input type="number" id="nr_pings" class="input-nr-pings"
+               ng-model="contact.nr_pings" min="0" step="1">
+      </div>
+      <div class="form-group">
+        <label for="max_bursts">Max Bursts</label>
+        <input type="number" id="max_bursts" class="input-max-bursts"
+               ng-model="contact.max_bursts" min="0" step="1">
+      </div>
+    </div>
   </div>
 
   <div title="My Station">
