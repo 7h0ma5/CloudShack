@@ -1,7 +1,7 @@
 var gulp = require("gulp"),
     $ = require("gulp-load-plugins")();
 
-var BOWER_DIR = "bower_components"
+var BOWER_DIR = "bower_components";
 
 gulp.task("app.js", function() {
     return gulp.src("webapp/**/*.js")
@@ -68,7 +68,7 @@ gulp.task("images", function() { 
     return gulp.src([
             BOWER_DIR + "/leaflet/dist/images/*.png",
             "assets/images/**/*"
-        ])
+    ])
         .pipe($.changed("public/images"))
         .pipe(gulp.dest("public/images")); 
 });
