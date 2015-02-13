@@ -83,7 +83,8 @@ gulp.task("map", function() { 
 gulp.task("templates", function() { 
     return gulp.src("assets/templates/**/*")
         .pipe($.changed("public/templates"))
-        .pipe(gulp.dest("public/templates")); 
+        .pipe(gulp.dest("public/templates"))
+        .pipe($.livereload());
 });
 
 gulp.task("index", function() { 
