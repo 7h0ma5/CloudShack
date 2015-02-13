@@ -146,10 +146,12 @@ function importContacts(req, res) {
     var start = req.query.start ? new Date(req.query.start) : null;
     var end = req.query.end ? new Date(req.query.end) : null;
 
-    contacts = _.filter(contacts, function(contact) {
-        return (new Date(contact.start)) > start
-            && (new Date(contact.start)) < end;
-    });
+    if (start && end) {
+        contacts = _.filter(contacts, function(contact) {
+            return (new Date(contact.start)) > start
+                && (new Date(contact.start)) < end;
+        });
+    }
 
     if (req.query.dxcc) _.each(contacts, updateDxcc);
 
