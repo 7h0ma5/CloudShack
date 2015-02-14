@@ -1,12 +1,20 @@
 var gulp = require("gulp"),
-    $ = require("gulp-load-plugins")();
+    $ = require("gulp-load-plugins")()
+    pkg = require("./package.json");
 
 var BOWER_DIR = "bower_components";
 
 gulp.task("app.js", function() {
+    var version = 'var CLOUDSHACK_VERSION = "' + pkg.version + '";';
+
     return gulp.src("webapp/**/*.js")
+        .pipe($.file("version.js", version))
         .pipe($.plumber())
-        .pipe($.order(["webapp/app.js", "webapp/**/*.js"]))
+        .pipe($.order([
+            "version.js",
+            "webapp/app.js",
+            "webapp/**/*.js"
+        ]))
         .pipe($.sourcemaps.init())
         .pipe($.ngAnnotate())
         .pipe($.uglify())

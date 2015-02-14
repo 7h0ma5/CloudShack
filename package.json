@@ -52,6 +52,7 @@
     "gulp": "^3.8.11",
     "gulp-changed": "^1.1.1",
     "gulp-concat": "^2.4.3",
+    "gulp-file": "^0.2.0",
     "gulp-less": "^3.0.0",
     "gulp-livereload": "^3.7.0",
     "gulp-load-plugins": "^0.8.0",

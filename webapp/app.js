@@ -7,6 +7,7 @@ app.config(function(hotkeysProvider, localStorageServiceProvider) {
 });
 
 // this function is here to always initialize the rig and services
-app.run(function(CW, Rig) {
+app.run(function($rootScope, CW, Rig) {
+    $rootScope.version = CLOUDSHACK_VERSION;
     console.log("CloudShack is ready.");
 });
