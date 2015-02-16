@@ -36,10 +36,12 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
 
     $scope.resetStart = function() {
         $scope.startDate = new Date();
+        $scope.startDate.setUTCMilliseconds(0);
     };
 
     $scope.resetEnd = function() {
         $scope.endDate = new Date();
+        $scope.endDate.setUTCMilliseconds(0);
     };
 
     $scope.reset = function() {

@@ -5,7 +5,9 @@ app.controller("ImportCtrl", function($scope, $upload, Flash, Contact, Profile) 
     $scope.profiles = Profile.get();
 
     $scope.start = new Date();
+    $scope.start.setUTCMilliseconds(0);
     $scope.end = new Date();
+    $scope.end.setUTCMilliseconds(0);
 
     $scope.onFileSelect = function($files) {
         if ($files.length > 0) {

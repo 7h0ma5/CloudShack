@@ -1,6 +1,8 @@
 app.controller("ExportCtrl", function($scope, $window) {
     $scope.start = new Date();
+    $scope.start.setUTCMilliseconds(0);
     $scope.end = new Date();
+    $scope.end.setUTCMilliseconds(0);
 
     $scope.format = "adi";
 
