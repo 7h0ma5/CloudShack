@@ -1,64 +1,66 @@
 <h1 ng-hide="new">Edit <b>{{profile.name}}</b></h1>
 <h1 ng-show="new">New Profile</h1>
 
-<p>
-  <div class="form-group">
-    <label for="name">Profile name</label>
-    <input type="text" id="name" ng-model="profile.name">
+<div class="box">
+  <div class="box-content">
+    <div class="form-group">
+      <label for="name">Profile name</label>
+      <input type="text" id="name" ng-model="profile.name">
+    </div>
+
+    <h3>Operator</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="operator">Callsign</label>
+        <input type="text" id="operator" ng-model="profile.operator">
+      </div>
+
+      <div class="form-group">
+        <label for="my_name">Name (optional)</label>
+        <input type="text" id="my_name" ng-model="profile.my_name">
+      </div>
+    </div>
+
+    <h3>Location</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="gridsquare">Gridsquare</label>
+        <input type="text" id="gridsquare" ng-model="profile.my_gridsquare">
+      </div>
+
+      <div class="form-group">
+        <label for="lat">Latitude (optional)</label>
+        <input type="text" id="lat" ng-model="profile.my_lat">
+      </div>
+
+      <div class="form-group">
+        <label for="lon">Longitude (optional)</label>
+        <input type="text" id="lon" ng-model="profile.my_lon">
+      </div>
+    </div>
+
+    <h3>Station</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="station_callsign">Callsign (optional)</label>
+        <input type="text" id="station_callsign" ng-model="profile.station_callsign">
+      </div>
+      <div class="form-group">
+        <label for="rig">Rig</label>
+        <input type="text" id="rig" ng-model="profile.my_rig">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <button class="btn-primary" ng-click="save()">
+        <i class="fa fa-save"></i> Save
+      </button>
+      <button class="btn-danger" ng-click="delete()" ng-hide="new">
+        <i class="fa fa-trash"></i> Delete
+      </button>
+    </div>
   </div>
-</p>
-
-<h3>Operator</h3>
-
-<p>
-  <div class="form-group">
-    <label for="operator">Callsign</label>
-    <input type="text" id="operator" ng-model="profile.operator">
-  </div>
-
-  <div class="form-group">
-    <label for="my_name">Name (optional)</label>
-    <input type="text" id="my_name" ng-model="profile.my_name">
-  </div>
-</p>
-
-<h3>Location</h3>
-
-<p>
-  <div class="form-group">
-    <label for="gridsquare">Gridsquare</label>
-    <input type="text" id="gridsquare" ng-model="profile.my_gridsquare">
-  </div>
-
-  <div class="form-group">
-    <label for="lat">Latitude (optional)</label>
-    <input type="text" id="lat" ng-model="profile.my_lat">
-  </div>
-
-  <div class="form-group">
-    <label for="lon">Longitude (optional)</label>
-    <input type="text" id="lon" ng-model="profile.my_lon">
-  </div>
-</p>
-
-<h3>Station</h3>
-
-<p>
-  <div class="form-group">
-    <label for="station_callsign">Callsign (optional)</label>
-    <input type="text" id="station_callsign" ng-model="profile.station_callsign">
-  </div>
-  <div class="form-group">
-    <label for="rig">Rig</label>
-    <input type="text" id="rig" ng-model="profile.my_rig">
-  </div>
-</p>
-
-<p>
-  <button class="btn-primary" ng-click="save()">
-    <i class="fa fa-save"></i> Save
-  </button>
-  <button class="btn-danger" ng-click="delete()" ng-hide="new">
-    <i class="fa fa-trash"></i> Delete
-  </button>
-</p>
+</div>

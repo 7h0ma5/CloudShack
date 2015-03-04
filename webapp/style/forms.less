@@ -1,18 +1,16 @@
 input, select {
     display: inline-block;
-    padding: 4px ! important;
-    margin: 0 ! important;
+    padding: 4px;
+    margin: 0 0 1px 0;
     background-color: #fff;
-    border: 1px solid @border-color;
+    border: none;
+    border-bottom: 1px solid @border-color;
     outline: 0 ! important;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-sizing: border-box;
-    transition: all 0.2s;
 
     &:focus {
         border-color: #26a0e5;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-                          0 0 8px rgba(38, 160, 229, 0.6);
+        padding-bottom: 3px;
+        border-bottom-width: 2px;
     }
 
     &:disabled {
@@ -20,17 +18,27 @@ input, select {
     }
 }
 
+select {
+
+}
+
 .form-row {
-    margin: 1em 0;
+
 }
 
 .form-group {
     display: inline-block;
-    margin-right: 10px;
+    padding: 2px 2px 25px 2px;
+
+    input-select {
+        margin-top: 20px ! important;
+    }
 
     label {
+        padding-left: 2px;
         display: block;
         font-size: 0.9em;
+        color: #555;
     }
 }
 
@@ -38,11 +46,12 @@ input, select {
     display: inline-table;
     padding: 0;
     margin: 0;
-    border: 1px solid @border-color;
+    border-bottom: 1px solid @border-color;
     border-collapse: collapse;
 
     .input-addon {
         padding: 4px 8px;
+        background-color: #f7f7f7;
         border: none;
     }
 

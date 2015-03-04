@@ -8,7 +8,7 @@ app.controller("HomeCtrl", function($scope, Contact) {
 
     // Query total QSOs
     Contact.stats({group_level: 0}, function(stats) {
-        $scope.qso_stats.total = stats.rows ? stats.rows[0].value : 0;
+        $scope.qso_stats.total = stats.rows.length ? stats.rows[0].value : 0;
     });
 
     // Query QSOs from this year
@@ -19,7 +19,7 @@ app.controller("HomeCtrl", function($scope, Contact) {
     };
 
     Contact.stats(options, function(stats) {
-        $scope.qso_stats.year = stats.rows ? stats.rows[0].value : 0;
+        $scope.qso_stats.year = stats.rows.length ? stats.rows[0].value : 0;
     });
 
     // Query QSOs from this month
@@ -30,6 +30,6 @@ app.controller("HomeCtrl", function($scope, Contact) {
     };
 
     Contact.stats(options, function(stats) {
-        $scope.qso_stats.month = stats.rows ? stats.rows[0].value : 0;
+        $scope.qso_stats.month = stats.rows.length ? stats.rows[0].value : 0;
     });
 });

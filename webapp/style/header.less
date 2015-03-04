@@ -3,87 +3,88 @@ header {
     z-index: 100;
     display: table;
     height: @header-height;
-    padding-left: @sidebar-width;
+    margin-left: @sidebar-width;
     color: @header-foreground;
     background-color: @header-background;
-    transition: padding-left 0.5s ease;
+    .transition(margin-left 0.5s ease);
     .user-select(none);
+    .box-shadow(0px 2px 5px 0 rgba(0, 0, 0, 0.10));
 
     > div {
         display: table-cell;
         white-space: nowrap;
         vertical-align: middle;
     }
+}
 
-    .sidebar-toggle-button {
-        padding: 0 20px;
+.sidebar-toggle-button {
+    padding: 0 20px;
 
-        a {
-            color: @header-foreground;
-        }
+    a {
+        color: @header-foreground;
+    }
+}
+
+.ticker {
+    width: 100%;
+    padding: 0 20px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.ticker-text {
+    opacity: 1;
+
+    &.ng-hide-add,
+    &.ng-hide-remove {
+        display: block ! important;
+        .transition(all 1s ease);
     }
 
-    .ticker {
-        width: 100%;
-        padding: 0 20px;
-        font-size: 1.5em;
-        text-align: center;
+    &.ng-hide-remove,
+    &.ng-hide-add.ng-hide-add-active {
+        opacity: 0;
     }
 
-    .ticker-text {
+    &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
         opacity: 1;
+    }
+}
 
-        &.ng-hide-add,
-        &.ng-hide-remove {
-            display: block ! important;
-            transition: all 1s ease;
-        }
+.profile-select {
+    position: relative;
+    width: 200px;
+    padding: 0 25px;
+    font-weight: bold;
+    text-align: right;
 
-        &.ng-hide-remove,
-        &.ng-hide-add.ng-hide-add-active {
-            opacity: 0;
-        }
-
-        &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
-            opacity: 1;
-        }
+    a {
+        color: @header-foreground;
     }
 
-    .profile-select {
-        position: relative;
-        width: 200px;
-        padding: 0 25px;
-        font-weight: bold;
-        text-align: right;
+    ul a:hover {
+        color: #00a2ff;
+    }
 
-        a {
-            color: @header-foreground;
-        }
+    ul {
+        position: absolute;
+        top: @header-height;
+        right: 0;
+        z-index: 100;
+        display: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        list-style: none;
+        background-color: @header-background;
+        .box-shadow(-5px 5px 10px 0 rgba(0, 0, 0, 0.10));
+    }
 
-        ul a:hover {
-            color: #00a2ff;
-        }
+    &.open ul {
+        display: block;
+    }
 
-        ul {
-            position: absolute;
-            top: @header-height;
-            right: 0;
-            z-index: 100;
-            display: none;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-            list-style: none;
-            background-color: @header-background;
-            box-shadow: 0 1px 1px rgba(55, 55, 55, .55);
-        }
-
-        &.open ul {
-            display: block;
-        }
-
-        li {
-            padding: 10px;
-        }
+    li {
+        padding: 10px;
     }
 }

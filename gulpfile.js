@@ -1,5 +1,6 @@
 var gulp = require("gulp"),
-    $ = require("gulp-load-plugins")()
+    $ = require("gulp-load-plugins")(),
+    merge = require("merge-stream"),
     pkg = require("./package.json");
 
 var BOWER_DIR = "bower_components";
@@ -39,7 +40,7 @@ gulp.task("vendor.css", function() {
     return gulp.src([
             BOWER_DIR + "/normalize-css/normalize.css",
             BOWER_DIR + "/font-awesome/css/font-awesome.css",
-            BOWER_DIR + "/open-sans/css/open-sans.css",
+            BOWER_DIR + "/roboto-fontface/roboto-fontface.css",
             BOWER_DIR + "/leaflet/dist/leaflet.css",
     ])
         .pipe($.minifyCss())
@@ -65,12 +66,19 @@ gulp.task("vendor.js", function() {
 });
 
 gulp.task("fonts", function() { 
-    return gulp.src([
-            BOWER_DIR + "/font-awesome/fonts/*.*",
-            BOWER_DIR + "/open-sans/fonts/**/*.*"
+    var fa = gulp.src([
+            BOWER_DIR + "/font-awesome/fonts/*.*"
     ])
         .pipe($.changed("public/fonts"))
         .pipe(gulp.dest("public/fonts")); 
+
+    var roboto = gulp.src([
+            BOWER_DIR + "/roboto-fontface/fonts/**/*.{woff,woff2}"
+    ])
+        .pipe($.changed("public/css/fonts"))
+        .pipe(gulp.dest("public/css/fonts")); 
+
+    return merge(fa, roboto);
 });
 
 gulp.task("images", function() { 

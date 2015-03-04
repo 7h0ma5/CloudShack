@@ -1,9 +1,9 @@
 .tabs {
     display: inline-block;
     width: 100%;
-    margin: 5px 0;
+    margin: 10px 0;
     background-color: #fff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    .box-shadow(0px 3px 10px -4px rgba(0, 0, 0, 0.26));
 }
 
 .tab {
@@ -12,36 +12,31 @@
 
     a {
         display: inline-block;
-        padding: 8px 15px;
+        padding: 8px 15px 8px 15px;
         margin-right: 5px;
         font-weight: bold;
-        color: #8e9aa2;
-        transition: all 0.1s ease;
-    }
-
-    a:hover {
-        color: #444;
+        color: #fff;
+        .transition(all 0.1s linear);
     }
 }
 
 .tab-active a {
-    color: inherit;
     cursor: default;
-    background-color: #fff;
-    border-radius: 3px 3px 0 0;
+    padding-bottom: 5px;
+    border-bottom: 3px solid lighten(@tab-background, 30);
 }
 
 .tab-list {
-    padding: 0 1px 0 1px;
+    padding: 0;
     margin: 0;
     list-style: none;
     background-color: @tab-background;
+    .user-select(none);
 }
 
 .tab-content {
     padding: 10px;
     background-color: #fff;
-    border: 1px solid @border-color;
     border-top: none;
 
     > :first-child {

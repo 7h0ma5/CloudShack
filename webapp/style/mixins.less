@@ -1,7 +1,32 @@
 .user-select(@value) {
     -webkit-user-select: @value;
-    -moz-user-select: @value;
-    -ms-user-select: @value;
-    -o-user-select: @value;
-    user-select: @value;
+       -moz-user-select: @value;
+        -ms-user-select: @value;
+         -o-user-select: @value;
+            user-select: @value;
+}
+
+.box-shadow(@value) {
+    -webkit-box-shadow: @value;
+       -moz-box-shadow: @value;
+            box-shadow: @value;
+}
+
+.border-radius(@value) {
+    -webkit-border-radius: @value;
+       -moz-border-radius: @value;
+            border-radius: @value;
+}
+
+.animation(@name, @duration: 300ms, @delay: 0, @ease: ease) {
+    -webkit-animation: @name @duration @delay @ease;
+       -moz-animation: @name @duration @delay @ease;
+        -ms-animation: @name @duration @delay @ease;
+}
+
+.transition(@transition) {
+    -webkit-transition: @transition;
+       -moz-transition: @transition;
+        -ms-transition: @transition;
+         -o-transition: @transition;
 }
