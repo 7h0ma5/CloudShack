@@ -1,13 +1,13 @@
 aside {
     position: fixed;
-    z-index: 200;
-    left: 0;
     top: 0;
     bottom: 0;
+    left: 0;
+    z-index: 200;
     width: @sidebar-width;
     background-color: @sidebar-background;
-    .transition(margin-left 0.5s ease);
-    .user-select(none);
+    transition: margin-left 0.5s ease;
+    user-select: none;
 }
 
 nav {
@@ -35,7 +35,7 @@ nav {
         color: @sidebar-foreground;
         text-decoration: none;
         border-left: 5px solid transparent;
-        .transition(all 0.3s);
+        transition: all 0.3s;
 
         &:hover {
             background-color: @sidebar-hover;
@@ -57,7 +57,7 @@ nav {
     text-align: center;
     vertical-align: middle;
     background-color: @sidebar-active;
-    .box-shadow(0px 2px 5px 0 rgba(0, 0, 0, 0.10));
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.10);
 
     h1 {
         padding: 0 10px;

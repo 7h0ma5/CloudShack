@@ -1,5 +1,4 @@
 @import "style/variables.less";
-@import "style/mixins.less";
 @import "style/box.less";
 @import "style/header.less";
 @import "style/sidebar.less";
@@ -13,10 +12,10 @@
 
 html {
     height: 100%;
-    color: @text-color;
-    background-color: @page-background;
     font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
+    color: @text-color;
+    background-color: @page-background;
 }
 
 a {
@@ -45,7 +44,7 @@ h6 {
 }
 
 h1 { font-size: 2em; font-weight: normal; }
-h2 { font-size: 1.5em; line-height: 2.4em; }
+h2 { font-size: 1.5em; line-height: 2em; }
 h3 { font-size: 1.17em; line-height: 2em; }
 h5 { font-size: .83em; }
 h6 { font-size: .75em; }
@@ -84,20 +83,26 @@ h6 { font-size: .75em; }
 }
 
 .newcontact-main {
-    flex: 2;
-    margin-right: 20px;
-    min-width: 600px;
     max-width: 800px;
+    min-width: 600px;
+    margin-right: 20px;
+    flex: 2;
 }
 
 .newcontact-side {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-wrap: wrap;
     flex-direction: column;
 }
 
 .newcontact-side > .box {
-    min-width: 300px;
     max-width: 400px;
+    min-width: 300px;
+}
+
+.statistics {
+    .value {
+        font-size: 2em;
+    }
 }

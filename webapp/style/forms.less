@@ -1,15 +1,15 @@
 input, select {
-    display: inline-block;
     padding: 4px;
-    margin: 0 0 1px 0;
     background-color: #fff;
-    border: none;
-    border-bottom: 1px solid @border-color;
+    border-color: @border-color;
+    border-style: solid;
+    border-width: 0 0 1px 0;
     outline: 0 ! important;
+    transition: border-color 0.5s linear;
 
     &:focus {
-        border-color: #26a0e5;
         padding-bottom: 3px;
+        border-color: #26a0e5;
         border-bottom-width: 2px;
     }
 
@@ -19,46 +19,64 @@ input, select {
 }
 
 select {
-
+    box-sizing: border-box;
 }
 
 .form-row {
+    display: flex;
+    margin: 20px 0;
+    flex-flow: row;
+    align-items: flex-end;
 
+    > div {
+        margin: 0 5px;
+    }
+
+    > div:first-child {
+        margin-left: 0;
+    }
+
+    > div:last-child {
+        margin-right: 0;
+    }
+
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .form-group {
-    display: inline-block;
-    padding: 2px 2px 25px 2px;
-
-    input-select {
-        margin-top: 20px ! important;
-    }
+    display: inline-flex;
+    margin: 0;
+    flex-flow: column;
 
     label {
-        padding-left: 2px;
         display: block;
-        font-size: 0.9em;
+        padding-left: 2px;
+        font-size: 0.8em;
         color: #555;
     }
 }
 
 .input-group {
-    display: inline-table;
-    padding: 0;
-    margin: 0;
-    border-bottom: 1px solid @border-color;
-    border-collapse: collapse;
+    display: flex;
+    flex-flow: row nowrap;
 
-    .input-addon {
-        padding: 4px 8px;
-        background-color: #f7f7f7;
-        border: none;
+    input, select {
+        flex: 1 1 auto;
     }
 
-    input, .input-addon {
-        display: table-cell;
-        margin: 0;
-        border: none;
+    .input-addon {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid @border-color;
+        flex-shrink: 0;
     }
 
     a {

@@ -30,6 +30,7 @@ gulp.task("app.css", function() {
         .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.less())
+        .pipe($.autoprefixer())
         .pipe($.minifyCss())
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest("public/css"))

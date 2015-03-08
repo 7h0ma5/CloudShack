@@ -108,47 +108,51 @@
 
     <tabs>
       <div title="QSL">
-        <div class="form-group">
-          <label for="qsl_via">QSL via: </label>
-          <input uppercase type="text" id="qsl_via"
-                 ng-model="contact.qsl_via" autocomplete="off" />
-        </div>
-        <div class="form-group">
-          <label for="qsl_sent">QSL sent: </label>
-          <select id="qsl_sent" ng-model="contact.qsl_sent"
-                  ng-options="o.id as o.name for o in qsl_sent">
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="qsl_rcvd">QSL received: </label>
-          <select id="qsl_rcvd" ng-model="contact.qsl_rcvd"
-                  ng-options="o.id as o.name for o in qsl_rcvd">
-            <option value=""></option>
-          </select>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="qsl_via">QSL via: </label>
+            <input uppercase type="text" id="qsl_via"
+                   ng-model="contact.qsl_via" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="qsl_sent">QSL sent: </label>
+            <select id="qsl_sent" ng-model="contact.qsl_sent"
+                    ng-options="o.id as o.name for o in qsl_sent">
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="qsl_rcvd">QSL received: </label>
+            <select id="qsl_rcvd" ng-model="contact.qsl_rcvd"
+                    ng-options="o.id as o.name for o in qsl_rcvd">
+              <option value=""></option>
+            </select>
+          </div>
         </div>
       </div>
 
       <div title="Contact">
-        <div class="form-group">
-          <label for="age">Age</label>
-          <div class="input-group">
-            <input type="number" min="1" max="150" autocomplete="off"
-                   step="1" ng-model="contact.age" id="age" class="input-age">
-            <span class="input-addon">
-              Years
-            </span>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="age">Age</label>
+            <div class="input-group">
+              <input type="number" min="1" max="150" autocomplete="off"
+                     step="1" ng-model="contact.age" id="age" class="input-age">
+              <span class="input-addon">
+                Years
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="email">E-Mail</label>
-          <input type="text" id="email" ng-model="contact.email" autocomplete="off">
-        </div>
+          <div class="form-group">
+            <label for="email">E-Mail</label>
+            <input type="text" id="email" ng-model="contact.email" autocomplete="off">
+          </div>
 
-        <div class="form-group">
-          <label for="rig">Rig</label>
-          <input type="text" id="rig" ng-mode="contact.rig">
+          <div class="form-group">
+            <label for="rig">Rig</label>
+            <input type="text" id="rig" ng-mode="contact.rig">
+          </div>
         </div>
       </div>
 
@@ -239,20 +243,25 @@
     <div class="box" ng-show="dxcc">
       <div class="box-title">{{dxcc.country}} &ndash; {{dxcc.cont}}</div>
       <div class="box-content">
-         <img src="/flag/64/{{dxcc.dxcc}}" style="float: right" />
-         <div class="form-row">
-             <div class="form-group">
-               <label for="cqz">CQ</label>
-               <input class="input-zone" type="number" ng-model="contact.cqz" id="cqz"
-                      autocomplete="off" min="1" max="40" step="1">
-             </div>
+        <div class="form-row" style="align-items: center;">
+          <div class="form-group">
+            <label for="cqz">CQ</label>
+            <input class="input-zone" type="number" ng-model="contact.cqz" id="cqz"
+                   autocomplete="off" min="1" max="40" step="1">
+          </div>
 
-             <div class="form-group">
-               <label for="ituz">ITU</label>
-               <input class="input-zone" type="number" ng-model="contact.ituz" id="cqz"
-                      autocomplete="off" min="1" max="90" step="1">
-             </div>
-         </div>
+          <div class="form-group">
+            <label for="ituz">ITU</label>
+            <input class="input-zone" type="number" ng-model="contact.ituz" id="cqz"
+                   autocomplete="off" min="1" max="90" step="1">
+          </div>
+
+          <div style="flex: 1">
+            <!-- spacing -->
+          </div>
+
+          <img src="/flag/64/{{dxcc.dxcc}}" style="margin: -10px 0;">
+        </div>
       </div>
     </div>
 

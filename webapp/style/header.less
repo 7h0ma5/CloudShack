@@ -6,9 +6,9 @@ header {
     margin-left: @sidebar-width;
     color: @header-foreground;
     background-color: @header-background;
-    .transition(margin-left 0.5s ease);
-    .user-select(none);
-    .box-shadow(0px 2px 5px 0 rgba(0, 0, 0, 0.10));
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.10);
+    transition: margin-left 0.5s ease;
+    user-select: none;
 
     > div {
         display: table-cell;
@@ -38,7 +38,7 @@ header {
     &.ng-hide-add,
     &.ng-hide-remove {
         display: block ! important;
-        .transition(all 1s ease);
+        transition: all 1s ease;
     }
 
     &.ng-hide-remove,
@@ -77,7 +77,7 @@ header {
         text-align: left;
         list-style: none;
         background-color: @header-background;
-        .box-shadow(-5px 5px 10px 0 rgba(0, 0, 0, 0.10));
+        box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.10);
     }
 
     &.open ul {

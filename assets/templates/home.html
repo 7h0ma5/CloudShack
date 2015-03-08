@@ -1,6 +1,6 @@
 <h1>Welcome to CloudShack!</h1>
 
-<div class="box" style="width: auto; margin: 1em 0;">
+<div class="box statistics" style="width: auto; margin: 1em 0;">
   <div class="box-title">
     <i class="fa fa-globe"></i>
     QSO Statistics
@@ -8,15 +8,15 @@
   <div class="box-content">
     <div style="float: left; display: inline-block; padding-right: 20px;">
       <small>Total</small>
-      <h2>{{qso_stats.total}}</h2>
+      <div class="value">{{qso_stats.total}}</div>
     </div>
     <div style="float: left; display: inline-block; padding-right: 20px;">
       <small>This Year</small>
-      <h2>{{qso_stats.year}}</h2>
+      <div class="value">{{qso_stats.year}}</div>
     </div>
     <div style="float: left; display: inline-block;">
       <small>This Month</small>
-      <h2>{{qso_stats.month}}</h2>
+      <div class="value">{{qso_stats.month}}</div>
     </div>
     <div style="clear: both;"></div>
   </div>
