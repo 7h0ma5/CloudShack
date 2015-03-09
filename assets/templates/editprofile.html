@@ -3,9 +3,11 @@
 
 <div class="box">
   <div class="box-content">
-    <div class="form-group">
-      <label for="name">Profile name</label>
-      <input type="text" id="name" ng-model="profile.name">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Profile name</label>
+        <input type="text" id="name" ng-model="profile.name">
+      </div>
     </div>
 
     <h3>Operator</h3>
@@ -53,14 +55,16 @@
         <input type="text" id="rig" ng-model="profile.my_rig">
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="form-row">
-      <button class="btn-primary" ng-click="save()">
-        <i class="fa fa-save"></i> Save
-      </button>
-      <button class="btn-danger" ng-click="delete()" ng-hide="new">
-        <i class="fa fa-trash"></i> Delete
-      </button>
-    </div>
+<div class="box-transparent">
+  <div class="box-content">
+    <button class="btn-primary" ng-click="save()">
+      <i class="fa fa-save"></i> Save
+    </button>
+    <button class="btn-danger" ng-click="delete()" ng-hide="new">
+      <i class="fa fa-trash"></i> Delete
+    </button>
   </div>
 </div>
