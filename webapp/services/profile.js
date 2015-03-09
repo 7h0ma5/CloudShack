@@ -1,6 +1,5 @@
 app.factory("Profile", function($rootScope, $resource) {
-    var Profile = $resource("/profiles/:id/:rev", {id: "@id", rev: "@rev"},
-                            {"update": {method: "PUT"}});
+    var Profile = $resource("/profiles/:id/:rev", {id: "@id", rev: "@rev"});
 
     var active = null;
 
@@ -23,11 +22,7 @@ app.factory("Profile", function($rootScope, $resource) {
         }
 
         if (updated) {
-            Profile.update({id: active._id, rev: active._rev}, active,
-                function(res) {
-                    active["_rev"] = res["rev"];
-                }
-            );
+            Profile.save(active, function(res) { active["_rev"] = res["rev"]; });
         }
     }
 
@@ -49,13 +44,6 @@ app.factory("Profile", function($rootScope, $resource) {
         get: Profile.get,
         save: function() {
             var req = Profile.save.apply(this, arguments);
-            req.$promise.then(function() {
-                $rootScope.$emit("profile:update");
-            });
-            return req;
-        },
-        update: function() {
-            var req = Profile.update.apply(this, arguments);
             req.$promise.then(function() {
                 $rootScope.$emit("profile:update");
             });

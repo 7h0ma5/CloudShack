@@ -194,7 +194,9 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
             $scope.contact.cqz = result.cqz;
             $scope.contact.dxcc = result.dxcc;
             $scope.contact.country = result.country;
-            setMapTarget([result.lat, result.lon], 2);
+            if (result.lat && result.lon) {
+                setMapTarget([result.lat, result.lon], 2);
+            }
         }, resetDxcc);
 
         if (newValue.length < 3) {
@@ -209,7 +211,9 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
 
             $scope.callbook = result;
             $scope.contact.ituz = result.ituz;
-            setMapTarget(Toolkit.gridToCoord(result.gridsquare), 1);
+
+            var coord = Toolkit.gridToCoord(result.gridsquare);
+            if (coord) setMapTarget(coord, 1);
         }, resetCallbook);
 
         var queryOptions = {

@@ -17,21 +17,11 @@ function readProfile(req, res) {
     });
 }
 
-function createProfile(req, res) {
+function saveProfile(req, res) {
     db.profiles.insert(req.body, function(err, data) {
         if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
-}
-
-function updateProfile(req, res) {
-    var profile = req.body;
-    profile["_id"] = req.params.id;
-    profile["_rev"] = req.params.rev;
-    db.profiles.insert(profile, function(err, data) {
-        if (err) res.status(err.statusCode).send(err);
-        else res.send(data);
-     });
 }
 
 function deleteProfile(req, res) {
@@ -44,7 +34,6 @@ function deleteProfile(req, res) {
 exports.setup = function(config, app, io) {
     app.get("/profiles", allProfiles);
     app.get("/profiles/:id", readProfile);
-    app.post("/profiles", createProfile);
-    app.put("/profiles/:id/:rev", updateProfile);
+    app.post("/profiles", saveProfile);
     app.delete("/profiles/:id/:rev", deleteProfile);
 }

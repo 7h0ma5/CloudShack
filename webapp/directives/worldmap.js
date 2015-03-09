@@ -21,7 +21,10 @@ app.directive("worldmap", function($window, $timeout) {
 
             scope.$watch("maptarget", function(newValue, oldValue) {
                 if (!newValue || newValue == oldValue) return;
+
                 var pos = L.latLng(newValue);
+                if (!pos) return;
+
                 map.panTo(pos);
                 marker.setLatLng(pos);
 

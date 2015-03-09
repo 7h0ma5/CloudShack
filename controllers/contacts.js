@@ -33,7 +33,7 @@ function readContact(req, res) {
     });
 }
 
-function createContact(req, res) {
+function saveContact(req, res) {
     var contact = req.body;
     updateBand(contact);
 
@@ -43,10 +43,6 @@ function createContact(req, res) {
         if (err) res.status(err.statusCode).send(err);
         else res.send(data);
     });
-}
-
-function updateContact(req, res) {
-
 }
 
 function deleteContact(req, res) {
@@ -248,8 +244,7 @@ exports.setup = function(config, app, io) {
     app.get("/contacts/:id", readContact);
     app.get("/contacts.:format", exportContacts);
     app.post("/contacts.:format", importContacts);
-    app.post("/contacts", createContact);
-    app.put("/contacts/:id/:rev", updateContact);
+    app.post("/contacts", saveContact);
     app.delete("/contacts/:id/:rev", deleteContact);
     app.post("/contacts/_lotw", importLotw);
 }

@@ -49,9 +49,9 @@ var Server = function(config, port) {
     });
 
     config.observe("lotw", function() {
-        var user = config.get("lotw.username");
-        var pass = config.get("lotw.password");
-        lotw.setCredentials(user, pass);
+        var username = config.get("lotw.username");
+        var password = config.get("lotw.password");
+        lotw.setCredentials(username, password);
     }, true);
 
     config.observe("db", function() {
