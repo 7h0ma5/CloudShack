@@ -3,6 +3,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
                                           Contact, Callbook, Dxcc, Data, Rig, CW)
 {
     $scope.rig = Rig;
+    $scope.cw = CW;
     $scope.modes = Data.get("modes");
     $scope.contests = Data.get("contests");
 
@@ -106,6 +107,18 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
             Flash.error("Spot failed.");
         });
     };
+
+    function freqChanged(newValue, oldValue) {
+        if (!newValue || newValue == oldValue) return;
+        if (!$scope.rig || !$scope.rig.connected) return;
+        $scope.rig.setFrequency(newValue);
+    }
+
+    function rigFreqChanged(newValue, oldValue) {
+        if (!newValue || newValue == oldValue) return;
+        if (!$scope.rig || !$scope.rig.connected) return;
+        $scope.contact.freq = newValue;
+    }
 
     function modeChanged(newValue, oldValue) {
         if (newValue != oldValue && "submode" in $scope.contact) {
@@ -268,8 +281,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
         }
     });
 
-    $scope.cw = CW;
-
     $scope.sendCW = function() {
         CW.sendText($scope.cwtext);
         $scope.cwtext = "";
@@ -282,6 +293,8 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
         $scope.$watch("contact.call", callChanged);
         $scope.$watch("contact.gridsquare", gridChanged);
         $scope.$watch("contact.mode", modeChanged);
+        $scope.$watch("contact.freq", freqChanged);
+        $scope.$watch("rig.freq", rigFreqChanged);
         $scope.reset();
     });
 });

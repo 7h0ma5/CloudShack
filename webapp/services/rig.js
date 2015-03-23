@@ -1,4 +1,4 @@
-app.factory("Rig", function($rootScope, Socket) {
+app.factory("Rig", function(Socket) {
     var rig = {
         connected: false,
         freq: 0.0,

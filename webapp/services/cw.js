@@ -1,4 +1,4 @@
-app.factory("CW", function($rootScope, Socket) {
+app.factory("CW", function(Socket) {
     var cw = {};
 
     cw.sendText = function(text) {
