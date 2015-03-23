@@ -1,4 +1,4 @@
-app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
+app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
                                           hotkeys, focus, Flash, Profile, Spots,
                                           Contact, Callbook, Dxcc, Data, Rig, CW)
 {
@@ -107,9 +107,9 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         });
     };
 
-    $scope.$watch("contact.mode", function(newValue, oldValue) {
-        if (newValue != oldValue) {
-            delete $scope.contact["submode"];
+    function modeChanged(newValue, oldValue) {
+        if (newValue != oldValue && "submode" in $scope.contact) {
+            delete $scope.contact.submode;
         }
         $scope.submodes = null;
 
@@ -121,7 +121,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
                 }
             });
         });
-    });
+    }
 
     var mapTargets = [null, null, null];
 
@@ -152,26 +152,26 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         updateMapTarget(null);
     }
 
-    $scope.$watch("contact.gridsquare", function(newValue, oldValue) {
+    function gridChanged(newValue, oldValue) {
         if (newValue && (newValue.length == 4 || newValue.length == 6)) {
             setMapTarget(Toolkit.gridToCoord(newValue), 0);
         }
         else {
             setMapTarget(null, 0);
         }
-    });
+    }
 
     function resetDxcc() {
-        delete $scope.dxcc;
-        delete $scope.contact.cqz;
-        delete $scope.contact.dxcc;
-        delete $scope.contact.country;
+        if ("dxcc" in $scope) delete $scope.dxcc;
+        if ("cqz" in $scope.contact) delete $scope.contact.cqz;
+        if ("dxcc" in $scope.contact) delete $scope.contact.dxcc;
+        if ("country" in $scope.contact) delete $scope.contact.country;
         setMapTarget(null, 2);
     }
 
     function resetCallbook() {
-        delete $scope.callbook;
-        delete $scope.contact.ituz;
+        if ("callbook" in $scope) delete $scope.callbook;
+        if ("ituz" in $scope.contact) delete $scope.contact.ituz;
         setMapTarget(null, 1);
     }
 
@@ -179,7 +179,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         $scope.previous = null;
     }
 
-    $scope.$watch("contact.call", function(newValue, oldValue) {
+    function callChanged(newValue, oldValue) {
         if (!newValue) {
             $scope.resetStart();
             $scope.resetEnd();
@@ -225,7 +225,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         Contact.byCall(queryOptions, function(result) {
             $scope.previous = result.rows.length ? result.rows : null;
         }, resetPrevious);
-    });
+    }
 
     $scope.qsl_rcvd = [
         {id: "N", name: "No"},
@@ -275,5 +275,13 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, Toolkit,
         $scope.cwtext = "";
     };
 
-    $scope.reset();
+    $q.all([
+        $scope.modes.$promise,
+        $scope.contests.$promise
+    ]).then(function() {
+        $scope.$watch("contact.call", callChanged);
+        $scope.$watch("contact.gridsquare", gridChanged);
+        $scope.$watch("contact.mode", modeChanged);
+        $scope.reset();
+    });
 });
