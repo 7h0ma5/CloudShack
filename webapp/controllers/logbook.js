@@ -1,11 +1,25 @@
 app.controller("LogbookCtrl", function($scope, Contact) {
+    var filter = null;
     var limit = 20;
-    var prev = [];
-    var start = null;
-    var next = null;
+    var prev, start, next;
 
-    $scope.total_pages = 1;
-    $scope.page = 1;
+    function reset() {
+        prev = [];
+        start = null;
+        next = null;
+    }
+
+    function responseReceived(result) {
+        $scope.contacts = result["rows"].slice(0, limit);
+
+        if (result["rows"].length == limit + 1) {
+            next = result["rows"][limit];
+        }
+    }
+
+    function responseError(result) {
+        $scope.contacts = null;
+    }
 
     $scope.reload = function() {
         var options = {
@@ -13,24 +27,19 @@ app.controller("LogbookCtrl", function($scope, Contact) {
             limit: limit+1
         }
 
+        if (filter == "callsign") {
+            options.startkey = JSON.stringify([$scope.callsign]);
+            options.endkey = JSON.stringify([$scope.callsign, {}]);
+            options.descending = false;
+        }
+
         if (start) {
             options.startkey = start.key;
             options.startkey_docid = start.id;
         }
 
-        Contact.get(options,
-            function(result) {
-                $scope.contacts = result["rows"].slice(0, limit);
-                $scope.total_pages = Math.ceil(result["total_rows"]/limit);
-
-                if (result["rows"].length == limit + 1) {
-                    next = result["rows"][limit];
-                }
-            },
-            function(error) {
-                alert("Error " + error);
-            }
-        );
+        var query = filter == "callsign" ? Contact.byCall : Contact.get;
+        query(options, responseReceived, responseError);
     };
 
     $scope.hasNextPage = function() {
@@ -45,16 +54,28 @@ app.controller("LogbookCtrl", function($scope, Contact) {
         prev.push(start);
         start = next;
         next = null;
-        $scope.page++;
         $scope.reload();
     };
 
     $scope.prevPage = function() {
         next = start;
         start = prev.pop();
-        $scope.page--;
         $scope.reload();
     };
 
+    $scope.filterCallsign = function() {
+        filter = $scope.callsign ? "callsign" : null;
+        reset();
+        $scope.reload();
+    };
+
+    $scope.resetFilters = function() {
+        delete $scope.callsign;
+        filter = null;
+        reset();
+        $scope.reload();
+    }
+
+    reset();
     $scope.reload();
 });
