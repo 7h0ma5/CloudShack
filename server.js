@@ -36,7 +36,7 @@ var Server = function(config, port) {
 
     var self = this;
     ["contacts", "profiles", "callbook", "dxcc", "data",
-     "rig", "keyer", "cluster", "fldigi", "config"]
+     "rig", "keyer", "cluster", "fldigi", "wsjtx", "config"]
         .map(function(controllerName) {
             var controller = require("./controllers/" + controllerName);
             controller.setup(self.config, self.app, self.io);

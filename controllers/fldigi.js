@@ -2,9 +2,7 @@ var http = require("http"),
     libxml = require("libxmljs"),
     util = require("util"),
     adif = require("adif"),
-    nano = require("nano");
-
-var db;
+    db = require("../lib/database");
 
 function createResponse() {
     var doc = new libxml.Document();
@@ -23,7 +21,7 @@ function addRecord(doc, res) {
     var reader = new adif.AdiReader(data);
     var contacts = reader.readAll();
 
-    db.bulk({docs: contacts}, function(err, data) {
+    db.contacts.bulk({docs: contacts}, function(err, data) {
         if (err) {
             res.status(500).send();
         }
@@ -51,7 +49,7 @@ function getRecord(doc, res) {
         include_docs: true
     };
 
-    db.view("logbook", "byCall", query, function(err, data) {
+    db.contacts.view("logbook", "byCall", query, function(err, data) {
         if (err || data.rows.length < 1) {
             res.send(resDoc.toString());
         }
@@ -135,9 +133,4 @@ function rpc(req, res) {
 
 exports.setup = function(config, app, io) {
     app.post("/RPC2", rpc);
-
-    config.observe("db", function() {
-        var local = config.get("db.local");
-        db = nano(local.address).use(local.name);
-    }, true);
 }

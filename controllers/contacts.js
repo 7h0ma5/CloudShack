@@ -35,7 +35,7 @@ function readContact(req, res) {
 
 function saveContact(req, res) {
     var contact = req.body;
-    updateBand(contact);
+    data.updateBand(contact);
 
     fs.appendFile("contacts.log", JSON.stringify(contact) + "\n");
 
@@ -50,48 +50,6 @@ function deleteContact(req, res) {
         if (err) res.status(err.statusCode).send(err);
         else res.send();
     });
-}
-
-function updateDxcc(contact) {
-    var result = dxcc.lookup(contact.call);
-    if (!result) return;
-
-    contact.dxcc = result.dxcc;
-    contact.cqz = result.cqz;
-}
-
-function applyProfile(profile, contact) {
-    var fields = [
-        "operator", "my_name", "my_gridsquare", "my_lat", "my_lon",
-        "my_rig", "station_callsign"
-    ];
-
-    _.each(fields, function(field) {
-        if (field in profile) {
-            contact[field] = profile[field];
-        }
-    });
-}
-
-function updateBand(contact) {
-    if (contact.band || !contact.freq) return;
-
-    _.each(data.bands, function(band) {
-        if (contact.freq >= band.start && contact.freq <= band.end) {
-            contact.band = band.name.toUpperCase();
-            return false;
-        }
-    });
-}
-
-function migrateMode(contact) {
-    if (contact.submode || !contact.mode) return;
-
-    var result = data.legacyModes[contact.mode];
-
-    if (result) {
-        _.merge(contact, result);
-    }
 }
 
 function exportContacts(req, res) {
@@ -149,10 +107,10 @@ function importContacts(req, res) {
         });
     }
 
-    if (req.query.dxcc) _.each(contacts, updateDxcc);
+    if (req.query.dxcc) _.each(contacts, dxcc.updateContact.bind(dxcc));
 
-    _.each(contacts, updateBand);
-    _.each(contacts, migrateMode);
+    _.each(contacts, data.updateBand);
+    _.each(contacts, data.migrateMode);
 
     async.series([
         function(callback) {
@@ -160,7 +118,7 @@ function importContacts(req, res) {
             db.profiles.get(req.query.profile, function(err, data) {
                 if (err) return callback(err);
                 if (data.length < 1) return callback();
-                _.each(contacts, _.partial(applyProfile, data));
+                _.each(contacts, _.partial(db.applyProfile, data));
                 callback();
             });
         }
@@ -184,39 +142,12 @@ function statistics(req, res) {
     });
 }
 
-function searchContact(ref, callback) {
-    var interval = 5;
-    var start = new Date(ref["start"]);
-    var end = new Date(ref["end"] ? ref["end"] : ref["start"]);
-    start.setMinutes(start.getHours() - interval);
-    end.setMinutes(start.getHours() + interval);
-
-    var params = {
-        startkey: start.toJSON(), endkey: end.toJSON(), include_docs: true
-    };
-
-    db.contacts.view("logbook", "byDate", {include_docs: true}, function(err, data) {
-        if (err) callback(null);
-
-        var result = _.find(data.rows, function(row) {
-            // we can stop instantly if the bands are not the same
-            if (row.doc.band && ref.band && row.doc.band.toUpperCase() != ref.band.toUpperCase()) {
-                return false;
-            }
-
-            return row.doc.call.toUpperCase() == ref.call.toUpperCase();
-        });
-
-        callback(result ? result.doc : null);
-    });
-}
-
 function importLotw(req, res) {
     lotw.query({qso_query: 1, qso_qsl: "no", qso_qsldetail: "yes"}, function(data) {
         var updates = [], fails = [];
 
         async.eachLimit(data, 10, function(entry, callback) {
-            searchContact(entry, function(contact) {
+            db.findContact(entry, function(contact) {
                 if (!contact) {
                     fails.push(entry.call);
                 }
