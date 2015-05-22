@@ -28,5 +28,11 @@
     },
     "keyer": {
         "port": ""
+    },
+    "profiles": {
+        "default": null
+    },
+    "wsjtx": {
+        "enabled": false
     }
 }

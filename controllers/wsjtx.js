@@ -4,6 +4,8 @@ var dgram = require("dgram"),
     data = require("../lib/data"),
     db = require("../lib/database");
 
+var server;
+
 function Reader(buffer) {
     this.pos = 0;
     this.buffer = buffer;
@@ -117,19 +119,23 @@ Reader.prototype.read = function() {
             var contact = this.readQSOLog();
             dxcc.updateContact(contact);
             data.updateBand(contact);
-            db.contacts.insert(contact, function(err, data) {
-                if (err) {
-                    log.error("Failed to save WSJT contact");
-                }
-                else {
-                    log.debug("WSJT contact saved");
-                }
+
+            db.applyDefaultProfile([contact], function() {
+                db.contacts.insert(contact, function(err, data) {
+                    if (err) {
+                        log.error("Failed to save WSJT contact");
+                    }
+                    else {
+                        log.debug("WSJT contact saved");
+                    }
+                });
             });
             break;
     }
 }
-exports.setup = function(config, app, io) {
-    var server = dgram.createSocket("udp6");
+
+function startServer() {
+    server = dgram.createSocket("udp6");
 
     server.on("error", function (err) {
       log.error("WSJT server error:\n" + err.stack);
@@ -148,4 +154,24 @@ exports.setup = function(config, app, io) {
     });
 
     server.bind(2237);
+}
+
+function stopServer() {
+    if (server) {
+        server.close();
+        server = null;
+    }
+}
+
+
+exports.setup = function(config, app, io) {
+    config.observe("wsjtx", function() {
+        if (config.get("wsjtx.enabled")) {
+            stopServer();
+            startServer();
+        }
+        else {
+            stopServer();
+        }
+    }, true);
 }

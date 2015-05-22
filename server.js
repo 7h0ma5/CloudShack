@@ -59,6 +59,10 @@ var Server = function(config, port) {
         var remote = config.get("db.remote");
         db.init(local, remote);
     }, true);
+
+    config.observe("profiles.default", function() {
+        db.setDefaultProfile(config.get("profiles.default"));
+    }, true);
 }
 
 Server.prototype.run = function() {

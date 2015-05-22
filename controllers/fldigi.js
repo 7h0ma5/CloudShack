@@ -2,6 +2,8 @@ var http = require("http"),
     libxml = require("libxmljs"),
     util = require("util"),
     adif = require("adif"),
+    dxcc = require("../lib/dxcc"),
+    data = require("../lib/data"),
     db = require("../lib/database");
 
 function createResponse() {
@@ -21,14 +23,20 @@ function addRecord(doc, res) {
     var reader = new adif.AdiReader(data);
     var contacts = reader.readAll();
 
-    db.contacts.bulk({docs: contacts}, function(err, data) {
-        if (err) {
-            res.status(500).send();
-        }
-        else {
-            var resDoc = createResponse();
-            res.send(resDoc.toString());
-        }
+    _.each(contacts, dxcc.updateContact.bind(dxcc));
+    _.each(contacts, data.updateBand);
+    _.each(contacts, data.migrateMode);
+
+    db.applyDefaultProfile(contacts, function() {
+        db.contacts.bulk({docs: contacts}, function(err, data) {
+            if (err) {
+                res.status(500).send();
+            }
+            else {
+                var resDoc = createResponse();
+                res.send(resDoc.toString());
+            }
+        });
     });
 };
 

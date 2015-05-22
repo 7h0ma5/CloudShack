@@ -1,6 +1,20 @@
 <h1>Settings</h1>
 
 <tabs>
+    <div title="General">
+      <p>
+        <input type="checkbox" ng-model="config.wsjtx.enabled" id="wsjtx-enabled" />
+        <label for="wsjtx-enabled">Enable WSJTX interface</label>
+      </p>
+      <p>
+      <p>
+        <label for="profiles-default">Default Profile</label>
+        <select ng-options="profile.id as profile.doc.name for profile in profiles.rows"
+                ng-model="config.profiles.default">
+          <option value="">&mdash;</option>
+        </select>
+      </p>
+    </div>
     <div title="Callbook">
         <div class="form-group">
           <label for="callbook-username">Username</label>

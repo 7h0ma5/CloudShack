@@ -116,10 +116,10 @@ function importContacts(req, res) {
         function(callback) {
             if (!req.query.profile) return callback();
             db.profiles.get(req.query.profile, function(err, data) {
-                if (err) return callback(err);
-                if (data.length < 1) return callback();
-                _.each(contacts, _.partial(db.applyProfile, data));
-                callback();
+                if (!err && data) {
+                    _.each(contacts, _.partial(db.applyProfile, data));
+                }
+                callback(err);
             });
         }
     ], function(err) {

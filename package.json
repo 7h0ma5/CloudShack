@@ -32,7 +32,7 @@
     "recess": "recess --noOverqualifying false webapp/app.less"
   },
   "dependencies": {
-    "adif": "^0.2.3",
+    "adif": "^0.2.5",
     "async": "^0.9.0",
     "body-parser": "^1.11.0",
     "dateformat": "^1.0.11",
