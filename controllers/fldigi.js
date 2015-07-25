@@ -14,10 +14,7 @@ function createResponse() {
 
 function addRecord(doc, res) {
     var value = doc.get("//value");
-    if (!value) {
-        res.status(400).send();
-        return;
-    }
+    if (!value) return res.status(400).send();
 
     var data = value.text();
     var reader = new adif.AdiReader(data);
@@ -29,13 +26,10 @@ function addRecord(doc, res) {
 
     db.applyDefaultProfile(contacts, function() {
         db.contacts.bulk({docs: contacts}, function(err, data) {
-            if (err) {
-                res.status(500).send();
-            }
-            else {
-                var resDoc = createResponse();
-                res.send(resDoc.toString());
-            }
+            if (err) return res.status(500).send();
+
+            var resDoc = createResponse();
+            res.send(resDoc.toString());
         });
     });
 };

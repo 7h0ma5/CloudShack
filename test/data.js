@@ -18,8 +18,8 @@ describe("Data API", function() {
         app = testServer.app;
 
         // remove functions
-	delete data.updateBand;
-	delete data.migrateMode;
+        data.updateBand = [42];
+        data.migrateMode = [42];
 
         // give the server time to initialize the database
         setTimeout(done, 5000);
