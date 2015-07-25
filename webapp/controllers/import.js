@@ -1,4 +1,4 @@
-app.controller("ImportCtrl", function($scope, $upload, Flash, Contact, Profile) {
+app.controller("ImportCtrl", function($scope, Upload, Flash, Contact, Profile) {
     $scope.file = null;
     $scope.progress = null;
     $scope.loading = false;
@@ -9,7 +9,7 @@ app.controller("ImportCtrl", function($scope, $upload, Flash, Contact, Profile) 
     $scope.end = new Date();
     $scope.end.setUTCMilliseconds(0);
 
-    $scope.onFileSelect = function($files) {
+    $scope.fileSelected = function($files, $event) {
         if ($files.length > 0) {
             $scope.file = $files[0];
         }
@@ -36,7 +36,7 @@ app.controller("ImportCtrl", function($scope, $upload, Flash, Contact, Profile) 
         fileReader.readAsArrayBuffer($scope.file);
         fileReader.onload = function(e) {
             $scope.loading = true;
-            $upload.http({
+            Upload.http({
                 url: '/contacts.adi',
                 headers: {'Content-Type': "text/plain"},
                 data: e.target.result,

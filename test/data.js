@@ -17,6 +17,10 @@ describe("Data API", function() {
         var testServer = new server.Server(conf);
         app = testServer.app;
 
+        // remove functions
+	delete data.updateBand;
+	delete data.migrateMode;
+
         // give the server time to initialize the database
         setTimeout(done, 5000);
     });

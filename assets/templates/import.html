@@ -2,7 +2,9 @@
 
 <tabs>
   <div title="File">
-    <p><input type="file" ng-file-select="onFileSelect($files)"></p>
+    <p>
+      <input type="file" ngf-select ngf-change="fileSelected($files, $event)">
+    </p>
 
     <p>
       <input type="checkbox" ng-model="dateRange"> Date Range:

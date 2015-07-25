@@ -1,5 +1,5 @@
 var app = angular.module("app", ["ngRoute", "ngResource", "ngAnimate", "cfp.hotkeys",
-                                 "LocalStorageModule", "angularFileUpload"]);
+                                 "LocalStorageModule", "ngFileUpload"]);
 
 app.config(function(hotkeysProvider, localStorageServiceProvider) {
     hotkeysProvider.includeCheatSheet = false;

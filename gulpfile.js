@@ -41,7 +41,7 @@ gulp.task("vendor.css", function() {
     return gulp.src([
             BOWER_DIR + "/normalize-css/normalize.css",
             BOWER_DIR + "/font-awesome/css/font-awesome.css",
-            BOWER_DIR + "/roboto-fontface/roboto-fontface.css",
+            BOWER_DIR + "/roboto-fontface/css/roboto-fontface.css",
             BOWER_DIR + "/leaflet/dist/leaflet.css",
     ])
         .pipe($.minifyCss())
@@ -56,7 +56,7 @@ gulp.task("vendor.js", function() {
         BOWER_DIR + "/angular-hotkeys/build/hotkeys.js",
         BOWER_DIR + "/angular-resource/angular-resource.js",
         BOWER_DIR + "/angular-route/angular-route.js",
-        BOWER_DIR + "/ng-file-upload/angular-file-upload.js",
+        BOWER_DIR + "/ng-file-upload/ng-file-upload.js",
         BOWER_DIR + "/angular-local-storage/dist/angular-local-storage.js",
         BOWER_DIR + "/leaflet/dist/leaflet-src.js",
         BOWER_DIR + "/socket.io-client/socket.io.js"
@@ -66,48 +66,48 @@ gulp.task("vendor.js", function() {
         .pipe(gulp.dest("public/js"));
 });
 
-gulp.task("fonts", function() { 
+gulp.task("fonts", function() {
     var fa = gulp.src([
             BOWER_DIR + "/font-awesome/fonts/*.*"
     ])
         .pipe($.changed("public/fonts"))
-        .pipe(gulp.dest("public/fonts")); 
+        .pipe(gulp.dest("public/fonts"));
 
     var roboto = gulp.src([
             BOWER_DIR + "/roboto-fontface/fonts/**/*.{woff,woff2}"
     ])
-        .pipe($.changed("public/css/fonts"))
-        .pipe(gulp.dest("public/css/fonts")); 
+        .pipe($.changed("public/fonts"))
+        .pipe(gulp.dest("public/fonts"));
 
     return merge(fa, roboto);
 });
 
-gulp.task("images", function() { 
+gulp.task("images", function() {
     return gulp.src([
             BOWER_DIR + "/leaflet/dist/images/*.png",
             "assets/images/**/*"
     ])
         .pipe($.changed("public/images"))
-        .pipe(gulp.dest("public/images")); 
+        .pipe(gulp.dest("public/images"));
 });
 
-gulp.task("map", function() { 
+gulp.task("map", function() {
     return gulp.src("assets/map/**/*")
         .pipe($.changed("public/map"))
-        .pipe(gulp.dest("public/map")); 
+        .pipe(gulp.dest("public/map"));
 });
 
-gulp.task("templates", function() { 
+gulp.task("templates", function() {
     return gulp.src("assets/templates/**/*")
         .pipe($.changed("public/templates"))
         .pipe(gulp.dest("public/templates"))
         .pipe($.livereload());
 });
 
-gulp.task("index", function() { 
+gulp.task("index", function() {
     return gulp.src("assets/index.html")
         .pipe($.changed("public"))
-        .pipe(gulp.dest("public")); 
+        .pipe(gulp.dest("public"));
 });
 
 gulp.task("default", [
