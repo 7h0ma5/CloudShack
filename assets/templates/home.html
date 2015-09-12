@@ -1,24 +1,37 @@
 <h1>Welcome to CloudShack!</h1>
 
-<div class="box statistics" style="width: auto; margin: 1em 0;">
-  <div class="box-title">
-    <i class="fa fa-globe"></i>
-    QSO Statistics
+
+<div class="dashboard">
+  <div class="box statistics">
+    <div class="box-title">
+      <i class="fa fa-globe"></i>
+      QSO Statistics
+    </div>
+    <div class="box-content">
+      <div class="column">
+        <small>Total</small>
+        <div class="value">{{qso_stats.total}}</div>
+      </div>
+      <div class="column">
+        <small>This Year</small>
+        <div class="value">{{qso_stats.year}}</div>
+      </div>
+      <div class="column">
+        <small>This Month</small>
+        <div class="value">{{qso_stats.month}}</div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
   </div>
-  <div class="box-content">
-    <div style="float: left; display: inline-block; padding-right: 20px;">
-      <small>Total</small>
-      <div class="value">{{qso_stats.total}}</div>
+
+  <div class="box statistics">
+    <div class="box-title">
+      Mode Statistics
     </div>
-    <div style="float: left; display: inline-block; padding-right: 20px;">
-      <small>This Year</small>
-      <div class="value">{{qso_stats.year}}</div>
+    <div class="box-content">
+      <canvas class="chart chart-doughnut" data="modeData"
+        labels="modeLabels" legend="true"></canvas>
     </div>
-    <div style="float: left; display: inline-block;">
-      <small>This Month</small>
-      <div class="value">{{qso_stats.month}}</div>
-    </div>
-    <div style="clear: both;"></div>
   </div>
 </div>
 

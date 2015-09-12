@@ -32,4 +32,23 @@ app.controller("HomeCtrl", function($scope, Contact) {
     Contact.stats(options, function(stats) {
         $scope.qso_stats.month = stats.rows.length ? stats.rows[0].value : 0;
     });
+
+    // Query modes
+    var options = {
+        group_level: 1,
+        include_docs: false,
+        descending: false
+    };
+
+    Contact.byMode(options, function(modes) {
+        var labels = [], data = [];
+
+        angular.forEach(modes.rows, function(mode) {
+            labels.push(mode.key[0]);
+            data.push(mode.value);
+        });
+
+        $scope.modeLabels = labels;
+        $scope.modeData = data;
+    });
 });

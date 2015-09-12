@@ -42,6 +42,7 @@ gulp.task("vendor.css", function() {
             BOWER_DIR + "/normalize-css/normalize.css",
             BOWER_DIR + "/font-awesome/css/font-awesome.css",
             BOWER_DIR + "/roboto-fontface/css/roboto-fontface.css",
+            BOWER_DIR + "/angular-chart.js/dist/angular-chart.css",
             BOWER_DIR + "/leaflet/dist/leaflet.css",
     ])
         .pipe($.minifyCss())
@@ -58,6 +59,8 @@ gulp.task("vendor.js", function() {
         BOWER_DIR + "/angular-route/angular-route.js",
         BOWER_DIR + "/ng-file-upload/ng-file-upload.js",
         BOWER_DIR + "/angular-local-storage/dist/angular-local-storage.js",
+        BOWER_DIR + "/Chart.js/Chart.js",
+        BOWER_DIR + "/angular-chart.js/dist/angular-chart.js",
         BOWER_DIR + "/leaflet/dist/leaflet-src.js",
         BOWER_DIR + "/socket.io-client/socket.io.js"
     ])

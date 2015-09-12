@@ -101,7 +101,25 @@ h6 { font-size: .75em; }
     min-width: 300px;
 }
 
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .box {
+        max-width: 300px;
+        margin-right: 20px;
+    }
+}
+
 .statistics {
+    .column {
+        float: left;
+        display: inline-block;
+        padding-right: 20px;
+    }
+
     .value {
         font-size: 2em;
     }
