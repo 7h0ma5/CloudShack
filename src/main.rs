@@ -25,6 +25,7 @@ use logger::Logger;
 use std::thread;
 
 pub fn main() {
+    println!("Loading configuration from config.toml...");
     let config = config::Config::load();
 
     let port = config.get_int("general.port").unwrap_or(3000);
@@ -43,10 +44,13 @@ pub fn main() {
     let mut chain = Chain::new(controllers::routes());
 
     let (logger_before, logger_after) = Logger::new(None);
+    println!("Initializing database middleware...");
     chain.link_before(middleware::database::create(db));
+    println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
     chain.link_before(logger_before);
     chain.link_after(logger_after);
 
+    println!("Starting http server...");
     Iron::new(chain).http(&*format!("0.0.0.0:{}", port)).unwrap();
 }
