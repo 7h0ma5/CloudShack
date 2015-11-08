@@ -1,0 +1,31 @@
+[package]
+name = "cloudshack"
+version = "0.1.0"
+authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
+
+[dependencies]
+iron = "*"
+plugin = "*"
+router = "*"
+staticfile = "*"
+mount = "*"
+urlencoded = "*"
+bodyparser = "*"
+persistent = "*"
+toml = "*"
+rustc-serialize = "*"
+
+[dependencies.logger]
+git = "https://github.com/iron/logger.git"
+
+[dependencies.couchdb]
+path = "lib/couchdb"
+
+[dependencies.adif]
+path = "lib/adif"
+
+[dependencies.dxcc]
+path = "lib/dxcc"
+
+[dependencies.wsjt]
+path = "lib/wsjt"

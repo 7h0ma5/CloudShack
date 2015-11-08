@@ -1,0 +1,8 @@
+[package]
+name = "callbook"
+version = "0.1.0"
+authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
+
+[dependencies]
+xml-rs = "*"
+hyper = "*"

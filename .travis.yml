@@ -1,18 +1,32 @@
-language: node_js
-node_js:
-- "0.11"
-- "0.10"
-deploy:
-  provider: npm
-  api_key:
-    secure: nHH0/4YvGnVpy4F09DdIY5/I7yzQhye/L1V2lZpMjIZIMi3sT98TRb4w03yq0VDId+pXkksLtwVxg93jFo2QdrGurhvkZJtPwtkjR/XVXcGXN96u2YpNhp1hr0wHGj096hwjHCqmsjcrofLgzw5sezZnoNXXlHEz2MpBr5xUyaY=
-  email: thomas.gatzweiler@gmail.com
-  on:
-    tags: true
+language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+matrix:
+  allow_failures:
+    - rust: nightly
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
 services:
   - couchdb
 before_script:
   - curl -X PUT 127.0.0.1:5984/contacts
   - curl -X PUT 127.0.0.1:5984/profiles
-script: "npm run-script test-travis"
-after_script: "npm install coveralls && cat ./coverage/lcov.info | coveralls"
+  - pip install 'travis-cargo<0.2' --user
+  - export PATH=$HOME/.local/bin:$PATH
+script:
+  - travis-cargo build
+  - travis-cargo test -- -p callbook
+  - travis-cargo test -- -p couchdb
+  - travis-cargo test -- -p dxcc
+  - travis-cargo test -- -p dxcluster
+  - travis-cargo test -- -p wsjt
+  - travis-cargo test
+  - travis-cargo --only stable doc
+after_success:
+  - travis-cargo coveralls --no-sudo

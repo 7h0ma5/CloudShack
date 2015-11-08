@@ -1,11 +1,12 @@
 app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
                                           hotkeys, focus, Flash, Profile, Spots,
-                                          Contact, Callbook, Dxcc, Data, Rig, CW)
+                                          Contact, Callbook, Dxcc, Rig, CW,
+                                          Modes, Contests)
 {
     $scope.rig = Rig;
     $scope.cw = CW;
-    $scope.modes = Data.get("modes");
-    $scope.contests = Data.get("contests");
+    $scope.modes = Modes;
+    $scope.contests = Contests;
 
     var preserve = ["freq", "mode", "submode", "tx_pwr"];
 
@@ -126,13 +127,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
         }
         $scope.submodes = null;
 
-        $scope.modes.$promise.then(function(modes) {
-            angular.forEach(modes, function(mode) {
-                if (mode.name == newValue) {
-                    $scope.submodes = mode.submodes;
-                    $scope.rst = mode.rst || "599";
-                }
-            });
+        angular.forEach($scope.modes, function(mode) {
+            if (mode.name == newValue) {
+                $scope.submodes = mode.submodes;
+                $scope.rst = mode.rst || "599";
+            }
         });
     }
 
@@ -177,6 +176,7 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
     function resetDxcc() {
         if ("dxcc" in $scope) delete $scope.dxcc;
         if ("cqz" in $scope.contact) delete $scope.contact.cqz;
+        if ("ituz" in $scope.contact) delete $scope.contact.ituz;
         if ("dxcc" in $scope.contact) delete $scope.contact.dxcc;
         if ("country" in $scope.contact) delete $scope.contact.country;
         setMapTarget(null, 2);
@@ -184,7 +184,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
 
     function resetCallbook() {
         if ("callbook" in $scope) delete $scope.callbook;
-        if ("ituz" in $scope.contact) delete $scope.contact.ituz;
         setMapTarget(null, 1);
     }
 
@@ -205,10 +204,11 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
         Dxcc.get({"call": newValue}, function(result) {
             $scope.dxcc = result;
             $scope.contact.cqz = result.cqz;
+            $scope.contact.ituz = result.ituz;
             $scope.contact.dxcc = result.dxcc;
             $scope.contact.country = result.country;
-            if (result.lat && result.lon) {
-                setMapTarget([result.lat, result.lon], 2);
+            if (result.latlon) {
+                setMapTarget(result.latlon, 2);
             }
         }, resetDxcc);
 
@@ -223,7 +223,6 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
             if (result.call != $scope.contact.call) return;
 
             $scope.callbook = result;
-            $scope.contact.ituz = result.ituz;
 
             var coord = Toolkit.gridToCoord(result.gridsquare);
             if (coord) setMapTarget(coord, 1);
@@ -286,15 +285,10 @@ app.controller("NewContactCtrl", function($scope, $filter, $window, $q, Toolkit,
         $scope.cwtext = "";
     };
 
-    $q.all([
-        $scope.modes.$promise,
-        $scope.contests.$promise
-    ]).then(function() {
-        $scope.$watch("contact.call", callChanged);
-        $scope.$watch("contact.gridsquare", gridChanged);
-        $scope.$watch("contact.mode", modeChanged);
-        $scope.$watch("contact.freq", freqChanged);
-        $scope.$watch("rig.freq", rigFreqChanged);
-        $scope.reset();
-    });
+    $scope.$watch("contact.call", callChanged);
+    $scope.$watch("contact.gridsquare", gridChanged);
+    $scope.$watch("contact.mode", modeChanged);
+    $scope.$watch("contact.freq", freqChanged);
+    $scope.$watch("rig.freq", rigFreqChanged);
+    $scope.reset();
 });

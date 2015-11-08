@@ -34,7 +34,7 @@ app.controller("LogbookCtrl", function($scope, Contact) {
         }
 
         if (start) {
-            options.startkey = start.key;
+            options.startkey = JSON.stringify(start.key);
             options.startkey_docid = start.id;
         }
 

@@ -5,7 +5,7 @@ app.directive("worldmap", function($window, $timeout) {
             maptarget: '='
         },
         link: function(scope, ele, attrs) {
-            var offline = L.tileLayer("/map/{z}/{x}/{y}.png", {
+            var offline = L.tileLayer("/images/map/{z}/{x}/{y}.png", {
                 maxZoom: 4
             });
 

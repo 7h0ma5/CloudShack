@@ -1,0 +1,11 @@
+[package]
+name = "adif"
+version = "0.1.0"
+authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
+
+[dependencies]
+nom = "~0.5.0"
+chrono = "~0.2.0"
+rustc-serialize = "~0.3.16"
+phf = "~0.7.6"
+phf_macros = "~0.7.6"
