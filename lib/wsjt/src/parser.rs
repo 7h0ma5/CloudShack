@@ -1,16 +1,29 @@
-use nom::{IResult};
 use std::str::FromStr;
 use std::str;
 
 #[derive(Debug)]
+pub struct LogEntry {
+    id: String,
+    date: u64,
+    call: String,
+    gridsquare: String,
+    freq: u64,
+    mode: String,
+    rst_sent: String,
+    rst_rcvd: String,
+    tx_pwr: String,
+    comment: String,
+    name: String
+}
+
+#[derive(Debug)]
 pub enum Packet {
-    Decode(String),
-    Bla
+    Log(LogEntry)
 }
 
 named!(pub parse_packet <&[u8], Packet>, chain!(
     tag!([0xad, 0xbc, 0xcb, 0xda]) ~
-    schema: u32!(true) ~
+    u32!(true) ~ // schema
     packet: alt!(
         parse_log
     ), || { packet }
@@ -29,7 +42,21 @@ named!(parse_log <&[u8], Packet>, chain!(
     tx_pwr: parse_string ~
     comment: parse_string ~
     name: parse_string,
-    || { Packet::Decode(call) }
+    || {
+        Packet::Log(LogEntry {
+            id: id,
+            date: date,
+            call: call,
+            gridsquare: gridsquare,
+            freq: freq,
+            mode: mode,
+            rst_sent: rst_sent,
+            rst_rcvd: rst_rcvd,
+            tx_pwr: tx_pwr,
+            comment: comment,
+            name: name
+        })
+    }
 ));
 
 named!(parse_string <&[u8], String>, map_res!(map_res!(
@@ -42,8 +69,8 @@ named!(parse_string <&[u8], String>, map_res!(map_res!(
 );
 
 named!(parse_datetime <&[u8], u64>, chain!(
-    julianDay: u64!(true) ~
-    microSeconds: u32!(true) ~
+    julian_day: u64!(true) ~
+    micro_seconds: u32!(true) ~
     take!(1),
-    || { (julianDay - 2440588) * 86400000 + microSeconds as u64 }
+    || { (julian_day - 2440588) * 86400000 + micro_seconds as u64 }
 ));

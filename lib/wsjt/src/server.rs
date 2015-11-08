@@ -1,5 +1,4 @@
 use std::net::UdpSocket;
-use std::str;
 
 pub struct Server {
     socket: UdpSocket
