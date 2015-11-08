@@ -1,6 +1,7 @@
 use std::str::FromStr;
 use std::str;
-use nom::{IResult, eof};
+use std::io::Read;
+use nom::IResult;
 use field;
 use contact::{Value, Contact};
 
@@ -50,6 +51,16 @@ named!(field_size <&[u8], usize>,
 named!(field_type <&[u8], &str>,
     map_res!(preceded!(tag!(":"), take_until!(">")), str::from_utf8)
 );
+
+pub fn parse<T: Read>(mut reader: T) -> Vec<Contact> {
+    let mut data = String::new();
+    reader.read_to_string(&mut data).unwrap();
+
+    match contacts(data.as_bytes()) {
+        IResult::Done(_, contacts) => contacts,
+        _ => Vec::new()
+    }
+}
 
 #[test]
 pub fn test_field_2() {
