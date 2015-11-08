@@ -1,5 +1,3 @@
-#![feature(custom_derive)]
-
 extern crate hyper;
 extern crate rustc_serialize;
 

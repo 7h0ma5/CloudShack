@@ -5,7 +5,6 @@ use iron::mime::Mime;
 use iron::status;
 
 use rustc_serialize::json;
-use dxcc;
 
 pub fn lookup(req: &mut Request) -> IronResult<Response> {
     let call = req.param("call").unwrap();

@@ -6,9 +6,8 @@ rust:
   - nightly
 matrix:
   allow_failures:
-    - rust:
-        - beta
-        - stable
+    - rust: beta
+    - rust: stable
 addons:
   apt:
     packages:
@@ -22,12 +21,8 @@ before_script:
   - curl -X PUT 127.0.0.1:5984/profiles
   - pip install 'travis-cargo<0.2' --user
   - export PATH=$HOME/.local/bin:$PATH
-  - curl http://cloudshack.org/dxcc.json.gz | gunzip > dxcc.json
 script:
   - travis-cargo build
-  - travis-cargo test -- -p adif
-  - travis-cargo test -- -p couchdb
-  - travis-cargo test -- -p dxcc
   - travis-cargo test
   - travis-cargo --only stable doc
 after_success:

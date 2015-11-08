@@ -35,9 +35,6 @@ pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
 }
 
 pub fn get_contact(req: &mut Request) -> IronResult<Response> {
-    let srv = couchdb::Server::new("localhost", 5984);
-    let db = srv.db("contacts");
-
     if let Some(id) = req.param("id") {
         if let Ok(data) = req.db().db("contacts").get(id) {
             let json_mime = "application/json".parse::<Mime>().unwrap();

@@ -28,7 +28,7 @@ impl<'a, 'b> RequestHelper for Request<'a, 'b> {
     }
 
     fn parse_query(&mut self) {
-        self.get_ref::<UrlEncodedQuery>();
+        let _ = self.get_ref::<UrlEncodedQuery>();
     }
 
     fn query(&self, parameter: &str) -> Option<&str> {

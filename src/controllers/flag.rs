@@ -1,10 +1,8 @@
 use iron::prelude::*;
-use iron::mime::Mime;
 use iron::status;
 use controllers::RequestHelper;
 use router::Router;
 use std::path::PathBuf;
-use std::fs::PathExt;
 use iron::headers::{CacheControl,CacheDirective};
 
 use adif;

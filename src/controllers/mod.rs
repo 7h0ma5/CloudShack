@@ -8,7 +8,6 @@ pub use self::helper::RequestHelper;
 use mount::Mount;
 use staticfile::Static;
 use std::path::Path;
-use router::Router;
 
 pub fn routes() -> Mount {
     let mut mount = Mount::new();

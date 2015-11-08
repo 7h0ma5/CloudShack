@@ -1,4 +1,3 @@
-#![feature(path_ext)]
 extern crate iron;
 extern crate plugin;
 extern crate router;
