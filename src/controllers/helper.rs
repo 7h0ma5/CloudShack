@@ -2,6 +2,7 @@ use plugin::Pluggable;
 use persistent::Read;
 use urlencoded::UrlEncodedQuery;
 use iron::Request;
+use std::collections::HashMap;
 use std::sync::Arc;
 use router::Router;
 
@@ -14,6 +15,7 @@ pub trait RequestHelper {
     fn dxcc(&self) -> &Arc<dxcc::Dxcc>;
 
     fn parse_query(&mut self);
+    fn merge_query<'c>(&'c self, params: &mut HashMap<&'c str, &'c str>);
     fn query(&self, parameter: &str) -> Option<&str>;
     fn param(&self, parameter: &str) -> Option<&str>;
 }
@@ -29,6 +31,17 @@ impl<'a, 'b> RequestHelper for Request<'a, 'b> {
 
     fn parse_query(&mut self) {
         let _ = self.get_ref::<UrlEncodedQuery>();
+    }
+
+    fn merge_query<'c>(&'c self, params: &mut HashMap<&'c str, &'c str>) {
+        if let Some(map) = self.extensions.get::<UrlEncodedQuery>() {
+            for (key, value) in map.iter() {
+                let key = &(**key);
+                if !params.contains_key(key) {
+                   params.insert(key, &*value[0]);
+                }
+            }
+        }
     }
 
     fn query(&self, parameter: &str) -> Option<&str> {
