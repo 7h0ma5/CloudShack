@@ -25,7 +25,7 @@
     <td>{{contact.doc.start|date:"dd.MM.yyyy":"UTC"}}</td>
     <td>{{contact.doc.start|date:"HH:mm":"UTC"}}</td>
     <td class="flag-cell">
-      <img src="/flag/24/{{contact.doc.dxcc}}" />
+      <img ng-src="/flag/24/{{contact.doc.dxcc}}" />
     </td>
     <td>
         <span ng-show="contact.doc.contest_id" data-tooltip="{{contact.doc.contest_id}}">

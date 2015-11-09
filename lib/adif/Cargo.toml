@@ -7,9 +7,5 @@ authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
 nom = "~0.5.0"
 chrono = "~0.2.0"
 rustc-serialize = "~0.3.16"
-
-[dependencies.phf]
-git = "https://github.com/7h0ma5/rust-phf.git"
-
-[dependencies.phf_macros]
-git = "https://github.com/7h0ma5/rust-phf.git"
+phf = "~0.7.7"
+phf_macros = "~0.7.7"

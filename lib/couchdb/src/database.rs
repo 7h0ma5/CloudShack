@@ -2,6 +2,7 @@ use server::{Server, Params};
 use error::{Result, Error};
 use rustc_serialize::{Encodable, Decodable, json};
 use rustc_serialize::json::{Json};
+use std::collections::HashMap;
 
 pub struct Database<'a> {
     server: &'a Server,
@@ -67,6 +68,9 @@ impl<'a> Database<'a> {
     }
 
     pub fn delete(&self, id: &str, rev: &str) -> Result<Json> {
-        self.server.delete(vec!(self.name, id), Some(vec!(("rev", rev))))
+        let mut params = HashMap::new();
+        params.insert("rev", rev);
+
+        self.server.delete(vec!(self.name, id), Some(params))
     }
 }
