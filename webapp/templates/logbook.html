@@ -21,24 +21,24 @@
     <th>Mode</th>
     <th>Frequency</th>
   </tr>
-  <tr ng-repeat="contact in contacts">
-    <td>{{contact.doc.start|date:"dd.MM.yyyy":"UTC"}}</td>
-    <td>{{contact.doc.start|date:"HH:mm":"UTC"}}</td>
+  <tr *ng-for="#contact of result">
+    <td>{%contact.doc.start|date:"dd.MM.yyyy"%}</td>
+    <td>{%contact.doc.start|date:"HH:mm"%}</td>
     <td class="flag-cell">
       <img src="/flag/24/{{contact.doc.dxcc}}" />
     </td>
     <td>
-        <span ng-show="contact.doc.contest_id" data-tooltip="{{contact.doc.contest_id}}">
+        <span ng-show="contact.doc.contest_id" data-tooltip="{contact.doc.contest_id}">
             <i style="color: #e67e22;" class="fa fa-trophy"></i>
         </span>
         <span ng-show="contact.doc.lotw_qsl_rcvd == 'Y'" data-tooltip="Confirmed via LotW">
             <i style="color: #27ae60;" class="fa fa-check-circle"></i>
         </span>
     </td>
-    <td><b><a ng-href="/#/contact/{{contact.doc._id}}">{{contact.doc.call}}</a></b></td>
+    <td><b><a href="/#/contact/{{contact.doc._id}}">{{contact.doc.call}}</a></b></td>
     <td>{{contact.doc.name}}</td>
     <td>{{contact.doc.mode}}</td>
-    <td>{{contact.doc.freq|number:3}} MHz</td>
+    <td>{{contact.doc.freq|number:'.3-3'}} MHz</td>
   </tr>
 </table>
 
