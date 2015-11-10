@@ -2,11 +2,11 @@
 name = "wsjt"
 version = "0.1.0"
 dependencies = [
- "nom 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nom 1.0.0-beta2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "nom"
-version = "0.4.0"
+version = "1.0.0-beta2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
