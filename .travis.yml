@@ -33,7 +33,7 @@ env:
     - TRAVIS_CARGO_NIGHTLY_FEATURE=""
 before_deploy:
   - mkdir package/
-  - bash tools/package.sh package/cloudshack-${TRAVIS_OS_NAME}.tar.gz
+  - bash tools/package.sh package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
 deploy:
   provider: s3
   access_key_id: AKIAJ6SIB6XJBNQL43GQ
