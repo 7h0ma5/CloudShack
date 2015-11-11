@@ -4,7 +4,6 @@ import {Http, URLSearchParams} from "angular2/http";
 @Injectable()
 export class ContactsService {
     constructor(public http: Http) {
-        console.log("Contacts Service started");
     }
 
     query(base: string, options?: Object) : string {
@@ -16,17 +15,26 @@ export class ContactsService {
         return base + "?" + params.toString();
     }
 
-    get(url: string, options?: Object) : any {
+    get_req(url: string, options?: Object) : any {
         var url = this.query(url, options);
-        return this.http.get(url, options)
-          .map(res => res.json())
+        return this.http.get(url)
+          .map(res => res.json());
+    }
+
+    get(id: string) : any {
+        return this.get_req("/contacts/" + id);
     }
 
     all(options?: Object) : any {
-        return this.get("/contacts", options);
+        return this.get_req("/contacts", options);
     }
 
     byCall(options?: Object) : any {
-        return this.get("/contacts/_view/byCall", options);
+        return this.get_req("/contacts/_view/byCall", options);
+    }
+
+    delete(id: string, rev: string) : any {
+        var url = this.query("/contacts/" + id, {rev: rev});
+        return this.http.delete(url);
     }
 }
