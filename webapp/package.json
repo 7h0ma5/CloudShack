@@ -4,6 +4,9 @@
   "description": "Amateur Radio logbook server",
   "author": "Thomas Gatzweiler <dl2ic@darc.de>",
   "license": "GPL-3.0",
+  "scripts": {
+    "build": "npm install && gulp"
+  },
   "devDependencies": {
     "bower": "^1.4.1",
     "gulp": "^3.9.0",
