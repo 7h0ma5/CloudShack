@@ -39,7 +39,7 @@ deploy:
   access_key_id: AKIAJ6SIB6XJBNQL43GQ
   secret_access_key:
     secure: fDFaiqoNVYXvVYDnQwL7Pz9uLZ4jMaGArP+j3ds41WUCQgPE9qaBZH6pK/8Y2DnUAUtJ1z0F8/XDk44kufL3+SoiAxZItp5SVnCIUBEt9mKEoxG21Y1zb7BaeUWYFKb6i/o4xLg4MrZM5vXr5NInWiYc4Obcx+MJYUlqlYahPCA=
-  bucket: cloudshack
+  bucket: static.cloudshack.org
   region: eu-central-1
   local-dir: package
   acl: public_read

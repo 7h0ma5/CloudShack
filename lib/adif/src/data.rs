@@ -2,22 +2,22 @@ use phf;
 
 #[derive(Debug)]
 pub struct Band<'a> {
-    name: &'a str,
-    start: f32,
-    end: f32
+    pub name: &'a str,
+    pub start: f32,
+    pub end: f32
 }
 
 #[derive(Debug)]
 pub struct LegacyMode<'a> {
-    mode: &'a str,
-    submode: &'a str
+    pub mode: &'a str,
+    pub submode: &'a str
 }
 
 #[derive(Debug)]
 pub struct DxccEntity<'a> {
-    id: u32,
-    name: &'a str,
-    flag: &'a str
+    pub id: u32,
+    pub name: &'a str,
+    pub flag: &'a str
 }
 
 pub static BANDS: phf::Map<&'static str, Band<'static>> = phf_map!{
@@ -53,18 +53,12 @@ pub static BANDS: phf::Map<&'static str, Band<'static>> = phf_map!{
 };
 
 pub fn find_band<'a>(freq: f32) -> Option<&'static Band<'static>> {
-    for (name, band) in BANDS.into_iter() {
+    for (_, band) in BANDS.into_iter() {
         if band.start <= freq && freq <= band.end {
             return Some(band)
         }
     }
     None
-}
-
-#[test]
-pub fn test_bands() {
-    assert_eq!(BANDS.get("70cm").unwrap().name, "70cm");
-    assert_eq!(BANDS.get("70cm").unwrap().start, find_band(433.500).unwrap().start);
 }
 
 pub static LEGACY_MODES: phf::Map<&'static str, LegacyMode<'static>> = phf_map!{
@@ -113,12 +107,6 @@ pub static LEGACY_MODES: phf::Map<&'static str, LegacyMode<'static>> = phf_map!{
 pub fn find_legacy_mode<'a>(mode: &str) -> Option<&'static LegacyMode<'static>> {
     LEGACY_MODES.get(mode)
 }
-
-#[test]
-pub fn test_legacy_modes() {
-    assert_eq!(find_legacy_mode("PSK31").unwrap().mode, "PSK");
-}
-
 
 pub static DXCC_ENTITIES: [Option<&'static DxccEntity<'static>>; 522] = [
     None,
@@ -652,9 +640,4 @@ pub fn get_flag(id: usize) -> Option<&'static str> {
     else {
         None
     }
-}
-
-#[test]
-pub fn test_get_flag() {
-    assert_eq!(get_flag(521).unwrap(), "SS");
 }
