@@ -2,19 +2,19 @@ use std::str::FromStr;
 use std::str;
 use std::io::Read;
 use nom::IResult;
-use field;
 use contact::{Value, Contact};
 
 type ContactList = Vec<Contact>;
 
 named!(contacts <&[u8], ContactList>, chain!(
-        contacts: many0!(contact),
+        opt!(header) ~
+        contacts: many1!(contact),
     || { contacts }
 ));
 
 named!(contact <&[u8], Contact>, chain!(
     fields: many0!(field) ~
-    alt!(tag!("<eor>") | tag!("<EOR>")),
+    end_of_record,
     || {
         let mut contact = Contact::new();
         for (key, value) in fields {
@@ -25,6 +25,24 @@ named!(contact <&[u8], Contact>, chain!(
         }
         contact
     }
+));
+
+named!(header <&[u8], ()>, chain!(
+    many0!(field) ~
+    end_of_header,
+    || { () }
+));
+
+named!(end_of_header <&[u8], ()>, chain!(
+    take_until!("<") ~
+    alt!(tag!("<eoh>") | tag!("<EOH>")),
+    || { () }
+));
+
+named!(end_of_record <&[u8], ()>, chain!(
+    take_until!("<") ~
+    alt!(tag!("<eor>") | tag!("<EOR>")),
+    || { () }
 ));
 
 named!(field <&[u8], (&str, Option<&str>)>, chain!(
@@ -52,27 +70,20 @@ named!(field_type <&[u8], &str>,
     map_res!(preceded!(tag!(":"), take_until!(">")), str::from_utf8)
 );
 
-pub fn parse<T: Read>(mut reader: T) -> Vec<Contact> {
-    let mut data = String::new();
-    reader.read_to_string(&mut data).unwrap();
-
-    match contacts(data.as_bytes()) {
-        IResult::Done(_, contacts) => contacts,
+pub fn parse_bytes(bytes: &[u8]) -> Vec<Contact> {
+    let res = contacts(bytes);
+    match res {
+        IResult::Done(_, data) => data,
         _ => Vec::new()
     }
 }
 
-#[test]
-pub fn test_field_2() {
-    assert_eq!(field(b"<tEsT:2>AB"), IResult::Done(&b""[..], ("tEsT", Some("AB"))));
-}
-
-#[test]
-pub fn test_field_3() {
-    assert_eq!(field(b"<CALL:7:S>He<ll>o"), IResult::Done(&b""[..], ("CALL", Some("He<ll>o"))));
-}
-
-#[test]
-pub fn contact_test() {
-    println!("contact: {:?}", contacts(b"<CALL:5>DL2IC<MODE:2>CW<BLA:0>AVCSD<EOR>"));
+pub fn parse<T: Read>(mut reader: T) -> Vec<Contact> {
+    let mut data = String::new();
+    if reader.read_to_string(&mut data).is_ok() {
+        parse_bytes(data.as_bytes())
+    }
+    else {
+        Vec::new()
+    }
 }

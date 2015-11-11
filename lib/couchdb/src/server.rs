@@ -7,6 +7,7 @@ use hyper::status::StatusCode;
 use hyper::Url;
 use rustc_serialize::{Decodable, json};
 use rustc_serialize::json::{Json};
+use std::collections::HashMap;
 
 pub struct Server {
     url: String,
@@ -21,7 +22,7 @@ pub struct ServerInfo {
 }
 
 pub type Path<'a> = Vec<&'a str>;
-pub type Params<'a> = Vec<(&'a str, &'a str)>;
+pub type Params<'a> = HashMap<&'a str, &'a str>;
 
 impl Server {
     pub fn new(host: &str, port: u16) -> Server {

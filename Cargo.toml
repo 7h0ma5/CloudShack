@@ -14,6 +14,7 @@ bodyparser = "*"
 persistent = "*"
 toml = "*"
 rustc-serialize = "*"
+chrono = "~0.2.0"
 
 [dependencies.logger]
 git = "https://github.com/iron/logger.git"

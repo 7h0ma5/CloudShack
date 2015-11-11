@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 use std::convert::From;
 use chrono::datetime::DateTime as ChronoDateTime;
-use chrono::offset::fixed::FixedOffset;
+use chrono::UTC;
 use rustc_serialize::{json, Encoder, Encodable, Decoder, Decodable};
 
-pub type DateTime = ChronoDateTime<FixedOffset>;
+pub type DateTime = ChronoDateTime<UTC>;
 
-#[derive(Debug, RustcDecodable)]
+#[derive(Debug, PartialEq, RustcDecodable)]
 pub enum Value {
     Number(f64),
     Boolean(bool),
@@ -19,35 +19,44 @@ pub struct Contact {
 }
 
 impl Contact {
+    /// Create an empty Contact.
     pub fn new() -> Contact {
         Contact { fields: HashMap::new() }
     }
 
+    /// Returns a reference to the Value corresponding to the key.
     pub fn get(&self, key: &str) -> Option<&Value> {
         self.fields.get(key)
     }
 
+    /// Set the value for a key.
     pub fn set(&mut self, key: &str, value: Value) {
         self.fields.insert(String::from(key), value);
     }
 
     fn get_datetime(&self, key: &str) -> Option<DateTime> {
-        match self.fields.get(key) {
-            Some(&Value::Text(ref start)) => DateTime::parse_from_rfc3339(start).ok(),
-            _ => None
+        if let Some(&Value::Text(ref datetime)) = self.fields.get(key) {
+            let parsed = ChronoDateTime::parse_from_rfc3339(datetime);
+            parsed.map(|res| res.with_timezone(&UTC)).ok()
+        }
+        else {
+            None
         }
     }
 
+    /// Returns the start time of the contact.
     pub fn start(&self) -> Option<DateTime> {
         self.get_datetime("start")
     }
 
+    /// Returns the end time of the contact.
     pub fn end(&self) -> Option<DateTime> {
         self.get_datetime("end")
     }
 
-    pub fn to_json(&self) -> String {
-        json::encode(self).unwrap()
+    /// Convert the contact to a JSON-encoded String.
+    pub fn to_json(&self) -> Option<String> {
+        json::encode(self).ok()
     }
 }
 
@@ -89,27 +98,4 @@ impl From<String> for Contact {
             Contact::new()
         }
     }
-}
-
-#[cfg(test)]
-mod datetime_test {
-    use chrono::*;
-    use contact::Contact;
-    use contact::Value;
-
-    #[test]
-    pub fn test_datetime() {
-        let mut contact = Contact::new();
-        contact.set("start", Value::Text(String::from("2012-12-19T16:39:57.123Z")));
-        assert_eq!(contact.start().unwrap(), UTC.ymd(2012, 12, 19).and_hms_milli(16, 39, 57, 123));
-    }
-}
-
-#[test]
-pub fn test_json() {
-    let mut contact = Contact::new();
-    contact.set("call", Value::Text(String::from("DL2IC")));
-    contact.set("qsl_sent", Value::Boolean(true));
-    let encoded = contact.to_json();
-    println!("{}", encoded);
 }
