@@ -8,6 +8,7 @@ pub mod error;
 pub use server::Server;
 pub use database::Database;
 pub use error::Error;
+pub use error::Result;
 
 #[derive(RustcEncodable)]
 pub struct TestDoc {
