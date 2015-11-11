@@ -37,6 +37,10 @@
 
 <p>
   <i class="fa fa-hand-o-right"></i>
-  <a ng-if="qso_stats.total == 0" href="/#/contact/new">Log your first contact!</a>
-  <a ng-if="qso_stats.total > 0" href="/#/contact/new">Log a new contact</a>
+  <a *ng-if="qso_stats.total == 0" href="/#/contact/new">
+    Log your first contact!
+  </a>
+  <a *ng-if="qso_stats.total > 0" href="/#/contact/new">
+    Log a new contact
+  </a>
 </p>

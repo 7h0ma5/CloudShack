@@ -1,7 +1,9 @@
-import {Component} from "angular2/angular2";
+import {Component, View, NgIf} from "angular2/angular2";
 
-@Component({
-    templateUrl: "/templates/home.html"
+@Component({})
+@View({
+    templateUrl: "/templates/home.html",
+    directives: [NgIf]
 })
 export class HomePage {
     qso_stats: Object;

@@ -15,23 +15,14 @@ import {LogbookPage} from "../pages/logbook";
     new Route({path: "/", component: HomePage, as: "Home"}),
     new Route({path: "/logbook", component: LogbookPage, as: "Logbook"}),
     new Route({path: "/contact/new", component: HomePage, as: "NewContact"}),
+    new Route({path: "/contact/:id", component: HomePage, as: "ShowContact"}),
     new Route({path: "/cluster", component: HomePage, as: "Cluster"}),
     new Route({path: "/import", component: HomePage, as: "Import"}),
     new Route({path: "/export", component: HomePage, as: "Export"}),
     new Route({path: "/settings", component: HomePage, as: "Settings"})
 ])
 export class AppComponent {
-    router: Router;
-    location: Location;
-
-    constructor(router: Router, location: Location) {
-        this.router = router;
-        this.location = location;
-        console.log("CloudShack is ready!", this.router, this.location);
+    constructor() {
+        console.log("CloudShack is ready!");
     }
-    /*
-    getLinkStyle(path) {
-        return this.location.path() === path;
-    }
-    */
 }
