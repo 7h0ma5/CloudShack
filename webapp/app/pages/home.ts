@@ -1,8 +1,8 @@
 import {Component, View, NgIf, NgFor} from "angular2/angular2";
-import {ContactsService} from "../services/contacts";
+import {ContactService} from "../services/contact";
 
 @Component({
-    providers: [ContactsService]
+    providers: [ContactService]
 })
 @View({
     templateUrl: "/templates/home.html",
@@ -12,7 +12,7 @@ export class HomePage {
     qso_stats = {total: 0, year: 0, month: 0};
     modes: Array<[string, number]> = [];
 
-    constructor(public api: ContactsService) {
+    constructor(public api: ContactService) {
         this.reload();
     }
 

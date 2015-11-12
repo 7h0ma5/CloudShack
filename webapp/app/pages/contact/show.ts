@@ -1,10 +1,10 @@
 import {Component, View} from "angular2/angular2";
 import {NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault} from "angular2/angular2";
 import {RouteParams, Router, Location} from "angular2/router";
-import {ContactsService} from "../../services/contacts";
+import {ContactService} from "../../services/contact";
 
 @Component({
-    providers: [ContactsService]
+    providers: [ContactService]
 })
 @View({
     templateUrl: "/templates/contact/show.html",
@@ -15,7 +15,7 @@ export class ShowContactPage {
 
     constructor(
         params: RouteParams,
-        public api: ContactsService,
+        public api: ContactService,
         public router: Router,
         public location: Location
     ) {

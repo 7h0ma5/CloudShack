@@ -1,9 +1,9 @@
 import {Component, View, NgFor, NgIf} from "angular2/angular2";
 import {RouterLink} from "angular2/router";
-import {ContactsService} from "../services/contacts";
+import {ContactService} from "../services/contact";
 
 @Component({
-    providers: [ContactsService]
+    providers: [ContactService]
 })
 @View({
     templateUrl: "/templates/logbook.html",
@@ -15,7 +15,7 @@ export class LogbookPage {
     limit: number = 20;
     pages = {prev: [], next: null, start: null};
 
-    constructor(public api: ContactsService) {
+    constructor(public api: ContactService) {
         this.reload();
     }
 

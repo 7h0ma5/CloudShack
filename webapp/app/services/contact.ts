@@ -2,7 +2,7 @@ import {Injectable} from "angular2/angular2";
 import {Http, URLSearchParams} from "angular2/http";
 
 @Injectable()
-export class ContactsService {
+export class ContactService {
     constructor(public http: Http) {
     }
 
