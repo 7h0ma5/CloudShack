@@ -10,6 +10,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
+        "moduleResolution": "classic",
         "outDir": "public/"
     }
 }

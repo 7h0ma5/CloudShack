@@ -1,5 +1,5 @@
 import {Component, View, NgIf, NgFor} from "angular2/angular2";
-import {ContactService} from "../services/contact";
+import {ContactService} from "services/contact";
 
 @Component({
     providers: [ContactService]

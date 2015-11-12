@@ -5,18 +5,26 @@ var gulp = require("gulp"),
 var NPM_DIR = "node_modules";
 var project = $.typescript.createProject("tsconfig.json");
 
-gulp.task("app.js", function() {
+gulp.task("app.js", ["tsd"], function() {
     return gulp.src([
         "app/**/*.ts",
-        NPM_DIR + "/angular2/bundles/typings/**/*.d.ts",
+        "typings/tsd.d.ts",
+        NPM_DIR + "/angular2/bundles/typings/**/*.d.ts"
     ])
         .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.typescript(project))
         .js
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest("public/app"))
+        .pipe(gulp.dest("public/js"))
         .pipe($.livereload());
+});
+
+gulp.task("tsd", function(callback) {
+    $.tsd({
+        command: "reinstall",
+        config: "./tsd.json"
+    }, callback);
 });
 
 gulp.task("app.css", function() {
@@ -44,16 +52,22 @@ gulp.task("vendor.css", function() {
 });
 
 gulp.task("vendor.js", function() {
-    return gulp.src([
+    var standalone = gulp.src([
+        NPM_DIR + "/leaflet/dist/leaflet.js"
+    ])
+        .pipe(gulp.dest("public/js"));
+
+    var vendor = gulp.src([
         NPM_DIR + "/systemjs/dist/system.src.js",
         "system.conf.js",
         NPM_DIR + "/angular2/bundles/angular2.dev.js",
         NPM_DIR + "/angular2/bundles/router.dev.js",
-        NPM_DIR + "/angular2/bundles/http.dev.js",
-        NPM_DIR + "/leaflet/dist/leaflet.js"
+        NPM_DIR + "/angular2/bundles/http.dev.js"
     ])
         .pipe($.concat("vendor.js"))
         .pipe(gulp.dest("public/js"));
+
+    return merge(standalone, vendor);
 });
 
 gulp.task("fonts", function() {
@@ -73,12 +87,18 @@ gulp.task("fonts", function() {
 });
 
 gulp.task("images", function() {
-    return gulp.src([
-            NPM_DIR + "/leaflet/dist/images/*.png",
+    var css = gulp.src([
+            NPM_DIR + "/leaflet/dist/images/*.png"
+    ])
+        .pipe(gulp.dest("public/css/images"));
+
+    var images = gulp.src([
             "images/**/*"
     ])
         .pipe($.changed("public/images"))
         .pipe(gulp.dest("public/images"));
+
+    return merge(css, images);
 });
 
 gulp.task("templates", function() {

@@ -1,9 +1,10 @@
 import {Component, View} from "angular2/angular2";
 import {ROUTER_DIRECTIVES, RouteConfig, Route} from "angular2/router";
-import {ClockComponent} from "./clock";
-import {HomePage} from "../pages/home";
-import {LogbookPage} from "../pages/logbook";
-import {ShowContactPage} from "../pages/contact/show";
+import {ClockComponent} from "components/clock";
+import {HomePage} from "pages/home";
+import {LogbookPage} from "pages/logbook";
+import {NewContactPage} from "pages/contact/new";
+import {ShowContactPage} from "pages/contact/show";
 
 @Component({
     selector: "app"
@@ -15,7 +16,7 @@ import {ShowContactPage} from "../pages/contact/show";
 @RouteConfig([
     new Route({path: "/", component: HomePage, as: "Home"}),
     new Route({path: "/logbook", component: LogbookPage, as: "Logbook"}),
-    new Route({path: "/contact/new", component: HomePage, as: "NewContact"}),
+    new Route({path: "/contact/new", component: NewContactPage, as: "NewContact"}),
     new Route({path: "/contact/:id", component: ShowContactPage, as: "ShowContact"}),
     new Route({path: "/contact/:id/edit", component: HomePage, as: "EditContact"}),
     new Route({path: "/cluster", component: HomePage, as: "Cluster"}),

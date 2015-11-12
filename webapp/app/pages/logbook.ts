@@ -1,6 +1,6 @@
 import {Component, View, NgFor, NgIf} from "angular2/angular2";
 import {RouterLink} from "angular2/router";
-import {ContactService} from "../services/contact";
+import {ContactService} from "services/contact";
 
 @Component({
     providers: [ContactService]

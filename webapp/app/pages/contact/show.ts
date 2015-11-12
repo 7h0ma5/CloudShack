@@ -1,7 +1,7 @@
 import {Component, View} from "angular2/angular2";
 import {NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault} from "angular2/angular2";
 import {RouteParams, Router, Location} from "angular2/router";
-import {ContactService} from "../../services/contact";
+import {ContactService} from "services/contact";
 
 @Component({
     providers: [ContactService]
