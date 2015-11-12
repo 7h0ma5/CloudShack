@@ -4,9 +4,9 @@ use rustc_serialize::{Encodable, Decodable, json};
 use rustc_serialize::json::{Json};
 use std::collections::HashMap;
 
-pub struct Database<'a> {
-    server: &'a Server,
-    name: &'a str
+pub struct Database {
+    server: Server,
+    name: String
 }
 
 #[derive(RustcDecodable, Debug)]
@@ -31,24 +31,24 @@ pub struct DatabaseInfo {
     pub disk_format_version: usize
 }
 
-impl<'a> Database<'a> {
-    pub fn new(server: &'a Server, name: &'a str) -> Database<'a> {
-        Database { server: server, name: name }
+impl Database {
+    pub fn new(server: Server, name: &str) -> Database {
+        Database { server: server, name: String::from(name) }
     }
 
     /// Create the database
     pub fn create(&self) -> Result<Json> {
-        self.server.put(vec!(self.name))
+        self.server.put(vec!(&*self.name))
     }
 
     /// Destroy the database
     pub fn destroy(&self) -> Result<Json> {
-        self.server.delete(vec!(self.name), None)
+        self.server.delete(vec!(&*self.name), None)
     }
 
     /// Get Database
     pub fn info(&self) -> Result<DatabaseInfo> {
-        let data = try!(self.server.get(vec!(self.name), None));
+        let data = try!(self.server.get(vec!(&*self.name), None));
         let mut decoder = json::Decoder::new(data);
         Ok(try!(Decodable::decode(&mut decoder)))
     }
@@ -56,21 +56,21 @@ impl<'a> Database<'a> {
     // Insert a document into the database
     pub fn insert<T: Encodable>(&self, doc: T) -> Result<Json> {
         let body = try!(json::encode(&doc));
-        self.server.post(vec!(self.name), Some(body))
+        self.server.post(vec!(&*self.name), Some(body))
     }
 
     pub fn get(&self, id: &str) -> Result<Json> {
-        self.server.get(vec!(self.name, id), None)
+        self.server.get(vec!(&*self.name, id), None)
     }
 
     pub fn view(&self, designdoc: &str, viewdoc: &str, params: Option<Params>) -> Result<Json> {
-        self.server.get(vec!(self.name, "_design", designdoc, "_view", viewdoc), params)
+        self.server.get(vec!(&*self.name, "_design", designdoc, "_view", viewdoc), params)
     }
 
     pub fn delete(&self, id: &str, rev: &str) -> Result<Json> {
         let mut params = HashMap::new();
         params.insert("rev", rev);
 
-        self.server.delete(vec!(self.name, id), Some(params))
+        self.server.delete(vec!(&*self.name, id), Some(params))
     }
 }

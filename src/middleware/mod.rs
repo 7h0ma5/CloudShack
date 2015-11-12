@@ -1,2 +1,2 @@
-pub mod database;
+pub mod contacts;
 pub mod dxcc;

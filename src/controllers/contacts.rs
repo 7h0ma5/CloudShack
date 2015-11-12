@@ -29,12 +29,12 @@ pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
     params.insert("include_docs", req.query("include_docs").unwrap_or("true"));
     req.merge_query(&mut params);
 
-    couch_response(req.db().db("contacts").view("logbook", view, Some(params)))
+    couch_response(req.contacts().view("logbook", view, Some(params)))
 }
 
 pub fn get_contact(req: &mut Request) -> IronResult<Response> {
     if let Some(id) = req.param("id") {
-        couch_response(req.db().db("contacts").get(id))
+        couch_response(req.contacts().get(id))
     }
     else {
         Ok(Response::with((status::NotFound, "Not Found")))
@@ -51,7 +51,7 @@ pub fn delete_contact(req: &mut Request) -> IronResult<Response> {
         return Ok(Response::with((status::NotFound, "NotFound")));
     }
 
-    couch_response(req.db().db("contacts").delete(id.unwrap(), rev.unwrap()))
+    couch_response(req.contacts().delete(id.unwrap(), rev.unwrap()))
 }
 
 pub fn stats(req: &mut Request) -> IronResult<Response> {
@@ -61,7 +61,7 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
     params.insert("group_level", req.query("group_level").unwrap_or("3"));
     req.merge_query(&mut params);
 
-    couch_response(req.db().db("contacts").view("logbook", "stats", Some(params)))
+    couch_response(req.contacts().view("logbook", "stats", Some(params)))
 }
 
 pub fn routes() -> Router {
