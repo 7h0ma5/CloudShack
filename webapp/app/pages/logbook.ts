@@ -26,13 +26,13 @@ export class LogbookPage {
         };
 
         if (this.filter) {
-            options["startkey"] = [this.filter];
-            options["endkey"] = [this.filter, {}];
+            options["startkey"] = JSON.stringify([this.filter]);
+            options["endkey"] = JSON.stringify([this.filter, {}]);
             options["descending"] = false;
         }
 
         if (this.pages.start) {
-            options["startkey"] = this.pages.start.key;
+            options["startkey"] = JSON.stringify(this.pages.start.key);
             options["startkey_docid"] = this.pages.start.id;
         }
 
@@ -54,7 +54,8 @@ export class LogbookPage {
     }
 
     prevPage() {
-        this.pages.next = this.pages.prev.pop();
+        this.pages.next = this.pages.start;
+        this.pages.start = this.pages.prev.pop();
         this.reload();
     }
 

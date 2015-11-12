@@ -10,7 +10,7 @@ export class ContactsService {
         if (!options) return base;
         var params = new URLSearchParams();
         for (var key in options) {
-            params.set(key, JSON.stringify(options[key]));
+            params.set(key, String(options[key]));
         }
         return base + "?" + params.toString();
     }
