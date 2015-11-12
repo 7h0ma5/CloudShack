@@ -33,6 +33,14 @@ export class ContactsService {
         return this.get_req("/contacts/_view/byCall", options);
     }
 
+    byMode(options?: Object) : any {
+        return this.get_req("/contacts/_view/byMode", options);
+    }
+
+    stats(options?: Object) : any {
+        return this.get_req("/contacts/_stats", options);
+    }
+
     delete(id: string, rev: string) : any {
         var url = this.query("/contacts/" + id, {rev: rev});
         return this.http.delete(url);
