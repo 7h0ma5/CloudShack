@@ -28,7 +28,7 @@ pub fn main() {
     println!("Loading configuration from config.toml...");
     let config = config::Config::load();
 
-    let port = config.get_int("general.port").unwrap_or(3000);
+    let port = config.get_int("general.port").unwrap_or(7373);
     let wsjt = config.get_bool("general.wsjt").unwrap_or(false);
 
     if wsjt {
