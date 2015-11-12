@@ -39,13 +39,14 @@ pub fn main() {
 
     let db_host = config.get_str("database.local.host").unwrap_or("localhost");
     let db_port = config.get_int("database.local.port").unwrap_or(5984);
-    let db = couchdb::Server::new(db_host, db_port as u16);
+    let db_name = config.get_str("database.local.name").unwrap_or("contacts");
+    let couch = couchdb::Server::new(db_host, db_port as u16);
 
     let mut chain = Chain::new(controllers::routes());
 
     let (logger_before, logger_after) = Logger::new(None);
     println!("Initializing database middleware...");
-    chain.link_before(middleware::database::create(db));
+    chain.link_before(middleware::contacts::create(couch.db(db_name)));
     println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
     chain.link_before(logger_before);

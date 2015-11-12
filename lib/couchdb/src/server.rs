@@ -6,12 +6,11 @@ use hyper::header::{ContentType, Headers};
 use hyper::status::StatusCode;
 use hyper::Url;
 use rustc_serialize::{Decodable, json};
-use rustc_serialize::json::{Json};
 use std::collections::HashMap;
 
+#[derive(Clone)]
 pub struct Server {
-    url: String,
-    client: Client
+    url: String
 }
 
 #[derive(RustcDecodable, Debug)]
@@ -26,7 +25,7 @@ pub type Params<'a> = HashMap<&'a str, &'a str>;
 
 impl Server {
     pub fn new(host: &str, port: u16) -> Server {
-        Server { url: format!("http://{}:{}", host, port), client: Client::new() }
+        Server { url: format!("http://{}:{}", host, port) }
     }
 
     pub fn info(&self) -> Result<ServerInfo> {
@@ -35,8 +34,8 @@ impl Server {
         Ok(try!(Decodable::decode(&mut decoder)))
     }
 
-    pub fn db<'a>(&'a self, name: &'a str) -> Database<'a> {
-        Database::new(self, name)
+    pub fn db(&self, name: &str) -> Database {
+        Database::new(self.clone(), name)
     }
 
     pub fn make_url(&self, path: Path) -> Result<Url> {
@@ -47,8 +46,9 @@ impl Server {
     }
 
     pub fn request(&self, method: Method, path: Path, params: Option<Params>,
-                   body: Option<String>) -> Result<Json>
+                   body: Option<String>) -> Result<json::Json>
     {
+        let client = Client::new();
         let mut url = try!(self.make_url(path));
 
         let mut headers = Headers::new();
@@ -60,10 +60,10 @@ impl Server {
 
         let mut res = if body.is_some() {
             let body = body.unwrap();
-            try!(self.client.request(method, url).headers(headers).body(&body).send())
+            try!(client.request(method, url).headers(headers).body(&body).send())
         }
         else {
-            try!(self.client.request(method, url).headers(headers).send())
+            try!(client.request(method, url).headers(headers).send())
         };
 
         match res.status {
@@ -73,25 +73,25 @@ impl Server {
                     return Err(Error::CouchError)
                 }
                 else {
-                    Ok(try!(Json::from_reader(&mut res)))
+                    Ok(try!(json::Json::from_reader(&mut res)))
                 }
             }
         }
     }
 
-    pub fn get(&self, path: Path, params: Option<Params>) -> Result<Json> {
+    pub fn get(&self, path: Path, params: Option<Params>) -> Result<json::Json> {
         self.request(Method::Get, path, params, None)
     }
 
-    pub fn post(&self, path: Path, body: Option<String>) -> Result<Json> {
+    pub fn post(&self, path: Path, body: Option<String>) -> Result<json::Json> {
         self.request(Method::Post, path, None, body)
     }
 
-    pub fn put(&self, path: Path) -> Result<Json> {
+    pub fn put(&self, path: Path) -> Result<json::Json> {
         self.request(Method::Put, path, None, None)
     }
 
-    pub fn delete(&self, path: Path, params: Option<Params>) -> Result<Json> {
+    pub fn delete(&self, path: Path, params: Option<Params>) -> Result<json::Json> {
         self.request(Method::Delete, path, params, None)
     }
 }

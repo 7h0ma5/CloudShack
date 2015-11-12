@@ -11,7 +11,7 @@ use couchdb;
 use dxcc;
 
 pub trait RequestHelper {
-    fn db(&self) -> &Arc<couchdb::Server>;
+    fn contacts(&self) -> &Arc<couchdb::Database>;
     fn dxcc(&self) -> &Arc<dxcc::Dxcc>;
 
     fn parse_query(&mut self);
@@ -21,8 +21,8 @@ pub trait RequestHelper {
 }
 
 impl<'a, 'b> RequestHelper for Request<'a, 'b> {
-    fn db(&self) -> &Arc<couchdb::Server> {
-        self.extensions.get::<Read<middleware::database::CouchDB>>().unwrap()
+    fn contacts(&self) -> &Arc<couchdb::Database> {
+        self.extensions.get::<Read<middleware::contacts::Contacts>>().unwrap()
     }
 
     fn dxcc(&self) -> &Arc<dxcc::Dxcc> {
