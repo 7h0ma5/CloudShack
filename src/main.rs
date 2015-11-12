@@ -52,6 +52,7 @@ pub fn main() {
     chain.link_before(logger_before);
     chain.link_after(logger_after);
 
-    println!("Starting http server...");
-    Iron::new(chain).http(&*format!("0.0.0.0:{}", port)).unwrap();
+    let http_addr = &*format!("0.0.0.0:{}", port);
+    println!("Starting http server on {}...", http_addr);
+    Iron::new(chain).http(http_addr).unwrap();
 }
