@@ -32,6 +32,7 @@ after_success:
 env:
   global:
     - TRAVIS_CARGO_NIGHTLY_FEATURE=""
+    - secure: "VPWkTkyI/fCPvEzoT3S32CHslYY1fa9OKqS09xuKCHvggBSG2prB1WWTH4IDcaEjMK8A8QVrIyfuV4kO1XKVqmFcMKL2Pn1VZ+ZWsv+LmmN98oXzdsT38dVGCzuwS9tMQzfIwH/fbFhK9b2OzTnNa55XUQBPxp6Zk8QDXZ9SuVA="
 before_deploy:
   - mkdir package/
   - bash tools/package.sh package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
