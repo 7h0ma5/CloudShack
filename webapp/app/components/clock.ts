@@ -1,10 +1,10 @@
 import {Component, DatePipe} from "angular2/angular2";
 
 @Component({
-    selector: 'clock',
-    template: '{{time}}'
+    selector: "clock",
+    template: "{{time}}"
 })
-export class ClockComponent {
+export class Clock {
     time: String;
     datepipe: DatePipe;
 
