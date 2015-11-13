@@ -8,8 +8,7 @@ var project = $.typescript.createProject("tsconfig.json");
 gulp.task("app.js", ["tsd"], function() {
     return gulp.src([
         "app/**/*.ts",
-        "typings/tsd.d.ts",
-        NPM_DIR + "/angular2/bundles/typings/**/*.d.ts"
+        "typings/tsd.d.ts"
     ])
         .pipe($.plumber())
         .pipe($.sourcemaps.init())

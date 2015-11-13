@@ -1,7 +1,7 @@
 import {Component, View, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/angular2";
-import {ContactService} from "services/contact";
-import {WorldMap} from "components/worldmap";
-import {MODES, CONTESTS} from "constants";
+import {ContactService} from "../../services/contact";
+import {WorldMap} from "../../components/worldmap";
+import {MODES, CONTESTS} from "../../constants";
 
 @Component({
     providers: [ContactService]

@@ -4,6 +4,7 @@ import {Http, URLSearchParams} from "angular2/http";
 @Injectable()
 export class ContactService {
     constructor(public http: Http) {
+
     }
 
     query(base: string, options?: Object) : string {
