@@ -1,15 +1,17 @@
 import {Component, View, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/angular2";
 import {ContactService} from "../../services/contact";
+import {DxccService} from "../../services/dxcc";
 import {TAB_DIRECTIVES} from "../../components/tabs";
+import {Uppercase} from "../../components/uppercase";
 import {WorldMap} from "../../components/worldmap";
 import {MODES, CONTESTS} from "../../constants";
 
 @Component({
-    providers: [ContactService]
+    providers: [ContactService, DxccService]
 })
 @View({
     templateUrl: "/templates/contact/new.html",
-    directives: [WorldMap, NgIf, NgFor, TAB_DIRECTIVES, FORM_DIRECTIVES]
+    directives: [WorldMap, Uppercase, NgIf, NgFor, TAB_DIRECTIVES, FORM_DIRECTIVES]
 })
 export class NewContactPage {
     contact: Object = {};
@@ -22,13 +24,18 @@ export class NewContactPage {
     contests = CONTESTS;
 
     constructor(
-        public api: ContactService
+        public api: ContactService,
+        public dxccService: DxccService
     ) {
 
     }
 
     qrz() {
         window.open("http://www.qrz.com/db/" + this.contact["call"]);
+    }
+
+    save() {
+        console.log(this.contact);
     }
 
     reset() {
