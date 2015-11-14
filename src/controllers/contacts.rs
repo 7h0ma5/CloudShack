@@ -5,7 +5,7 @@ use iron::mime::Mime;
 use iron::status;
 use std::collections::HashMap;
 use rustc_serialize::json;
-
+use adif;
 use couchdb;
 
 pub fn couch_response(result: couchdb::Result<json::Json>) -> IronResult<Response> {
@@ -75,6 +75,16 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
     couch_response(req.contacts().view("logbook", "stats", Some(params)))
 }
 
+pub fn import_adi(req: &mut Request) -> IronResult<Response> {
+    req.parse_query();
+
+    let result = adif::adi::parse(&mut req.body);
+
+    println!("{:?}", result);
+
+    Ok(Response::with((status::Ok, "Done")))
+}
+
 pub fn routes() -> Router {
     let mut router = Router::new();
     router.get("/", all_contacts);
@@ -82,6 +92,7 @@ pub fn routes() -> Router {
     router.get("/_view/:view", all_contacts);
     router.get("/:id", get_contact);
     router.post("/", save_contact);
+    router.post("/_adi", import_adi);
     router.delete("/:id", delete_contact);
     router
 }
