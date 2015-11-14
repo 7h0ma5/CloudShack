@@ -42,11 +42,7 @@
 
 <div class="page-wrapper">
   <div class="page">
-    <div ng-controller="FlashCtrl">
-      <div class="flash" *ng-if="show">
-        <span class="flash-{message.level}">{message.text}</span>
-      </div>
-    </div>
+    <flash-view></flash-view>
     <router-outlet></router-outlet>
   </div>
 </div>

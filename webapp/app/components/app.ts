@@ -1,6 +1,7 @@
 import {Component, View, NgIf} from "angular2/angular2";
 import {ROUTER_DIRECTIVES, RouteConfig, Route} from "angular2/router";
 import {Clock} from "./clock";
+import {FlashView} from "./flash";
 import {ProfileSelect} from "./profile-select";
 import {StatusSelect} from "./status-select";
 import {HomePage} from "../pages/home";
@@ -13,7 +14,7 @@ import {ShowContactPage} from "../pages/contact/show";
 })
 @View({
     templateUrl: "/templates/layout.html",
-    directives: [Clock, ProfileSelect, StatusSelect, NgIf, ROUTER_DIRECTIVES]
+    directives: [Clock, FlashView, ProfileSelect, StatusSelect, NgIf, ROUTER_DIRECTIVES]
 })
 @RouteConfig([
     new Route({path: "/", component: HomePage, name: "Home"}),
