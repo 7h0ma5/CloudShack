@@ -1,23 +1,10 @@
 use iron::prelude::*;
-use controllers::RequestHelper;
-use router::Router;
-use iron::mime::Mime;
 use iron::status;
+use controllers::helper::{RequestHelper, couch_response};
+use router::Router;
 use std::collections::HashMap;
 use rustc_serialize::json;
 use adif;
-use couchdb;
-
-pub fn couch_response(result: couchdb::Result<json::Json>) -> IronResult<Response> {
-    match result {
-        Ok(data) => {
-            let json_mime = "application/json".parse::<Mime>().unwrap();
-            Ok(Response::with((json_mime, status::Ok, data.to_string())))
-        },
-        Err(couchdb::Error::NotFound) => Ok(Response::with((status::NotFound, "Not Found"))),
-        _ => Ok(Response::with((status::InternalServerError, "Internal Server Error")))
-    }
-}
 
 pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
@@ -32,7 +19,7 @@ pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
     couch_response(req.contacts().view("logbook", view, Some(params)))
 }
 
-pub fn get_contact(req: &mut Request) -> IronResult<Response> {
+pub fn show_contact(req: &mut Request) -> IronResult<Response> {
     if let Some(id) = req.param("id") {
         couch_response(req.contacts().get(id))
     }
@@ -90,7 +77,7 @@ pub fn routes() -> Router {
     router.get("/", all_contacts);
     router.get("/_stats", stats);
     router.get("/_view/:view", all_contacts);
-    router.get("/:id", get_contact);
+    router.get("/:id", show_contact);
     router.post("/", save_contact);
     router.post("/_adi", import_adi);
     router.delete("/:id", delete_contact);

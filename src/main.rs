@@ -47,6 +47,7 @@ pub fn main() {
     let (logger_before, logger_after) = Logger::new(None);
     println!("Initializing database middleware...");
     chain.link_before(middleware::contacts::create(couch.db(db_name)));
+    chain.link_before(middleware::profiles::create(couch.db("profiles")));
     println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
     chain.link_before(logger_before);

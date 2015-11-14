@@ -1,6 +1,6 @@
 use iron::prelude::*;
 use iron::status;
-use controllers::RequestHelper;
+use controllers::helper::RequestHelper;
 use router::Router;
 use std::path::PathBuf;
 use iron::headers::{CacheControl,CacheDirective};
