@@ -43,6 +43,7 @@ deploy:
   bucket: static.cloudshack.org
   region: eu-central-1
   local-dir: package
+  upload-dir: build
   acl: public_read
   skip_cleanup: true
   on:
