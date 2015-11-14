@@ -47,11 +47,13 @@ pub fn main() {
     let (logger_before, logger_after) = Logger::new(None);
     println!("Initializing database middleware...");
     chain.link_before(middleware::contacts::create(couch.db(db_name)));
+    chain.link_before(middleware::profiles::create(couch.db("profiles")));
     println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
     chain.link_before(logger_before);
     chain.link_after(logger_after);
 
-    println!("Starting http server...");
-    Iron::new(chain).http(&*format!("0.0.0.0:{}", port)).unwrap();
+    let http_addr = &*format!("0.0.0.0:{}", port);
+    println!("Starting http server on {}...", http_addr);
+    Iron::new(chain).http(http_addr).unwrap();
 }

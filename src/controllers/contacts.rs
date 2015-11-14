@@ -1,23 +1,10 @@
 use iron::prelude::*;
-use controllers::RequestHelper;
-use router::Router;
-use iron::mime::Mime;
 use iron::status;
+use controllers::helper::{RequestHelper, couch_response};
+use router::Router;
 use std::collections::HashMap;
 use rustc_serialize::json;
-
-use couchdb;
-
-pub fn couch_response(result: couchdb::Result<json::Json>) -> IronResult<Response> {
-    match result {
-        Ok(data) => {
-            let json_mime = "application/json".parse::<Mime>().unwrap();
-            Ok(Response::with((json_mime, status::Ok, data.to_string())))
-        },
-        Err(couchdb::Error::NotFound) => Ok(Response::with((status::NotFound, "Not Found"))),
-        _ => Ok(Response::with((status::InternalServerError, "Internal Server Error")))
-    }
-}
+use adif;
 
 pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
@@ -32,12 +19,23 @@ pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
     couch_response(req.contacts().view("logbook", view, Some(params)))
 }
 
-pub fn get_contact(req: &mut Request) -> IronResult<Response> {
+pub fn show_contact(req: &mut Request) -> IronResult<Response> {
     if let Some(id) = req.param("id") {
         couch_response(req.contacts().get(id))
     }
     else {
         Ok(Response::with((status::NotFound, "Not Found")))
+    }
+}
+
+pub fn save_contact(req: &mut Request) -> IronResult<Response> {
+    let data = json::Json::from_reader(&mut req.body).ok();
+
+    if let Some(data) = data {
+        couch_response(req.contacts().insert(data))
+    }
+    else {
+        Ok(Response::with((status::BadRequest, "Bad Request")))
     }
 }
 
@@ -64,12 +62,24 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
     couch_response(req.contacts().view("logbook", "stats", Some(params)))
 }
 
+pub fn import_adi(req: &mut Request) -> IronResult<Response> {
+    req.parse_query();
+
+    let result = adif::adi::parse(&mut req.body);
+
+    println!("{:?}", result);
+
+    Ok(Response::with((status::Ok, "Done")))
+}
+
 pub fn routes() -> Router {
     let mut router = Router::new();
     router.get("/", all_contacts);
     router.get("/_stats", stats);
     router.get("/_view/:view", all_contacts);
-    router.get("/:id", get_contact);
+    router.get("/:id", show_contact);
+    router.post("/", save_contact);
+    router.post("/_adi", import_adi);
     router.delete("/:id", delete_contact);
     router
 }

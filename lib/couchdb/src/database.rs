@@ -67,6 +67,10 @@ impl Database {
         self.server.get(vec!(&*self.name, "_design", designdoc, "_view", viewdoc), params)
     }
 
+    pub fn all_docs(&self, params: Option<Params>) -> Result<Json> {
+        self.server.get(vec!(&*self.name, "_all_docs"), params)
+    }
+
     pub fn delete(&self, id: &str, rev: &str) -> Result<Json> {
         let mut params = HashMap::new();
         params.insert("rev", rev);

@@ -1,5 +1,5 @@
 use iron::prelude::*;
-use controllers::RequestHelper;
+use controllers::helper::RequestHelper;
 use router::Router;
 use iron::mime::Mime;
 use iron::status;
