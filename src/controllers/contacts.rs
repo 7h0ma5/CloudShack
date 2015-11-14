@@ -41,6 +41,17 @@ pub fn get_contact(req: &mut Request) -> IronResult<Response> {
     }
 }
 
+pub fn save_contact(req: &mut Request) -> IronResult<Response> {
+    let data = json::Json::from_reader(&mut req.body).ok();
+
+    if let Some(data) = data {
+        couch_response(req.contacts().insert(data))
+    }
+    else {
+        Ok(Response::with((status::BadRequest, "Bad Request")))
+    }
+}
+
 pub fn delete_contact(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
 
@@ -70,6 +81,7 @@ pub fn routes() -> Router {
     router.get("/_stats", stats);
     router.get("/_view/:view", all_contacts);
     router.get("/:id", get_contact);
+    router.post("/", save_contact);
     router.delete("/:id", delete_contact);
     router
 }
