@@ -1,16 +1,12 @@
 import {Component, View, Input, NgFor, NgClass} from "angular2/angular2";
-import {Query, QueryList} from "angular2/angular2";
+import {ContentChildren, QueryList} from "angular2/angular2";
 
 @Component({
     selector: "tab",
     inputs: ["title"]
 })
 @View({
-    template: `
-        <div [hidden]="!active">
-          <ng-content></ng-content>
-        </div>
-    `
+    template: `<div [hidden]="!active"><ng-content></ng-content></div>`
 })
 export class Tab {
     @Input() title: string;
@@ -27,21 +23,15 @@ export class Tab {
             <a (click)="selectTab(tab)">{{tab.title}}</a>
           </li>
         </ul>
-        <div class="tab-content">
-          <ng-content></ng-content>
-        </div>
+        <div class="tab-content"><ng-content></ng-content></div>
     `,
     directives: [NgFor, NgClass]
 })
 export class Tabs {
-    tabs: QueryList<Tab>;
+    @ContentChildren(Tab) tabs: QueryList<Tab>;
 
-    constructor(@Query(Tab) tabs: QueryList<Tab>) {
-        this.tabs = tabs;
-        this.tabs.changes.subscribe(_ => {
-            this.tabs.map(tab => tab.active = false);
-            if (this.tabs.first) this.tabs.first.active = true;
-        });
+    afterViewInit() {
+        this.selectTab(this.tabs.first);
     }
 
     selectTab(tab) {
