@@ -1,5 +1,6 @@
 import {Component, View, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/angular2";
 import {ContactService} from "../../services/contact";
+import {TAB_DIRECTIVES} from "../../components/tabs";
 import {WorldMap} from "../../components/worldmap";
 import {MODES, CONTESTS} from "../../constants";
 
@@ -8,7 +9,7 @@ import {MODES, CONTESTS} from "../../constants";
 })
 @View({
     templateUrl: "/templates/contact/new.html",
-    directives: [WorldMap, NgIf, NgFor, FORM_DIRECTIVES]
+    directives: [WorldMap, NgIf, NgFor, TAB_DIRECTIVES, FORM_DIRECTIVES]
 })
 export class NewContactPage {
     contact: Object = {};

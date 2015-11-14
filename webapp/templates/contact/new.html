@@ -106,7 +106,7 @@
     </div>
 
     <tabs>
-      <div title="QSL">
+      <tab title="QSL">
         <div class="form-row">
           <div class="form-group">
             <label for="qsl_via">QSL via: </label>
@@ -128,9 +128,9 @@
             </select>
           </div>
         </div>
-      </div>
+      </tab>
 
-      <div title="Contact">
+      <tab title="Contact">
         <div class="form-row">
           <div class="form-group">
             <label for="age">Age</label>
@@ -153,21 +153,21 @@
             <input type="text" id="rig" ng-mode="contact.rig">
           </div>
         </div>
-      </div>
+      </tab>
 
-      <div title="Contest">
+      <tab title="Contest">
         <div class="form-group">
           <label for="contest_id">Contest</label>
           <select id="contest_id" [(ng-model)]="contact.contest_id">
             <option *ng-for="#c of contests" [value]="c.id">{{c.desc}}</option>
           </select>
         </div>
-      </div>
+      </tab>
 
-      <div title="Comment">
+      <tab title="Comment">
           <input type="text" id="comment" class="input-comment"
                  [(ng-model)]="contact.comment">
-      </div>
+      </tab>
     </tabs>
 
     <div class="box-transparent">

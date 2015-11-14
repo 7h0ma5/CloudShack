@@ -1,108 +1,108 @@
 <h1>Settings</h1>
 
 <tabs>
-    <div title="General">
-      <p>
-        <input type="checkbox" ng-model="config.wsjtx.enabled" id="wsjtx-enabled" />
-        <label for="wsjtx-enabled">Enable WSJTX interface</label>
-      </p>
-      <p>
-      <p>
-        <label for="profiles-default">Default Profile</label>
-        <select ng-options="profile.id as profile.doc.name for profile in profiles.rows"
-                ng-model="config.profiles.default">
-          <option value="">&mdash;</option>
-        </select>
-      </p>
+  <tab title="General">
+    <p>
+      <input type="checkbox" ng-model="config.wsjtx.enabled" id="wsjtx-enabled" />
+      <label for="wsjtx-enabled">Enable WSJTX interface</label>
+    </p>
+    <p>
+    <p>
+      <label for="profiles-default">Default Profile</label>
+      <select ng-options="profile.id as profile.doc.name for profile in profiles.rows"
+              ng-model="config.profiles.default">
+        <option value="">&mdash;</option>
+      </select>
+    </p>
+  </tab>
+  <tab title="Callbook">
+    <div class="form-group">
+      <label for="callbook-username">Username</label>
+      <input type="text" id="callbook-username" ng-model="config.callbook.username" />
     </div>
-    <div title="Callbook">
-        <div class="form-group">
-          <label for="callbook-username">Username</label>
-          <input type="text" id="callbook-username" ng-model="config.callbook.username" />
-        </div>
-        <div class="form-group">
-          <label for="callbook-password">Password</label>
-          <input type="password" id="callbook-password" ng-model="config.callbook.password" />
-        </div>
+    <div class="form-group">
+      <label for="callbook-password">Password</label>
+      <input type="password" id="callbook-password" ng-model="config.callbook.password" />
     </div>
-    <div title="LOTW">
-        <div class="form-group">
-          <label for="lotw-username">Username</label>
-          <input type="text" id="lotw-username" ng-model="config.lotw.username" />
-        </div>
-        <div class="form-group">
-          <label for="lotw-password">Password</label>
-          <input type="password" id="lotw-password" ng-model="config.lotw.password" />
-        </div>
+  </tab>
+  <tab title="LOTW">
+    <div class="form-group">
+      <label for="lotw-username">Username</label>
+      <input type="text" id="lotw-username" ng-model="config.lotw.username" />
     </div>
-    <div title="Rig">
-        <div class="form-group">
-          <label for="rig-host">Host</label>
-          <input type="text" id="rig-host" ng-model="config.rig.host" />
-        </div>
-        <div class="form-group">
-          <label for="rig-port">Port</label>
-          <input type="number" step="1" id="rig-port" ng-model="config.rig.port" />
-        </div>
+    <div class="form-group">
+      <label for="lotw-password">Password</label>
+      <input type="password" id="lotw-password" ng-model="config.lotw.password" />
     </div>
-    <div title="Database">
-        <h2>Local</h2>
-        <p>
-            <div class="form-group">
-              <label for="db-local-address">Address</label>
-              <input type="text" id="db-local-address" ng-model="config.db.local.address" />
-            </div>
-            <div class="form-group">
-              <label for="db-local-name">Name</label>
-              <input type="text" id="db-local-name" ng-model="config.db.local.name" />
-            </div>
-        </p>
-        <h2>Remote</h2>
-        <p>
-          <input type="checkbox" ng-model="config.db.remote.usecsdb" id="cloudshack-db-service" />
-          <label for="cloudshack-db-service">CloudShack Database Service</label>
-        </p>
-        <p>
-            <div class="form-group" ng-hide="config.db.remote.usecsdb">
-              <label for="db-remote-address">Address</label>
-              <input type="text" id="db-remote-address" ng-model="config.db.remote.address" />
-            </div>
-            <div class="form-group" ng-hide="config.db.remote.usecsdb">
-              <label for="db-remote-name">Name</label>
-              <input type="text" id="db-remote-name" ng-model="config.db.remote.name" />
-            </div>
-        </p>
-        <p ng-show="csDbService">
-            <div class="form-group" ng-show="config.db.remote.usecsdb">
-              <label for="cloudshack-user">Callsign</label>
-              <input type="text" id="cloudshack-user" ng-model="config.db.remote.cs.user" />
-            </div>
-            <div class="form-group" ng-show="config.db.remote.usecsdb">
-              <label for="cloudshack-password">Password</label>
-              <input type="password" id="cloudshack-password" ng-model="config.db.remote.cs.password" />
-            </div>
-        </p>
+  </tab>
+  <tab title="Rig">
+    <div class="form-group">
+      <label for="rig-host">Host</label>
+      <input type="text" id="rig-host" ng-model="config.rig.host" />
     </div>
-    <div title="DX Cluster">
-        <div class="form-group">
-          <label for="cluster-host">Host</label>
-          <input type="text" id="cluster-host" ng-model="config.cluster.host" />
-        </div>
-        <div class="form-group">
-          <label for="cluster-port">Port</label>
-          <input type="number" step="1" id="cluster-port" ng-model="config.cluster.port" />
-        </div>
-        <div class="form-group">
-          <label for="cluster-username">Username</label>
-          <input type="text" id="cluster-username" ng-model="config.cluster.username" />
-        </div>
+    <div class="form-group">
+      <label for="rig-port">Port</label>
+      <input type="number" step="1" id="rig-port" ng-model="config.rig.port" />
     </div>
-    <div title="Keyer">
+  </tab>
+  <tab title="Database">
+    <h2>Local</h2>
+    <p>
       <div class="form-group">
-        <label for="keyer-port">Port</label>
-        <input type="text" id="keyer-port" ng-model="config.keyer.port" />
+        <label for="db-local-address">Address</label>
+        <input type="text" id="db-local-address" ng-model="config.db.local.address" />
       </div>
+      <div class="form-group">
+        <label for="db-local-name">Name</label>
+        <input type="text" id="db-local-name" ng-model="config.db.local.name" />
+      </div>
+    </p>
+    <h2>Remote</h2>
+    <p>
+      <input type="checkbox" ng-model="config.db.remote.usecsdb" id="cloudshack-db-service" />
+      <label for="cloudshack-db-service">CloudShack Database Service</label>
+    </p>
+    <p>
+      <div class="form-group" ng-hide="config.db.remote.usecsdb">
+        <label for="db-remote-address">Address</label>
+        <input type="text" id="db-remote-address" ng-model="config.db.remote.address" />
+      </div>
+      <div class="form-group" ng-hide="config.db.remote.usecsdb">
+        <label for="db-remote-name">Name</label>
+        <input type="text" id="db-remote-name" ng-model="config.db.remote.name" />
+      </div>
+    </p>
+    <p ng-show="csDbService">
+      <div class="form-group" ng-show="config.db.remote.usecsdb">
+        <label for="cloudshack-user">Callsign</label>
+        <input type="text" id="cloudshack-user" ng-model="config.db.remote.cs.user" />
+      </div>
+      <div class="form-group" ng-show="config.db.remote.usecsdb">
+        <label for="cloudshack-password">Password</label>
+        <input type="password" id="cloudshack-password" ng-model="config.db.remote.cs.password" />
+      </div>
+    </p>
+  </tab>
+  <tab title="DX Cluster">
+    <div class="form-group">
+      <label for="cluster-host">Host</label>
+      <input type="text" id="cluster-host" ng-model="config.cluster.host" />
     </div>
+    <div class="form-group">
+      <label for="cluster-port">Port</label>
+      <input type="number" step="1" id="cluster-port" ng-model="config.cluster.port" />
+    </div>
+    <div class="form-group">
+      <label for="cluster-username">Username</label>
+      <input type="text" id="cluster-username" ng-model="config.cluster.username" />
+    </div>
+  </tab>
+  <tab title="Keyer">
+    <div class="form-group">
+      <label for="keyer-port">Port</label>
+      <input type="text" id="keyer-port" ng-model="config.keyer.port" />
+    </div>
+  </tab>
 </tabs>
 
 <div class="box-transparent">

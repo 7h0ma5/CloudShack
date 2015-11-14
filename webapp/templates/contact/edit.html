@@ -1,7 +1,7 @@
 <h1>Edit contact with <b>{{contact.call}}</b></h1>
 
 <tabs>
-  <div title="General">
+  <tab title="General">
     <div class="form-row">
       <div class="form-group">
         <label for="call">Callsign</label>
@@ -77,9 +77,9 @@
                ng-model="contact.comment">
       </div>
     </div>
-  </div>
+  </tab>
 
-  <div title="Contact">
+  <tab title="Contact">
     <div class="form-row">
       <div class="form-group">
         <label for="name">Name</label>
@@ -115,9 +115,9 @@
         <input type="text" name="rig" id="rig" ng-mode="contact.rig">
       </div>
     </div>
-  </div>
+  </tab>
 
-  <div title="Location">
+  <tab title="Location">
     <div class="form-row">
       <div class="form-group">
         <label for="qth">QTH</label>
@@ -174,9 +174,9 @@
         <input type="text" id="lon" ng-model="contact.lon">
       </div>
     </div>
-  </div>
+  </tab>
 
-  <div title="Contest">
+  <tab title="Contest">
     <div class="form-row">
       <div class="form-group">
         <label for="contest_id">Contest ID</label>
@@ -205,9 +205,9 @@
         <input type="text" id="stx_string" ng-model="contact.stx_string">
       </div>
     </div>
-  </div>
+  </tab>
 
-  <div title="QSL">
+  <tab title="QSL">
     <div class="form-row">
       <div class="form-group">
         <label for="qsl_via">QSL via</label>
@@ -272,9 +272,9 @@
         <input type="text" id="lotw_qslrdate" ng-model="contact.qslradate">
       </div>
     </div>
-  </div>
+  </tab>
 
-  <div title="Propagation">
+  <tab title="Propagation">
     <div class="form-row">
       <div class="form-group">
         <label for="prop_mode">Propagation mode</label>
@@ -329,9 +329,9 @@
                ng-model="contact.max_bursts" min="0" step="1">
       </div>
     </div>
-  </div>
+  </tab>
 
-  <div title="My Station">
+  <tab title="My Station">
     <div class="form-row">
       <div class="form-group">
         <label for="operator">Operator</label>
@@ -365,7 +365,7 @@
                ng-model="contact.my_gridsquare">
       </div>
     </div>
-  </div>
+  </tab>
 </tabs>
 
 <div class="box-transparent">

@@ -8,10 +8,6 @@ export class FlashMessage {
 export class Flash {
     @Output() public fire: EventEmitter<FlashMessage> = new EventEmitter();
 
-    constructor() {
-        console.log("new flash service");
-    }
-
     show(level: string, text: string) {
         var message: FlashMessage = {level: level, text: text};
         this.fire.next(message);
