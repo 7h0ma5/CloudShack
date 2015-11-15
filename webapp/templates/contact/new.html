@@ -8,7 +8,7 @@
           <div class="form-group">
             <label for="call">Callsign</label>
             <input required uppercase type="text" autocomplete="off" id="call"
-                   [(ng-model)]="contact.call" class="input-callsign" focus-on="call"
+                   [(ng-model)]="contact.call" class="input-callsign" autofocus
                    [ng-form-control]="callsign">
           </div>
 
@@ -42,7 +42,7 @@
             <label for="gridsquare">Gridsquare</label>
             <input smartinput uppercase type="text" [(ng-model)]="contact.gridsquare"
                    class="input-gridsquare" id="gridsquare" autocomplete="off"
-                   placeholder="{{callbook?.gridsquare}}">
+                   placeholder="{{callbook?.gridsquare}}" [ng-form-control]="gridsquare">
           </div>
         </div>
 
@@ -60,16 +60,15 @@
 
           <div class="form-group">
             <label for="mode">Mode</label>
-            <select id="mode" [(ng-model)]="contact.mode">
+            <select id="mode" [(ng-model)]="contact.mode" [ng-form-control]="mode">
               <option *ng-for="#m of modes" [value]="m.name">{{m.name}}</option>
             </select>
           </div>
 
           <div class="form-group" *ng-if="submodes">
               <label for="submode">Submode</label>
-              <select id="submode" [(ng-model)]="contact.submode"
-                      ng-options="mode.name as mode.name for mode in submodes">
-                      <option value=""></option>
+              <select id="submode" [(ng-model)]="contact.submode">
+                <option *ng-for="#m of submodes" [value]="m.name">{{m.name}}<option>
               </select>
           </div>
 

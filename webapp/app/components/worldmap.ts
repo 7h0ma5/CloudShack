@@ -19,7 +19,7 @@ export class WorldMap {
 
         var osm = tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
             subdomains: ["1", "2", "3", "4"],
-            maxZoom: 12,
+            maxZoom: 14,
             attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         });
 
