@@ -9,7 +9,7 @@
             <label for="call">Callsign</label>
             <input required uppercase type="text" autocomplete="off" id="call"
                    [(ng-model)]="contact.call" class="input-callsign" focus-on="call"
-                   (keyup)="callsignChanged(callsign.value)" #callsign>
+                   [ng-form-control]="callsign">
           </div>
 
           <div class="form-group">
