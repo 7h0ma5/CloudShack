@@ -25,9 +25,9 @@ name = "adif"
 version = "0.1.0"
 dependencies = [
  "chrono 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
- "nom 1.0.0-beta2 (registry+https://github.com/rust-lang/crates.io-index)",
- "phf 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)",
- "phf_macros 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nom 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "phf 0.7.7 (git+https://github.com/7h0ma5/rust-phf)",
+ "phf_macros 0.7.7 (git+https://github.com/7h0ma5/rust-phf)",
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -273,7 +273,7 @@ dependencies = [
 
 [[package]]
 name = "nom"
-version = "1.0.0-beta2"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -327,33 +327,33 @@ dependencies = [
 [[package]]
 name = "phf"
 version = "0.7.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/7h0ma5/rust-phf#07e9aa4a306929e18b3bc142a37df114f3f325c6"
 dependencies = [
- "phf_shared 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "phf_shared 0.7.7 (git+https://github.com/7h0ma5/rust-phf)",
 ]
 
 [[package]]
 name = "phf_generator"
 version = "0.7.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/7h0ma5/rust-phf#07e9aa4a306929e18b3bc142a37df114f3f325c6"
 dependencies = [
- "phf_shared 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "phf_shared 0.7.7 (git+https://github.com/7h0ma5/rust-phf)",
  "rand 0.3.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "phf_macros"
 version = "0.7.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/7h0ma5/rust-phf#07e9aa4a306929e18b3bc142a37df114f3f325c6"
 dependencies = [
- "phf_generator 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)",
- "phf_shared 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "phf_generator 0.7.7 (git+https://github.com/7h0ma5/rust-phf)",
+ "phf_shared 0.7.7 (git+https://github.com/7h0ma5/rust-phf)",
 ]
 
 [[package]]
 name = "phf_shared"
 version = "0.7.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/7h0ma5/rust-phf#07e9aa4a306929e18b3bc142a37df114f3f325c6"
 
 [[package]]
 name = "pkg-config"
@@ -535,6 +535,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "wsjt"
 version = "0.1.0"
 dependencies = [
- "nom 1.0.0-beta2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nom 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
