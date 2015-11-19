@@ -17,7 +17,7 @@ pub fn test_parser() {
 pub fn test_generator() {
     let mut contact = Contact::new();
     contact.set("call", Value::Text(String::from("DL2IC")));
-    contact.set("freq", Value::Number(14.313));
+    contact.set("freq", Value::Float(14.313));
 
     let mut out = Vec::new();
     adif::adi::generate(vec!(contact), &mut out).unwrap();

@@ -1,6 +1,6 @@
 use std::io;
 use std::io::Write;
-use contact::{Value, Contact};
+use {Value, Contact};
 
 pub struct Generator<T> {
     writer: T
@@ -12,13 +12,12 @@ impl<T: io::Write> Generator<T> {
     }
 
     pub fn write_field(&mut self, key: &str, value: Value) -> io::Result<()> {
-        let value = match value {
-            Value::Number(val) => format!("{}", val),
-            Value::Boolean(val) => format!("{}", if val { "Y" } else { "N" }),
-            Value::Text(ref val) => format!("{}", val)
-        };
-
-        try!(write!(&mut self.writer, "<{}:{}>{}", key, value.len(), value));
+        if let Some(value) = value.to_adif(key) {
+            try!(write!(&mut self.writer, "<{}:{}>{}", key, value.len(), value));
+        }
+        else {
+            println!("Couldn't write adif key '{}' with value '{:?}'.", key, value);
+        }
         Ok(())
     }
 

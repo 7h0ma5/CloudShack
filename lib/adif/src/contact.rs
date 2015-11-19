@@ -3,15 +3,9 @@ use std::convert::From;
 use chrono::datetime::DateTime as ChronoDateTime;
 use chrono::UTC;
 use rustc_serialize::{json, Encoder, Encodable, Decoder, Decodable};
+use Value;
 
 pub type DateTime = ChronoDateTime<UTC>;
-
-#[derive(Debug, PartialEq, RustcDecodable)]
-pub enum Value {
-    Number(f64),
-    Boolean(bool),
-    Text(String)
-}
 
 #[derive(Debug)]
 pub struct Contact {
@@ -69,16 +63,6 @@ impl Encodable for Contact {
 impl Decodable for Contact {
     fn decode<D: Decoder>(decoder: &mut D) -> Result<Contact, D::Error> {
         HashMap::decode(decoder).map(|fields| Contact { fields: fields })
-    }
-}
-
-impl Encodable for Value {
-    fn encode<S: Encoder>(&self, encoder: &mut S) -> Result<(), S::Error> {
-        match *self {
-            Value::Number(value) => encoder.emit_f64(value),
-            Value::Boolean(value) => encoder.emit_bool(value),
-            Value::Text(ref value) => encoder.emit_str(value),
-        }
     }
 }
 
