@@ -191,24 +191,15 @@ fn encode_boolean(value: &Value) -> Option<String> {
 }
 
 fn encode_string(value: &Value) -> Option<String> {
-    match value {
-        &Value::Text(ref val) => Some(val.to_owned()),
-        _ => None
-    }
+    value.text()
 }
 
 fn encode_uppercase(value: &Value) -> Option<String> {
-    match value {
-        &Value::Text(ref val) => Some(val.to_owned().to_uppercase()),
-        _ => None
-    }
+    value.text().map(|s| s.to_uppercase())
 }
 
 fn encode_lowercase(value: &Value) -> Option<String> {
-    match value {
-        &Value::Text(ref val) => Some(val.to_owned().to_lowercase()),
-        _ => None
-    }
+    value.text().map(|s| s.to_lowercase())
 }
 
 impl Value {
@@ -227,6 +218,34 @@ impl Value {
         }
         else {
             None
+        }
+    }
+
+    pub fn text(&self) -> Option<String> {
+        match self {
+            &Value::Text(ref val) => Some(val.to_owned()),
+            _ => None
+        }
+    }
+
+    pub fn integer(&self) -> Option<i32> {
+        match self {
+            &Value::Integer(val) => Some(val),
+            _ => None
+        }
+    }
+
+    pub fn float(&self) -> Option<f64> {
+        match self {
+            &Value::Float(val) => Some(val),
+            _ => None
+        }
+    }
+
+    pub fn boolean(&self) -> Option<bool> {
+        match self {
+            &Value::Boolean(val) => Some(val),
+            _ => None
         }
     }
 }

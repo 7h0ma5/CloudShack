@@ -65,11 +65,10 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
 pub fn import_adi(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
 
-    let result = adif::adi::parse(&mut req.body);
+    let mut result = adif::adi::parse(&mut req.body);
+    result.retain(adif::Contact::is_valid);
 
-    println!("{:?}", result);
-
-    Ok(Response::with((status::Ok, "Done")))
+    couch_response(req.contacts().bulk(result))
 }
 
 pub fn routes() -> Router {

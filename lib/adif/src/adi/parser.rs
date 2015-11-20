@@ -26,6 +26,7 @@ named!(contact <&[u8], Contact>, chain!(
                 println!("Couldn't read adif key '{}' with value '{:?}'.", key, value);
             }
         }
+        contact.parse_datetime();
         contact
     }
 ));

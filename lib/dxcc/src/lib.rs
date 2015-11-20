@@ -40,12 +40,13 @@ struct Prefix {
 
 impl Dxcc {
     pub fn load() -> Option<Dxcc> {
-        let mut file = File::open("dxcc.json").unwrap();
+        let mut file = File::open("dxcc.json");
+        if file.is_err() { return None; }
 
         let mut data = String::new();
-        file.read_to_string(&mut data);
+        if file.unwrap().read_to_string(&mut data).is_err() { return None; }
 
-        return json::decode(&data).ok();
+        json::decode(&data).ok()
     }
 
     pub fn download() {
