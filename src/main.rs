@@ -24,6 +24,44 @@ use iron::prelude::*;
 use logger::Logger;
 use std::thread;
 
+fn init_contacts_db(db: &couchdb::Database) {
+    use rustc_serialize::json::Json;
+
+    db.create().ok();
+
+    let design = include_str!("logbook.json").replace("\n", " ");
+    let design_doc = Json::from_str(&design).expect("Invalid internal design document.");
+
+    let db_version = match db.get("_design/logbook") {
+        Ok(Json::Object(ref obj)) => obj.get("version").to_owned(),
+        _ => None
+    }.and_then(|v| v.as_u64()).unwrap_or(0);
+
+    let version = match design_doc {
+        Json::Object(ref obj) => obj.get("version").to_owned(),
+        _ => None
+    }.and_then(|v| v.as_u64()).expect("Invalid internal design document.");
+
+    if db_version == version {
+        println!("Design document is up to date (v{}).", version);
+    }
+    else if db_version > version {
+        println!("Design document is newer than the internal! (v{} > v{})", db_version, version);
+        panic!("This version of CloudShack is too old to  handle the selected contacts database.");
+    }
+    else {
+        print!("Updating the design document (v{} => v{})... ", db_version, version);
+        let result = db.insert(design_doc);
+
+        if result.is_ok() { println!("Update successful!"); }
+        else { println!("Update failed!"); }
+    }
+}
+
+fn init_profiles_db(db: &couchdb::Database) {
+    db.create().is_ok();
+}
+
 pub fn main() {
     println!("Loading configuration from config.toml...");
     let config = config::Config::load();
@@ -42,12 +80,19 @@ pub fn main() {
     let db_name = config.get_str("database.local.name").unwrap_or("contacts");
     let couch = couchdb::Server::new(db_host, db_port as u16);
 
+    println!("Initializing database...");
+    let contacts = couch.db(db_name);
+    init_contacts_db(&contacts);
+
+    let profiles = couch.db("profiles");
+    init_profiles_db(&profiles);
+
     let mut chain = Chain::new(controllers::routes());
 
     let (logger_before, logger_after) = Logger::new(None);
     println!("Initializing database middleware...");
-    chain.link_before(middleware::contacts::create(couch.db(db_name)));
-    chain.link_before(middleware::profiles::create(couch.db("profiles")));
+    chain.link_before(middleware::contacts::create(contacts));
+    chain.link_before(middleware::profiles::create(profiles));
     println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
     chain.link_before(logger_before);
