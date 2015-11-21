@@ -64,8 +64,9 @@ impl Contact {
                           .or_else(|| end.and_time(start.time()))
                           .unwrap_or(start);
 
-        self.set("start", Value::Text(start.to_rfc3339()));
-        self.set("end", Value::Text(end.to_rfc3339()));
+        // TODO: fix this workaround for correct JavaScript date formats
+        self.set("start", Value::Text(format!("{:?}", start)));
+        self.set("end", Value::Text(format!("{:?}", end)));
     }
 
     fn parse_date(&self, value: &str) -> Option<Date<UTC>> {
