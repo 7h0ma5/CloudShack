@@ -75,6 +75,24 @@ pub fn test_legacy_modes() {
 }
 
 #[test]
+pub fn test_adif_datetime() {
+    let mut contact = Contact::new();
+    contact.set("qso_date",  Value::Text(String::from("20121221")));
+    contact.set("time_on",  Value::Text(String::from("192305")));
+    contact.set("qso_date_off",  Value::Text(String::from("20121222")));
+    contact.set("time_off",  Value::Text(String::from("0059")));
+    contact.parse_datetime();
+
+    let start = contact.start().unwrap();
+    assert_eq!((start.year(), start.month(), start.day()), (2012, 12, 21));
+    assert_eq!((start.hour(), start.minute(), start.second()), (19, 23, 05));
+
+    let end = contact.end().unwrap();
+    assert_eq!((end.year(), end.month(), end.day()), (2012, 12, 22));
+    assert_eq!((end.hour(),end.minute(), end.second()), (0, 59, 0));
+}
+
+#[test]
 pub fn test_migrate_mode() {
     let mut contact = Contact::new();
     contact.set("mode", Value::Text(String::from("PSK31")));
