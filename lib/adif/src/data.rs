@@ -3,8 +3,8 @@ use phf;
 #[derive(Debug)]
 pub struct Band<'a> {
     pub name: &'a str,
-    pub start: f32,
-    pub end: f32
+    pub start: f64,
+    pub end: f64
 }
 
 #[derive(Debug)]
@@ -52,7 +52,7 @@ pub static BANDS: phf::Map<&'static str, Band<'static>> = phf_map!{
     "1mm" => Band { name: "1mm", start: 241000.0, end: 250000.0 }
 };
 
-pub fn find_band<'a>(freq: f32) -> Option<&'static Band<'static>> {
+pub fn find_band<'a>(freq: f64) -> Option<&'static Band<'static>> {
     for (_, band) in BANDS.into_iter() {
         if band.start <= freq && freq <= band.end {
             return Some(band)

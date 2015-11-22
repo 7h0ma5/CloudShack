@@ -4,6 +4,7 @@ use chrono::datetime::DateTime as ChronoDateTime;
 use chrono::{TimeZone, Date, UTC, NaiveTime};
 use rustc_serialize::{json, Encoder, Encodable, Decoder, Decodable};
 use Value;
+use data;
 
 pub type DateTime = ChronoDateTime<UTC>;
 
@@ -35,6 +36,48 @@ impl Contact {
 
     pub fn is_valid(&self) -> bool {
         self.fields.contains_key("call") && self.fields.contains_key("start")
+    }
+
+    /// Update the band field to match the frequency field.
+    /// Returns true if the band field was changed.
+    pub fn update_band(&mut self) -> bool {
+        let band = self.get("band").and_then(|v| v.text());
+        let freq = self.get("freq").and_then(|v| v.float());
+
+        if freq.is_none() { return false; }
+
+        let new_band = data::find_band(freq.unwrap());
+        if new_band.is_none() { return false; }
+        let new_band = new_band.unwrap();
+
+        if band.is_some() && band.unwrap() == new_band.name {
+            return false;
+        }
+        else {
+            self.set("band", Value::Text(new_band.name.to_string()));
+            return true;
+        }
+    }
+
+    /// Update the mode and submode fields to the new standard if the current mode is a legacy mode.
+    /// Returns true if the mode fields were changed.
+    pub fn migrate_mode(&mut self) -> bool {
+        let mode = self.get("mode").and_then(|v| v.text());
+
+        if mode.is_none() || self.get("submode").is_some() {
+            return false;
+        }
+
+        let legacy_mode = data::find_legacy_mode(&*mode.unwrap());
+
+        if let Some(legacy_mode) = legacy_mode {
+            self.set("mode", Value::Text(legacy_mode.mode.to_string()));
+            self.set("submode", Value::Text(legacy_mode.submode.to_string()));
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /// Convert ADIF dates and times to RFC3339 encoded times with the keys *start* and *end*.

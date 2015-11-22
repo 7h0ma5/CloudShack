@@ -59,7 +59,6 @@ pub fn test_datetime_offset() {
     assert_eq!((start.hour(), start.minute(), start.second()), (0, 39, 57));
 }
 
-
 #[test]
 pub fn test_bands() {
     let seventy_cm = data::find_band(433.500).unwrap().start;
@@ -73,6 +72,27 @@ pub fn test_legacy_modes() {
     assert_eq!(data::find_legacy_mode("JT65C").unwrap().mode, "JT65");
     assert_eq!(data::find_legacy_mode("PSK31").unwrap().mode, "PSK");
     assert!(data::find_legacy_mode("CW").is_none());
+}
+
+#[test]
+pub fn test_migrate_mode() {
+    let mut contact = Contact::new();
+    contact.set("mode", Value::Text(String::from("PSK31")));
+    assert_eq!(contact.get("mode").unwrap().text().unwrap(), "PSK31");
+    let changed = contact.migrate_mode();
+    assert!(changed);
+    assert_eq!(contact.get("mode").unwrap().text().unwrap(), "PSK");
+    assert_eq!(contact.get("submode").unwrap().text().unwrap(), "PSK31");
+}
+
+#[test]
+pub fn test_update_band() {
+    let mut contact = Contact::new();
+    contact.set("freq", Value::Float(7.123));
+    contact.set("band", Value::Text(String::from("30m")));
+    let changed = contact.update_band();
+    assert!(changed);
+    assert_eq!(contact.get("band").unwrap().text().unwrap(), "40m");
 }
 
 #[test]
