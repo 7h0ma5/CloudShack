@@ -16,6 +16,7 @@ extern crate wsjt;
 extern crate dxcc;
 
 //mod ws;
+mod database;
 mod controllers;
 mod middleware;
 mod config;
@@ -24,63 +25,16 @@ use iron::prelude::*;
 use logger::Logger;
 use std::thread;
 
-fn init_contacts_db(db: &couchdb::Database) {
-    use rustc_serialize::json::Json;
-
-    db.create().ok();
-
-    let design = include_str!("logbook.json").replace("\n", " ");
-    let design_doc = Json::from_str(&design).expect("Invalid internal design document.");
-
-    let active_design_doc = db.get("_design/logbook");
-
-    let db_version = match active_design_doc {
-        Ok(Json::Object(ref obj)) => obj.get("version").to_owned(),
-        _ => None
-    }.and_then(|v| v.as_u64()).unwrap_or(0);
-
-    let version = match design_doc {
-        Json::Object(ref obj) => obj.get("version").to_owned(),
-        _ => None
-    }.and_then(|v| v.as_u64()).expect("Invalid internal design document.");
-
-    if db_version == version {
-        println!("Design document is up to date (v{}).", version);
-    }
-    else if db_version > version {
-        println!("Design document is newer than the internal! (v{} > v{})", db_version, version);
-        panic!("This version of CloudShack is too old to handle the selected contacts database.");
-    }
-    else if let Ok(Json::Object(ref old)) = active_design_doc {
-        print!("Updating the design document (v{} => v{})... ", db_version, version);
-
-        if let (Json::Object(ref new), Some(&Json::String(ref rev))) = (design_doc, old.get("_rev")) {
-            let mut new = new.to_owned();
-            new.insert("_rev".to_string(), Json::String(rev.to_owned()));
-
-            let result = db.insert(Json::Object(new));
-
-            if result.is_ok() { println!("Update successful!"); }
-            else { println!("Update failed!"); }
-        }
-        else {
-            println!("Update failed! Old design document has no revision.");
-        }
-    }
-    else {
-        print!("Creating the design document... ");
-        let result = db.insert(design_doc);
-
-        if result.is_ok() { println!("Creation successful!"); }
-        else { println!("Creation failed!"); }
-    }
-}
-
-fn init_profiles_db(db: &couchdb::Database) {
-    db.create().is_ok();
+pub fn version() -> String {
+    format!("{}.{}.{}{}", env!("CARGO_PKG_VERSION_MAJOR"),
+                         env!("CARGO_PKG_VERSION_MINOR"),
+                         env!("CARGO_PKG_VERSION_PATCH"),
+                         option_env!("CARGO_PKG_VERSION_PRE").unwrap_or(""))
 }
 
 pub fn main() {
+    println!("CloudShack {}\n", version());
+
     println!("Loading configuration from config.toml...");
     let config = config::Config::load();
 
@@ -100,19 +54,20 @@ pub fn main() {
 
     println!("Initializing database...");
     let contacts = couch.db(db_name);
-    init_contacts_db(&contacts);
+    database::init_contacts(&contacts);
 
     let profiles = couch.db("profiles");
-    init_profiles_db(&profiles);
+    database::init_profiles(&profiles);
 
     let mut chain = Chain::new(controllers::routes());
 
-    let (logger_before, logger_after) = Logger::new(None);
     println!("Initializing database middleware...");
     chain.link_before(middleware::contacts::create(contacts));
     chain.link_before(middleware::profiles::create(profiles));
     println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
+
+    let (logger_before, logger_after) = Logger::new(None);
     chain.link_before(logger_before);
     chain.link_after(logger_after);
 

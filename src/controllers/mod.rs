@@ -15,6 +15,9 @@ pub fn routes() -> Mount {
     mount.mount("/profiles", profiles::routes());
     mount.mount("/dxcc", dxcc::routes());
     mount.mount("/flag", flag::routes());
+    mount.mount("/version", |_: &mut ::iron::Request| {
+        Ok(::iron::Response::with((::iron::status::Ok, ::version())))
+    });
     mount.mount("/", Static::new(Path::new("webapp/public")));
     mount
 }
