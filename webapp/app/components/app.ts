@@ -1,5 +1,6 @@
 import {Component, View, NgIf} from "angular2/angular2";
 import {ROUTER_DIRECTIVES, RouteConfig, Route} from "angular2/router";
+import {Http, Response} from "angular2/http";
 import {Clock} from "./clock";
 import {FlashView} from "./flash";
 import {ProfileSelect} from "./profile-select";
@@ -30,9 +31,12 @@ import {ShowContactPage} from "../pages/contact/show";
     new Route({path: "/settings", component: HomePage, name: "Settings"})
 ])
 export class AppComponent {
-    version: string = "0.5";
+    version: string = "?";
 
-    constructor() {
+    constructor(http: Http) {
         console.log("CloudShack is ready!");
+
+        http.get("/version").map((res: Response) => res.text())
+                            .subscribe(version => this.version = version);
     }
 }
