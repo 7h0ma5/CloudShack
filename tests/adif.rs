@@ -17,7 +17,7 @@ pub fn test_parser() {
 pub fn test_generator() {
     let mut contact = Contact::new();
     contact.set("call", Value::Text(String::from("DL2IC")));
-    contact.set("freq", Value::Number(14.313));
+    contact.set("freq", Value::Float(14.313));
 
     let mut out = Vec::new();
     adif::adi::generate(vec!(contact), &mut out).unwrap();
@@ -59,7 +59,6 @@ pub fn test_datetime_offset() {
     assert_eq!((start.hour(), start.minute(), start.second()), (0, 39, 57));
 }
 
-
 #[test]
 pub fn test_bands() {
     let seventy_cm = data::find_band(433.500).unwrap().start;
@@ -73,6 +72,45 @@ pub fn test_legacy_modes() {
     assert_eq!(data::find_legacy_mode("JT65C").unwrap().mode, "JT65");
     assert_eq!(data::find_legacy_mode("PSK31").unwrap().mode, "PSK");
     assert!(data::find_legacy_mode("CW").is_none());
+}
+
+#[test]
+pub fn test_adif_datetime() {
+    let mut contact = Contact::new();
+    contact.set("qso_date",  Value::Text(String::from("20121221")));
+    contact.set("time_on",  Value::Text(String::from("192305")));
+    contact.set("qso_date_off",  Value::Text(String::from("20121222")));
+    contact.set("time_off",  Value::Text(String::from("0059")));
+    contact.parse_datetime();
+
+    let start = contact.start().unwrap();
+    assert_eq!((start.year(), start.month(), start.day()), (2012, 12, 21));
+    assert_eq!((start.hour(), start.minute(), start.second()), (19, 23, 05));
+
+    let end = contact.end().unwrap();
+    assert_eq!((end.year(), end.month(), end.day()), (2012, 12, 22));
+    assert_eq!((end.hour(),end.minute(), end.second()), (0, 59, 0));
+}
+
+#[test]
+pub fn test_migrate_mode() {
+    let mut contact = Contact::new();
+    contact.set("mode", Value::Text(String::from("PSK31")));
+    assert_eq!(contact.get("mode").unwrap().text().unwrap(), "PSK31");
+    let changed = contact.migrate_mode();
+    assert!(changed);
+    assert_eq!(contact.get("mode").unwrap().text().unwrap(), "PSK");
+    assert_eq!(contact.get("submode").unwrap().text().unwrap(), "PSK31");
+}
+
+#[test]
+pub fn test_update_band() {
+    let mut contact = Contact::new();
+    contact.set("freq", Value::Float(7.123));
+    contact.set("band", Value::Text(String::from("30m")));
+    let changed = contact.update_band();
+    assert!(changed);
+    assert_eq!(contact.get("band").unwrap().text().unwrap(), "40m");
 }
 
 #[test]

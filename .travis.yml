@@ -21,7 +21,7 @@ services:
   - couchdb
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then nvm install iojs; fi
-  - curl http://static.cloudshack.org/dxcc.json.gz | gunzip > dxcc.json
+  - curl https://cdn.cloudshack.org/dxcc.json.gz | gunzip > dxcc.json
   - pip install 'travis-cargo<0.2' --user
   - export PATH=${PATH}:$HOME/.local/bin:/Users/travis/Library/Python/2.7/bin
 script:

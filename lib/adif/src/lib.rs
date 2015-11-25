@@ -8,9 +8,10 @@ extern crate rustc_serialize;
 extern crate phf;
 
 mod contact;
+mod value;
 pub mod data;
 pub mod adi;
 
 pub use contact::Contact;
-pub use contact::Value;
 pub use contact::DateTime;
+pub use value::Value;

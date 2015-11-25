@@ -9,6 +9,11 @@ pub struct Database {
     name: String
 }
 
+#[derive(RustcEncodable, Debug)]
+struct BulkDocs<T: Encodable> {
+    docs: Vec<T>
+}
+
 #[derive(RustcDecodable, Debug)]
 pub struct DatabaseInfo {
     /// Name of the database
@@ -57,6 +62,12 @@ impl Database {
     pub fn insert<T: Encodable>(&self, doc: T) -> Result<Json> {
         let body = try!(json::encode(&doc));
         self.server.post(vec!(&*self.name), Some(body))
+    }
+
+    pub fn bulk<T: Encodable>(&self, docs: Vec<T>) -> Result<Json> {
+        let req = BulkDocs { docs: docs };
+        let body = try!(json::encode(&req));
+        self.server.post(vec!(&*self.name, "_bulk_docs"), Some(body))
     }
 
     pub fn get(&self, id: &str) -> Result<Json> {

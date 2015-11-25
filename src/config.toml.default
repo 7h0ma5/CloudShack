@@ -1,0 +1,22 @@
+[general]
+port = 7373
+wsjt = false
+
+[database.local]
+host = "127.0.0.1"
+port = 5984
+name = "contacts"
+
+[callbook]
+provider = "hamqth"
+username = ""
+password = ""
+
+[lotw]
+username = ""
+password = ""
+
+[cluster]
+host = ""
+port = 23
+username = ""

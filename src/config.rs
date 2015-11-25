@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::Read;
+use std::io::{Read, Write};
 use toml;
 
 #[derive(Debug)]
@@ -12,7 +12,20 @@ impl Config {
     pub fn load() -> Config {
         let filename = "config.toml";
 
-        let mut file = File::open(filename).expect("Couldn't find config.toml");
+        let file = File::open(filename);
+
+        let mut file = if file.is_err() {
+            let mut new_file = File::create(filename).expect("Couldn't create config.toml");
+
+            let default_config = include_bytes!("config.toml.default");
+            new_file.write_all(default_config).expect("Couldn't write to config.toml");
+            drop(new_file);
+
+            File::open(filename).expect("Couldn't open config.toml")
+        }
+        else {
+            file.expect("Couldn't open config.toml")
+        };
 
         let mut s = String::new();
         file.read_to_string(&mut s).unwrap();

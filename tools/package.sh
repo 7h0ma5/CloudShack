@@ -18,8 +18,7 @@ ln -s $(pwd)/webapp/public/ ${PACKAGE_DIR}/webapp/public || exit 1
 
 popd
 
-echo "" > ${PACKAGE_DIR}/config.toml
-curl http://static.cloudshack.org/dxcc.json.gz | gunzip > ${PACKAGE_DIR}/dxcc.json
+curl https://cdn.cloudshack.org/dxcc.json.gz | gunzip > ${PACKAGE_DIR}/dxcc.json
 
 tar czfh ${1:-cloudshack.tar.gz} -C ${TMP_DIR} cloudshack || exit 1
 

@@ -2,7 +2,7 @@ use std::str::FromStr;
 use std::str;
 use std::io::Read;
 use nom::IResult;
-use contact::{Value, Contact};
+use {Value, Contact};
 
 type ContactList = Vec<Contact>;
 
@@ -19,10 +19,14 @@ named!(contact <&[u8], Contact>, chain!(
         let mut contact = Contact::new();
         for (key, value) in fields {
             let key = key.to_string().to_lowercase();
-            if let Some(value) = value {
-                contact.set(&*key, Value::Text(value.to_string()));
+            if let Some(value) = value.and_then(|v| Value::from_adif(&*key, v)) {
+                contact.set(&*key, value);
+            }
+            else {
+                println!("Couldn't read adif key '{}' with value '{:?}'.", key, value);
             }
         }
+        contact.parse_datetime();
         contact
     }
 ));
