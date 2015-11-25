@@ -1,6 +1,6 @@
 [root]
 name = "cloudshack"
-version = "0.1.0"
+version = "0.5.0"
 dependencies = [
  "adif 0.1.0",
  "bodyparser 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",

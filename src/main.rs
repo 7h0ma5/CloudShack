@@ -25,7 +25,16 @@ use iron::prelude::*;
 use logger::Logger;
 use std::thread;
 
+pub fn version() -> String {
+    format!("{}.{}.{}{}", env!("CARGO_PKG_VERSION_MAJOR"),
+                         env!("CARGO_PKG_VERSION_MINOR"),
+                         env!("CARGO_PKG_VERSION_PATCH"),
+                         option_env!("CARGO_PKG_VERSION_PRE").unwrap_or(""))
+}
+
 pub fn main() {
+    println!("CloudShack {}\n", version());
+
     println!("Loading configuration from config.toml...");
     let config = config::Config::load();
 
@@ -52,12 +61,13 @@ pub fn main() {
 
     let mut chain = Chain::new(controllers::routes());
 
-    let (logger_before, logger_after) = Logger::new(None);
     println!("Initializing database middleware...");
     chain.link_before(middleware::contacts::create(contacts));
     chain.link_before(middleware::profiles::create(profiles));
     println!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
+
+    let (logger_before, logger_after) = Logger::new(None);
     chain.link_before(logger_before);
     chain.link_after(logger_after);
 
