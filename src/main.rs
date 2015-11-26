@@ -7,6 +7,7 @@ extern crate bodyparser;
 extern crate urlencoded;
 extern crate persistent;
 
+extern crate chrono;
 extern crate rustc_serialize;
 extern crate toml;
 extern crate adif;

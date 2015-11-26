@@ -4,6 +4,7 @@ use controllers::helper::{RequestHelper, couch_response};
 use router::Router;
 use std::collections::HashMap;
 use rustc_serialize::json;
+use chrono::{DateTime, UTC};
 use adif;
 
 pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
@@ -65,8 +66,17 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
 pub fn import_adi(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
 
+    let start = req.query("start").and_then(|start| DateTime::parse_from_rfc3339(start).ok())
+                                  .map(|res| res.with_timezone(&UTC));
+    let end = req.query("end").and_then(|end| DateTime::parse_from_rfc3339(end).ok())
+                              .map(|res| res.with_timezone(&UTC));
+
     let mut contacts = adif::adi::parse(&mut req.body);
     contacts.retain(adif::Contact::is_valid);
+
+    if start.is_some() || end.is_some() {
+        contacts.retain(|c| c.in_timespan(start, end));
+    }
 
     for contact in &mut contacts {
         contact.update_band();
