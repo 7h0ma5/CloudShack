@@ -16,7 +16,7 @@ impl<T: io::Write> Generator<T> {
             try!(write!(&mut self.writer, "<{}:{}>{}", key, value.len(), value));
         }
         else {
-            println!("Couldn't write adif key '{}' with value '{:?}'.", key, value);
+            warn!("Couldn't write adif key '{}' with value '{:?}'.", key, value);
         }
         Ok(())
     }

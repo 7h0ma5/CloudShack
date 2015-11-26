@@ -23,7 +23,7 @@ named!(contact <&[u8], Contact>, chain!(
                 contact.set(&*key, value);
             }
             else {
-                println!("Couldn't read adif key '{}' with value '{:?}'.", key, value);
+                warn!("Couldn't read adif key '{}' with value '{:?}'.", key, value);
             }
         }
         contact.parse_datetime();
