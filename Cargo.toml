@@ -14,10 +14,9 @@ bodyparser = "*"
 persistent = "*"
 toml = "*"
 rustc-serialize = "*"
+log = "~0.3.0"
+env_logger = "~0.3.0"
 chrono = "~0.2.0"
-
-[dependencies.logger]
-git = "https://github.com/iron/logger.git"
 
 [dependencies.couchdb]
 path = "lib/couchdb"

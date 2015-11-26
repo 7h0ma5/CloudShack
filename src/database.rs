@@ -20,14 +20,14 @@ pub fn init_contacts(db: &couchdb::Database) {
     }.and_then(|v| v.as_u64()).expect("Invalid internal design document.");
 
     if db_version == version {
-        println!("Design document is up to date (v{}).", version);
+        info!("Design document is up to date (v{}).", version);
     }
     else if db_version > version {
-        println!("Design document is newer than the internal! (v{} > v{})", db_version, version);
-        panic!("This version of CloudShack is too old to handle the selected contacts database.");
+        warn!("Design document is newer than the internal! (v{} > v{})", db_version, version);
+        warn!("This version of CloudShack is too old to handle the selected contacts database.");
     }
     else if let Ok(Json::Object(ref old)) = active_design_doc {
-        print!("Updating the design document (v{} => v{})... ", db_version, version);
+        info!("Updating the design document (v{} => v{})... ", db_version, version);
 
         if let (Json::Object(ref new), Some(&Json::String(ref rev))) = (design_doc, old.get("_rev")) {
             let mut new = new.to_owned();
@@ -35,19 +35,19 @@ pub fn init_contacts(db: &couchdb::Database) {
 
             let result = db.insert(Json::Object(new));
 
-            if result.is_ok() { println!("Update successful!"); }
-            else { println!("Update failed!"); }
+            if result.is_ok() { info!("Update successful!"); }
+            else { warn!("Update failed!"); }
         }
         else {
-            println!("Update failed! Old design document has no revision.");
+            warn!("Update failed! Old design document has no revision.");
         }
     }
     else {
-        print!("Creating the design document... ");
+        info!("Creating the design document... ");
         let result = db.insert(design_doc);
 
-        if result.is_ok() { println!("Creation successful!"); }
-        else { println!("Creation failed!"); }
+        if result.is_ok() { info!("Creation successful!"); }
+        else { warn!("Creation failed!"); }
     }
 }
 

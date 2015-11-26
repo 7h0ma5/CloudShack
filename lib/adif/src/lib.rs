@@ -7,6 +7,9 @@ extern crate chrono;
 extern crate rustc_serialize;
 extern crate phf;
 
+#[macro_use]
+extern crate log;
+
 mod contact;
 mod value;
 pub mod data;
