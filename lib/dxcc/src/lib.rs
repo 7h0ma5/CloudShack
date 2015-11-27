@@ -11,7 +11,7 @@ use rustc_serialize::json;
 
 #[derive(RustcDecodable)]
 pub struct Dxcc {
-    entities: HashMap<u32, DxccEntity>,
+    entities: HashMap<i32, DxccEntity>,
     prefixes: HashMap<String, Vec<Prefix>>
 }
 
@@ -19,10 +19,10 @@ pub struct Dxcc {
 pub struct DxccEntity {
     pub country: String,
     pub prefix: String,
-    pub dxcc: u32,
+    pub dxcc: i32,
     pub cont: String,
-    pub cqz: u32,
-    pub ituz: u32,
+    pub cqz: i32,
+    pub ituz: i32,
     pub latlon: (f32, f32),
     pub tz: f32
 }
@@ -31,9 +31,9 @@ pub struct DxccEntity {
 struct Prefix {
     prefix: String,
     exact: bool,
-    dxcc: u32,
-    cqz: Option<u32>,
-    ituz: Option<u32>,
+    dxcc: i32,
+    cqz: Option<i32>,
+    ituz: Option<i32>,
     cont: Option<String>,
     latlon: Option<(f32, f32)>
 }
