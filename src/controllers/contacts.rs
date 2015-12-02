@@ -71,6 +71,8 @@ pub fn import_adi(req: &mut Request) -> IronResult<Response> {
     let end = req.query("end").and_then(|end| DateTime::parse_from_rfc3339(end).ok())
                               .map(|res| res.with_timezone(&UTC));
 
+    let update_dxcc = req.query("dxcc").map(|value| value == "true").unwrap_or(false);
+
     let mut contacts = adif::adi::parse(&mut req.body);
     contacts.retain(adif::Contact::is_valid);
 
@@ -81,6 +83,18 @@ pub fn import_adi(req: &mut Request) -> IronResult<Response> {
     for contact in &mut contacts {
         contact.update_band();
         contact.migrate_mode();
+
+        if update_dxcc {
+            contact.get("call")
+                   .and_then(|value| value.text())
+                   .and_then(|call| req.dxcc().lookup(&*call))
+                   .map(|result| {
+                contact.set("dxcc", adif::Value::Integer(result.dxcc));
+                contact.set("cqz", adif::Value::Integer(result.cqz));
+                contact.set("ituz", adif::Value::Integer(result.ituz));
+                contact.set("cont", adif::Value::Text(result.cont.to_owned()));
+            });
+        }
     }
 
     couch_response(req.contacts().bulk(contacts))
