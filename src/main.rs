@@ -14,6 +14,7 @@ extern crate adif;
 extern crate couchdb;
 extern crate wsjt;
 extern crate dxcc;
+extern crate dxcluster;
 
 #[macro_use]
 extern crate log;
@@ -62,9 +63,19 @@ pub fn main() {
     let wsjt = config.get_bool("general.wsjt").unwrap_or(false);
 
     if wsjt {
-        debug!("Starting wsjt server...");
+        info!("Starting wsjt server...");
         let server = wsjt::Server::new();
         thread::spawn(move || server.run());
+    }
+
+    if let Some(host) = config.get_str("cluster.host") {
+        info!("Connecting to the cluster...");
+        let port = config.get_int("cluster.port").unwrap_or(23);
+        let username = config.get_str("cluster.username");
+
+        let addr = format!("{}:{}", host, port);
+        let cluster = dxcluster::Cluster::new(&*addr, username);
+        thread::spawn(move || cluster.run());
     }
 
     let db_host = config.get_str("database.local.host").unwrap_or("localhost");

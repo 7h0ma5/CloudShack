@@ -27,5 +27,8 @@ path = "lib/adif"
 [dependencies.dxcc]
 path = "lib/dxcc"
 
+[dependencies.dxcluster]
+path = "lib/dxcluster"
+
 [dependencies.wsjt]
 path = "lib/wsjt"

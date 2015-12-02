@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
 
 [dependencies]
-hyper = "0.6.13"
+hyper = "~0.7"
 rustc-serialize = "0.3.16"
 flate2 = "0.2.9"
