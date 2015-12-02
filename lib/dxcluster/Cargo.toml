@@ -2,3 +2,7 @@
 name = "dxcluster"
 version = "0.1.0"
 authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
+
+[dependencies]
+regex = "~0.1"
+regex_macros = "~0.1"
