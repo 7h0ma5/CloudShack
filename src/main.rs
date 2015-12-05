@@ -69,11 +69,11 @@ pub fn main() {
     }
 
     if let Some(host) = config.get_str("cluster.host") {
-        info!("Connecting to the cluster...");
         let port = config.get_int("cluster.port").unwrap_or(23);
         let username = config.get_str("cluster.username");
-
         let addr = format!("{}:{}", host, port);
+
+        info!("Connecting to the cluster {}...", addr);
         let cluster = dxcluster::Cluster::new(&*addr, username);
         thread::spawn(move || cluster.run());
     }
