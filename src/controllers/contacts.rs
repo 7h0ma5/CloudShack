@@ -92,7 +92,7 @@ pub fn import_adi(req: &mut Request) -> IronResult<Response> {
                 contact.set("dxcc", adif::Value::Integer(result.dxcc));
                 contact.set("cqz", adif::Value::Integer(result.cqz));
                 contact.set("ituz", adif::Value::Integer(result.ituz));
-                contact.set("cont", adif::Value::Text(result.cont.to_owned()));
+                contact.set("cont", adif::Value::String(result.cont.to_owned()));
             });
         }
     }
