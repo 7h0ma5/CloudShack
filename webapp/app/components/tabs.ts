@@ -1,25 +1,20 @@
-import {Component, View, Input, NgFor, NgClass} from "angular2/angular2";
-import {ContentChildren, QueryList} from "angular2/angular2";
+import {Component, Input, ContentChildren, QueryList} from "angular2/core";
+import {NgFor, NgClass} from "angular2/common";
 
 @Component({
     selector: "tab",
-    inputs: ["title"]
-})
-@View({
     template: `<div [hidden]="!active"><ng-content></ng-content></div>`
 })
 export class Tab {
     @Input() title: string;
-    active: boolean = false;
+    @Input() active: boolean = false;
 }
 
 @Component({
-    selector: "tabs"
-})
-@View({
+    selector: "tabs",
     template: `
         <ul class="tab-list">
-          <li *ng-for="#tab of tabs" [ng-class]="{'active': tab.active}">
+          <li *ngFor="#tab of tabs" [ngClass]="{'active': tab.active}">
             <a (click)="selectTab(tab)">{{tab.title}}</a>
           </li>
         </ul>
@@ -29,10 +24,6 @@ export class Tab {
 })
 export class Tabs {
     @ContentChildren(Tab) tabs: QueryList<Tab>;
-
-    afterViewInit() {
-        this.selectTab(this.tabs.first);
-    }
 
     selectTab(tab) {
         this.tabs.map(tab => tab.active = false);

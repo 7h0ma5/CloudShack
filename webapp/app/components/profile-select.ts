@@ -1,21 +1,22 @@
-import {Component, View, NgIf, NgFor} from "angular2/angular2";
+import {Component, View} from "angular2/core";
+import {NgIf, NgFor} from "angular2/common";
 import {Router, RouterLink} from "angular2/router";
 
 @Component({
     selector: "profile-select",
     template: `
         <a>
-          <span *ng-if="activeProfile">{{activeProfile.name}}</span>
-          <span *ng-if="!activeProfile">No Profile</span>&nbsp;
+          <span *ngIf="activeProfile">{{activeProfile.name}}</span>
+          <span *ngIf="!activeProfile">No Profile</span>&nbsp;
           <i class="fa fa-angle-down"></i>
         </a>
         <ul>
-          <li *ng-for="#profile of profiles; #i = index">
+          <li *ngFor="#profile of profiles; #i = index">
             <a (click)="edit(i)"><i class="fa fa-pencil fg-lg"></i></a>
             <a (click)="activate(i)">{{profile.doc.name}}</a>
           </li>
           <li>
-            <a [router-link]="['/NewProfile']">
+            <a [routerLink]="['/NewProfile']">
               <i a class="fa fa-plus fa-lg"></i> New Profile
             </a>
           </li>

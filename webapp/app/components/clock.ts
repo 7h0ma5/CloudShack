@@ -1,22 +1,15 @@
-import {Component, DatePipe} from "angular2/angular2";
+import {Component} from "angular2/core";
+import {DatePipe} from "angular2/common";
+import {Observable} from "rxjs/Rx";
 
 @Component({
     selector: "clock",
-    template: "{{time}}"
+    template: "{{time | date: 'HH:mm:ss'}}"
 })
 export class Clock {
-    time: String;
-    datepipe: DatePipe;
+    time: Date = new Date();
 
     constructor() {
-        this.time = "00:00:00";
-        this.datepipe = new DatePipe();
-        this.updateTime();
-        setInterval(this.updateTime.bind(this), 1000);
-    }
-
-    updateTime() {
-        var date = new Date();
-        this.time = this.datepipe.transform(date, ["HH:mm:ss", "UTC"]);
+        Observable.interval(1000).subscribe(() => this.time = new Date());
     }
 }

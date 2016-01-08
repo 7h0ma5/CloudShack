@@ -1,13 +1,14 @@
-import {Component, NgIf, NgClass} from "angular2/angular2";
+import {Component} from "angular2/core";
+import {NgIf, NgClass} from "angular2/common";
 
 @Component({
     selector: "status-select",
     template: `
         <div class="status-icon">
-          <i class="fa fa-2x" [ng-class]="{'fa-wifi': onAir, 'fa-moon-o': !onAir}"></i>
+          <i class="fa fa-2x" [ngClass]="{'fa-wifi': onAir, 'fa-moon-o': !onAir}"></i>
         </div>
         <div class="status-text">
-          <div class="status-operator" *ng-if="activeProfile && activeProfile.operator">
+          <div class="status-operator" *ngIf="activeProfile && activeProfile.operator">
             {{activeProfile.operator}}
           </div>
           <div class="status-message" (click)="toggle()">

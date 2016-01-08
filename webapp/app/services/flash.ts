@@ -1,4 +1,4 @@
-import {Output, EventEmitter} from "angular2/angular2";
+import {Output, EventEmitter} from "angular2/core";
 
 export class FlashMessage {
     level: string;

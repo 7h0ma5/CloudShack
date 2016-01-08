@@ -1,5 +1,5 @@
-import {Component, View, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/angular2";
-import {Control} from "angular2/angular2";
+import {Component, View} from "angular2/core";
+import {Control, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/common";
 import {Http, Response} from "angular2/http";
 import {ContactService} from "../../services/contact";
 import {TAB_DIRECTIVES} from "../../components/tabs";

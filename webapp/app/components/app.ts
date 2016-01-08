@@ -1,4 +1,5 @@
-import {Component, View, NgIf} from "angular2/angular2";
+import {Component} from "angular2/core";
+import {NgIf} from "angular2/common";
 import {ROUTER_DIRECTIVES, RouteConfig, Route} from "angular2/router";
 import {Http, Response} from "angular2/http";
 import {Clock} from "./clock";
@@ -9,11 +10,10 @@ import {HomePage} from "../pages/home";
 import {LogbookPage} from "../pages/logbook";
 import {NewContactPage} from "../pages/contact/new";
 import {ShowContactPage} from "../pages/contact/show";
+import 'rxjs/Rx';
 
 @Component({
-    selector: "app"
-})
-@View({
+    selector: "app",
     templateUrl: "/templates/layout.html",
     directives: [Clock, FlashView, ProfileSelect, StatusSelect, NgIf, ROUTER_DIRECTIVES]
 })
@@ -33,10 +33,11 @@ import {ShowContactPage} from "../pages/contact/show";
 export class AppComponent {
     version: string = "?";
 
-    constructor(http: Http) {
+    constructor(public http: Http) {
         console.log("CloudShack is ready!");
 
-        http.get("/version").map((res: Response) => res.text())
-                            .subscribe(version => this.version = version);
+        this.http.get("/version")
+                 .map((res: Response) => res.text())
+                 .subscribe(version => this.version = version);
     }
 }

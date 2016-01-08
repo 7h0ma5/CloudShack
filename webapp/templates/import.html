@@ -7,29 +7,29 @@
     </p>
 
     <p>
-      <input type="checkbox" ng-model="dateRange"> Date Range:
-      <input type="datetime-local" ng-model="start" ng-disabled="!dateRange"
-             ng-model-options="{timezone: 'UTC'}">
-      <input type="datetime-local" ng-model="end" ng-disabled="!dateRange"
-             ng-model-options="{timezone: 'UTC'}">
+      <input type="checkbox" ngModel="dateRange"> Date Range:
+      <input type="datetime-local" ngModel="start" ngDisabled="!dateRange"
+             ngModel-options="{timezone: 'UTC'}">
+      <input type="datetime-local" ngModel="end" ngDisabled="!dateRange"
+             ngModel-options="{timezone: 'UTC'}">
     </p>
 
     <p>
-      <input type="checkbox" ng-model="dxcc"> Update DXCC
+      <input type="checkbox" ngModel="dxcc"> Update DXCC
     </p>
 
     <p>
       Apply profile:
-      <select ng-model="profile" ng-options="p.id as p.doc.name for p in profiles.rows">
+      <select ngModel="profile" ngOptions="p.id as p.doc.name for p in profiles.rows">
         <option></option>
       </select>
     </p>
 
     <p>
-      <button class="btn-primary" ng-click="import()" ng-disabled="!file || loading">
+      <button class="btn-primary" ngClick="import()" ngDisabled="!file || loading">
         Import
       </button>
-      <spinner ng-show="loading"></spinner>
+      <spinner ngShow="loading"></spinner>
     </p>
   </tab>
   <tab title="LotW">
@@ -37,18 +37,18 @@
       Import all LotW confirmations:
     </p>
     <p>
-      <button class="btn-primary" ng-click="importLotw()">
+      <button class="btn-primary" ngClick="importLotw()">
         Import
       </button>
-      <spinner ng-show="loading"></spinner>
+      <spinner ngShow="loading"></spinner>
     </p>
-    <div ng-show="lotwResult">
+    <div ngShow="lotwResult">
       <p>
         Updated <b>{{lotwResult.updates}}</b> contacts.
       </p>
-      <p ng-show="lotwResult.fails">Failed matches:
+      <p ngShow="lotwResult.fails">Failed matches:
         <ul>
-          <li ng-repeat="call in lotwResult.fails track by $index">
+          <li ngRepeat="call in lotwResult.fails track by $index">
             {{call}}
           </li>
         </ul>

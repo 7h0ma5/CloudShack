@@ -1,11 +1,11 @@
 <header>
   <div class="sidebar-toggle-button">
-    <a ng-click="toggleSidebar = toggleSidebar ? false : true">
+    <a ngClick="toggleSidebar = toggleSidebar ? false : true">
       <i class="fa fa-bars fa-2x"></i>
     </a>
   </div>
   <div class="ticker" ng-controller="TickerCtrl">
-    <div class="ticker-text" *ng-if="show">
+    <div class="ticker-text" *ngIf="show">
       <i class="fa fa-globe fa-lg"></i>
       <b>{spot.dxcall}</b> on
       {spot.freq|number:3} by
@@ -25,13 +25,13 @@
 
   <nav nav-menu>
     <ul>
-      <li><a [router-link]="['/Home']"><i class="fa fa-home"></i> Home</a></li>
-      <li><a [router-link]="['/Logbook']"><i class="fa fa-book"></i> Logbook</a></li>
-      <li><a [router-link]="['/NewContact']"><i class="fa fa-plus"></i> New Contact</a></li>
-      <li><a [router-link]="['/Cluster']"><i class="fa fa-globe"></i> DX Cluster</a></li>
-      <li><a [router-link]="['/Import']"><i class="fa fa-cloud-upload"></i> Import</a></li>
-      <li><a [router-link]="['/Export']"><i class="fa fa-cloud-download"></i> Export</a></li>
-      <li><a [router-link]="['/Settings']"><i class="fa fa-wrench"></i> Settings</a></li>
+      <li><a [routerLink]="['/Home']"><i class="fa fa-home"></i> Home</a></li>
+      <li><a [routerLink]="['/Logbook']"><i class="fa fa-book"></i> Logbook</a></li>
+      <li><a [routerLink]="['/NewContact']"><i class="fa fa-plus"></i> New Contact</a></li>
+      <li><a [routerLink]="['/Cluster']"><i class="fa fa-globe"></i> DX Cluster</a></li>
+      <li><a [routerLink]="['/Import']"><i class="fa fa-cloud-upload"></i> Import</a></li>
+      <li><a [routerLink]="['/Export']"><i class="fa fa-cloud-download"></i> Export</a></li>
+      <li><a [routerLink]="['/Settings']"><i class="fa fa-wrench"></i> Settings</a></li>
     </ul>
   </nav>
 

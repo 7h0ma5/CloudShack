@@ -21,23 +21,23 @@
     <th>Mode</th>
     <th>Frequency</th>
   </tr>
-  <tr *ng-for="#contact of contacts">
+  <tr *ngFor="#contact of contacts">
     <td><!-- contact.doc.start|date:"dd.MM.yyyy" --> {{contact.doc.start|slice:0:10}}</td>
     <td><!-- contact.doc.start|date:"HH:mm" --> {{contact.doc.start|slice:11:16}}</td>
     <td class="flag-cell">
       <img [src]="'/flag/24/' + contact.doc.dxcc" />
     </td>
     <td>
-        <span *ng-if="contact.doc.contest_id" data-tooltip="{contact.doc.contest_id}">
+        <span *ngIf="contact.doc.contest_id" data-tooltip="{contact.doc.contest_id}">
             <i style="color: #e67e22;" class="fa fa-trophy"></i>
         </span>
-        <span *ng-if="contact.doc.lotw_qsl_rcvd == 'Y'" data-tooltip="Confirmed via LotW">
+        <span *ngIf="contact.doc.lotw_qsl_rcvd == 'Y'" data-tooltip="Confirmed via LotW">
             <i style="color: #27ae60;" class="fa fa-check-circle"></i>
         </span>
     </td>
     <td>
       <b>
-        <a [router-link]="['/ShowContact', {id: contact.doc._id}]">
+        <a [routerLink]="['/ShowContact', {id: contact.doc._id}]">
           {{contact.doc.call}}
         </a>
       </b>

@@ -3,21 +3,21 @@
 <div class="box">
   <div class="box-content">
     <p>
-      <select ng-options="format.id as format.name for format in formats"
-              ng-model="format">
+      <select ngOptions="format.id as format.name for format in formats"
+              ngModel="format">
       </select>
     </p>
 
     <p>
-      <input type="checkbox" ng-model="dateRange"> Date Range:
-      <input type="datetime-local" ng-model="start" ng-disabled="!dateRange"
-             ng-model-options="{timezone: 'UTC'}">
-      <input type="datetime-local" ng-model="end" ng-disabled="!dateRange"
-             ng-model-options="{timezone: 'UTC'}">
+      <input type="checkbox" ngModel="dateRange"> Date Range:
+      <input type="datetime-local" ngModel="start" ngDisabled="!dateRange"
+             ngModel-options="{timezone: 'UTC'}">
+      <input type="datetime-local" ngModel="end" ngDisabled="!dateRange"
+             ngModel-options="{timezone: 'UTC'}">
     </p>
 
     <p>
-      <button class="btn-primary" ng-click="export()">
+      <button class="btn-primary" ngClick="export()">
         Export
       </button>
     </p>

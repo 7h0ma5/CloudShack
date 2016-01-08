@@ -6,19 +6,19 @@
       <div class="form-group">
         <label for="call">Callsign</label>
         <input type="text" id="call" class="input-callsign"
-               ng-model="contact.call" uppercase>
+               ngModel="contact.call" uppercase>
       </div>
 
       <div class="form-group">
         <label for="rst-rcvd">RST Rcvd</label>
         <input type="text" id="rst-rcvd"  class="input-rst"
-               ng-model="contact.rst_rcvd">
+               ngModel="contact.rst_rcvd">
       </div>
 
       <div class="form-group">
         <label for="rst-sent">RST Sent</label>
         <input type="text" id="rst-sent" class="input-rst"
-               ng-model="contact.rst_sent">
+               ngModel="contact.rst_sent">
       </div>
     </div>
 
@@ -27,7 +27,7 @@
         <label for="freq">Freq</label>
         <div class="input-group">
           <input type="number" min="0.0" max="100000.0"
-                 step="0.001" ng-model="contact.freq" id="freq">
+                 step="0.001" ngModel="contact.freq" id="freq">
           <span class="input-addon">
             MHz
           </span>
@@ -38,7 +38,7 @@
         <label for="band">Band</label>
         <div class="input-group">
           <input type="text" id="band" class="input-band"
-                 ng-model="contact.band">
+                 ngModel="contact.band">
         </div>
       </div>
     </div>
@@ -47,26 +47,26 @@
       <div class="form-group">
         <label for="mode">Mode</label>
         <input type="text" id="mode" class="input-mode"
-               ng-model="contact.mode">
+               ngModel="contact.mode">
       </div>
 
       <div class="form-group">
         <label for="submode">Submode</label>
         <input type="text" id="submode" class="input-mode"
-              ng-model="contact.submode">
+              ngModel="contact.submode">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="start">Start</label>
-        <input type="datetime-local" step="1" ng-model="startDate"
-               id="start" ng-model-options="{timezone: 'UTC'}" required>
+        <input type="datetime-local" step="1" ngModel="startDate"
+               id="start" ngModel-options="{timezone: 'UTC'}" required>
       </div>
       <div class="form-group">
         <label for="end">End</label>
-        <input type="datetime-local" step="1" ng-model="endDate"
-               id="start" ng-model-options="{timezone: 'UTC'}" required>
+        <input type="datetime-local" step="1" ngModel="endDate"
+               id="start" ngModel-options="{timezone: 'UTC'}" required>
       </div>
     </div>
 
@@ -74,7 +74,7 @@
       <div class="form-group">
         <label for="comment">Comment</label>
         <input type="text" id="comment" class="input-comment"
-               ng-model="contact.comment">
+               ngModel="contact.comment">
       </div>
     </div>
   </tab>
@@ -83,14 +83,14 @@
     <div class="form-row">
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" id="name" ng-model="contact.name">
+        <input type="text" id="name" ngModel="contact.name">
       </div>
 
       <div class="form-group">
         <label for="age">Age</label>
         <div class="input-group">
           <input type="number" min="1" max="150" step="1"
-                 ng-model="contact.age" id="age" class="input-age">
+                 ngModel="contact.age" id="age" class="input-age">
           <span class="input-addon">
             Years
           </span>
@@ -101,18 +101,18 @@
     <div class="form-row">
       <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" name="address" id="address" ng-model="contact.address">
+        <input type="text" name="address" id="address" ngModel="contact.address">
       </div>
       <div class="form-group">
         <label for="email">E-Mail</label>
-        <input type="text" name="email" id="email" ng-model="contact.email">
+        <input type="text" name="email" id="email" ngModel="contact.email">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="rig">Rig</label>
-        <input type="text" name="rig" id="rig" ng-mode="contact.rig">
+        <input type="text" name="rig" id="rig" ngModel="contact.rig">
       </div>
     </div>
   </tab>
@@ -121,57 +121,57 @@
     <div class="form-row">
       <div class="form-group">
         <label for="qth">QTH</label>
-        <input type="text" id="qth" ng-model="contact.qth">
+        <input type="text" id="qth" ngModel="contact.qth">
       </div>
 
       <div class="form-group">
         <label for="gridsquare">Gridsquare</label>
         <input type="text" id="gridsquare" class="input-gridsquare"
-               ng-model="contact.gridsquare">
+               ngModel="contact.gridsquare">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="country">Country</label>
-        <input type="text" ng-model="contact.country" id="country">
+        <input type="text" ngModel="contact.country" id="country">
       </div>
 
       <div class="form-group">
         <label for="dxcc">DXCC</label>
         <input type="number" id="dxcc" class="input-dxcc"
-               ng-model="contact.dxcc" start="1" step="1">
+               ngModel="contact.dxcc" start="1" step="1">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="cont">Continent</label>
-        <input type="text" id="cont" class="input-cont" ng-model="contact.cont"
+        <input type="text" id="cont" class="input-cont" ngModel="contact.cont"
                uppercase>
       </div>
 
       <div class="form-group">
         <label for="cqz">CQ Zone</label>
         <input class="input-zone" type="number" id="cqz"
-               ng-model="contact.cqz" min="1" max="40" step="1">
+               ngModel="contact.cqz" min="1" max="40" step="1">
       </div>
 
       <div class="form-group">
         <label for="ituz">ITU Zone</label>
         <input class="input-zone" type="number" id="ituz"
-               ng-model="contact.ituz" min="1" max="90" step="1">
+               ngModel="contact.ituz" min="1" max="90" step="1">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="lat">Latitude</label>
-        <input type="text" id="lat" ng-model="contact.lat">
+        <input type="text" id="lat" ngModel="contact.lat">
       </div>
 
       <div class="form-group">
         <label for="lon">Longitude</label>
-        <input type="text" id="lon" ng-model="contact.lon">
+        <input type="text" id="lon" ngModel="contact.lon">
       </div>
     </div>
   </tab>
@@ -180,29 +180,29 @@
     <div class="form-row">
       <div class="form-group">
         <label for="contest_id">Contest ID</label>
-        <input type="text" id="contest_id" ng-model="contact.contest_id">
+        <input type="text" id="contest_id" ngModel="contact.contest_id">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="srx"># rcvd</label>
         <input type="number" id="srx" class="input-contest-serial"
-               ng-model="contact.srx" step="1">
+               ngModel="contact.srx" step="1">
       </div>
       <div class="form-group">
         <label for="srx_string">Exchange rcvd</label>
-        <input type="text" id="srx_string" ng-model="contact.srx_string">
+        <input type="text" id="srx_string" ngModel="contact.srx_string">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="stx"># sent</label>
         <input type="number" id="stx" class="input-contest-serial"
-               ng-model="contact.stx" step="1">
+               ngModel="contact.stx" step="1">
       </div>
       <div class="form-group">
         <label for="stx_string">Exchange sent</label>
-        <input type="text" id="stx_string" ng-model="contact.stx_string">
+        <input type="text" id="stx_string" ngModel="contact.stx_string">
       </div>
     </div>
   </tab>
@@ -211,7 +211,7 @@
     <div class="form-row">
       <div class="form-group">
         <label for="qsl_via">QSL via</label>
-        <input type="text" id="qsl_via" ng-model="contact.qsl_via">
+        <input type="text" id="qsl_via" ngModel="contact.qsl_via">
       </div>
     </div>
 
@@ -221,30 +221,30 @@
       <div class="form-group">
         <label for="qsl_sent">QSL sent</label>
         <input type="text" id="qsl_sent" class="input-qsl-status"
-               ng-model="contact.qsl_sent">
+               ngModel="contact.qsl_sent">
       </div>
       <div class="form-group">
         <label for="qsl_sent_via">QSL sent via</label>
-        <input type="text" id="qsl_sent_via" ng-model="contact.qsl_sent_via">
+        <input type="text" id="qsl_sent_via" ngModel="contact.qsl_sent_via">
       </div>
       <div class="form-group">
         <label for="qslsdate">QSL sent date</label>
-        <input type="text" id="qslsdate" ng-model="contact.qslsdate">
+        <input type="text" id="qslsdate" ngModel="contact.qslsdate">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="qsl_rcvd">QSL rcvd</label>
         <input type="text" id="qsl_rcvd" class="input-qsl-status"
-               ng-model="contact.qsl_received">
+               ngModel="contact.qsl_received">
       </div>
       <div class="form-group">
         <label for="qsl_rcvd_via">QSL received via</label>
-        <input type="text" id="qsl_rcvd_via" ng-model="qslrvia">
+        <input type="text" id="qsl_rcvd_via" ngModel="qslrvia">
       </div>
       <div class="form-group">
         <label for="qslrdate">QSL received date</label>
-        <input type="text" id="qslrdate" ng-model="contact.qslrdate">
+        <input type="text" id="qslrdate" ngModel="contact.qslrdate">
       </div>
     </div>
 
@@ -254,22 +254,22 @@
       <div class="form-group">
         <label for="lotw_qsl_sent">QSL sent</label>
         <input type="text" id="lotw_qsl_sent" class="input-qsl-status"
-               ng-model="contact.lotw_sent">
+               ngModel="contact.lotw_sent">
       </div>
       <div class="form-group">
         <label for="lotw_qslsdate">QSL sent date</label>
-        <input type="text" id="lotw_qslsdate" ng-model="contact.lotw_qslsdate">
+        <input type="text" id="lotw_qslsdate" ngModel="contact.lotw_qslsdate">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="lotw_qsl_rcvd">QSL rcvd</label>
         <input type="text" id="lotw_qsl_rcvd" class="input-qsl-status"
-               ng-model="contact.lotw_qsl_rcvd">
+               ngModel="contact.lotw_qsl_rcvd">
       </div>
       <div class="form-group">
         <label for="lotw_qslrdate">QSL received date</label>
-        <input type="text" id="lotw_qslrdate" ng-model="contact.qslradate">
+        <input type="text" id="lotw_qslrdate" ngModel="contact.qslradate">
       </div>
     </div>
   </tab>
@@ -278,55 +278,55 @@
     <div class="form-row">
       <div class="form-group">
         <label for="prop_mode">Propagation mode</label>
-        <input type="text" id="prop_mode" ng-model="contact.prop_mode">
+        <input type="text" id="prop_mode" ngModel="contact.prop_mode">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="sfi">SFI</label>
         <input type="number" id="sfi" class="input-sun-index"
-               ng-model="contact.sfi" min="0" step="1">
+               ngModel="contact.sfi" min="0" step="1">
       </div>
       <div class="form-group">
         <label for="a_index">A index</label>
         <input type="number" id="a_index" class="input-sun-index"
-               ng-model="contact.a_index" min="0" step="1">
+               ngModel="contact.a_index" min="0" step="1">
       </div>
       <div class="form-group">
         <label for="k_index">K index</label>
         <input type="number" id="k_index" class="input-sun-index"
-               ng-model="contact.k_index" min="0" step="1">
+               ngModel="contact.k_index" min="0" step="1">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="sat_mode">Satellite mode</label>
-        <input type="text" id="sat_mode" ng-model="contact.sat_mode">
+        <input type="text" id="sat_mode" ngModel="contact.sat_mode">
       </div>
       <div class="form-group">
         <label for="sat_name">Satellite name</label>
-        <input type="text" id="sat_name" ng-model="contact.sat_name">
+        <input type="text" id="sat_name" ngModel="contact.sat_name">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="ms_shower">Meteor Shower</label>
-        <input type="text" id="ms_shower" ng-model="contact.ms_shower">
+        <input type="text" id="ms_shower" ngModel="contact.ms_shower">
       </div>
       <div class="form-group">
         <label for="nr_bursts"># Bursts</label>
         <input type="number" id="nr_bursts" class="input-nr-bursts"
-               ng-model="contact.nr_bursts" min="0" step="1">
+               ngModel="contact.nr_bursts" min="0" step="1">
       </div>
       <div class="form-group">
         <label for="nr_pings"># Pings</label>
         <input type="number" id="nr_pings" class="input-nr-pings"
-               ng-model="contact.nr_pings" min="0" step="1">
+               ngModel="contact.nr_pings" min="0" step="1">
       </div>
       <div class="form-group">
         <label for="max_bursts">Max Bursts</label>
         <input type="number" id="max_bursts" class="input-max-bursts"
-               ng-model="contact.max_bursts" min="0" step="1">
+               ngModel="contact.max_bursts" min="0" step="1">
       </div>
     </div>
   </tab>
@@ -335,26 +335,26 @@
     <div class="form-row">
       <div class="form-group">
         <label for="operator">Operator</label>
-        <input type="text" id="operator" ng-model="contact.operator">
+        <input type="text" id="operator" ngModel="contact.operator">
       </div>
 
       <div class="form-group">
         <label for="station_call">Station Callsign</label>
         <input type="text" id="station_callsign"
-               ng-model="contact.station_callsign">
+               ngModel="contact.station_callsign">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="my_rig">Rig</label>
-        <input type="text" id="my_rig" ng-model="contact.my_rig">
+        <input type="text" id="my_rig" ngModel="contact.my_rig">
       </div>
 
       <div class="form-group">
         <label for="tx_pwr">Power</label>
         <input class="input-power" type="number" id="tx_pwr"
-               ng-model="contact.tx_pwr">
+               ngModel="contact.tx_pwr">
       </div>
     </div>
 
@@ -362,7 +362,7 @@
       <div class="form-group">
         <label for="my_gridsquare">Gridsquare</label>
         <input type="text" id="my_gridsquare" class="input-gridsquare"
-               ng-model="contact.my_gridsquare">
+               ngModel="contact.my_gridsquare">
       </div>
     </div>
   </tab>
@@ -370,13 +370,13 @@
 
 <div class="box-transparent">
   <div class="box-content">
-    <button ng-click="save()" class="btn-primary">
+    <button ngClick="save()" class="btn-primary">
       <i class="fa fa-check"></i> Save
     </button>
-    <button ng-click="discard()" class="btn-danger">
+    <button ngClick="discard()" class="btn-danger">
       <i class="fa fa-times"></i> Discard
     </button>
-    <button ng-click="queryCallbook()">
+    <button ngClick="queryCallbook()">
       <i class="fa fa-download"></i> Query Callbook
     </button>
   </div>

@@ -28,7 +28,7 @@
       Mode Statistics
     </div>
     <table class="box-table">
-      <tr *ng-for="#mode of modes">
+      <tr *ngFor="#mode of modes">
         <td>{{mode[0]}}</td>
         <td>{{mode[1]}}</td>
       </tr>
@@ -38,10 +38,10 @@
 
 <p>
   <i class="fa fa-hand-o-right"></i>
-  <a *ng-if="qso_stats.total == 0" href="/#/contact/new">
+  <a *ngIf="qso_stats.total == 0" href="/#/contact/new">
     Log your first contact!
   </a>
-  <a *ng-if="qso_stats.total > 0" href="/#/contact/new">
+  <a *ngIf="qso_stats.total > 0" href="/#/contact/new">
     Log a new contact
   </a>
 </p>

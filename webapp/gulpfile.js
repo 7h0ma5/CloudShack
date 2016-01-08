@@ -52,16 +52,18 @@ gulp.task("vendor.css", function() {
 
 gulp.task("vendor.js", function() {
     var standalone = gulp.src([
-        NPM_DIR + "/leaflet/dist/leaflet.js"
+        NPM_DIR + "/leaflet/dist/leaflet.js",
     ])
         .pipe(gulp.dest("public/js"));
 
     var vendor = gulp.src([
+        NPM_DIR + "/angular2/bundles/angular2-polyfills.js",
         NPM_DIR + "/systemjs/dist/system.src.js",
         "system.conf.js",
+        NPM_DIR + "/rxjs/bundles/Rx.js",
         NPM_DIR + "/angular2/bundles/angular2.dev.js",
-        NPM_DIR + "/angular2/bundles/router.dev.js",
-        NPM_DIR + "/angular2/bundles/http.dev.js"
+        NPM_DIR + "/angular2/bundles/router.js",
+        NPM_DIR + "/angular2/bundles/http.js"
     ])
         .pipe($.concat("vendor.js"))
         .pipe(gulp.dest("public/js"));

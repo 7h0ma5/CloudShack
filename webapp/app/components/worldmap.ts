@@ -1,4 +1,4 @@
-import {Component, Directive, Inject, ElementRef} from "angular2/angular2";
+import {Component, Directive, Inject, ElementRef} from "angular2/core";
 import {Map, Icon, LatLng, Marker, marker, tileLayer, control} from "leaflet";
 
 @Directive({

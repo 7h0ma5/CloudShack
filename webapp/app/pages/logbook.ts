@@ -1,4 +1,5 @@
-import {Component, View, NgFor, NgIf} from "angular2/angular2";
+import {Component, View} from "angular2/core";
+import {NgIf, NgFor} from "angular2/common";
 import {RouterLink} from "angular2/router";
 import {ContactService} from "../services/contact";
 

@@ -1,4 +1,5 @@
-import {Component, NgIf} from "angular2/angular2";
+import {Component} from "angular2/core";
+import {NgIf} from "angular2/common";
 import {Flash, FlashMessage} from "../services/flash";
 
 @Component({

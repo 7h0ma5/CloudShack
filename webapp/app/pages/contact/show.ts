@@ -1,5 +1,5 @@
-import {Component, View} from "angular2/angular2";
-import {NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault} from "angular2/angular2";
+import {Component, View} from "angular2/core";
+import {NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault} from "angular2/common";
 import {RouteParams, Router, Location} from "angular2/router";
 import {ContactService} from "../../services/contact";
 
