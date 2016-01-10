@@ -18,6 +18,7 @@ dependencies = [
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "staticfile 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "toml 0.1.25 (registry+https://github.com/rust-lang/crates.io-index)",
+ "url 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "urlencoded 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "wsjt 0.1.0",
 ]
