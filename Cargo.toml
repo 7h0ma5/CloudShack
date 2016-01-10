@@ -4,16 +4,16 @@ version = "0.5.0"
 authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
 
 [dependencies]
-iron = "*"
-plugin = "*"
-router = "*"
-staticfile = "*"
-mount = "*"
-urlencoded = "*"
-bodyparser = "*"
-persistent = "*"
-toml = "*"
-rustc-serialize = "*"
+iron = "~0.2.6"
+plugin = "~0.2.6"
+router = "~0.1.0"
+staticfile = "~0.1.0"
+mount = "~0.0.9"
+urlencoded = "~0.2.1"
+bodyparser = "~0.0.6"
+persistent = "~0.0.9"
+toml = "~0.1.25"
+rustc-serialize = "~0.3.16"
 log = "~0.3.0"
 env_logger = "~0.3.0"
 chrono = "~0.2.0"
@@ -26,6 +26,9 @@ path = "lib/adif"
 
 [dependencies.dxcc]
 path = "lib/dxcc"
+
+[dependencies.dxcluster]
+path = "lib/dxcluster"
 
 [dependencies.wsjt]
 path = "lib/wsjt"

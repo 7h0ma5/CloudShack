@@ -156,6 +156,19 @@ impl Contact {
         self.get_datetime("end")
     }
 
+    /// Returns true if the contact starts in the given timespan.
+    pub fn in_timespan(&self, start: Option<DateTime>, end: Option<DateTime>) -> bool {
+        if let Some(cstart) = self.start() {
+            match (start, end) {
+                (Some(start), Some(end)) => cstart >= start && cstart <= end,
+                (Some(start), None) => cstart >= start,
+                (None, Some(end)) => cstart <= end,
+                (None, None) => true
+            }
+        }
+        else { false }
+    }
+
     /// Convert the contact to a JSON-encoded String.
     pub fn to_json(&self) -> Option<String> {
         json::encode(self).ok()

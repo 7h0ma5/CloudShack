@@ -1,5 +1,5 @@
 use server::{Server, Params};
-use error::{Result, Error};
+use error::Result;
 use rustc_serialize::{Encodable, Decodable, json};
 use rustc_serialize::json::{Json};
 use std::collections::HashMap;

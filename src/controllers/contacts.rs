@@ -4,6 +4,7 @@ use controllers::helper::{RequestHelper, couch_response};
 use router::Router;
 use std::collections::HashMap;
 use rustc_serialize::json;
+use chrono::{DateTime, UTC};
 use adif;
 
 pub fn all_contacts(req: &mut Request) -> IronResult<Response> {
@@ -65,12 +66,35 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
 pub fn import_adi(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
 
+    let start = req.query("start").and_then(|start| DateTime::parse_from_rfc3339(start).ok())
+                                  .map(|res| res.with_timezone(&UTC));
+    let end = req.query("end").and_then(|end| DateTime::parse_from_rfc3339(end).ok())
+                              .map(|res| res.with_timezone(&UTC));
+
+    let update_dxcc = req.query("dxcc").map(|value| value == "true").unwrap_or(false);
+
     let mut contacts = adif::adi::parse(&mut req.body);
     contacts.retain(adif::Contact::is_valid);
+
+    if start.is_some() || end.is_some() {
+        contacts.retain(|c| c.in_timespan(start, end));
+    }
 
     for contact in &mut contacts {
         contact.update_band();
         contact.migrate_mode();
+
+        if update_dxcc {
+            contact.get("call")
+                   .and_then(|value| value.text())
+                   .and_then(|call| req.dxcc().lookup(&*call))
+                   .map(|result| {
+                contact.set("dxcc", adif::Value::Integer(result.dxcc));
+                contact.set("cqz", adif::Value::Integer(result.cqz));
+                contact.set("ituz", adif::Value::Integer(result.ituz));
+                contact.set("cont", adif::Value::Text(result.cont.to_owned()));
+            });
+        }
     }
 
     couch_response(req.contacts().bulk(contacts))
