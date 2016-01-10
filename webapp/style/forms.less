@@ -22,6 +22,14 @@ input, select {
     &:disabled {
         color: #ccc;
     }
+
+    &[uppercase] {
+        text-transform: uppercase;
+    }
+
+    &:placeholder-shown {
+        text-transform: none;
+    }
 }
 
 select {

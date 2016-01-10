@@ -6,6 +6,7 @@ import {TAB_DIRECTIVES} from "../../components/tabs";
 import {Uppercase} from "../../components/uppercase";
 import {WorldMap} from "../../components/worldmap";
 import {MODES, CONTESTS} from "../../constants";
+import {Observable} from "rxjs/Rx";
 import {coord_distance, coord_bearing, grid_to_coord} from "../../utils/geo";
 
 const GRID_PRIORITY: number = 0;
@@ -46,8 +47,9 @@ export class NewContactPage {
     {
         this.callsign.valueChanges
             .debounceTime(500)
-            .switchMap(val => this.http.get("/dxcc/" + val))
-            .filter((res: Response) => res.status == 200)
+            .map(encodeURIComponent)
+            .switchMap((val: string) => this.http.get("/dxcc/" + val))
+            .catch((err, src, caught) => { this.resetDxcc(); return src; })
             .map((res: Response) => res.json())
             .subscribe((dxcc: any) => this.updateDxcc(dxcc));
 
@@ -83,10 +85,7 @@ export class NewContactPage {
     }
 
     updateDxcc(dxcc) {
-        if (!dxcc) {
-            this.resetDxcc();
-            return;
-        }
+        if (!dxcc) this.resetDxcc();
 
         this.dxcc = dxcc;
         this.contact["dxcc"] = dxcc["dxcc"];
