@@ -40,7 +40,7 @@ struct Prefix {
 
 impl Dxcc {
     pub fn load() -> Option<Dxcc> {
-        let mut file = File::open("dxcc.json");
+        let file = File::open("dxcc.json");
         if file.is_err() { return None; }
 
         let mut data = String::new();
