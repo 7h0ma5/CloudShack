@@ -6,6 +6,7 @@ extern crate staticfile;
 extern crate bodyparser;
 extern crate urlencoded;
 extern crate persistent;
+extern crate url;
 
 extern crate chrono;
 extern crate rustc_serialize;
