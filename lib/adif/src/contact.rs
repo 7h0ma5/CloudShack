@@ -54,7 +54,7 @@ impl Contact {
             return false;
         }
         else {
-            self.set("band", Value::Text(new_band.name.to_string()));
+            self.set("band", Value::String(new_band.name.to_string()));
             return true;
         }
     }
@@ -71,8 +71,8 @@ impl Contact {
         let legacy_mode = data::find_legacy_mode(&*mode.unwrap());
 
         if let Some(legacy_mode) = legacy_mode {
-            self.set("mode", Value::Text(legacy_mode.mode.to_string()));
-            self.set("submode", Value::Text(legacy_mode.submode.to_string()));
+            self.set("mode", Value::String(legacy_mode.mode.to_string()));
+            self.set("submode", Value::String(legacy_mode.submode.to_string()));
             return true;
         }
         else {
@@ -108,8 +108,8 @@ impl Contact {
                           .unwrap_or(start);
 
         // TODO: fix this workaround for correct JavaScript date formats
-        self.set("start", Value::Text(format!("{:?}", start)));
-        self.set("end", Value::Text(format!("{:?}", end)));
+        self.set("start", Value::String(format!("{:?}", start)));
+        self.set("end", Value::String(format!("{:?}", end)));
     }
 
     fn parse_date(&self, value: &str) -> Option<Date<UTC>> {
@@ -139,7 +139,7 @@ impl Contact {
     }
 
     fn get_datetime(&self, key: &str) -> Option<DateTime> {
-        if let Some(&Value::Text(ref datetime)) = self.fields.get(key) {
+        if let Some(&Value::String(ref datetime)) = self.fields.get(key) {
             let parsed = ChronoDateTime::parse_from_rfc3339(datetime);
             parsed.map(|res| res.with_timezone(&UTC)).ok()
         }

@@ -6,7 +6,7 @@ pub enum Value {
     Float(f64),
     Integer(i32),
     Boolean(bool),
-    Text(String)
+    String(String)
 }
 
 type AdifDecode = fn(&str) -> Option<Value>;
@@ -153,17 +153,17 @@ fn decode_boolean(val: &str) -> Option<Value> {
 
 fn decode_string(val: &str) -> Option<Value> {
     let value = String::from(val.trim());
-    if value.is_empty() { None } else { Some(Value::Text(value)) }
+    if value.is_empty() { None } else { Some(Value::String(value)) }
 }
 
 fn decode_uppercase(val: &str) -> Option<Value> {
     let value = String::from(val).trim().to_uppercase();
-    if value.is_empty() { None } else { Some(Value::Text(value)) }
+    if value.is_empty() { None } else { Some(Value::String(value)) }
 }
 
 fn decode_lowercase(val: &str) -> Option<Value> {
     let value = String::from(val).trim().to_lowercase();
-    if value.is_empty() { None } else { Some(Value::Text(value)) }
+    if value.is_empty() { None } else { Some(Value::String(value)) }
 }
 
 fn encode_integer(value: &Value) -> Option<String> {
@@ -223,7 +223,7 @@ impl Value {
 
     pub fn text(&self) -> Option<String> {
         match self {
-            &Value::Text(ref val) => Some(val.to_owned()),
+            &Value::String(ref val) => Some(val.to_owned()),
             _ => None
         }
     }
@@ -256,7 +256,7 @@ impl Encodable for Value {
             Value::Float(value) => encoder.emit_f64(value),
             Value::Integer(value) => encoder.emit_i32(value),
             Value::Boolean(value) => encoder.emit_bool(value),
-            Value::Text(ref value) => encoder.emit_str(value),
+            Value::String(ref value) => encoder.emit_str(value),
         }
     }
 }
