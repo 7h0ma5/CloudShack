@@ -41,7 +41,7 @@ impl Config {
     }
 
     pub fn get_str<'a>(&'a self, path: &'a str) -> Option<&'a str> {
-        self.get(path).and_then(|v| v.as_str())
+        self.get(path).and_then(|v| v.as_str()).and_then(|v| if v.is_empty() { None } else { Some(v) })
     }
 
     pub fn get_int(&self, path: &str) -> Option<i64> {
