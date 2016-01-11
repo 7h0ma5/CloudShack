@@ -7,14 +7,25 @@
     <link type="image/png" rel="shortcut icon" href="/images/favicon.png">
     <link type="text/css" rel="stylesheet" href="/css/vendor.css" />
     <link type="text/css" rel="stylesheet" href="/css/app.css" />
-    <script src="/js/vendor.js"></script>
   </head>
   <body>
     <app>
-      <div class="loading">
-        Loading...
+      <div id="loading">
+        <div id="loading-center">
+          <div id="loading-center-absolute">
+            <div class="object" id="object-a"></div>
+            <div class="object" id="object-b"></div>
+            <div class="object" id="object-c"></div>
+            <div class="object" id="object-d"></div>
+          </div>
+          <div id="loading-text">
+            CloudShack
+          </div>
+        </div>
       </div>
     </app>
+
+    <script src="/js/vendor.js"></script>
     <script>
       System.import("bootstrap");
     </script>
