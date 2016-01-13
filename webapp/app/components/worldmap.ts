@@ -1,11 +1,11 @@
-import {Component, Directive, Inject, ElementRef} from "angular2/core";
+import {Component, Directive, Inject, ElementRef, OnDestroy} from "angular2/core";
 import {Map, Icon, LatLng, Marker, marker, tileLayer, control} from "leaflet";
 
 @Directive({
     selector: "worldmap",
     properties: ["maptarget"]
 })
-export class WorldMap {
+export class WorldMap implements OnDestroy {
     target: [number, number];
     map: Map;
     marker: Marker;
@@ -37,6 +37,10 @@ export class WorldMap {
         control.layers(layers, []).addTo(this.map);
 
         this.marker = marker([0, 0]);
+    }
+
+    ngOnDestroy() {
+        this.map.remove();
     }
 
     set maptarget(newTarget) {
