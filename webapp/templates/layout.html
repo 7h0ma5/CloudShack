@@ -1,48 +1,50 @@
-<header>
-  <div class="sidebar-toggle-button">
-    <a ngClick="toggleSidebar = toggleSidebar ? false : true">
-      <i class="fa fa-bars fa-2x"></i>
-    </a>
-  </div>
-  <div class="ticker" ng-controller="TickerCtrl">
-    <div class="ticker-text" *ngIf="show">
-      <i class="fa fa-globe fa-lg"></i>
-      <b>{spot.dxcall}</b> on
-      {spot.freq|number:3} by
-      {spot.spotter}
+<div [ngClass]="{'toggle-sidebar': toggleSidebar}">
+  <header>
+    <div class="sidebar-toggle-button">
+      <a (click)="toggleSidebar = !toggleSidebar">
+        <i class="fa fa-bars fa-2x"></i>
+      </a>
     </div>
-  </div>
-  <profile-select></profile-select>
-</header>
+    <div class="ticker" ng-controller="TickerCtrl">
+      <div class="ticker-text" *ngIf="show">
+        <i class="fa fa-globe fa-lg"></i>
+        <b>{spot.dxcall}</b> on
+        {spot.freq|number:3} by
+        {spot.spotter}
+      </div>
+    </div>
+    <profile-select></profile-select>
+  </header>
 
-<aside>
-  <div class="brand">
-    <h1><a href="/#/">CloudShack</a></h1>
-  </div>
+  <aside>
+    <div class="brand">
+      <h1><a href="/#/">CloudShack</a></h1>
+    </div>
 
-  <clock></clock>
-  <status-select></status-select>
+    <clock></clock>
+    <status-select></status-select>
 
-  <nav nav-menu>
-    <ul>
-      <li><a [routerLink]="['/Home']"><i class="fa fa-home"></i> Home</a></li>
-      <li><a [routerLink]="['/Logbook']"><i class="fa fa-book"></i> Logbook</a></li>
-      <li><a [routerLink]="['/NewContact']"><i class="fa fa-plus"></i> New Contact</a></li>
-      <li><a [routerLink]="['/Cluster']"><i class="fa fa-globe"></i> DX Cluster</a></li>
-      <li><a [routerLink]="['/Import']"><i class="fa fa-cloud-upload"></i> Import</a></li>
-      <li><a [routerLink]="['/Export']"><i class="fa fa-cloud-download"></i> Export</a></li>
-      <li><a [routerLink]="['/Settings']"><i class="fa fa-wrench"></i> Settings</a></li>
-    </ul>
-  </nav>
+    <nav nav-menu>
+      <ul>
+        <li><a [routerLink]="['/Home']"><i class="fa fa-home"></i> Home</a></li>
+        <li><a [routerLink]="['/Logbook']"><i class="fa fa-book"></i> Logbook</a></li>
+        <li><a [routerLink]="['/NewContact']"><i class="fa fa-plus"></i> New Contact</a></li>
+        <li><a [routerLink]="['/Cluster']"><i class="fa fa-globe"></i> DX Cluster</a></li>
+        <li><a [routerLink]="['/Import']"><i class="fa fa-cloud-upload"></i> Import</a></li>
+        <li><a [routerLink]="['/Export']"><i class="fa fa-cloud-download"></i> Export</a></li>
+        <li><a [routerLink]="['/Settings']"><i class="fa fa-wrench"></i> Settings</a></li>
+      </ul>
+    </nav>
 
-  <div class="sidebar-footer">
-    Version <b>{{version}}</b>
-  </div>
-</aside>
+    <div class="sidebar-footer">
+      Version <b>{{version}}</b>
+    </div>
+  </aside>
 
-<div class="page-wrapper">
-  <div class="page">
-    <flash-view></flash-view>
-    <router-outlet></router-outlet>
+  <div class="page-wrapper">
+    <div class="page">
+      <flash-view></flash-view>
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

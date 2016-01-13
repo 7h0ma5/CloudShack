@@ -32,6 +32,7 @@ import 'rxjs/Rx';
 ])
 export class AppComponent {
     version: string = "?";
+    toggleSidebar: boolean = false;
 
     constructor(public http: Http) {
         console.log("CloudShack is ready!");
