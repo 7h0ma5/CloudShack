@@ -214,7 +214,7 @@ fn encode_integer(value: &Value) -> Option<String> {
 
 fn encode_float(value: &Value) -> Option<String> {
     match value {
-        &Value::Float(num) => Some(format!("{}", num)),
+        &Value::Float(num) => Some(format!("{:.6}", num)),
         &Value::Integer(num) => Some(format!("{}", num)),
         _ => None
     }

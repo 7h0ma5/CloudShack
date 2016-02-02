@@ -187,8 +187,8 @@ impl Decodable for Contact {
     }
 }
 
-impl From<json::Json> for Contact {
-    fn from(data: json::Json) -> Contact {
+impl<'a> From<&'a json::Json> for Contact {
+    fn from(data: &json::Json) -> Contact {
         let mut contact = Contact::new();
 
         for (key, value) in data.as_object().unwrap().iter() {
@@ -204,7 +204,7 @@ impl From<String> for Contact {
     fn from(data: String) -> Contact {
         let result = json::Json::from_str(&*data);
         if let Ok(data) = result {
-            Contact::from(data)
+            Contact::from(&data)
         }
         else {
             Contact::new()

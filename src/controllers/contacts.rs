@@ -63,6 +63,36 @@ pub fn stats(req: &mut Request) -> IronResult<Response> {
     couch_response(req.contacts().view("logbook", "stats", Some(params)))
 }
 
+pub fn export_adi(req: &mut Request) -> IronResult<Response> {
+    req.parse_query();
+
+    let mut params = HashMap::new();
+    params.insert("descending", "false");
+    req.merge_query(&mut params);
+    params.insert("include_docs", "true");
+
+    let result = req.contacts().view("logbook", "byDate", Some(params));
+
+    if let Ok(json::Json::Object(result)) = result {
+        let mut contacts = Vec::new();
+
+        if let Some(rows) = result.get("rows").and_then(|obj| obj.as_array()) {
+            for contact in rows.iter() {
+                if let Some(contact) = contact.as_object().and_then(|obj| obj.get("doc")) {
+                    contacts.push(adif::Contact::from(contact));
+                }
+            }
+        }
+
+        let mut data = Vec::new();
+        adif::adi::generate(&contacts, &mut data).ok();
+        Ok(Response::with((status::Ok, data)))
+    }
+    else {
+        Ok(Response::with((status::InternalServerError, "Internal Server Error")))
+    }
+}
+
 pub fn import_adi(req: &mut Request) -> IronResult<Response> {
     req.parse_query();
 
@@ -107,6 +137,7 @@ pub fn routes() -> Router {
     router.get("/_view/:view", all_contacts);
     router.get("/:id", show_contact);
     router.post("/", save_contact);
+    router.get("/_adi", export_adi);
     router.post("/_adi", import_adi);
     router.delete("/:id", delete_contact);
     router

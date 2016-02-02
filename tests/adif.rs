@@ -20,7 +20,7 @@ pub fn test_generator() {
     contact.set("freq", Value::Float(14.313));
 
     let mut out = Vec::new();
-    adif::adi::generate(vec!(contact), &mut out).unwrap();
+    adif::adi::generate(&vec!(contact), &mut out).unwrap();
 
     let result = adif::adi::parse(&out[..]);
     assert_eq!(result.len(), 1);
