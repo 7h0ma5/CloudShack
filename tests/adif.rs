@@ -27,18 +27,26 @@ pub fn test_generator() {
     let contact = &result[0];
 
     assert_eq!(*contact.get("call").unwrap(), Value::String(String::from("DL2IC")));
-    //assert_eq!(*contact.get("freq").unwrap(), Value::Number(14.313));
+    assert_eq!(*contact.get("freq").unwrap(), Value::Float(14.313));
 }
 
 #[test]
 pub fn test_json() {
     let mut contact = Contact::new();
     contact.set("call", Value::String(String::from("DL2IC")));
-    contact.set("qsl_sent", Value::Boolean(true));
-    contact.to_json().unwrap();
+    contact.set("band", Value::String(String::from("20M")));
+    contact.set("qso_random", Value::Boolean(true));
+    contact.set("freq", Value::Float(14.313));
+    contact.set("srx", Value::Integer(42));
 
-    //let contact = Contact::from(encoded);
-    //assert_eq!(*contact.get("call").unwrap(), Value::String(String::from("DL2IC")));
+    let encoded = contact.to_json().unwrap();
+    let contact = Contact::from(encoded);
+
+    assert_eq!(*contact.get("call").unwrap(), Value::String(String::from("DL2IC")));
+    assert_eq!(*contact.get("band").unwrap(), Value::String(String::from("20m")));
+    assert_eq!(*contact.get("qso_random").unwrap(), Value::Boolean(true));
+    assert_eq!(*contact.get("freq").unwrap(), Value::Float(14.313));
+    assert_eq!(*contact.get("srx").unwrap(), Value::Integer(42));
 }
 
 #[test]

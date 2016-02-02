@@ -189,7 +189,14 @@ impl Decodable for Contact {
 
 impl From<json::Json> for Contact {
     fn from(data: json::Json) -> Contact {
-        Contact::new()
+        let mut contact = Contact::new();
+
+        for (key, value) in data.as_object().unwrap().iter() {
+            if let Some(value) = Value::from_json(key, value) {
+                contact.set(key, value);
+            }
+        }
+        contact
     }
 }
 
