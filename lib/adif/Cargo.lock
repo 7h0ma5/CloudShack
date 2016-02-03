@@ -4,7 +4,7 @@ version = "0.1.0"
 dependencies = [
  "chrono 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "nom 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nom 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "phf 0.7.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "phf_macros 0.7.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -52,7 +52,7 @@ dependencies = [
 
 [[package]]
 name = "nom"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
