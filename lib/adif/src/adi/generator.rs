@@ -23,7 +23,25 @@ impl<T: io::Write> Generator<T> {
 
     pub fn write_contact(&mut self, contact: &Contact) -> io::Result<()> {
         for (key, value) in &contact.fields {
-            try!(self.write_field(&*key, value));
+            if key == "start" {
+                if let Some(start) = contact.start() {
+                    let qso_date = Value::String(start.format("%Y%m%d").to_string());
+                    let time_on = Value::String(start.format("%H%M%S").to_string());
+                    try!(self.write_field("qso_date", &qso_date));
+                    try!(self.write_field("time_on", &time_on));
+                }
+            }
+            else if key == "end" {
+                if let Some(end) = contact.end() {
+                    let qso_date_off = Value::String(end.format("%Y%m%d").to_string());
+                    let time_off = Value::String(end.format("%H%M%S").to_string());
+                    try!(self.write_field("qso_date_off", &qso_date_off));
+                    try!(self.write_field("time_off", &time_off));
+                }
+            }
+            else {
+                try!(self.write_field(&*key, value));
+            }
         }
         try!(self.writer.write(b"<EOR>\n\n"));
         Ok(())
