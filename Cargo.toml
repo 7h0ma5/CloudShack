@@ -34,3 +34,6 @@ path = "lib/dxcluster"
 
 [dependencies.wsjt]
 path = "lib/wsjt"
+
+[dependencies.rigctl]
+path = "lib/rigctl"
