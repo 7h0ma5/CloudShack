@@ -1,0 +1,6 @@
+[package]
+name = "rigctl"
+version = "0.1.0"
+authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
+
+[dependencies]

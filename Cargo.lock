@@ -14,6 +14,7 @@ dependencies = [
  "mount 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "persistent 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "plugin 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rigctl 0.1.0",
  "router 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "staticfile 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -473,6 +474,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "regex 0.1.48 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "rigctl"
+version = "0.1.0"
 
 [[package]]
 name = "route-recognizer"

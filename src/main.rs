@@ -17,6 +17,7 @@ extern crate couchdb;
 extern crate wsjt;
 extern crate dxcc;
 extern crate dxcluster;
+extern crate rigctl;
 
 #[macro_use]
 extern crate log;
@@ -65,7 +66,13 @@ pub fn main() {
     info!("Starting websocket server...");
     thread::spawn(move || ws::run());
 
-    let port = config.get_int("general.port").unwrap_or(7373);
+    info!("Connecting to the rig...");
+    if let Some(host) = config.get_str("rig.host") {
+        let port = config.get_int("rig.port").unwrap_or(4532) as u16;
+        let rig = rigctl::RigCtl::new(host, port);
+        thread::spawn(move || rig.run());
+    }
+
     let wsjt = config.get_bool("general.wsjt").unwrap_or(false);
 
     if wsjt {
@@ -103,6 +110,8 @@ pub fn main() {
     chain.link_before(middleware::profiles::create(profiles));
     debug!("Initializing dxcc middleware...");
     chain.link_before(middleware::dxcc::create());
+
+    let port = config.get_int("general.port").unwrap_or(7373);
 
     let http_addr = &*format!("0.0.0.0:{}", port);
     info!("Starting http server on {}...", http_addr);
