@@ -7,6 +7,7 @@ extern crate bodyparser;
 extern crate urlencoded;
 extern crate persistent;
 extern crate url;
+extern crate websocket;
 
 extern crate chrono;
 extern crate rustc_serialize;
@@ -21,11 +22,12 @@ extern crate dxcluster;
 extern crate log;
 extern crate env_logger;
 
-//mod ws;
 mod database;
 mod controllers;
 mod middleware;
 mod config;
+#[path = "websocket.rs"]
+mod ws;
 
 use iron::prelude::*;
 use std::thread;
@@ -59,6 +61,9 @@ pub fn main() {
 
     debug!("Loading configuration from config.toml...");
     let config = config::Config::load();
+
+    info!("Starting websocket server...");
+    thread::spawn(move || ws::run());
 
     let port = config.get_int("general.port").unwrap_or(7373);
     let wsjt = config.get_bool("general.wsjt").unwrap_or(false);
