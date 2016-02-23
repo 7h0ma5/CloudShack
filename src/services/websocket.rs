@@ -1,3 +1,4 @@
+use config::Config;
 use std::thread;
 
 pub fn run() {
@@ -43,4 +44,9 @@ pub fn run() {
             }
         });
     }
+}
+
+pub fn init(_: &Config) {
+    info!("Starting websocket server...");
+    thread::spawn(|| run());
 }

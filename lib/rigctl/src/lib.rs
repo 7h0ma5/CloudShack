@@ -1,38 +1,51 @@
 use std::net::TcpStream;
 use std::io::{BufReader, BufRead, Write};
-use std::thread::sleep;
-use std::time::Duration;
+use std::sync::{RwLock, Mutex};
 
-pub struct RigCtl {
+pub struct RigState {
     connected: bool,
     freq: f64,
-    host: String,
-    port: u16
+}
+
+pub struct RigCtl {
+    rig_state: RwLock<RigState>,
+    stream: TcpStream,
+    reader: Mutex<BufReader<TcpStream>>
 }
 
 impl RigCtl {
-    pub fn new(host: &str, port: u16) -> RigCtl {
-        RigCtl {
+    pub fn new(host: &str, port: u16) -> std::io::Result<RigCtl> {
+        let stream = try!(TcpStream::connect(&*format!("{}:{}", host, port)));
+        let reader = BufReader::new(try!(stream.try_clone()));
+
+        let state = RigState {
             connected: false,
-            freq: 0.0,
-            host: String::from(host),
-            port: port
-        }
+            freq: 0.0
+        };
+
+        Ok(RigCtl {
+            rig_state: RwLock::new(state),
+            stream: stream,
+            reader: Mutex::new(reader)
+        })
     }
 
-    pub fn run(&self) {
-        let mut stream = TcpStream::connect(&*format!("{}:{}", self.host, self.port)).unwrap();
-        let mut reader = BufReader::new(stream.try_clone().unwrap());
+    pub fn poll(&self) -> std::io::Result<()> {
+        let mut stream = try!(self.stream.try_clone());
+        try!(stream.write_all(b"+f\n"));
+        try!(stream.write_all(b"+m\n"));
+        Ok(())
+    }
 
-        loop {
-            stream.write_all(b"+f\n").unwrap();
-            stream.write_all(b"+m\n").unwrap();
+    pub fn read(&self) -> std::io::Result<()> {
+        let mut line = String::new();
+        let bytes_read = try!(self.reader.lock().unwrap().read_line(&mut line));
 
-            let mut line = String::new();
-            let result = reader.read_line(&mut line);
-            println!("{}", line);
-
-            sleep(Duration::from_secs(1));
+        if bytes_read > 0 {
+            Ok(())
+        }
+        else {
+            Err(std::io::Error::new(std::io::ErrorKind::BrokenPipe, "connection lost"))
         }
     }
 }

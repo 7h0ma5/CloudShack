@@ -8,7 +8,6 @@ extern crate urlencoded;
 extern crate persistent;
 extern crate url;
 extern crate websocket;
-
 extern crate chrono;
 extern crate rustc_serialize;
 extern crate toml;
@@ -23,15 +22,12 @@ extern crate rigctl;
 extern crate log;
 extern crate env_logger;
 
-mod database;
+mod services;
 mod controllers;
 mod middleware;
 mod config;
-#[path = "websocket.rs"]
-mod ws;
 
 use iron::prelude::*;
-use std::thread;
 
 pub fn version() -> String {
     format!("{}.{}.{}{}", env!("CARGO_PKG_VERSION_MAJOR"),
@@ -63,45 +59,13 @@ pub fn main() {
     debug!("Loading configuration from config.toml...");
     let config = config::Config::load();
 
-    info!("Starting websocket server...");
-    thread::spawn(move || ws::run());
+    let dispatcher = services::dispatcher::init();
 
-    info!("Connecting to the rig...");
-    if let Some(host) = config.get_str("rig.host") {
-        let port = config.get_int("rig.port").unwrap_or(4532) as u16;
-        let rig = rigctl::RigCtl::new(host, port);
-        thread::spawn(move || rig.run());
-    }
-
-    let wsjt = config.get_bool("general.wsjt").unwrap_or(false);
-
-    if wsjt {
-        info!("Starting wsjt server...");
-        let server = wsjt::Server::new();
-        thread::spawn(move || server.run());
-    }
-
-    if let Some(host) = config.get_str("cluster.host") {
-        let port = config.get_int("cluster.port").unwrap_or(23);
-        let username = config.get_str("cluster.username");
-        let addr = format!("{}:{}", host, port);
-
-        info!("Connecting to the cluster {}...", addr);
-        let cluster = dxcluster::Cluster::new(&*addr, username);
-        thread::spawn(move || cluster.run());
-    }
-
-    let db_host = config.get_str("database.local.host").unwrap_or("localhost");
-    let db_port = config.get_int("database.local.port").unwrap_or(5984);
-    let db_name = config.get_str("database.local.name").unwrap_or("contacts");
-    let couch = couchdb::Server::new(db_host, db_port as u16);
-
-    debug!("Initializing database...");
-    let contacts = couch.db(db_name);
-    database::init_contacts(&contacts);
-
-    let profiles = couch.db("profiles");
-    database::init_profiles(&profiles);
+    services::websocket::init(&config);
+    services::rigctl::init(&config, dispatcher.clone());
+    services::wsjt::init(&config);
+    services::cluster::init(&config);
+    let (contacts, profiles) = services::database::init(&config);
 
     let mut chain = Chain::new(controllers::routes());
 
@@ -115,5 +79,5 @@ pub fn main() {
 
     let http_addr = &*format!("0.0.0.0:{}", port);
     info!("Starting http server on {}...", http_addr);
-    Iron::new(chain).http(http_addr).unwrap();
+    Iron::new(chain).listen_with(http_addr, 6, iron::Protocol::Http, None).unwrap();
 }
