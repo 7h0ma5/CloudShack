@@ -5,9 +5,7 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
-pub enum Command {
-    SetFrequency(f64)
-}
+pub use rigctl::RigState;
 
 pub fn poll(rig: Arc<RigCtl>) {
     loop {
@@ -18,7 +16,11 @@ pub fn poll(rig: Arc<RigCtl>) {
 
 pub fn run(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
     loop {
-        rig.read().unwrap();
+        let state = rig.read().unwrap();
+        if let Some(state) = state {
+            println!("new rig state {:?}", state);
+            dispatcher.publish(Event::RigStateChange(state));
+        }
     }
 }
 
