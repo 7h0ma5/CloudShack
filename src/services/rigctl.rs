@@ -18,16 +18,19 @@ pub fn run(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
     loop {
         let state = rig.read().unwrap();
         if let Some(state) = state {
-            println!("new rig state {:?}", state);
             dispatcher.publish(Event::RigStateChange(state));
+            if !state.connected { break; }
         }
     }
 }
 
 pub fn listen(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
     let rx = dispatcher.subscribe();
-    for event in rx.recv() {
-        println!("{:?}", event);
+    for event in rx.iter() {
+        match event {
+            Event::RigStateChange(state) => { if !state.connected { break; }},
+//            _ => { }
+        }
     }
 }
 

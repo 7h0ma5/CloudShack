@@ -3,16 +3,16 @@ use std::io::{BufReader, BufRead, Write};
 use std::sync::{RwLock, Mutex};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
-enum RigMode {
+pub enum RigMode {
     FM, AM, USB, LSB, CW, UNKNOWN
 }
 
 #[derive(Debug, Clone, Copy)]
 pub struct RigState {
-    connected: bool,
-    frequency: f64,
-    mode: RigMode,
-    passband: u32
+    pub connected: bool,
+    pub frequency: f64,
+    pub mode: RigMode,
+    pub passband: u32
 }
 
 pub struct RigCtl {
@@ -27,7 +27,7 @@ impl RigCtl {
         let reader = BufReader::new(try!(stream.try_clone()));
 
         let state = RigState {
-            connected: false,
+            connected: true,
             frequency: 0.0,
             mode: RigMode::UNKNOWN,
             passband: 0
@@ -72,7 +72,8 @@ impl RigCtl {
             }
         }
         else {
-            Err(std::io::Error::new(std::io::ErrorKind::BrokenPipe, "connection lost"))
+            self.state.write().unwrap().connected = false;
+            Ok(Some(self.state.read().unwrap().clone()))
         }
     }
 
