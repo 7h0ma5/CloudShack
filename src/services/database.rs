@@ -1,10 +1,11 @@
 use rustc_serialize::json::Json;
+use config::Config;
 use couchdb;
 
 pub fn init_contacts(db: &couchdb::Database) {
     db.create().ok();
 
-    let design = include_str!("logbook.json").replace("\n", " ");
+    let design = include_str!("../logbook.json").replace("\n", " ");
     let design_doc = Json::from_str(&design).expect("Invalid internal design document.");
 
     let active_design_doc = db.get("_design/logbook");
@@ -53,4 +54,20 @@ pub fn init_contacts(db: &couchdb::Database) {
 
 pub fn init_profiles(db: &couchdb::Database) {
     db.create().is_ok();
+}
+
+pub fn init(config: &Config) -> (couchdb::Database, couchdb::Database) {
+    let db_host = config.get_str("database.local.host").unwrap_or("localhost");
+    let db_port = config.get_int("database.local.port").unwrap_or(5984);
+    let db_name = config.get_str("database.local.name").unwrap_or("contacts");
+    let couch = couchdb::Server::new(db_host, db_port as u16);
+
+    debug!("Initializing database...");
+    let contacts = couch.db(db_name);
+    init_contacts(&contacts);
+
+    let profiles = couch.db("profiles");
+    init_profiles(&profiles);
+
+    return (contacts, profiles);
 }
