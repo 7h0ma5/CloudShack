@@ -5,7 +5,7 @@ use services;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Event {
-    RigStateChange(services::rigctl::RigState)
+    RigStateChange(services::rigctl::RigState),
 }
 
 #[derive(Clone)]
