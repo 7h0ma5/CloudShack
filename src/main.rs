@@ -64,7 +64,7 @@ pub fn main() {
     services::websocket::init(&config);
     services::rigctl::init(&config, dispatcher.clone());
     services::wsjt::init(&config);
-    services::cluster::init(&config);
+    services::cluster::init(&config, dispatcher.clone());
     let (contacts, profiles) = services::database::init(&config);
 
     let mut chain = Chain::new(controllers::routes());
