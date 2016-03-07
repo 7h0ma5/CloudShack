@@ -13,7 +13,7 @@ impl Cluster {
         Cluster { addr: addr.to_owned(), user: user.map(|v| v.to_owned()) }
     }
 
-    pub fn run(&self) {
+    pub fn run<C>(&self, callback: C) where C: Fn(Spot) {
         let mut stream = TcpStream::connect(&*self.addr).unwrap();
         let mut reader = BufReader::new(stream.try_clone().unwrap());
 
@@ -29,8 +29,7 @@ impl Cluster {
             if result.is_err() { break; }
 
             if regex!(r"^DX").is_match(&*line) {
-                let spot = Spot::parse(&*line);
-                println!("new dx: {:?}", spot);
+                Spot::parse(&*line).map(|spot| callback(spot));
             }
         }
     }

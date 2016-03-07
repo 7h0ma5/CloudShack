@@ -5,7 +5,7 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
-pub use rigctl::RigState;
+pub use rigctl::{RigState, RigMode};
 
 pub fn poll(rig: Arc<RigCtl>) {
     loop {
@@ -25,11 +25,15 @@ pub fn run(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
 }
 
 pub fn listen(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
-    let rx = dispatcher.subscribe();
+    let rx = dispatcher.subscribe("rig");
     for event in rx.iter() {
+        println!("Event received {:?}", event);
         match event {
+            Event::SetFrequency(freq) => rig.set_frequency(freq),
+            Event::SetMode(mode, passband) => rig.set_mode(mode, passband),
             Event::RigStateChange(state) => { if !state.connected { break; }},
-//            _ => { }
+            Event::SubscriptionCanceled => break,
+            _ => { }
         }
     }
 }

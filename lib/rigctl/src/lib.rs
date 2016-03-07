@@ -47,16 +47,16 @@ impl RigCtl {
         Ok(())
     }
 
-    pub fn set_frequency(&self, frequency: f64) -> std::io::Result<()> {
-        let mut stream = try!(self.stream.try_clone());
-        try!(stream.write_all(format!("F {}", (frequency * 1e6) as u64).as_bytes()));
-        Ok(())
+    pub fn set_frequency(&self, frequency: f64) {
+        if let Ok(mut stream) = self.stream.try_clone() {
+            stream.write_all(format!("F {}", (frequency * 1e6) as u64).as_bytes()).ok();
+        }
     }
 
-    pub fn set_mode(&self, mode: &str, passband: u32) -> std::io::Result<()> {
-        let mut stream = try!(self.stream.try_clone());
-        try!(stream.write_all(format!("M {} {}", mode, passband).as_bytes()));
-        Ok(())
+    pub fn set_mode(&self, mode: RigMode, passband: u32) {
+        if let Ok(mut stream) = self.stream.try_clone() {
+            stream.write_all(format!("M {:?} {}", mode, passband).as_bytes()).ok();
+        }
     }
 
     pub fn read(&self) -> std::io::Result<Option<RigState>> {

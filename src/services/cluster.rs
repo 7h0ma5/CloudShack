@@ -1,8 +1,11 @@
 use config::Config;
+use services::{Dispatcher, Event};
 use std::thread;
 use dxcluster;
 
-pub fn init(config: &Config) {
+pub use dxcluster::Spot;
+
+pub fn init(config: &Config, dispatcher: Dispatcher) {
     if let Some(host) = config.get_str("cluster.host") {
         let port = config.get_int("cluster.port").unwrap_or(23);
         let username = config.get_str("cluster.username");
@@ -10,6 +13,9 @@ pub fn init(config: &Config) {
 
         info!("Connecting to the cluster {}...", addr);
         let cluster = dxcluster::Cluster::new(&*addr, username);
-        thread::spawn(move || cluster.run());
+
+        thread::spawn(move || cluster.run(|spot| {
+            dispatcher.publish(Event::SpotReceived(spot));
+        }));
     }
 }
