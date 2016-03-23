@@ -6,11 +6,11 @@ authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
 [dependencies]
 iron = "~0.2.6"
 plugin = "~0.2.6"
-router = "~0.1.0"
+router = "=0.1.0"
 staticfile = "~0.1.0"
 mount = "~0.0.9"
 urlencoded = "~0.2.1"
-bodyparser = "~0.0.6"
+bodyparser = "~0.2.0"
 persistent = "~0.0.9"
 toml = "~0.1.25"
 rustc-serialize = "~0.3.16"

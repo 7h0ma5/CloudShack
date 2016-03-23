@@ -1,4 +1,5 @@
 **/target
+lib/**/Cargo.lock
 webapp/public
 config.toml
 dxcc.json
