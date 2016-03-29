@@ -33,7 +33,7 @@ pub fn listen(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
             Event::SetMode(mode, passband) => rig.set_mode(mode, passband),
             Event::RigStateChange(state) => { if !state.connected { break; }},
             Event::SubscriptionCanceled => break,
-            _ => { }
+            //_ => { }
         }
     }
 }

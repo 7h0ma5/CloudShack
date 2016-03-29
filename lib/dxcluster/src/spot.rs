@@ -9,6 +9,10 @@ pub struct Spot {
 
 impl Spot {
     pub fn parse(data: &str) -> Option<Spot> {
+        let data = data.trim();
+        if data.len() < 75 { return None; }
+        if &data[0..2] != "DX" { return None; }
+
         let spotter = regex!(r"(?i)[a-z0-9/]*").captures(&data[6..16]).and_then(|cap| cap.at(0));
         let freq = (&data[16..24]).trim();
         let call = regex!(r"(?i)[a-z0-9/]*").captures(&data[26..38]).and_then(|cap| cap.at(0));
@@ -19,7 +23,7 @@ impl Spot {
             Some(Spot {
                 call: call.to_owned(),
                 spotter: spotter.to_owned(),
-                freq: freq.parse::<f64>().unwrap()/1000.0,
+                freq: freq.parse::<f64>().unwrap_or(0.0)/1000.0,
                 comment: comment.to_owned(),
                 time: time.to_owned()
             })

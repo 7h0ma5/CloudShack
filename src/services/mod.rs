@@ -1,6 +1,5 @@
 pub mod rigctl;
 pub mod wsjt;
-pub mod cluster;
 pub mod websocket;
 pub mod database;
 pub mod dispatcher;

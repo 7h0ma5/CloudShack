@@ -11,6 +11,7 @@ extern crate websocket;
 extern crate chrono;
 extern crate rustc_serialize;
 extern crate toml;
+extern crate rotor;
 extern crate adif;
 extern crate couchdb;
 extern crate wsjt;
@@ -27,6 +28,7 @@ mod controllers;
 mod middleware;
 mod config;
 
+use std::thread;
 use iron::prelude::*;
 
 pub fn version() -> String {
@@ -59,12 +61,29 @@ pub fn main() {
     debug!("Loading configuration from config.toml...");
     let config = config::Config::load();
 
+    let event_loop = rotor::Loop::new(&rotor::Config::new()).unwrap();
+    let mut loop_inst = event_loop.instantiate(dxcluster::Context);
+
+    if let Some(host) = config.get_str("cluster.host") {
+        let port = config.get_int("cluster.port").unwrap_or(23);
+        let username = config.get_str("cluster.username").map(|val| val.to_owned());
+        let addr = format!("{}:{}", host, port);
+
+        loop_inst.add_machine_with(|scope| {
+            dxcluster::new(addr, username, scope)
+        }).unwrap();
+    }
+
+    thread::spawn(move || {
+        loop_inst.run().unwrap();
+    });
+
     let dispatcher = services::dispatcher::init();
 
     services::websocket::init(&config);
     services::rigctl::init(&config, dispatcher.clone());
     services::wsjt::init(&config);
-    services::cluster::init(&config, dispatcher.clone());
+    //services::cluster::init(&config, dispatcher.clone());
     let (contacts, profiles) = services::database::init(&config);
 
     let mut chain = Chain::new(controllers::routes());
