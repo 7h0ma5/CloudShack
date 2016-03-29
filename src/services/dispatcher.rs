@@ -6,7 +6,7 @@ use services;
 #[derive(Debug, Clone)]
 pub enum Event {
     RigStateChange(services::rigctl::RigState),
-    SpotReceived(services::cluster::Spot),
+//    SpotReceived(services::cluster::Spot),
     SetFrequency(f64),
     SetMode(services::rigctl::RigMode, u32),
     SubscriptionCanceled
