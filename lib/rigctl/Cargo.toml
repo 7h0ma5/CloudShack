@@ -4,3 +4,8 @@ version = "0.1.0"
 authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
 
 [dependencies]
+rotor = "~0.6.3"
+rotor-stream = "~0.6.1"
+
+[dependencies.context]
+path = "../context/"

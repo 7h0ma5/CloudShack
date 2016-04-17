@@ -20,6 +20,7 @@ chrono = "~0.2.0"
 url = "~0.5.2"
 websocket = "~0.15.0"
 rotor = "~0.6.3"
+rotor-stream = "~0.6.1"
 
 [dependencies.couchdb]
 path = "lib/couchdb"
@@ -38,3 +39,6 @@ path = "lib/wsjt"
 
 [dependencies.rigctl]
 path = "lib/rigctl"
+
+[dependencies.context]
+path = "lib/context/"

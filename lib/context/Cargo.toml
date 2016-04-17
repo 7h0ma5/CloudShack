@@ -1,11 +1,6 @@
 [package]
-name = "wsjt"
+name = "context"
 version = "0.1.0"
 authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
 
 [dependencies]
-nom = "~1.2.0"
-rotor = "~0.6.3"
-
-[dependencies.context]
-path = "../context/"
