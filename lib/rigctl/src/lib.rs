@@ -1,52 +1,20 @@
-use std::net::TcpStream;
-use std::io::{BufReader, BufRead, Write};
-use std::sync::{RwLock, Mutex};
+extern crate rotor;
+extern crate rotor_stream;
+extern crate context;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum RigMode {
-    FM, AM, USB, LSB, CW, UNKNOWN
-}
+use std::time::Duration;
+use rotor::mio::tcp::{TcpStream};
+use rotor_stream::{Transport, Protocol, Intent, Exception};
+use rotor::{Scope};
+use context::{Context, RigMode};
 
-#[derive(Debug, Clone, Copy)]
-pub struct RigState {
-    pub connected: bool,
-    pub frequency: f64,
-    pub mode: RigMode,
-    pub passband: u32
-}
-
-pub struct RigCtl {
-    state: RwLock<RigState>,
-    stream: TcpStream,
-    reader: Mutex<BufReader<TcpStream>>
+pub enum RigCtl {
+    SendCommand(String),
+    Receive
 }
 
 impl RigCtl {
-    pub fn new(host: &str, port: u16) -> std::io::Result<RigCtl> {
-        let stream = try!(TcpStream::connect(&*format!("{}:{}", host, port)));
-        let reader = BufReader::new(try!(stream.try_clone()));
-
-        let state = RigState {
-            connected: true,
-            frequency: 0.0,
-            mode: RigMode::UNKNOWN,
-            passband: 0
-        };
-
-        Ok(RigCtl {
-            state: RwLock::new(state),
-            stream: stream,
-            reader: Mutex::new(reader)
-        })
-    }
-
-    pub fn poll(&self) -> std::io::Result<()> {
-        let mut stream = try!(self.stream.try_clone());
-        try!(stream.write_all(b"+f\n"));
-        try!(stream.write_all(b"+m\n"));
-        Ok(())
-    }
-
+    /*
     pub fn set_frequency(&self, frequency: f64) {
         if let Ok(mut stream) = self.stream.try_clone() {
             stream.write_all(format!("F {}", (frequency * 1e6) as u64).as_bytes()).ok();
@@ -58,26 +26,9 @@ impl RigCtl {
             stream.write_all(format!("M {:?} {}", mode, passband).as_bytes()).ok();
         }
     }
+    */
 
-    pub fn read(&self) -> std::io::Result<Option<RigState>> {
-        let mut line = String::new();
-        let bytes_read = try!(self.reader.lock().unwrap().read_line(&mut line));
-
-        if bytes_read > 0 {
-            if self.parse_line(line) {
-                Ok(Some(self.state.read().unwrap().clone()))
-            }
-            else {
-                Ok(None)
-            }
-        }
-        else {
-            self.state.write().unwrap().connected = false;
-            Ok(Some(self.state.read().unwrap().clone()))
-        }
-    }
-
-    fn parse_line(&self, line: String) -> bool {
+    fn parse(line: &str, scope: &mut Scope<Context>) -> bool {
         let mut split = line.split(": ");
 
         let key = split.next();
@@ -86,14 +37,14 @@ impl RigCtl {
         let value = split.next().map(|val| val.trim()).unwrap_or("");
 
         match key.unwrap() {
-            "Mode" => self.update_mode(value),
-            "Frequency" => self.update_frequency(value),
-            "Passband" => self.update_passband(value),
+            "Mode" => RigCtl::update_mode(value, scope),
+            "Frequency" => RigCtl::update_frequency(value, scope),
+            "Passband" => RigCtl::update_passband(value, scope),
             _ => false
         }
     }
 
-    fn update_mode(&self, mode: &str) -> bool {
+    fn update_mode(mode: &str, scope: &mut Scope<Context>) -> bool {
         let mode = match mode {
             "FM" => RigMode::FM,
             "AM" => RigMode::AM,
@@ -102,22 +53,82 @@ impl RigCtl {
             "CW" => RigMode::CW,
             _ => RigMode::UNKNOWN
         };
-        let changed = self.state.read().unwrap().mode != mode;
-        if changed { self.state.write().unwrap().mode = mode; }
+        let changed = scope.rig.mode != mode;
+        if changed { scope.rig.mode = mode; }
         changed
     }
 
-    fn update_frequency(&self, frequency: &str) -> bool {
-        let frequency = frequency.parse::<f64>().unwrap_or(0.0) / 1e6;
-        let changed = self.state.read().unwrap().frequency != frequency;
-        if changed { self.state.write().unwrap().frequency = frequency; }
+    fn update_frequency(frequency: &str, scope: &mut Scope<Context>) -> bool {
+        let frequency = frequency.parse::<u64>().unwrap_or(0);
+        let changed = scope.rig.freq != frequency;
+        if changed { scope.rig.freq = frequency; }
         changed
     }
 
-    fn update_passband(&self, passband: &str) -> bool {
+    fn update_passband(passband: &str, scope: &mut Scope<Context>) -> bool {
         let passband = passband.parse::<u32>().unwrap_or(0);
-        let changed = self.state.read().unwrap().passband != passband;
-        if changed { self.state.write().unwrap().passband = passband; }
+        let changed = scope.rig.passband != passband;
+        if changed { scope.rig.passband = passband; }
         changed
+    }
+}
+
+impl<'a> Protocol for RigCtl {
+    type Context = Context;
+    type Socket = TcpStream;
+    type Seed = ();
+
+    fn create(_: Self::Seed, _sock: &mut TcpStream, scope: &mut Scope<Context>) -> Intent<Self> {
+        Intent::of(RigCtl::Receive)
+            .expect_delimiter(b"\n", 256)
+            .deadline(scope.now() + Duration::new(1, 0))
+    }
+
+    fn bytes_flushed(self, transport: &mut Transport<TcpStream>, scope: &mut Scope<Context>) -> Intent<Self> {
+        match self {
+            RigCtl::SendCommand(cmd) => {
+                transport.output().extend(cmd.as_bytes());
+                Intent::of(RigCtl::Receive)
+                    .expect_delimiter(b"\n", 256)
+                    .deadline(scope.now() + Duration::new(1, 0))
+            }
+            _ => unreachable!()
+        }
+    }
+
+    fn bytes_read(self, transport: &mut Transport<TcpStream>, end: usize, scope: &mut Scope<Context>) -> Intent<Self> {
+        match self {
+            RigCtl::Receive => {
+                {
+                    let line = String::from_utf8_lossy(&transport.input()[..end]);
+                    RigCtl::parse(&*line, scope);
+                }
+                transport.input().consume(end + 1);
+                println!("{:?}", scope.rig);
+                Intent::of(RigCtl::Receive)
+                    .expect_delimiter(b"\n", 4096)
+            }
+            _ => unreachable!()
+        }
+    }
+
+    fn timeout(self, _transport: &mut Transport<TcpStream>, _scope: &mut Scope<Context>) -> Intent<Self> {
+        Intent::of(RigCtl::SendCommand(String::from("+f\n+m\n"))).expect_flush()
+    }
+
+    fn wakeup(self, _transport: &mut Transport<TcpStream>, _scope: &mut Scope<Context>) -> Intent<Self> {
+        unreachable!();
+    }
+
+    fn exception(self, _transport: &mut Transport<Self::Socket>, reason: Exception, scope: &mut Scope<Self::Context>) -> Intent<Self> {
+        println!("Error when fetching data: {}", reason);
+        scope.shutdown_loop();
+        Intent::done()
+    }
+
+    fn fatal(self, reason: Exception, scope: &mut Scope<Self::Context>) -> Option<Box<::std::error::Error>> {
+        println!("Error when fetching data: {}", reason);
+        scope.shutdown_loop();
+        None
     }
 }

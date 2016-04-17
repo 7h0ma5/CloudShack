@@ -1,73 +1,15 @@
-use config::Config;
-use rigctl::RigCtl;
-use services::{Dispatcher, Event};
-use std::sync::Arc;
-use std::thread;
-use std::time::Duration;
+use rotor;
+use rotor_stream;
+use rigctl;
+use context;
 
-pub use rigctl::{RigState, RigMode};
+pub type RigCtl = rotor_stream::Stream<rigctl::RigCtl>;
 
-pub fn poll(rig: Arc<RigCtl>) {
-    loop {
-        rig.poll().unwrap();
-        thread::sleep(Duration::from_millis(1000));
-    }
-}
-
-pub fn run(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
-    loop {
-        let state = rig.read().unwrap();
-        if let Some(state) = state {
-            dispatcher.publish(Event::RigStateChange(state));
-            if !state.connected { break; }
-        }
-    }
-}
-
-pub fn listen(rig: Arc<RigCtl>, dispatcher: Dispatcher) {
-    let rx = dispatcher.subscribe("rig");
-    for event in rx.iter() {
-        println!("Event received {:?}", event);
-        match event {
-            Event::SetFrequency(freq) => rig.set_frequency(freq),
-            Event::SetMode(mode, passband) => rig.set_mode(mode, passband),
-            Event::RigStateChange(state) => { if !state.connected { break; }},
-            Event::SubscriptionCanceled => break,
-            //_ => { }
-        }
-    }
-}
-
-pub fn init(config: &Config, dispatcher: Dispatcher) {
-    let port = config.get_int("rig.port").unwrap_or(4532) as u16;
-    let host = config.get_str("rig.host").map(|s| String::from(s));
-
-    if let Some(host) = host {
-        thread::spawn(move || loop {
-            info!("Connecting to the rig...");
-            let rig = RigCtl::new(&*host, port);
-
-            if let Ok(rig) = rig {
-                let rig = Arc::new(rig);
-                let rig2 = rig.clone();
-                let rig3 = rig.clone();
-
-                let dispatcher_listen = dispatcher.clone();
-                let dispatcher_run = dispatcher.clone();
-
-                let handle1 = thread::spawn(move || poll(rig));
-                let handle2 = thread::spawn(move || run(rig2, dispatcher_run));
-                let handle3 = thread::spawn(move || listen(rig3, dispatcher_listen));
-
-                handle1.join().ok();
-                handle2.join().ok();
-            }
-            else {
-                thread::sleep(Duration::from_millis(5000));
-            }
-        });
-    }
-    else {
-        info!("No rig connection supplied...");
-    }
+pub fn new(addr: String, scope: &mut rotor::Scope<context::Context>)
+    -> rotor::Response<RigCtl, rotor::Void>
+{
+    use std::net::ToSocketAddrs;
+    let addr = addr.to_socket_addrs().ok().and_then(|mut addrs| addrs.next()).unwrap();
+    let sock = rotor::mio::tcp::TcpStream::connect(&addr).unwrap();
+    rotor_stream::Stream::<rigctl::RigCtl>::new(sock, (), scope)
 }
