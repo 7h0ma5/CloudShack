@@ -1,117 +1,119 @@
 var gulp = require("gulp"),
     $ = require("gulp-load-plugins")(),
-    merge = require("merge-stream"),
-    pkg = require("./package.json");
+    merge = require("merge-stream");
 
-var BOWER_DIR = "bower_components";
+var NPM_DIR = "node_modules";
+var TARGET_DIR = "../priv/static";
 
-gulp.task("app.js", function() {
-    var version = 'var CLOUDSHACK_VERSION = "' + pkg.version + '";';
+var project = $.typescript.createProject("tsconfig.json");
 
+gulp.task("app.js", ["typings"], function() {
     return gulp.src([
-            "controllers/*.js",
-            "directives/*.js",
-            "services/*.js",
-            "constants/*.js",
-            "app.js",
-            "routes.js"
-        ])
-        .pipe($.file("version.js", version))
+        "app/**/*.ts",
+        "typings/browser.d.ts",
+        "node_modules/angular2/typings/browser.d.ts"
+    ])
         .pipe($.plumber())
-        .pipe($.order([
-            "version.js",
-            "app.js",
-            "**/*.js"
-        ]))
         .pipe($.sourcemaps.init())
-        .pipe($.ngAnnotate())
-        .pipe($.uglify())
-        .pipe($.concat("app.js"))
+        .pipe($.typescript(project))
+        .js
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest("public/js"))
+        .pipe(gulp.dest(TARGET_DIR + "/js"))
         .pipe($.livereload());
 });
 
+gulp.task("typings", function(callback) {
+    return gulp.src("./typings.json")
+        .pipe($.typings());
+});
+
 gulp.task("app.css", function() {
-    return gulp.src("app.less")
+    return gulp.src("style/app.less")
         .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.less())
         .pipe($.autoprefixer())
-        .pipe($.minifyCss())
+//        .pipe($.cleanCss())
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest("public/css"))
+        .pipe(gulp.dest(TARGET_DIR + "/css"))
         .pipe($.livereload());
 });
 
 gulp.task("vendor.css", function() {
     return gulp.src([
-            BOWER_DIR + "/normalize-css/normalize.css",
-            BOWER_DIR + "/font-awesome/css/font-awesome.css",
-            BOWER_DIR + "/roboto-fontface/css/roboto-fontface.css",
-            BOWER_DIR + "/angular-chart.js/dist/angular-chart.css",
-            BOWER_DIR + "/leaflet/dist/leaflet.css",
+            NPM_DIR + "/normalize.css/normalize.css",
+            NPM_DIR + "/font-awesome/css/font-awesome.css",
+            NPM_DIR + "/roboto-fontface/css/roboto-fontface.css",
+            NPM_DIR + "/leaflet/dist/leaflet.css",
     ])
-        .pipe($.minifyCss())
+//        .pipe($.cleanCss())
         .pipe($.concat("vendor.css"))
-        .pipe(gulp.dest("public/css"));
+        .pipe(gulp.dest(TARGET_DIR + "/css"));
 });
 
 gulp.task("vendor.js", function() {
-    return gulp.src([
-        BOWER_DIR + "/angular/angular.js",
-        BOWER_DIR + "/angular-animate/angular-animate.js",
-        BOWER_DIR + "/angular-hotkeys/build/hotkeys.js",
-        BOWER_DIR + "/angular-resource/angular-resource.js",
-        BOWER_DIR + "/angular-route/angular-route.js",
-        BOWER_DIR + "/ng-file-upload/ng-file-upload.js",
-        BOWER_DIR + "/angular-local-storage/dist/angular-local-storage.js",
-        BOWER_DIR + "/Chart.js/Chart.js",
-        BOWER_DIR + "/angular-chart.js/dist/angular-chart.js",
-        BOWER_DIR + "/leaflet/dist/leaflet-src.js",
-        BOWER_DIR + "/socket.io-client/socket.io.js"
+    var standalone = gulp.src([
+        NPM_DIR + "/leaflet/dist/leaflet.js",
     ])
-        .pipe($.uglify())
+        .pipe(gulp.dest(TARGET_DIR + "/js"));
+
+    var vendor = gulp.src([
+        NPM_DIR + "/angular2/bundles/angular2-polyfills.js",
+        NPM_DIR + "/systemjs/dist/system.src.js",
+        "system.conf.js",
+        NPM_DIR + "/rxjs/bundles/Rx.js",
+        NPM_DIR + "/angular2/bundles/angular2.dev.js",
+        NPM_DIR + "/angular2/bundles/router.js",
+        NPM_DIR + "/angular2/bundles/http.js"
+    ])
         .pipe($.concat("vendor.js"))
-        .pipe(gulp.dest("public/js"));
+        .pipe(gulp.dest(TARGET_DIR + "/js"));
+
+    return merge(standalone, vendor);
 });
 
 gulp.task("fonts", function() {
     var fa = gulp.src([
-            BOWER_DIR + "/font-awesome/fonts/*.*"
+            NPM_DIR + "/font-awesome/fonts/*.*"
     ])
-        .pipe($.changed("public/fonts"))
-        .pipe(gulp.dest("public/fonts"));
+        .pipe($.changed(TARGET_DIR + "/fonts"))
+        .pipe(gulp.dest(TARGET_DIR + "/fonts"));
 
     var roboto = gulp.src([
-            BOWER_DIR + "/roboto-fontface/fonts/**/*.{woff,woff2}"
+            NPM_DIR + "/roboto-fontface/fonts/**/*.{woff,woff2}"
     ])
-        .pipe($.changed("public/fonts"))
-        .pipe(gulp.dest("public/fonts"));
+        .pipe($.changed(TARGET_DIR + "/fonts"))
+        .pipe(gulp.dest(TARGET_DIR + "/fonts"));
 
     return merge(fa, roboto);
 });
 
 gulp.task("images", function() {
-    return gulp.src([
-            BOWER_DIR + "/leaflet/dist/images/*.png",
+    var css = gulp.src([
+            NPM_DIR + "/leaflet/dist/images/*.png"
+    ])
+        .pipe(gulp.dest(TARGET_DIR + "/css/images"));
+
+    var images = gulp.src([
             "images/**/*"
     ])
-        .pipe($.changed("public/images"))
-        .pipe(gulp.dest("public/images"));
+        .pipe($.changed(TARGET_DIR + "/images"))
+        .pipe(gulp.dest(TARGET_DIR + "/images"));
+
+    return merge(css, images);
 });
 
 gulp.task("templates", function() {
     return gulp.src("templates/**/*")
-        .pipe($.changed("public/templates"))
-        .pipe(gulp.dest("public/templates"))
+        .pipe($.changed(TARGET_DIR + "/templates"))
+        .pipe(gulp.dest(TARGET_DIR + "/templates"))
         .pipe($.livereload());
 });
 
 gulp.task("index", function() {
     return gulp.src("index.html")
-        .pipe($.changed("public"))
-        .pipe(gulp.dest("public"));
+        .pipe($.changed(TARGET_DIR))
+        .pipe(gulp.dest(TARGET_DIR));
 });
 
 gulp.task("default", [
@@ -127,8 +129,7 @@ gulp.task("default", [
 
 gulp.task("watch", function() {
     $.livereload.listen();
-
-    gulp.watch(["controllers/*.js", "directives/*.js", "services/*.js", "constants/*.js", "*.js"], ["app.js"]);
+    gulp.watch("app/**/*", ["app.js"]);
     gulp.watch(["app.less", "style/*.less"], ["app.css"]);
     gulp.watch("index.html", ["index"]);
     gulp.watch("templates/**/*.*", ["templates"]);

@@ -1,8 +1,0 @@
-[package]
-name = "cty2cs"
-version = "0.1.0"
-authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
-
-[dependencies]
-nom = "~1.0.0"
-rustc-serialize = "0.3"

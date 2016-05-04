@@ -1,0 +1,152 @@
+<h1>
+    <img [src]="'/flag/24/' + (contact.dxcc || '0')">
+    <b>{{contact?.call}}</b>
+    <span *ngIf="contact.name">{{contact.name}}</span>
+    <small>{{contact?.start}}</small>
+</h1>
+
+<div class="box" style="width: 500px ! important; display: block;">
+  <div class="box-title">
+    Contact
+  </div>
+  <table class="box-table">
+    <tr *ngIf="contact.mode">
+        <td>Mode</td>
+        <td>{{contact.submode ? contact.submode : contact.mode}}</td>
+    </tr>
+    <tr *ngIf="contact.freq">
+        <td>Frequency</td>
+        <td>{{contact.freq}} <span *ngIf="contact.band">({{contact.band}})</span></td>
+    </tr>
+    <tr *ngIf="contact.rst_sent">
+        <td>RST Sent</td>
+        <td>{{contact.rst_sent}}</td>
+    </tr>
+    <tr *ngIf="contact.rst_rcvd">
+        <td>RST Received</td>
+        <td>{{contact.rst_rcvd}}</td>
+    </tr>
+    <tr *ngIf="contact.contest_id">
+        <td>Contest</td>
+        <td>{{contact.contest_id}}</td>
+    </tr>
+    <tr *ngIf="contact.comment">
+        <td>Comment</td>
+        <td>{{contact.comment}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="box" style="width: 500px ! important; display: block;">
+  <div class="box-title">
+    Location
+  </div>
+  <table class="box-table">
+    <tr *ngIf="contact.qth">
+      <td>QTH</td>
+      <td>{{contact.qth}}</td>
+    </tr>
+    <tr *ngIf="contact.gridsquare">
+      <td>Gridsquare</td>
+      <td>{{contact.gridsquare}}</td>
+    </tr>
+    <tr *ngIf="contact.country">
+      <td>Country</td>
+      <td>{{contact.country}}</td>
+    </tr>
+    <tr *ngIf="contact.cqz">
+      <td>CQ Zone</td>
+      <td>{{contact.cqz}}</td>
+    </tr>
+    <tr *ngIf="contact.ituz">
+      <td>ITU Zone</td>
+      <td>{{contact.ituz}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="box" style="width: 500px ! important; display: block;">
+  <div class="box-title">
+    My Station
+  </div>
+  <table class="box-table">
+    <tr *ngIf="contact.tx_pwr">
+      <td>Power</td>
+      <td>{{contact.tx_pwr}} W</td>
+    </tr>
+    <tr *ngIf="contact.my_rig">
+      <td>Rig</td>
+      <td>{{contact.my_rig}}</td>
+    </tr>
+    <tr *ngIf="contact.my_gridsquare">
+      <td>Gridsquare</td>
+      <td>{{contact.my_gridsquare}}</td>
+    </tr>
+    <tr *ngIf="contact.operator">
+      <td>Operator</td>
+      <td>{{contact.operator}}</td>
+    </tr>
+    <tr *ngIf="contact.station_callsign">
+      <td>Station Call</td>
+      <td>{{contact.station_callsign}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="box" style="width: 500px ! important; display: block;">
+  <div class="box-title">QSL</div>
+  <table class="box-table">
+    <tr>
+      <th>Path</th>
+      <th>Out</th>
+      <th>In</th>
+    </tr>
+    <tr>
+      <td>QSL card</td>
+      <td [ngSwitch]="contact.qsl_sent">
+        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Sent</span>
+        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchWhen="'Q'"><i class="fa fa-upload"></i> Queued</span>
+        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Ignore</span>
+        <span *ngSwitchDefault><i class="fa fa-times"></i> Not Sent</span>
+      </td>
+      <td [ngSwitch]="contact.qsl_rcvd">
+        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Received</span>
+        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Invalid</span>
+        <span *ngSwitchDefault><i class="fa fa-times"></i> Not Received</span>
+      </td>
+    </tr>
+    <tr>
+      <td>LotW</td>
+      <td [ngSwitch]="contact.lotw_qsl_sent">
+        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Uploaded</span>
+        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchWhen="'Q'"><i class="fa fa-upload"></i> Queued</span>
+        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Ignore</span>
+        <span *ngSwitchDefault><i class="fa fa-times"></i> Not Uploaded</span>
+      </td>
+      <td [ngSwitch]="contact.lotw_qsl_rcvd">
+        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Received</span>
+        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Invalid</span>
+        <span *ngSwitchDefault><i class="fa fa-times"></i> Not Received</span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="box-transparent">
+  <div class="box-content">
+    <button (click)="qrz()">
+      <i class="fa fa-question-circle"></i> QRZ
+    </button>
+    <button (click)="edit()">
+      <i class="fa fa-pencil"></i>
+      Edit
+    </button>
+    <button (click)="delete()" class="btn-danger">
+      <i class="fa fa-trash"></i> Delete
+    </button>
+  </div>
+</div>

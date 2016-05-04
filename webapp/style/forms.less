@@ -13,8 +13,22 @@ input, select {
         border-bottom-width: 2px;
     }
 
+    &.ng-touched.ng-invalid {
+        padding-bottom: 3px;
+        border-color: #da4453;
+        border-bottom-width: 2px;
+    }
+
     &:disabled {
         color: #ccc;
+    }
+
+    &[uppercase] {
+        text-transform: uppercase;
+    }
+
+    &:placeholder-shown {
+        text-transform: none;
     }
 }
 

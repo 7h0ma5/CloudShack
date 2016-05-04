@@ -1,5 +1,6 @@
-**/target
-lib/**/Cargo.lock
-webapp/public
-config.toml
-dxcc.json
+/_build
+/cover
+/deps
+erl_crash.dump
+/priv/static
+/rel

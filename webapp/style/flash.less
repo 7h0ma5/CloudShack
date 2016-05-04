@@ -8,6 +8,9 @@
     color: #fff;
     text-align: center;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    display: block;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 
     span {
         display: inline-block;
@@ -17,19 +20,10 @@
         opacity: 1;
         box-shadow: 0 0 5px #ccc;
     }
+}
 
-    &.ng-hide-add, &.ng-hide-remove {
-        display: block ! important;
-        transition: all 0.5s ease;
-    }
-
-    &.ng-hide-remove, &.ng-hide-add.ng-hide-add-active {
-        opacity: 0;
-    }
-
-    &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
-        opacity: 1;
-    }
+.flash[hidden] {
+    opacity: 0;
 }
 
 .flash-info {

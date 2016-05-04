@@ -9,7 +9,7 @@
     <th>Frequency</th>
     <th>Comment</th>
   </tr>
-  <tr ng-repeat="spot in spots">
+  <tr ngRepeat="spot in spots">
     <td><b>{{spot.dxcall}}</b></td>
     <td class="flag-cell">
       <span data-tooltip="{{spot.dxcc.country}}">
@@ -18,7 +18,7 @@
     </td>
     <td>{{spot.time}}</td>
     <td>{{spot.spotter}}</td>
-    <td><a ng-click="tune($index)">{{spot.freq|number:3}}</a></td>
+    <td><a ngClick="tune($index)">{{spot.freq|number:3}}</a></td>
     <td>{{spot.comment}}</td>
   </tr>
 </table>

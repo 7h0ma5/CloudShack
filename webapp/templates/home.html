@@ -1,6 +1,5 @@
 <h1>Welcome to CloudShack!</h1>
 
-
 <div class="dashboard">
   <div class="box statistics">
     <div class="box-title">
@@ -28,15 +27,21 @@
     <div class="box-title">
       Mode Statistics
     </div>
-    <div class="box-content">
-      <canvas class="chart chart-doughnut" data="modeData"
-        labels="modeLabels" legend="true"></canvas>
-    </div>
+    <table class="box-table">
+      <tr *ngFor="#mode of modes">
+        <td>{{mode[0]}}</td>
+        <td>{{mode[1]}}</td>
+      </tr>
+    </table>
   </div>
 </div>
 
 <p>
   <i class="fa fa-hand-o-right"></i>
-  <a ng-if="qso_stats.total == 0" href="/#/contact/new">Log your first contact!</a>
-  <a ng-if="qso_stats.total > 0" href="/#/contact/new">Log a new contact</a>
+  <a *ngIf="qso_stats.total == 0" href="/#/contact/new">
+    Log your first contact!
+  </a>
+  <a *ngIf="qso_stats.total > 0" href="/#/contact/new">
+    Log a new contact
+  </a>
 </p>
