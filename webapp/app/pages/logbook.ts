@@ -1,12 +1,10 @@
-import {Component, View} from "angular2/core";
+import {Component} from "angular2/core";
 import {NgIf, NgFor} from "angular2/common";
 import {RouterLink} from "angular2/router";
 import {ContactService} from "../services/contact";
 
 @Component({
-    providers: [ContactService]
-})
-@View({
+    providers: [ContactService],
     templateUrl: "/templates/logbook.html",
     directives: [RouterLink, NgFor, NgIf]
 })

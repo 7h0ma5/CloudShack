@@ -3,27 +3,28 @@ var gulp = require("gulp"),
     merge = require("merge-stream");
 
 var NPM_DIR = "node_modules";
+var TARGET_DIR = "../priv/static";
+
 var project = $.typescript.createProject("tsconfig.json");
 
-gulp.task("app.js", ["tsd"], function() {
+gulp.task("app.js", ["typings"], function() {
     return gulp.src([
         "app/**/*.ts",
-        "typings/tsd.d.ts"
+        "typings/browser.d.ts",
+        "node_modules/angular2/typings/browser.d.ts"
     ])
         .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.typescript(project))
         .js
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest("public/js"))
+        .pipe(gulp.dest(TARGET_DIR + "/js"))
         .pipe($.livereload());
 });
 
-gulp.task("tsd", function(callback) {
-    $.tsd({
-        command: "reinstall",
-        config: "./tsd.json"
-    }, callback);
+gulp.task("typings", function(callback) {
+    return gulp.src("./typings.json")
+        .pipe($.typings());
 });
 
 gulp.task("app.css", function() {
@@ -32,9 +33,9 @@ gulp.task("app.css", function() {
         .pipe($.sourcemaps.init())
         .pipe($.less())
         .pipe($.autoprefixer())
-        .pipe($.minifyCss())
+//        .pipe($.cleanCss())
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest("public/css"))
+        .pipe(gulp.dest(TARGET_DIR + "/css"))
         .pipe($.livereload());
 });
 
@@ -45,16 +46,16 @@ gulp.task("vendor.css", function() {
             NPM_DIR + "/roboto-fontface/css/roboto-fontface.css",
             NPM_DIR + "/leaflet/dist/leaflet.css",
     ])
-        .pipe($.minifyCss())
+//        .pipe($.cleanCss())
         .pipe($.concat("vendor.css"))
-        .pipe(gulp.dest("public/css"));
+        .pipe(gulp.dest(TARGET_DIR + "/css"));
 });
 
 gulp.task("vendor.js", function() {
     var standalone = gulp.src([
         NPM_DIR + "/leaflet/dist/leaflet.js",
     ])
-        .pipe(gulp.dest("public/js"));
+        .pipe(gulp.dest(TARGET_DIR + "/js"));
 
     var vendor = gulp.src([
         NPM_DIR + "/angular2/bundles/angular2-polyfills.js",
@@ -66,7 +67,7 @@ gulp.task("vendor.js", function() {
         NPM_DIR + "/angular2/bundles/http.js"
     ])
         .pipe($.concat("vendor.js"))
-        .pipe(gulp.dest("public/js"));
+        .pipe(gulp.dest(TARGET_DIR + "/js"));
 
     return merge(standalone, vendor);
 });
@@ -75,14 +76,14 @@ gulp.task("fonts", function() {
     var fa = gulp.src([
             NPM_DIR + "/font-awesome/fonts/*.*"
     ])
-        .pipe($.changed("public/fonts"))
-        .pipe(gulp.dest("public/fonts"));
+        .pipe($.changed(TARGET_DIR + "/fonts"))
+        .pipe(gulp.dest(TARGET_DIR + "/fonts"));
 
     var roboto = gulp.src([
             NPM_DIR + "/roboto-fontface/fonts/**/*.{woff,woff2}"
     ])
-        .pipe($.changed("public/fonts"))
-        .pipe(gulp.dest("public/fonts"));
+        .pipe($.changed(TARGET_DIR + "/fonts"))
+        .pipe(gulp.dest(TARGET_DIR + "/fonts"));
 
     return merge(fa, roboto);
 });
@@ -91,28 +92,28 @@ gulp.task("images", function() {
     var css = gulp.src([
             NPM_DIR + "/leaflet/dist/images/*.png"
     ])
-        .pipe(gulp.dest("public/css/images"));
+        .pipe(gulp.dest(TARGET_DIR + "/css/images"));
 
     var images = gulp.src([
             "images/**/*"
     ])
-        .pipe($.changed("public/images"))
-        .pipe(gulp.dest("public/images"));
+        .pipe($.changed(TARGET_DIR + "/images"))
+        .pipe(gulp.dest(TARGET_DIR + "/images"));
 
     return merge(css, images);
 });
 
 gulp.task("templates", function() {
     return gulp.src("templates/**/*")
-        .pipe($.changed("public/templates"))
-        .pipe(gulp.dest("public/templates"))
+        .pipe($.changed(TARGET_DIR + "/templates"))
+        .pipe(gulp.dest(TARGET_DIR + "/templates"))
         .pipe($.livereload());
 });
 
 gulp.task("index", function() {
     return gulp.src("index.html")
-        .pipe($.changed("public"))
-        .pipe(gulp.dest("public"));
+        .pipe($.changed(TARGET_DIR))
+        .pipe(gulp.dest(TARGET_DIR));
 });
 
 gulp.task("default", [

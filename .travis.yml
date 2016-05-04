@@ -2,41 +2,28 @@ sudo: false
 os:
   - linux
   - osx
-language: rust
-rust:
-  - stable
-  - beta
-  - nightly
-matrix:
-  allow_failures:
-  - rust: beta
-  - rust: stable
-addons:
-  apt:
-    packages:
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
+language: elixir
+elixir:
+  - 1.2.2
+otp_release:
+  - 18.2.1
+env:
+  global:
+    - MIX_ENV=prod
 services:
   - couchdb
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then nvm install iojs; fi
   - curl https://cdn.cloudshack.org/dxcc.json.gz | gunzip > dxcc.json
-  - pip install 'travis-cargo<0.2' --user
-  - export PATH=${PATH}:$HOME/.local/bin:/Users/travis/Library/Python/2.7/bin
-script:
-  - travis-cargo build
-  - travis-cargo test
-  - travis-cargo --only stable doc
-after_success:
-  - travis-cargo coveralls --no-sudo
-env:
-  global:
-    - TRAVIS_CARGO_NIGHTLY_FEATURE=""
-    - secure: "VPWkTkyI/fCPvEzoT3S32CHslYY1fa9OKqS09xuKCHvggBSG2prB1WWTH4IDcaEjMK8A8QVrIyfuV4kO1XKVqmFcMKL2Pn1VZ+ZWsv+LmmN98oXzdsT38dVGCzuwS9tMQzfIwH/fbFhK9b2OzTnNa55XUQBPxp6Zk8QDXZ9SuVA="
+install:
+  - mix local.hex --force
+  - mix deps.get
+  - mix compile
+  - (cd webapp; npm run build)
 before_deploy:
-  - mkdir package/
-  - bash tools/package.sh package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
+  - mix release
+  - mkdir package
+  - cp rel/cloudshack/releases/*/cloudshack.tar.gz package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
 deploy:
   provider: s3
   access_key_id: AKIAJ6SIB6XJBNQL43GQ

@@ -1,11 +1,9 @@
-import {Component, View} from "angular2/core";
+import {Component} from "angular2/core";
 import {NgIf, NgFor} from "angular2/common";
 import {ContactService} from "../services/contact";
 
 @Component({
-    providers: [ContactService]
-})
-@View({
+    providers: [ContactService],
     templateUrl: "/templates/home.html",
     directives: [NgIf, NgFor]
 })

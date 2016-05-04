@@ -1,8 +1,0 @@
-[package]
-name = "callbook"
-version = "0.1.0"
-authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
-
-[dependencies]
-xml-rs = "~0.3.0"
-hyper = "~0.8.0"

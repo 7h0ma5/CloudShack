@@ -6,7 +6,7 @@ export class FlashMessage {
 }
 
 export class Flash {
-    @Output() public fire: EventEmitter<FlashMessage> = new EventEmitter();
+    @Output() public fire: EventEmitter<FlashMessage> = new EventEmitter<FlashMessage>();
 
     show(level: string, text: string) {
         var message: FlashMessage = {level: level, text: text};

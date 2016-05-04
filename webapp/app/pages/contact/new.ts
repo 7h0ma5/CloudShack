@@ -1,4 +1,4 @@
-import {Component, View} from "angular2/core";
+import {Component} from "angular2/core";
 import {Control, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/common";
 import {Http, Response} from "angular2/http";
 import {ContactService} from "../../services/contact";
@@ -14,9 +14,7 @@ const CALLBOOK_PRIORITY: number = 1;
 const DXCC_PRIORITY: number = 2;
 
 @Component({
-    providers: [ContactService]
-})
-@View({
+    providers: [ContactService],
     templateUrl: "/templates/contact/new.html",
     directives: [WorldMap, Uppercase, NgIf, NgFor, TAB_DIRECTIVES, FORM_DIRECTIVES]
 })
@@ -49,7 +47,7 @@ export class NewContactPage {
             .debounceTime(500)
             .map(encodeURIComponent)
             .switchMap((val: string) => this.http.get("/dxcc/" + val))
-            .catch((err, src, caught) => { this.resetDxcc(); return src; })
+            .catch((err, caught) => { this.resetDxcc(); return caught; })
             .map((res: Response) => res.json())
             .subscribe((dxcc: any) => this.updateDxcc(dxcc));
 

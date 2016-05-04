@@ -88,7 +88,7 @@
           <div class="form-group">
             <label for="start">Start</label>
             <div class="input-group">
-              <input type="datetime-local" step="1" [(ngModel)]="startDate"
+              <input type="date" [(ngModel)]="startDate"
                      id="start" ngModel-options="{timezone: 'UTC'}" required>
                 <a class="input-addon" ngClick="resetStart()">Now</a>
             </div>
@@ -96,7 +96,7 @@
           <div class="form-group">
             <label for="end">End</label>
             <div class="input-group">
-              <input type="datetime-local" step="1" [(ngModel)]="endDate"
+              <input type="date" [(ngModel)]="endDate"
                      id="end" ngModel-options="{timezone: 'UTC'}" required>
               <a class="input-addon" ngClick="resetEnd()">Now</a>
             </div>
