@@ -1,0 +1,50 @@
+version: 1.0.{build}
+environment:
+  MIX_ENV: prod
+  matrix:
+  - TARGET: i686-pc-windows-gnu
+    BITS: 32
+    SSL_ARCH: i386
+  - TARGET: x86_64-pc-windows-gnu
+    BITS: 64
+    SSL_ARCH: x64_86
+install:
+- cmd: >-
+    cinst elixir
+
+    refreshenv
+
+    bash -c "yes | mix local.hex --force"
+
+    bash -c "yes | mix local.rebar --force"
+
+    bash -c "yes | mix deps.get"
+
+    git submodule update --init --recursive
+build_script:
+- cmd: >-
+    bash -c "yes | mix compile"
+
+    bash -c "cd webapp && npm run build"
+
+    bash -c "yes | mix release"
+
+    bash -c "mkdir cloudshack"
+
+    bash -c "tar xfz rel/cloudshack/releases/*/cloudshack.tar.gz -C cloudshack"
+
+    7z a cloudshack-%APPVEYOR_REPO_BRANCH%-win%BITS%.zip cloudshack/
+test: off
+artifacts:
+- path: cloudshack-*-win*.zip
+  name: cloudshack-win.zip
+deploy:
+- provider: S3
+  access_key_id: AKIAIHMFP2GCVZOAV7AQ
+  secret_access_key:
+    secure: 8zLFBgPoqHectuJ+FUOjqGPlVoSrDQRRlMpmYrjgDAguLaCpk7FAMvZukTlkUr2s
+  region: eu-central-1
+  bucket: static.cloudshack.org
+  folder: build
+  artifact: cloudshack-win.zip
+  set_public: true
