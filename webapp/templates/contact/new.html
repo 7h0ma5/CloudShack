@@ -61,14 +61,14 @@
           <div class="form-group">
             <label for="mode">Mode</label>
             <select id="mode" [(ngModel)]="contact.mode" [ngFormControl]="mode">
-              <option *ngFor="#m of modes" [value]="m.name">{{m.name}}</option>
+              <option *ngFor="let m of modes" [value]="m.name">{{m.name}}</option>
             </select>
           </div>
 
           <div class="form-group" *ngIf="submodes">
               <label for="submode">Submode</label>
               <select id="submode" [(ngModel)]="contact.submode">
-                <option *ngFor="#m of submodes" [value]="m.name">{{m.name}}<option>
+                <option *ngFor="let m of submodes" [value]="m.name">{{m.name}}<option>
               </select>
           </div>
 
@@ -159,7 +159,7 @@
         <div class="form-group">
           <label for="contest_id">Contest</label>
           <select id="contest_id" [(ngModel)]="contact.contest_id">
-            <option *ngFor="#c of contests" [value]="c.id">{{c.desc}}</option>
+            <option *ngFor="let c of contests" [value]="c.id">{{c.desc}}</option>
           </select>
         </div>
       </tab>
@@ -283,7 +283,7 @@
           <th>Mode</th>
           <th>Freq</th>
         </tr>
-        <tr *ngFor="#row of previous">
+        <tr *ngFor="let row of previous">
           <td>{{row.doc.start|date:"dd.MM.yyyy":"UTC"}}</td>
           <td>{{row.doc.start|date:"HH:mm":"UTC"}}</td>
           <td>{{row.doc.mode}}</td>

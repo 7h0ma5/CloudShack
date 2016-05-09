@@ -2,6 +2,8 @@ defmodule Controller.Callbook do
   use Plug.Router
   use Plug.ErrorHandler
 
+  plug Cloudshack.Api
+
   plug :match
   plug :dispatch
 

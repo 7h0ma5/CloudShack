@@ -2,11 +2,12 @@ import {Component} from "angular2/core";
 import {NgIf, NgFor} from "angular2/common";
 import {RouterLink} from "angular2/router";
 import {ContactService} from "../services/contact";
+import {Uppercase} from "../components/uppercase";
 
 @Component({
     providers: [ContactService],
     templateUrl: "/templates/logbook.html",
-    directives: [RouterLink, NgFor, NgIf]
+    directives: [RouterLink, NgFor, NgIf, Uppercase]
 })
 export class LogbookPage {
     contacts: Array<Object> = [];
@@ -72,8 +73,13 @@ export class LogbookPage {
         this.pages.start = null;
     }
 
-    filterCallsign(callsign: String) {
-        this.filter = callsign;
+    useFilter() {
+        this.resetPages();
+        this.reload();
+    }
+
+    resetFilter() {
+        this.filter = "";
         this.resetPages();
         this.reload();
     }

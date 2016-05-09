@@ -22,9 +22,11 @@ defmodule Cloudshack.Router do
     |> send_file(200, Path.join(@static_path, "index.html"))
   end
 
+  forward "/flag", to: Controller.Flag
   forward "/callbook", to: Controller.Callbook
+  forward "/contacts", to: Controller.Contacts
 
-  #match _ do
-  #  send_resp(conn, 404, "oops")
-  #end
+  match _ do
+    send_resp(conn, 404, "not found")
+  end
 end
