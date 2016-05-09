@@ -9,7 +9,13 @@ defmodule Cloudshack do
     children = [
       # Define workers and child supervisors to be supervised
       # worker(Cloudshack.Worker, [arg1, arg2, arg3]),
-      Plug.Adapters.Cowboy.child_spec(:http, Cloudshack.Router, [], [port: 7373]),
+      Plug.Adapters.Cowboy.child_spec(:http, Cloudshack.Router, [], [
+        port: 7373,
+        dispatch: [{:_, [
+          {"/websocket", Cloudshack.WebsocketHandler, []},
+          {:_, Plug.Adapters.Cowboy.Handler, {Cloudshack.Router, []}}
+        ]}]
+      ]),
       worker(Callbook.Hamqth, []),
       worker(Wsjt, [])
     ]
