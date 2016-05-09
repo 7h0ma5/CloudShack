@@ -14,7 +14,7 @@ export class Tab {
     selector: "tabs",
     template: `
         <ul class="tab-list">
-          <li *ngFor="#tab of tabs" [ngClass]="{'active': tab.active}">
+          <li *ngFor="let tab of tabs" [ngClass]="{'active': tab.active}">
             <a (click)="selectTab(tab)">{{tab.title}}</a>
           </li>
         </ul>

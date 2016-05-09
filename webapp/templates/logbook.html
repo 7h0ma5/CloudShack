@@ -2,10 +2,10 @@
 
 <div class="box-transparent">
   <div class="box-content">
-    <form (submit)="filterCallsign(callsign.value)">
-      <input type="text" placeholder="Callsign" #callsign uppercase>
+    <form (submit)="useFilter()">
+      <input type="text" placeholder="Callsign" [(ngModel)]="filter" uppercase>
       <input type="submit" class="button" value="Search">
-      <button (click)="filterCallsign(null); callsign.value = ''">Reset</button>
+      <button (click)="resetFilter()">Reset</button>
     </form>
   </div>
 </div>
@@ -21,7 +21,7 @@
     <th>Mode</th>
     <th>Frequency</th>
   </tr>
-  <tr *ngFor="#contact of contacts">
+  <tr *ngFor="let contact of contacts">
     <td><!-- contact.doc.start|date:"dd.MM.yyyy" --> {{contact.doc.start|slice:0:10}}</td>
     <td><!-- contact.doc.start|date:"HH:mm" --> {{contact.doc.start|slice:11:16}}</td>
     <td class="flag-cell">

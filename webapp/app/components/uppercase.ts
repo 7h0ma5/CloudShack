@@ -16,11 +16,18 @@ export class Uppercase extends DefaultValueAccessor {
         super(_renderer, _elementRef);
     }
 
+    writeValue(value: any) : void {
+      if (value) { value = value.toUpperCase(); }
+      super.writeValue(value);
+    }
+
     blur() {
+        console.log("blur");
         this.onTouched();
     }
 
     input(value) {
+        console.log("input", value);
         this.onChange(value.toUpperCase());
     }
 }
