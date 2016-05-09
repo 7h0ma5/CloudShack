@@ -1,8 +1,8 @@
-defmodule Controller.Contacts do
+defmodule Cloudshack.Controller.Contacts do
   use Plug.Router
   use Plug.ErrorHandler
 
-  plug Cloudshack.Api
+  plug Cloudshack.Plug.Api
 
   plug :match
   plug :dispatch
