@@ -23,16 +23,22 @@ defmodule Callbook.Hamqth do
   end
 
   def lookup(callsign) do
-    GenServer.call(Callbook.Hamqth, {:lookup, callsign})
+    GenServer.call(__MODULE__, {:lookup, callsign})
   end
 
-  def init(:ok) do
-    {:ok, %{:user => "xyz", :password => "xyz", :session => nil}}
+  def set_credentials(user, password) do
+    GenServer.cast(__MODULE__, {:set_credentials, user, password})
+  end
+
+  def init(_) do
+    {:ok, %{:user => nil, :password => nil, :session => nil}}
+  end
+
+  def handle_cast({:set_credentials, user, password}, state) do
+    {:noreply, %{:user => user, :password => password, :session => nil}}
   end
 
   def handle_call({:lookup, callsign}, _from, state) do
-    IO.puts "lookup callsign #{callsign}"
-
     if !state[:session] do
       state = authenticate(state)
     end

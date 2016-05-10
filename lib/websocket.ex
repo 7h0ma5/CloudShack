@@ -1,14 +1,18 @@
 defmodule Cloudshack.WebsocketHandler do
   @behaviour :cowboy_websocket_handler
 
+  require Logger
+
   def init(_, _req, _opts) do
     {:upgrade, :protocol, :cowboy_websocket}
   end
 
   def websocket_init(_type, req, _opts) do
-    state = %{}
-    {:ok, req, state}
+    :gproc.reg({:p, :l, :websocket})
+    Logger.debug "Websocket client connected"
+    {:ok, req, nil}
   end
+
   def websocket_handle({:text, "ping"}, req, state) do
     {:reply, {:text, "pong"}, req, state}
   end
@@ -18,7 +22,8 @@ defmodule Cloudshack.WebsocketHandler do
     {:ok, req, state}
   end
 
-  def websocket_info(message, req, state) do
+  def websocket_info({event, data}, req, state) do
+    message = Poison.encode!(%{event: event, data: data})
     {:reply, {:text, message}, req, state}
   end
 

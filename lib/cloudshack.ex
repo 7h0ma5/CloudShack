@@ -16,8 +16,11 @@ defmodule Cloudshack do
           {:_, Plug.Adapters.Cowboy.Handler, {Cloudshack.Router, []}}
         ]}]
       ]),
+      worker(Cloudshack.Config, []),
+      worker(Cloudshack.State, []),
       worker(Callbook.Hamqth, []),
-      worker(Wsjt, [])
+      worker(Wsjt, []),
+      worker(Cluster, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

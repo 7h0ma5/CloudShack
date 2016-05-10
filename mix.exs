@@ -14,7 +14,10 @@ defmodule Cloudshack.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:cowboy, :plug, :httpoison, :sweet_xml, :couchdb, :logger],
+    [applications: [
+        :cowboy, :plug, :httpoison, :poison, :sweet_xml, :couchdb, :gproc,
+        :logger
+      ],
      mod: {Cloudshack, []}]
   end
 
@@ -33,7 +36,9 @@ defmodule Cloudshack.Mixfile do
       {:plug, "~> 1.1.4"},
       {:sweet_xml, "~> 0.6.1"},
       {:httpoison, "~> 0.8.2"},
+      {:poison, "~> 2.1.0"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
+      {:gproc, "~> 0.5.0"},
       {:exrm, "~> 1.0.3"}
     ]
   end

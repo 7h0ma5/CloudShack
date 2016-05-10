@@ -13,7 +13,8 @@ defmodule Cloudshack.Router do
   plug :dispatch
 
   get "/version" do
-    send_resp(conn, 200, "0.5.0")
+    version = Application.spec(:cloudshack, :vsn)
+    send_resp(conn, 200, version)
   end
 
   get "/" do
