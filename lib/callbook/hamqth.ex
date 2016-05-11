@@ -18,24 +18,16 @@ defmodule Callbook.Hamqth do
     qsl_via: ~x"/HamQTH/search/qsl_via/text()"s,
   ]
 
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
+  def start_link(config) do
+    GenServer.start_link(__MODULE__, config, [name: __MODULE__])
   end
 
   def lookup(callsign) do
     GenServer.call(__MODULE__, {:lookup, callsign})
   end
 
-  def set_credentials(user, password) do
-    GenServer.cast(__MODULE__, {:set_credentials, user, password})
-  end
-
-  def init(_) do
-    {:ok, %{:user => nil, :password => nil, :session => nil}}
-  end
-
-  def handle_cast({:set_credentials, user, password}, state) do
-    {:noreply, %{:user => user, :password => password, :session => nil}}
+  def init(config) do
+    {:ok, %{:user => config[:user], :password => config[:password], :session => nil}}
   end
 
   def handle_call({:lookup, callsign}, _from, state) do
