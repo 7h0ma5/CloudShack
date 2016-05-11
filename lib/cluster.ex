@@ -2,23 +2,35 @@ defmodule Cluster do
   use GenServer
   require Logger
 
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
+  def start_link(config) do
+    GenServer.start_link(__MODULE__, config, [name: __MODULE__])
   end
 
-  def init(_) do
-    Process.send_after(self, :connect, 100)
-    {:ok, nil}
+  def init(config) do
+    if config[:host] do
+      Process.send_after(self, :connect, 100)
+    end
+
+    {:ok, %{
+      host: config[:host],
+      port: Map.get(config, :port, 23),
+      user: Map.get(config, :user, nil)
+    }}
   end
 
   def handle_info(:connect, state) do
-    Logger.info "Connecting to the DX cluster..."
     options = [:binary, packet: :line, active: true, reuseaddr: true, keepalive: true]
-    case :gen_tcp.connect('db0sue.de', 8000, options) do
+
+    case :gen_tcp.connect(to_char_list(state.host), state.port, options) do
       {:ok, socket} ->
-        :gen_tcp.send(socket, "DL2IC\r\n")
+        Logger.info "Connected to the DX cluster..."
+        if state.user do
+          :gen_tcp.send(socket, state.user <> "\r\n")
+        end
         {:noreply, socket}
-      {:error, _} -> Process.send_after(self(), :connect, 10000)
+      {:error, _} ->
+        Logger.warn "Failed to connect to the DX cluster..."
+        Process.send_after(self(), :connect, 10000)
     end
     {:noreply, state}
   end
@@ -26,7 +38,6 @@ defmodule Cluster do
   def handle_info({:tcp, _, packet}, state) do
     packet = parse_line(packet)
     if packet do
-      Logger.debug "New spot: #{inspect packet}"
       :gproc.send({:p, :l, :websocket}, {:spot, packet})
     end
     {:noreply, state}

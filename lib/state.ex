@@ -9,7 +9,7 @@ defmodule Cloudshack.State do
     GenServer.call(__MODULE__, {:lookup, key})
   end
 
-  def init(:ok) do
+  def init(_) do
     {:ok, :undefined}
   end
 

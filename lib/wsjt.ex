@@ -2,13 +2,14 @@ defmodule Wsjt do
   use GenServer
   require Logger
 
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
+  def start_link(config) do
+    GenServer.start_link(__MODULE__, config, [name: __MODULE__])
   end
 
-  def init(_) do
+  def init(config) do
     Logger.info "Starting WSJT server..."
-    {:ok, socket} = :gen_udp.open(2237, [:binary, active: true])
+    port = Map.get(config, :port, 2237)
+    {:ok, socket} = :gen_udp.open(port, [:binary, active: true])
     {:ok, socket}
   end
 
