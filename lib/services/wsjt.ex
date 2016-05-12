@@ -1,4 +1,4 @@
-defmodule Wsjt do
+defmodule WSJT do
   use GenServer
   require Logger
 

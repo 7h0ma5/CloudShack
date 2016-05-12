@@ -1,6 +1,6 @@
-defmodule CloudshackTest do
+defmodule CloudShackTest do
   use ExUnit.Case
-  doctest Cloudshack
+  doctest CloudShack
 
   test "the truth" do
     assert 1 + 1 == 2

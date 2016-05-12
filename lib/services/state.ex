@@ -1,4 +1,4 @@
-defmodule Cloudshack.State do
+defmodule CloudShack.State do
   use GenServer
 
   def start_link do

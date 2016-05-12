@@ -1,4 +1,4 @@
-defmodule Cloudshack.Plug.Api do
+defmodule CloudShack.Plug.Api do
   import Plug.Conn
 
   def init(options) do

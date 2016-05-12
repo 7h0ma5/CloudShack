@@ -1,4 +1,4 @@
-defmodule Cloudshack.Controller.Flag do
+defmodule CloudShack.Controller.Flag do
   use Plug.Router
   use Plug.ErrorHandler
 

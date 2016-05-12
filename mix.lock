@@ -2,7 +2,7 @@
   "certifi": {:hex, :certifi, "0.4.0"},
   "cf": {:hex, :cf, "0.2.1"},
   "couchbeam": {:hex, :couchbeam, "1.3.0"},
-  "couchdb": {:git, "https://github.com/7h0ma5/elixir-couchdb.git", "7c3d3bd0de199a344c8ad68a21611160642261d9", []},
+  "couchdb": {:git, "https://github.com/7h0ma5/elixir-couchdb.git", "623715f835ad4f6ab3c2874e19b8386ea8d1b99d", []},
   "couchdb_connector": {:hex, :couchdb_connector, "0.2.0"},
   "cowboy": {:hex, :cowboy, "1.0.4"},
   "cowlib": {:hex, :cowlib, "1.0.2"},

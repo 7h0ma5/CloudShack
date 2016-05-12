@@ -1,4 +1,4 @@
-defmodule Cloudshack.Router do
+defmodule CloudShack.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
@@ -23,9 +23,9 @@ defmodule Cloudshack.Router do
     |> send_file(200, Path.join(@static_path, "index.html"))
   end
 
-  forward "/flag", to: Cloudshack.Controller.Flag
-  forward "/callbook", to: Cloudshack.Controller.Callbook
-  forward "/contacts", to: Cloudshack.Controller.Contacts
+  forward "/flag", to: CloudShack.Controller.Flag
+  forward "/callbook", to: CloudShack.Controller.Callbook
+  forward "/contacts", to: CloudShack.Controller.Contacts
 
   match _ do
     send_resp(conn, 404, "not found")

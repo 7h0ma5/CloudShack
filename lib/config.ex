@@ -1,4 +1,4 @@
-defmodule Cloudshack.Config do
+defmodule CloudShack.Config do
   use GenServer
 
   def start_link do
@@ -16,7 +16,7 @@ defmodule Cloudshack.Config do
   end
 
   def restart_services do
-    Supervisor.stop(Cloudshack.Services)
+    Supervisor.stop(CloudShack.Services)
   end
 
   def handle_call({:lookup, key}, _from, table) do
