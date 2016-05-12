@@ -1,4 +1,4 @@
-defmodule Cloudshack.Mixfile do
+defmodule CloudShack.Mixfile do
   use Mix.Project
 
   def project do
@@ -18,7 +18,7 @@ defmodule Cloudshack.Mixfile do
         :cowboy, :plug, :httpoison, :poison, :sweet_xml, :couchdb, :gproc,
         :logger
       ],
-     mod: {Cloudshack, []}]
+     mod: {CloudShack, []}]
   end
 
   # Dependencies can be Hex packages:

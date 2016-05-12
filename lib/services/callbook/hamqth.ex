@@ -1,4 +1,4 @@
-defmodule Callbook.Hamqth do
+defmodule Callbook.HamQTH do
   use GenServer
   import SweetXml
 

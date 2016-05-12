@@ -1,22 +1,22 @@
-defmodule Cloudshack do
+defmodule CloudShack do
   use Application
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, Cloudshack.Router, [], [
+      Plug.Adapters.Cowboy.child_spec(:http, CloudShack.Router, [], [
         port: 7373,
         dispatch: [{:_, [
-          {"/websocket", Cloudshack.WebsocketHandler, []},
-          {:_, Plug.Adapters.Cowboy.Handler, {Cloudshack.Router, []}}
+          {"/websocket", CloudShack.WebsocketHandler, []},
+          {:_, Plug.Adapters.Cowboy.Handler, {CloudShack.Router, []}}
         ]}]
       ]),
-      worker(Cloudshack.Config, []),
-      supervisor(Cloudshack.Services, [])
+      worker(CloudShack.Config, []),
+      supervisor(CloudShack.Services, [])
     ]
 
-    opts = [strategy: :one_for_one, name: Cloudshack.Supervisor]
+    opts = [strategy: :one_for_one, name: CloudShack.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

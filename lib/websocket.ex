@@ -1,4 +1,4 @@
-defmodule Cloudshack.WebsocketHandler do
+defmodule CloudShack.WebsocketHandler do
   @behaviour :cowboy_websocket_handler
 
   require Logger

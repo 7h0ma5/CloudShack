@@ -1,4 +1,4 @@
-defmodule Cloudshack.Services do
+defmodule CloudShack.Services do
   use Supervisor
   require Logger
 
@@ -10,10 +10,11 @@ defmodule Cloudshack.Services do
     Logger.info "Starting services..."
 
     children = [
-      worker(Cloudshack.State, []),
-      worker(Callbook.Hamqth, [Cloudshack.Config.lookup(:hamqth)]),
-      worker(Wsjt, [Cloudshack.Config.lookup(:wsjt)]),
-      worker(Cluster, [Cloudshack.Config.lookup(:cluster)])
+      worker(CloudShack.State, []),
+      worker(Callbook.HamQTH, [CloudShack.Config.lookup(:hamqth)]),
+      worker(WSJT, [CloudShack.Config.lookup(:wsjt)]),
+      worker(Cluster, [CloudShack.Config.lookup(:cluster)]),
+      worker(DXCC, [])
     ]
 
     opts = [strategy: :one_for_one]
