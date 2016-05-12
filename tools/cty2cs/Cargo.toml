@@ -1,0 +1,10 @@
+[package]
+name = "cty2cs"
+version = "0.1.0"
+authors = ["Thomas Gatzweiler <mail@thomasgatzweiler.com>"]
+
+[dependencies]
+nom = "~1.0.0"
+serde = "~0.7.5"
+serde_json = "~0.7.0"
+serde_macros = "~0.7.5"

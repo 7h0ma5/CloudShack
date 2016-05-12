@@ -24,6 +24,7 @@ defmodule CloudShack.Router do
   end
 
   forward "/flag", to: CloudShack.Controller.Flag
+  forward "/dxcc", to: CloudShack.Controller.DXCC
   forward "/callbook", to: CloudShack.Controller.Callbook
   forward "/contacts", to: CloudShack.Controller.Contacts
 

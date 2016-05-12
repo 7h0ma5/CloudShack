@@ -4,3 +4,6 @@
 erl_crash.dump
 /priv/static
 /rel
+dxcc.json.gz
+settings.ets
+/tools/**/target

@@ -3,7 +3,7 @@ defmodule DXCC do
   require Logger
 
   @source "https://cdn.cloudshack.org/dxcc.json.gz"
-  @prefix_override MapSet.new(["cqz", "ituz", "cont", "latlon"])
+  @prefix_override MapSet.new([:cqz, :ituz, :cont, :latlon])
 
   def start_link do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
@@ -34,10 +34,10 @@ defmodule DXCC do
         end)
 
     if prefix do
-      entity = prefix |> Map.get("dxcc") |> get_entity
+      entity = prefix |> Map.get(:dxcc) |> get_entity
 
       prefix = prefix
-        |> Enum.filter(fn {k, v} -> v && MapSet.member?(@prefix_override, k) end)
+        |> Enum.filter(fn {k, v} -> MapSet.member?(@prefix_override, k) end)
         |> Enum.into(%{})
 
       {:reply, Map.merge(entity, prefix), state}
@@ -50,8 +50,7 @@ defmodule DXCC do
     case :ets.lookup(:dxcc_prefixes, prefix) do
       [{prefix, results}] ->
         results |> Enum.find(fn(result) ->
-          IO.inspect {result, callsign, prefix, callsign}
-          !(Map.get(result, "exact", false) && callsign != prefix)
+          !(Map.get(result, :exact, false) && callsign != prefix)
         end)
       _ -> nil
     end
@@ -74,13 +73,13 @@ defmodule DXCC do
 
     data = File.open!("dxcc.json.gz", [:read, :compressed])
       |> IO.read(:all)
-      |> Poison.decode!
+      |> Poison.decode!(keys: :atoms)
 
     :ets.new(:dxcc_entities, [:set, :protected, :named_table])
     :ets.new(:dxcc_prefixes, [:bag, :protected, :named_table])
 
-    data["entities"] |> load_entities
-    data["prefixes"] |> load_prefixes
+    data.entities |> load_entities
+    data.prefixes |> load_prefixes
 
     entities = :ets.info(:dxcc_entities)[:size]
     prefixes = :ets.info(:dxcc_prefixes)[:size]
@@ -90,9 +89,8 @@ defmodule DXCC do
   end
 
   def load_entities(entities) do
-    Enum.each(entities, fn({key, value}) ->
-      {dxcc, _} = Integer.parse(key)
-      :ets.insert(:dxcc_entities, {dxcc, value})
+    Enum.each(entities, fn(entity) ->
+      :ets.insert(:dxcc_entities, {entity[:dxcc], entity})
     end)
   end
 
