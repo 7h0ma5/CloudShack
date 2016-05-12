@@ -13,8 +13,7 @@ env:
 services:
   - couchdb
 before_script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then nvm install iojs; fi
-  - curl https://cdn.cloudshack.org/dxcc.json.gz | gunzip > dxcc.json
+  - curl https://cdn.cloudshack.org/dxcc.json.gz > dxcc.json.gz
 install:
   - mix local.hex --force
   - mix deps.get

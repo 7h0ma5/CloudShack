@@ -23,13 +23,13 @@ defmodule Cluster do
 
     case :gen_tcp.connect(to_char_list(state.host), state.port, options) do
       {:ok, socket} ->
-        Logger.info "Connected to the DX cluster..."
+        Logger.info "Connected to the DX cluster"
         if state.user do
           :gen_tcp.send(socket, state.user <> "\r\n")
         end
         {:noreply, socket}
       {:error, _} ->
-        Logger.warn "Failed to connect to the DX cluster..."
+        Logger.warn "Failed to connect to the DX cluster"
         Process.send_after(self(), :connect, 10000)
     end
     {:noreply, state}
