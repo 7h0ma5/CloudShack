@@ -13,7 +13,7 @@ env:
 services:
   - couchdb
 before_script:
-  - curl https://cdn.cloudshack.org/dxcc.json.gz | gunzip > dxcc.json
+  - curl https://cdn.cloudshack.org/dxcc.json.gz > dxcc.json.gz
 install:
   - mix local.hex --force
   - mix deps.get
