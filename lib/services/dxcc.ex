@@ -71,30 +71,42 @@ defmodule DXCC do
   def handle_cast(:load, state) do
     Logger.info "Loading the DXCC data..."
 
-    data = File.open!("dxcc.json.gz", [:read, :compressed])
-      |> IO.read(:all)
-      |> Poison.decode!(keys: :atoms)
-
     :ets.new(:dxcc_entities, [:set, :protected, :named_table])
     :ets.new(:dxcc_prefixes, [:bag, :protected, :named_table])
 
+    case File.open("dxcc.json.gz", [:read, :compressed]) do
+      {:ok, file} ->
+        file |> IO.read(:all) |> load_json
+      _ ->
+        Logger.warn "Could not open dxcc.json.gz"
+    end
+
+    {:noreply, state}
+  end
+
+  defp load_json(json) do
+    case json |> Poison.decode(keys: :atoms) do
+      {:ok, data} -> load_data(data)
+      _ -> Logger.warn "Failed to parse dxcc.json"
+    end
+  end
+
+  defp load_data(data) do
     data.entities |> load_entities
     data.prefixes |> load_prefixes
 
     entities = :ets.info(:dxcc_entities)[:size]
     prefixes = :ets.info(:dxcc_prefixes)[:size]
     Logger.info "Loaded #{entities} DXCC entities and #{prefixes} prefixes"
-
-    {:noreply, state}
   end
 
-  def load_entities(entities) do
+  defp load_entities(entities) do
     Enum.each(entities, fn(entity) ->
       :ets.insert(:dxcc_entities, {entity[:dxcc], entity})
     end)
   end
 
-  def load_prefixes(prefixes) do
+  defp load_prefixes(prefixes) do
     Enum.each(prefixes, fn({key, value}) ->
       :ets.insert(:dxcc_prefixes, {key, value})
     end)
