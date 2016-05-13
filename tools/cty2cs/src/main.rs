@@ -16,7 +16,7 @@ use nom::{IResult, multispace};
 #[derive(Serialize)]
 struct DxccData {
     entities: Vec<DxccEntity>,
-    prefixes: HashMap<String, Vec<Prefix>>
+    prefixes: Vec<Prefix>
 }
 
 #[derive(Serialize)]
@@ -36,6 +36,11 @@ struct Prefix {
     prefix: String,
     exact: bool,
     dxcc: u32,
+    exceptions: Exceptions
+}
+
+#[derive(Serialize)]
+struct Exceptions {
     #[serde(skip_serializing_if="Option::is_none")]
     cqz: Option<u32>,
     #[serde(skip_serializing_if="Option::is_none")]
@@ -106,14 +111,14 @@ named!(parse_prefix <&[u8], Prefix>, chain!(
     exceptions: many0!(parse_exception),
     || {
         let mut pfx = Prefix { exact: exact.is_some(), dxcc: 0, prefix: prefix,
-                               cqz: None, ituz: None, cont: None, latlon: None };
+                               exceptions: Exceptions { cqz: None, ituz: None, cont: None, latlon: None } };
 
         for exception in exceptions {
             match exception {
-                Exception::Cqz(cqz) => pfx.cqz = Some(cqz),
-                Exception::Ituz(ituz) => pfx.ituz = Some(ituz),
-                Exception::LatLon(latlon) => pfx.latlon = Some(latlon),
-                Exception::Cont(cont) => pfx.cont = Some(cont)
+                Exception::Cqz(cqz) => pfx.exceptions.cqz = Some(cqz),
+                Exception::Ituz(ituz) => pfx.exceptions.ituz = Some(ituz),
+                Exception::LatLon(latlon) => pfx.exceptions.latlon = Some(latlon),
+                Exception::Cont(cont) => pfx.exceptions.cont = Some(cont)
             }
         }
 
@@ -145,7 +150,7 @@ fn main() {
     let result = parse_entries(data.as_bytes());
 
     let mut dxcc_list: Vec<DxccEntity> = Vec::new();
-    let mut prefix_map: HashMap<String, Vec<Prefix>> = HashMap::new();
+    let mut prefix_list: Vec<Prefix> = Vec::new();
 
     if let IResult::Done(_, result) = result {
         for (dxcc, prefixes) in result {
@@ -154,17 +159,11 @@ fn main() {
 
             for mut prefix in prefixes {
                 prefix.dxcc = dxcc_id;
-
-                if !prefix_map.contains_key(&prefix.prefix) {
-                    prefix_map.insert(prefix.prefix.clone(), Vec::new());
-                }
-
-                let mut prefix_list = prefix_map.get_mut(&prefix.prefix).unwrap();
                 prefix_list.push(prefix);
             }
         }
 
-        let data = DxccData { entities: dxcc_list, prefixes: prefix_map };
+        let data = DxccData { entities: dxcc_list, prefixes: prefix_list };
 
         output.write(serde_json::to_string(&data).unwrap().as_bytes()).unwrap();
     }
