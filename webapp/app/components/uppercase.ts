@@ -22,12 +22,10 @@ export class Uppercase extends DefaultValueAccessor {
     }
 
     blur() {
-        console.log("blur");
         this.onTouched();
     }
 
     input(value) {
-        console.log("input", value);
         this.onChange(value.toUpperCase());
     }
 }

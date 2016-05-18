@@ -5,9 +5,26 @@ defmodule CloudShack.Mixfile do
     [app: :cloudshack,
      version: "0.5.0",
      elixir: "~> 1.2",
+     description: "Amateur Radio Logbook Server",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     package: package]
+  end
+
+  def package do
+    [external_dependencies: [],
+     license_file: "LICENSE",
+     files: [ "lib", "mix.exs", "README*", "LICENSE"],
+     maintainers: ["Thomas Gatzweiler <mail@cloudshack.org>"],
+     licenses: ["GPL-3"],
+     vendor: "CloudShack",
+     links:  %{
+       "GitHub" => "https://github.com/7h0ma5/CloudShack",
+       "Docs" => "http://cloudshack.org",
+       "Homepage" => "http://cloudshack.org"
+     }
+    ]
   end
 
   # Configuration for the OTP application

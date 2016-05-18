@@ -45,7 +45,6 @@ defmodule DXCC do
     case :ets.lookup(:dxcc_prefixes, prefix) do
       [] -> nil
       results ->
-        IO.inspect results
         results |> Enum.find(fn({prefix, result}) ->
           !(Map.get(result, :exact, false) && callsign != prefix)
         end)
