@@ -66,10 +66,10 @@
           </div>
 
           <div class="form-group" *ngIf="submodes">
-              <label for="submode">Submode</label>
-              <select id="submode" [(ngModel)]="contact.submode">
-                <option *ngFor="let m of submodes" [value]="m.name">{{m.name}}<option>
-              </select>
+            <label for="submode">Submode</label>
+            <select id="submode" [(ngModel)]="contact.submode">
+              <option *ngFor="let m of submodes" [value]="m.name">{{m.name}}<option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -88,17 +88,15 @@
           <div class="form-group">
             <label for="start">Start</label>
             <div class="input-group">
-              <input type="date" [(ngModel)]="startDate"
-                     id="start" ngModel-options="{timezone: 'UTC'}" required>
-                <a class="input-addon" ngClick="resetStart()">Now</a>
+              <input type="datetime-local" [(ngModel)]="startDate" id="start" required>
+                <a class="input-addon" (click)="resetStart()">Now</a>
             </div>
           </div>
           <div class="form-group">
             <label for="end">End</label>
             <div class="input-group">
-              <input type="date" [(ngModel)]="endDate"
-                     id="end" ngModel-options="{timezone: 'UTC'}" required>
-              <a class="input-addon" ngClick="resetEnd()">Now</a>
+              <input type="datetime-local" [(ngModel)]="endDate"  id="end" required>
+              <a class="input-addon" (click)="resetEnd()">Now</a>
             </div>
           </div>
         </div>

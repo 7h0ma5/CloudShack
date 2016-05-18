@@ -15,7 +15,7 @@ defmodule CloudShack.Controller.Flag do
     get_flag(conn, id)
   end
 
-  def get_flag(conn, id, res \\ 32) do
+  def get_flag(conn, id, res \\ "32") do
     {id, _} = Integer.parse(id)
 
     flag = case Data.lookup_dxcc(id) do

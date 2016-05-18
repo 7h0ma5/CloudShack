@@ -43,6 +43,11 @@ export class WorldMap implements OnDestroy {
         this.map.remove();
     }
 
+    ngAfterViewInit() {
+        this.map.invalidateSize(false);
+        console.log("after view init");
+    }
+
     set maptarget(newTarget) {
         this.map.removeLayer(this.marker);
 

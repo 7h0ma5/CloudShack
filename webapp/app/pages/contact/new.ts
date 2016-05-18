@@ -23,8 +23,8 @@ export class NewContactPage {
     dxcc: Object = null;
     callbook: Object = null;
 
-    startDate: Date = new Date();
-    endDate: Date = new Date();
+    startDate: string = null;
+    endDate: string = null;
 
     callsign: Control = new Control();
     gridsquare: Control = new Control();
@@ -44,20 +44,32 @@ export class NewContactPage {
     )
     {
         this.callsign.valueChanges
-            .debounceTime(500)
+            .filter((val: string) => val && val.length > 0)
+            .debounceTime(200)
             .map(encodeURIComponent)
             .switchMap((val: string) => this.http.get("/dxcc/" + val))
             .catch((err, caught) => { this.resetDxcc(); return caught; })
             .map((res: Response) => res.json())
             .subscribe((dxcc: any) => this.updateDxcc(dxcc));
 
+        this.callsign.valueChanges
+            .filter((val: string) => val && val.length > 2)
+            .debounceTime(400)
+            .map(encodeURIComponent)
+            .switchMap((val: string) => this.http.get("/callbook/" + val))
+            .catch((err, caught) => { this.resetCallbook(); return caught; })
+            .map((res: Response) => res.json())
+            .subscribe((callbook: any) => this.updateCallbook(callbook));
+
         this.mode.valueChanges
-            .debounceTime(50)
+            .debounceTime(10)
             .subscribe((mode: string) => this.updateMode(mode));
 
         this.gridsquare.valueChanges
-            .debounceTime(200)
+            .debounceTime(10)
             .subscribe((grid: string) => this.updateGridsquare(grid));
+
+        this.reset();
     }
 
     qrz() {
@@ -65,12 +77,26 @@ export class NewContactPage {
     }
 
     save() {
+        this.contact["start"] = new Date(this.startDate);
+        this.contact["end"] = new Date(this.endDate);
         console.log(this.contact);
     }
 
     reset() {
         this.resetDxcc();
+        this.resetStart();
+        this.resetEnd();
         this.contact = {};
+    }
+
+    resetStart() {
+        var now = (new Date()).toJSON().slice(0, 19);
+        this.startDate = now;
+    }
+
+    resetEnd() {
+        var now = (new Date()).toJSON().slice(0, 19);
+        this.endDate = now;
     }
 
     resetDxcc() {
@@ -91,6 +117,14 @@ export class NewContactPage {
         this.contact["ituz"] = dxcc["ituz"];
         this.contact["country"] = dxcc["country"];
         this.updateMaptarget(dxcc["latlon"], DXCC_PRIORITY);
+    }
+
+    resetCallbook() {
+        
+    }
+
+    updateCallbook(callbook) {
+      console.log(callbook)
     }
 
     updateMode(newMode: string) {
