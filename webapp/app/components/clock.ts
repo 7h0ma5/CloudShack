@@ -7,9 +7,18 @@ import {Observable} from "rxjs/Rx";
     template: "{{time | date: 'HH:mm:ss'}}"
 })
 export class Clock {
-    time: Date = new Date();
+    time: Date;
 
     constructor() {
-        Observable.interval(1000).subscribe(() => this.time = new Date());
+        this.updateTime();
+        Observable.interval(1000).subscribe(() => this.updateTime());
+    }
+
+    updateTime() {
+        var now = new Date();
+        var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(),
+                               now.getUTCDate(),  now.getUTCHours(),
+                               now.getUTCMinutes(), now.getUTCSeconds());
+        this.time = now_utc;
     }
 }
