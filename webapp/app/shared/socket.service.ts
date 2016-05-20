@@ -17,7 +17,7 @@ export class Spot {
 }
 
 @Injectable()
-export class Socket {
+export class SocketService {
     @Output() spot: EventEmitter<Spot> = new EventEmitter<Spot>();
 
     constructor() {

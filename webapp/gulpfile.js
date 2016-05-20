@@ -9,6 +9,7 @@ var project = $.typescript.createProject("tsconfig.json");
 
 gulp.task("app.js", ["typings"], function() {
     return gulp.src([
+        "main.ts",
         "app/**/*.ts",
         "typings/browser.d.ts",
         "node_modules/angular2/typings/browser.d.ts"
@@ -18,7 +19,7 @@ gulp.task("app.js", ["typings"], function() {
         .pipe($.typescript(project))
         .js
         .pipe($.sourcemaps.write())
-        .pipe(gulp.dest(TARGET_DIR + "/js"))
+        .pipe(gulp.dest(TARGET_DIR + "/app"))
         .pipe($.livereload());
 });
 
@@ -55,7 +56,7 @@ gulp.task("vendor.js", function() {
     var standalone = gulp.src([
         NPM_DIR + "/leaflet/dist/leaflet.js",
     ])
-        .pipe(gulp.dest(TARGET_DIR + "/js"));
+        .pipe(gulp.dest(TARGET_DIR + "/app"));
 
     var vendor = gulp.src([
         NPM_DIR + "/angular2/bundles/angular2-polyfills.js",
@@ -104,9 +105,9 @@ gulp.task("images", function() {
 });
 
 gulp.task("templates", function() {
-    return gulp.src("templates/**/*")
-        .pipe($.changed(TARGET_DIR + "/templates"))
-        .pipe(gulp.dest(TARGET_DIR + "/templates"))
+    return gulp.src("app/**/*.html")
+        .pipe($.changed(TARGET_DIR + "/app"))
+        .pipe(gulp.dest(TARGET_DIR + "/app"))
         .pipe($.livereload());
 });
 

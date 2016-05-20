@@ -1,4 +1,4 @@
-import {Component, HostBinding, ElementRef} from "angular2/core";
+import { Component, HostBinding, ElementRef } from "angular2/core";
 
 @Component({
     selector: "[dropdown]",
@@ -6,7 +6,7 @@ import {Component, HostBinding, ElementRef} from "angular2/core";
         <b><ng-content></ng-content></b>
     `
 })
-export class Dropdown {
+export class DropdownComponent {
     @HostBinding('class.dropdown') private addClass = true;
 
     private _isOpen:boolean;

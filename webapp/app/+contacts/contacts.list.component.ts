@@ -1,15 +1,14 @@
-import {Component} from "angular2/core";
-import {NgIf, NgFor} from "angular2/common";
-import {RouterLink} from "angular2/router";
-import {ContactService} from "../services/contact";
-import {Uppercase} from "../components/uppercase";
+import { Component } from "angular2/core";
+import { NgIf, NgFor } from "angular2/common";
+import { RouterLink } from "angular2/router";
+import { ContactService, UppercaseDirective } from "../shared/index";
 
 @Component({
     providers: [ContactService],
-    templateUrl: "/templates/logbook.html",
-    directives: [RouterLink, NgFor, NgIf, Uppercase]
+    templateUrl: "/app/+contacts/contacts.list.component.html",
+    directives: [RouterLink, NgFor, NgIf, UppercaseDirective]
 })
-export class LogbookPage {
+export class ContactsListComponent {
     contacts: Array<Object> = [];
     filter: String = null;
     limit: number = 20;

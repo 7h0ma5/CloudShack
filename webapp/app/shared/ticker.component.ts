@@ -1,5 +1,5 @@
-import {Component} from "angular2/core";
-import {Socket, Spot} from "../services/socket";
+import { Component } from "angular2/core";
+import { SocketService, Spot } from "./socket.service";
 
 @Component({
     selector: "ticker",
@@ -12,12 +12,12 @@ import {Socket, Spot} from "../services/socket";
         </div>
     `
 })
-export class Ticker {
+export class TickerComponent {
     spot: Spot;
     visible: boolean = false;
     timeout: any = null;
 
-    constructor(socket: Socket) {
+    constructor(socket: SocketService) {
         socket.spot.subscribe(this.onSpot.bind(this));
     }
 

@@ -1,13 +1,13 @@
-import {Component} from "angular2/core";
-import {NgIf, NgFor} from "angular2/common";
-import {ContactService} from "../services/contact";
+import { Component } from "angular2/core";
+import { NgIf, NgFor } from "angular2/common";
+import { ContactService } from "../shared/index";
 
 @Component({
     providers: [ContactService],
-    templateUrl: "/templates/home.html",
+    templateUrl: "/app/+home/home.component.html",
     directives: [NgIf, NgFor]
 })
-export class HomePage {
+export class HomeComponent {
     qso_stats = {total: 0, year: 0, month: 0};
     modes: Array<[string, number]> = [];
 

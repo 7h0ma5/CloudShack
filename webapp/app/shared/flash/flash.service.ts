@@ -1,11 +1,11 @@
-import {Output, EventEmitter} from "angular2/core";
+import { Output, EventEmitter } from "angular2/core";
 
 export class FlashMessage {
     level: string;
     text: string;
 }
 
-export class Flash {
+export class FlashService {
     @Output() public fire: EventEmitter<FlashMessage> = new EventEmitter<FlashMessage>();
 
     show(level: string, text: string) {

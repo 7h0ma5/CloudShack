@@ -1,4 +1,4 @@
 System.config({
   defaultJSExtensions: true,
-  baseURL: '/js'
+  baseURL: '/app'
 });

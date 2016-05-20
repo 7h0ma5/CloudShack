@@ -1,14 +1,17 @@
-import {Component} from "angular2/core";
-import {Control, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/common";
-import {Http, Response} from "angular2/http";
-import {ContactService} from "../../services/contact";
-import {Flash} from "../../services/flash";
-import {TAB_DIRECTIVES} from "../../components/tabs";
-import {Uppercase} from "../../components/uppercase";
-import {WorldMap} from "../../components/worldmap";
-import {MODES, CONTESTS} from "../../constants";
-import {Observable} from "rxjs/Rx";
-import {coord_distance, coord_bearing, grid_to_coord} from "../../utils/geo";
+import { Component } from "angular2/core";
+import { Control, NgIf, NgFor, FORM_DIRECTIVES } from "angular2/common";
+import { Http, Response } from "angular2/http";
+import { Observable } from "rxjs/Rx";
+import { MODES, CONTESTS } from "../lib/constants";
+import { coord_distance, coord_bearing, grid_to_coord } from "../lib/geo";
+
+import {
+    ContactService,
+    FlashService,
+    TAB_DIRECTIVES,
+    UppercaseDirective,
+    WorldMapComponent
+} from "../shared/index";
 
 const GRID_PRIORITY: number = 0;
 const CALLBOOK_PRIORITY: number = 1;
@@ -16,10 +19,15 @@ const DXCC_PRIORITY: number = 2;
 
 @Component({
     providers: [ContactService],
-    templateUrl: "/templates/contact/new.html",
-    directives: [WorldMap, Uppercase, NgIf, NgFor, TAB_DIRECTIVES, FORM_DIRECTIVES]
+    templateUrl: "/app/+contacts/contacts.new.component.html",
+    directives: [
+        NgIf, NgFor, FORM_DIRECTIVES,
+        WorldMapComponent,
+        UppercaseDirective,
+        TAB_DIRECTIVES
+    ]
 })
-export class NewContactPage {
+export class ContactsNewComponent {
     contact: Object = {};
     dxcc: Object = null;
     callbook: Object = null;
@@ -41,7 +49,7 @@ export class NewContactPage {
 
     constructor(
         public api: ContactService,
-        public flash: Flash,
+        public flash: FlashService,
         public http: Http
     )
     {

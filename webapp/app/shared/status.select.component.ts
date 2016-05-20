@@ -1,5 +1,5 @@
-import {Component} from "angular2/core";
-import {NgIf, NgClass} from "angular2/common";
+import { Component } from "angular2/core";
+import { NgIf, NgClass } from "angular2/common";
 
 @Component({
     selector: "status-select",
@@ -18,7 +18,7 @@ import {NgIf, NgClass} from "angular2/common";
     `,
     directives: [NgIf, NgClass]
 })
-export class StatusSelect {
+export class StatusSelectComponent {
     activeProfile: Object = null;
     onAir: boolean = false;
     status: string = "Off Air";

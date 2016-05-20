@@ -1,11 +1,11 @@
-import {Component, Input, ContentChildren, QueryList} from "angular2/core";
-import {NgFor, NgClass} from "angular2/common";
+import { Component, Input, ContentChildren, QueryList } from "angular2/core";
+import { NgFor, NgClass } from "angular2/common";
 
 @Component({
     selector: "tab",
     template: `<div [hidden]="!active"><ng-content></ng-content></div>`
 })
-export class Tab {
+export class TabComponent {
     @Input() title: string;
     @Input() active: boolean = false;
 }
@@ -22,8 +22,8 @@ export class Tab {
     `,
     directives: [NgFor, NgClass]
 })
-export class Tabs {
-    @ContentChildren(Tab) tabs: QueryList<Tab>;
+export class TabsComponent {
+    @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
     selectTab(tab) {
         this.tabs.map(tab => tab.active = false);
@@ -31,4 +31,4 @@ export class Tabs {
     }
 }
 
-export const TAB_DIRECTIVES = [Tab, Tabs];
+export const TAB_DIRECTIVES = [TabComponent, TabsComponent];

@@ -1,6 +1,6 @@
-import {Component} from "angular2/core";
-import {NgIf, NgFor} from "angular2/common";
-import {Router, RouterLink} from "angular2/router";
+import { Component } from "angular2/core";
+import { NgIf, NgFor } from "angular2/common";
+import { Router, RouterLink } from "angular2/router";
 
 @Component({
     selector: "profile-select",
@@ -24,7 +24,7 @@ import {Router, RouterLink} from "angular2/router";
     `,
     directives: [NgIf, NgFor, RouterLink]
 })
-export class ProfileSelect {
+export class ProfileSelectComponent {
     profiles: Array<Object> = [];
     activeProfile: Object = null;
 
