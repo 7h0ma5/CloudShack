@@ -17,11 +17,10 @@ export class FlashView {
     timeout: any = null;
 
     constructor(flash: Flash) {
-        flash.fire.subscribe((message: FlashMessage) => this.show(message));
+        flash.fire.subscribe(this.show.bind(this));
     }
 
     show(message: FlashMessage) {
-        console.log("Show Message", message);
         this.message = message;
         this.visible = true;
 

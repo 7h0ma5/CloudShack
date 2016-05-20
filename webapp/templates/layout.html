@@ -5,14 +5,7 @@
         <i class="fa fa-bars fa-2x"></i>
       </a>
     </div>
-    <div class="ticker" ng-controller="TickerCtrl">
-      <div class="ticker-text" *ngIf="show">
-        <i class="fa fa-globe fa-lg"></i>
-        <b>{spot.dxcall}</b> on
-        {spot.freq|number:3} by
-        {spot.spotter}
-      </div>
-    </div>
+    <ticker></ticker>
     <profile-select></profile-select>
   </header>
 

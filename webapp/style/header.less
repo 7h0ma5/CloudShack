@@ -10,7 +10,7 @@ header {
     transition: margin-left 0.5s ease;
     user-select: none;
 
-    > div, > profile-select {
+    >* {
         display: table-cell;
         white-space: nowrap;
         vertical-align: middle;
@@ -25,7 +25,7 @@ header {
     }
 }
 
-.ticker {
+ticker {
     width: 100%;
     padding: 0 20px;
     font-size: 1.5em;
@@ -33,26 +33,16 @@ header {
 }
 
 .ticker-text {
+    display: inline-block;
     opacity: 1;
+    transition: opacity 1s ease;
+}
 
-    &.ng-hide-add,
-    &.ng-hide-remove {
-        display: block ! important;
-        transition: all 1s ease;
-    }
-
-    &.ng-hide-remove,
-    &.ng-hide-add.ng-hide-add-active {
-        opacity: 0;
-    }
-
-    &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
-        opacity: 1;
-    }
+.ticker-text[hidden] {
+    opacity: 0;
 }
 
 profile-select {
-    display: block;
     position: relative;
     width: 200px;
     padding: 0 25px;

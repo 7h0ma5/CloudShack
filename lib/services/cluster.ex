@@ -61,6 +61,11 @@ defmodule Cluster do
     call = Regex.run(~r/^[a-zA-Z0-9\/]*/, String.slice(line, 20, 12)) |> List.first
     comment = line |> String.slice(33, 30) |> String.strip
     time = line |> String.slice(64, 4)
+
+    # Parse the frequency and convert to MHz
+    {freq, _} = Float.parse(freq)
+    freq = freq/1000
+
     %{spotter: spotter, freq: freq, call: call, comment: comment, time: time}
   end
 end
