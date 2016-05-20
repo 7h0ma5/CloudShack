@@ -2,6 +2,7 @@ import {Component} from "angular2/core";
 import {Control, NgIf, NgFor, FORM_DIRECTIVES} from "angular2/common";
 import {Http, Response} from "angular2/http";
 import {ContactService} from "../../services/contact";
+import {Flash} from "../../services/flash";
 import {TAB_DIRECTIVES} from "../../components/tabs";
 import {Uppercase} from "../../components/uppercase";
 import {WorldMap} from "../../components/worldmap";
@@ -40,6 +41,7 @@ export class NewContactPage {
 
     constructor(
         public api: ContactService,
+        public flash: Flash,
         public http: Http
     )
     {
@@ -80,6 +82,7 @@ export class NewContactPage {
         this.contact["start"] = new Date(this.startDate);
         this.contact["end"] = new Date(this.endDate);
         console.log(this.contact);
+        this.flash.success("Contact saved.");
     }
 
     reset() {
@@ -120,7 +123,7 @@ export class NewContactPage {
     }
 
     resetCallbook() {
-        
+
     }
 
     updateCallbook(callbook) {

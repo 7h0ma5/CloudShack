@@ -3,6 +3,7 @@ import {NgIf} from "angular2/common";
 import {ROUTER_DIRECTIVES, RouteConfig, Route} from "angular2/router";
 import {Http, Response} from "angular2/http";
 import {Clock} from "./clock";
+import {Ticker} from "./ticker";
 import {FlashView} from "./flash";
 import {ProfileSelect} from "./profile-select";
 import {StatusSelect} from "./status-select";
@@ -15,7 +16,10 @@ import 'rxjs/Rx';
 @Component({
     selector: "app",
     templateUrl: "/templates/layout.html",
-    directives: [Clock, FlashView, ProfileSelect, StatusSelect, NgIf, ROUTER_DIRECTIVES]
+    directives: [
+        Clock, Ticker, FlashView, ProfileSelect, StatusSelect, NgIf,
+        ROUTER_DIRECTIVES
+    ]
 })
 @RouteConfig([
     new Route({path: "/", component: HomePage, name: "Home"}),

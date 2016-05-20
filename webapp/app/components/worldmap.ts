@@ -45,7 +45,6 @@ export class WorldMap implements OnDestroy {
 
     ngAfterViewInit() {
         this.map.invalidateSize(false);
-        console.log("after view init");
     }
 
     set maptarget(newTarget) {
