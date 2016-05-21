@@ -24,6 +24,12 @@ defmodule Database do
     {:ok, db}
   end
 
+  def get, do: GenServer.call(__MODULE__, :get)
+
+  def handle_call(:get, _from, db) do
+    {:reply, db, db}
+  end
+
   def handle_cast(:migrate, db) do
     db |> CouchDB.Database.create
 

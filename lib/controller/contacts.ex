@@ -11,8 +11,7 @@ defmodule CloudShack.Controller.Contacts do
     options = %{"limit" => 10, "include_docs" => true, "descending" => true}
       |> Map.merge(conn.query_params)
 
-    {:ok, results} = CouchDB.connect
-      |> CouchDB.Server.database("user_dl2ic")
+    {:ok, results} = Database.get
       |> CouchDB.Database.view("logbook", "byDate", options)
 
     send_resp(conn, 200, results)
@@ -22,8 +21,7 @@ defmodule CloudShack.Controller.Contacts do
     options = %{"group_level" => 3}
       |> Map.merge(conn.query_params)
 
-    {:ok, results} = CouchDB.connect
-      |> CouchDB.Server.database("user_dl2ic")
+    {:ok, results} = Database.get
       |> CouchDB.Database.view("logbook", "stats", options)
 
     send_resp(conn, 200, results)
@@ -33,16 +31,14 @@ defmodule CloudShack.Controller.Contacts do
     options = %{"limit" => 10, "include_docs" => true, "descending" => true}
       |> Map.merge(conn.query_params)
 
-    {:ok, results} = CouchDB.connect
-      |> CouchDB.Server.database("user_dl2ic")
+    {:ok, results} =  Database.get
       |> CouchDB.Database.view("logbook", view, options)
 
     send_resp(conn, 200, results)
   end
 
   get "/:id" do
-    {:ok, result} = CouchDB.connect
-      |> CouchDB.Server.database("user_dl2ic")
+    {:ok, result} =  Database.get
       |> CouchDB.Database.get(id)
 
     send_resp(conn, 200, result)
@@ -51,8 +47,7 @@ defmodule CloudShack.Controller.Contacts do
   post "/" do
     {:ok, body, conn} = read_body(conn)
 
-    {:ok, result} = CouchDB.connect
-      |> CouchDB.Server.database("user_dl2ic")
+    {:ok, result} = Database.get
       |> CouchDB.Database.insert(body)
 
     send_resp(conn, 200, result)
@@ -61,8 +56,7 @@ defmodule CloudShack.Controller.Contacts do
   delete "/:id" do
     rev = conn.query_params["rev"]
 
-    {:ok, result} = CouchDB.connect
-      |> CouchDB.Server.database("user_dl2ic")
+    {:ok, result} = Database.get
       |> CouchDB.Database.delete(id, rev)
 
     send_resp(conn, 200, result)
