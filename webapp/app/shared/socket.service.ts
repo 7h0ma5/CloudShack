@@ -21,10 +21,19 @@ export class SocketService {
     @Output() spot: EventEmitter<Spot> = new EventEmitter<Spot>();
 
     constructor() {
+        this.connect();
+    }
+
+    connect() {
         let loc = window.location;
         let url = "ws://" + loc.host + loc.pathname + "websocket";
         let socket = new WebSocket(url);
         socket.onmessage = this.onMessage.bind(this);
+        socket.onclose = this.onClose.bind(this);
+    }
+
+    onClose() {
+        setTimeout(this.connect.bind(this), 5000);
     }
 
     onMessage(messageEvent) {
