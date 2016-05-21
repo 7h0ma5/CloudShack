@@ -1,0 +1,82 @@
+{
+    "_id": "_design/logbook",
+    "version": 5,
+    "views": {
+        "byDate": {
+            "map": "function(doc) {
+                emit(doc.start);
+            }"
+        },
+        "byCall": {
+            "map": "function(doc) {
+                emit([doc.call.toUpperCase(), doc.start]);
+            }"
+        },
+        "byGrid": {
+            "map": "function(doc) {
+                if (doc.gridsquare) {
+                    var grid = doc.gridsquare.toUpperCase();
+                    emit([grid.slice(0,2), grid.slice(2,4), grid.slice(4,6)]);
+                }
+            }",
+            "reduce": "_count"
+        },
+        "byMode": {
+            "map": "function(doc) {
+                if (doc.mode) {
+                    if (doc.submode) emit([doc.mode, doc.submode]);
+                    else emit([doc.mode]);
+                }
+            }",
+            "reduce": "_count"
+        },
+        "dxcc": {
+            "map": "function(doc) {
+                if (doc.dxcc) {
+                    var status = {
+                        worked: doc.call,
+                        lotw: doc.lotw_qsl_rcvd == 'Y' ? doc.call : null,
+                        card: doc.qsl_rcvd == 'Y' ? doc.call : null
+                    };
+                    emit([doc.dxcc, 'MIXED'], status);
+                    if (doc.band) emit([doc.dxcc, doc.band], status);
+                    if (doc.mode) {
+                        switch (doc.mode) {
+                            case 'CW':
+                                emit([doc.dxcc, 'CW'], status); break;
+                            case 'SSB': case 'FM': case 'AM':
+                                emit([doc.dxcc, 'PHONE'], status); break;
+                            default:
+                                emit([doc.dxcc, 'DIGITAL'], status);
+                        }
+                    }
+                }
+            }",
+            "reduce": "function (key, values, rereduce) {
+                var status = {worked: null, lotw: null, card: null};
+                values.forEach(function(value) {
+                    if (value.worked) status.worked = value.worked;
+                    if (value.lotw) status.lotw = value.lotw;
+                    if (value.card) status.card = value.card;
+                });
+                return status;
+            }"
+        },
+        "stats": {
+            "map": "function(doc) {
+                var date = doc.start.split('T')[0];
+                var date_components = date.split('-');
+                emit(date_components);
+            }",
+            "reduce": "_count"
+        }
+    },
+    "filters": {
+        "sync": "function (doc, req) { return doc._id.charAt(0) != '_'; }"
+    },
+    "validate_doc_update": "function(newDoc, oldDoc, userCtx, secObj) {
+        if (newDoc._deleted) return;
+        if (!newDoc.call) throw({forbidden: 'call field required'});
+        if (!newDoc.start) throw({forbidden: 'start field required'});
+    }"
+}

@@ -14,6 +14,7 @@ defmodule CloudShack.Services do
       worker(Callbook.HamQTH, [CloudShack.Config.lookup(:hamqth)]),
       worker(WSJT, [CloudShack.Config.lookup(:wsjt)]),
       worker(Cluster, [CloudShack.Config.lookup(:cluster)]),
+      worker(Database, [CloudShack.Config.lookup(:database)]),
       worker(DXCC, [])
     ]
 
