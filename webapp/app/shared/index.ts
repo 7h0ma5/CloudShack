@@ -4,6 +4,7 @@ export * from "./dropdown.component";
 export * from "./flash/index";
 export * from "./profile.select.component";
 export * from "./socket.service";
+export * from "./state.service";
 export * from "./status.select.component";
 export * from "./tabs.component";
 export * from "./ticker.component";

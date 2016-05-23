@@ -90,7 +90,12 @@ export class ContactsNewComponent {
         this.contact["start"] = new Date(this.startDate);
         this.contact["end"] = new Date(this.endDate);
         console.log(this.contact);
-        this.flash.success("Contact saved.");
+        this.api.insert(this.contact).subscribe(result => {
+            this.flash.success("Contact saved.");
+        }, err => {
+            this.flash.error("Failed to save contact.");
+        });
+
     }
 
     reset() {

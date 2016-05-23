@@ -7,6 +7,12 @@ export class ContactService {
 
     }
 
+    insert(doc) : any {
+        console.log("insert!");
+        return this.http.post("/contacts", JSON.stringify(doc))
+            .map((res: Response) => res.json());
+    }
+
     query(base: string, options?: Object) : string {
         if (!options) return base;
         var params = new URLSearchParams();

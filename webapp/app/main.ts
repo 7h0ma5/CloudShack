@@ -4,7 +4,7 @@ import { ROUTER_PROVIDERS } from "angular2/router";
 import { HTTP_PROVIDERS } from "angular2/http";
 import { LocationStrategy, HashLocationStrategy } from "angular2/platform/common";
 import { AppComponent } from "./app.component";
-import { FlashService, SocketService } from "./shared/index";
+import { FlashService, SocketService, StateService } from "./shared/index";
 
 
 bootstrap(AppComponent, [
@@ -12,5 +12,6 @@ bootstrap(AppComponent, [
     provide(LocationStrategy, {useClass: HashLocationStrategy}),
     HTTP_PROVIDERS,
     FlashService,
-    SocketService
+    SocketService,
+    StateService
 ]);

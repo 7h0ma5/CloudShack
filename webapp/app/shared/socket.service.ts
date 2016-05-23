@@ -1,4 +1,4 @@
-import {Injectable, Output, EventEmitter} from "angular2/core";
+import { Injectable, Output, EventEmitter } from "angular2/core";
 
 export class Spot {
     time: String;
@@ -19,6 +19,7 @@ export class Spot {
 @Injectable()
 export class SocketService {
     @Output() spot: EventEmitter<Spot> = new EventEmitter<Spot>();
+    @Output() state: EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {
         this.connect();
@@ -53,6 +54,9 @@ export class SocketService {
             case "spot":
                 let spot = new Spot(data);
                 this.spot.next(spot);
+                break;
+            case "state":
+                this.state.next(data);
                 break;
             default:
                 console.log("unknown websocket event:", event);

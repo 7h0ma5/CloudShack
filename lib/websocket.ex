@@ -8,8 +8,11 @@ defmodule CloudShack.WebsocketHandler do
   end
 
   def websocket_init(_type, req, _opts) do
-    :gproc.reg({:p, :l, :websocket})
     Logger.debug "Websocket client connected"
+
+    :gproc.reg({:p, :l, :websocket})
+    send self(), :initialize
+
     {:ok, req, nil}
   end
 
@@ -20,6 +23,11 @@ defmodule CloudShack.WebsocketHandler do
   def websocket_handle({:text, message}, req, state) do
     IO.puts(message)
     {:ok, req, state}
+  end
+
+  def websocket_info(:initialize, req, state) do
+    message = %{event: :state, data: CloudShack.State.get} |> Poison.encode!
+    {:reply, {:text, message}, req, state}
   end
 
   def websocket_info({event, data}, req, state) do

@@ -17,8 +17,8 @@ export class TickerComponent {
     visible: boolean = false;
     timeout: any = null;
 
-    constructor(socket: SocketService) {
-        socket.spot.subscribe(this.onSpot.bind(this));
+    constructor(socketService: SocketService) {
+        socketService.spot.subscribe(this.onSpot.bind(this));
     }
 
     onSpot(spot) {

@@ -1,5 +1,6 @@
 import { Component } from "angular2/core";
 import { NgIf, NgClass } from "angular2/common";
+import { StateService } from "./state.service";
 
 @Component({
     selector: "status-select",
@@ -8,8 +9,8 @@ import { NgIf, NgClass } from "angular2/common";
           <i class="fa fa-2x" [ngClass]="{'fa-wifi': onAir, 'fa-moon-o': !onAir}"></i>
         </div>
         <div class="status-text">
-          <div class="status-operator" *ngIf="activeProfile && activeProfile.operator">
-            {{activeProfile.operator}}
+          <div class="status-operator">
+            {{stateService.state?.profile?.operator}}
           </div>
           <div class="status-message" (click)="toggle()">
             {{status}}
@@ -19,14 +20,10 @@ import { NgIf, NgClass } from "angular2/common";
     directives: [NgIf, NgClass]
 })
 export class StatusSelectComponent {
-    activeProfile: Object = null;
     onAir: boolean = false;
     status: string = "Off Air";
 
-    constructor() {
-        this.activeProfile = {
-            operator: "TE0ST"
-        };
+    constructor(public stateService: StateService) {
         this.toggle();
     }
 

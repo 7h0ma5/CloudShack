@@ -47,8 +47,15 @@ defmodule CloudShack.Controller.Contacts do
   post "/" do
     {:ok, body, conn} = read_body(conn)
 
+    profile = CloudShack.State.get(:profile)
+
+    doc = body 
+      |> Poison.decode!
+      |> Map.merge(profile)
+      |> Poison.encode!
+
     {:ok, result} = Database.get
-      |> CouchDB.Database.insert(body)
+      |> CouchDB.Database.insert(doc)
 
     send_resp(conn, 200, result)
   end
