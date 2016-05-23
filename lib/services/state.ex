@@ -10,7 +10,7 @@ defmodule CloudShack.State do
 
   def init(_) do
     state = %{
-      profile: %{operator: "DL2IC", my_gridsquare: "JO30BR", my_rig: "IC-7300"},
+      profile: %{"operator" => "DL2IC", "my_gridsquare" => "JO30BR", "my_rig" => "IC-7300"},
       rig: %{freq: 0.0, mode: :cw},
       log: %{freq: 14.055, mode: "CW", tx_pwr: 10.0}
     }

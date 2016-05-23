@@ -437,4 +437,10 @@ defmodule Data do
   end
 
   def lookup_dxcc(_), do: nil
+
+  def find_band(freq) do
+    Enum.find(Map.values(@bands), fn(band) ->
+      band.start <= freq && band.end >= freq
+    end)
+  end
 end

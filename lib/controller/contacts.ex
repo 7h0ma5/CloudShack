@@ -49,9 +49,10 @@ defmodule CloudShack.Controller.Contacts do
 
     profile = CloudShack.State.get(:profile)
 
-    doc = body 
+    doc = body
       |> Poison.decode!
       |> Map.merge(profile)
+      |> Contact.update_band
       |> Poison.encode!
 
     {:ok, result} = Database.get
