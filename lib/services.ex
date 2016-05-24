@@ -11,10 +11,10 @@ defmodule CloudShack.Services do
 
     children = [
       worker(CloudShack.State, []),
-      worker(Callbook.HamQTH, [CloudShack.Config.lookup(:hamqth)]),
-      worker(WSJT, [CloudShack.Config.lookup(:wsjt)]),
-      worker(Cluster, [CloudShack.Config.lookup(:cluster)]),
-      worker(Database, [CloudShack.Config.lookup(:database)]),
+      worker(Callbook.HamQTH, [CloudShack.Config.get(:hamqth)]),
+      worker(WSJT, [CloudShack.Config.get(:wsjt)]),
+      worker(Cluster, [CloudShack.Config.get(:cluster)]),
+      worker(Database, [CloudShack.Config.get(:database)]),
       worker(DXCC, [])
     ]
 

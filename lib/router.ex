@@ -28,6 +28,7 @@ defmodule CloudShack.Router do
   forward "/callbook", to: CloudShack.Controller.Callbook
   forward "/contacts", to: CloudShack.Controller.Contacts
   forward "/profiles", to: CloudShack.Controller.Profiles
+  forward "/config", to: CloudShack.Controller.Config
 
   match _ do
     send_resp(conn, 404, "not found")

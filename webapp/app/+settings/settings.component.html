@@ -1,113 +1,70 @@
 <h1>Settings</h1>
 
 <tabs>
-  <tab title="General">
-    <p>
-      <input type="checkbox" ngModel="config.wsjtx.enabled" id="wsjtx-enabled" />
-      <label for="wsjtx-enabled">Enable WSJTX interface</label>
-    </p>
-    <p>
-    <p>
-      <label for="profiles-default">Default Profile</label>
-      <select ngOptions="profile.id as profile.doc.name for profile in profiles.rows"
-              ngModel="config.profiles.default">
-        <option value="">&mdash;</option>
-      </select>
-    </p>
-  </tab>
-  <tab title="Callbook">
+  <tab title="Callbook" active="true">
+    <h4>HamQTH</h4>
     <div class="form-group">
-      <label for="callbook-username">Username</label>
-      <input type="text" id="callbook-username" ngModel="config.callbook.username" />
+      <label for="hamqth-username">Username</label>
+      <input type="text" id="hamqth-username" [(ngModel)]="config.hamqth.user" />
     </div>
     <div class="form-group">
-      <label for="callbook-password">Password</label>
-      <input type="password" id="callbook-password" ngModel="config.callbook.password" />
+      <label for="hamqth-password">Password</label>
+      <input type="password" id="hamqth-password" [(ngModel)]="config.hamqth.password" />
     </div>
   </tab>
-  <tab title="LOTW">
-    <div class="form-group">
-      <label for="lotw-username">Username</label>
-      <input type="text" id="lotw-username" ngModel="config.lotw.username" />
-    </div>
-    <div class="form-group">
-      <label for="lotw-password">Password</label>
-      <input type="password" id="lotw-password" ngModel="config.lotw.password" />
-    </div>
-  </tab>
-  <tab title="Rig">
-    <div class="form-group">
-      <label for="rig-host">Host</label>
-      <input type="text" id="rig-host" ngModel="config.rig.host" />
-    </div>
-    <div class="form-group">
-      <label for="rig-port">Port</label>
-      <input type="number" step="1" id="rig-port" ngModel="config.rig.port" />
-    </div>
-  </tab>
-  <tab title="Database">
-    <h2>Local</h2>
-    <p>
-      <div class="form-group">
-        <label for="db-local-address">Address</label>
-        <input type="text" id="db-local-address" ngModel="config.db.local.address" />
-      </div>
-      <div class="form-group">
-        <label for="db-local-name">Name</label>
-        <input type="text" id="db-local-name" ngModel="config.db.local.name" />
-      </div>
-    </p>
-    <h2>Remote</h2>
-    <p>
-      <input type="checkbox" ngModel="config.db.remote.usecsdb" id="cloudshack-db-service" />
-      <label for="cloudshack-db-service">CloudShack Database Service</label>
-    </p>
-    <p>
-      <div class="form-group" ngHide="config.db.remote.usecsdb">
-        <label for="db-remote-address">Address</label>
-        <input type="text" id="db-remote-address" ngModel="config.db.remote.address" />
-      </div>
-      <div class="form-group" ngHide="config.db.remote.usecsdb">
-        <label for="db-remote-name">Name</label>
-        <input type="text" id="db-remote-name" ngModel="config.db.remote.name" />
-      </div>
-    </p>
-    <p ngShow="csDbService">
-      <div class="form-group" ngShow="config.db.remote.usecsdb">
-        <label for="cloudshack-user">Callsign</label>
-        <input type="text" id="cloudshack-user" ngModel="config.db.remote.cs.user" />
-      </div>
-      <div class="form-group" ngShow="config.db.remote.usecsdb">
-        <label for="cloudshack-password">Password</label>
-        <input type="password" id="cloudshack-password" ngModel="config.db.remote.cs.password" />
-      </div>
-    </p>
-  </tab>
+
   <tab title="DX Cluster">
     <div class="form-group">
       <label for="cluster-host">Host</label>
-      <input type="text" id="cluster-host" ngModel="config.cluster.host" />
+      <input type="text" id="cluster-host" [(ngModel)]="config.cluster.host" />
     </div>
     <div class="form-group">
       <label for="cluster-port">Port</label>
-      <input type="number" step="1" id="cluster-port" ngModel="config.cluster.port" />
+      <input type="number" step="1" min="1" max="65535" id="cluster-port"
+        [(ngModel)]="config.cluster.port" />
     </div>
     <div class="form-group">
-      <label for="cluster-username">Username</label>
-      <input type="text" id="cluster-username" ngModel="config.cluster.username" />
+      <label for="cluster-user">User</label>
+      <input type="text" id="cluster-user" [(ngModel)]="config.cluster.user" />
     </div>
   </tab>
-  <tab title="Keyer">
-    <div class="form-group">
-      <label for="keyer-port">Port</label>
-      <input type="text" id="keyer-port" ngModel="config.keyer.port" />
+
+  <tab title="Database">
+    <div>
+      <div class="form-group">
+        <label for="db-host">Host</label>
+        <input type="text" id="db-host" [(ngModel)]="config.database.host" />
+      </div>
+      <div class="form-group">
+        <label for="db-port">Port</label>
+        <input type="number" step="1" min="1" max="65535" id="db-port"
+          [(ngModel)]="config.database.port" />
+      </div>
+      <div class="form-group">
+        <label for="db-protocol">Protocol</label>
+        <input type="text" id="db-protocol" [(ngModel)]="config.database.protocol" />
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="db-name">Name</label>
+        <input type="text" id="db-name" [(ngModel)]="config.database.name" />
+      </div>
+      <div class="form-group">
+        <label for="db-user">User</label>
+        <input type="text" id="db-user" [(ngModel)]="config.database.user" />
+      </div>
+      <div class="form-group">
+        <label for="db-password">Password</label>
+        <input type="text" id="db-password" [(ngModel)]="config.database.password" />
+      </div>
     </div>
   </tab>
 </tabs>
 
 <div class="box-transparent">
   <div class="box-content">
-    <button ngClick="save()" class="btn-primary">
+    <button (click)="save()" class="btn-primary">
       <i class="fa fa-check"></i> Save
     </button>
   </div>

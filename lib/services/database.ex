@@ -16,7 +16,7 @@ defmodule Database do
     protocol = config |> Map.get(:protocol, "http")
     user = config |> Map.get(:user, nil)
     password = config |> Map.get(:password, nil)
-    database = config |> Map.get(:database, "contacts")
+    database = config |> Map.get(:name, "contacts")
 
     server = CouchDB.connect(host, port, protocol, user, password)
 

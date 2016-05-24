@@ -5,7 +5,9 @@ defmodule CloudShack.Config do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
   end
 
-  def lookup(key), do: GenServer.call(__MODULE__, {:lookup, key})
+  def get(), do: GenServer.call(__MODULE__, :get)
+  def get(key), do: GenServer.call(__MODULE__, {:get, key})
+  def set(map), do: GenServer.cast(__MODULE__, {:set, map})
   def set(key, value), do: GenServer.cast(__MODULE__, {:set, key, value})
   def save, do: GenServer.cast(__MODULE__, :save)
   def load, do: GenServer.cast(__MODULE__, :load)
@@ -19,15 +21,38 @@ defmodule CloudShack.Config do
     Supervisor.stop(CloudShack.Services)
   end
 
-  def handle_call({:lookup, key}, _from, table) do
+  def handle_call(:get, _from, table) do
+    result = :ets.foldl(fn({key, value}, map) ->
+      Map.put(map, key, value)
+    end, %{}, table)
+    {:reply, result, table}
+  end
+
+  def handle_call({:get, key}, _from, table) do
     case :ets.lookup(table, key) do
-      [{key, value}] -> {:reply, value, table}
+      [{_key, value}] -> {:reply, value, table}
       _ -> {:reply, %{}, table}
     end
   end
 
+  def handle_cast({:set, map}, table)  do
+    map |> Enum.each(fn({key, value}) ->
+      value = value
+        |> Enum.filter(fn {_, v} ->
+            if is_binary(v), do: String.strip(v) != "", else: v
+         end)
+        |> Enum.into(%{})
+      :ets.insert(table, {key, value})
+    end)
+
+    restart_services()
+    GenServer.cast(self(), :save)
+    {:noreply, table}
+  end
+
   def handle_cast({:set, key, value}, table) do
     :ets.insert(table, {key, value})
+    GenServer.cast(self(), :save)
     {:noreply, table}
   end
 
