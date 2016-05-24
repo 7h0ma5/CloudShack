@@ -62,6 +62,9 @@ defmodule Cluster do
     comment = line |> String.slice(33, 30) |> String.strip
     time = line |> String.slice(64, 4)
 
+    # TODO Convert comment from ISO 8859-1 to UTF-8
+    comment = if String.printable?(comment), do: comment, else: ""
+
     # Parse the frequency and convert to MHz
     {freq, _} = Float.parse(freq)
     freq = freq/1000
