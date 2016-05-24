@@ -1,10 +1,8 @@
 import { Component } from "angular2/core";
-import { NgIf, NgFor } from "angular2/common";
 import { ContactService } from "../shared/index";
 
 @Component({
-    templateUrl: "/app/+home/home.component.html",
-    directives: [NgIf, NgFor]
+    templateUrl: "/app/+home/home.component.html"
 })
 export class HomeComponent {
     qso_stats = {total: 0, year: 0, month: 0};

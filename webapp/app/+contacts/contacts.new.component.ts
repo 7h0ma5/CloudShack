@@ -1,5 +1,5 @@
 import { Component } from "angular2/core";
-import { Control, NgIf, NgFor, FORM_DIRECTIVES } from "angular2/common";
+import { Control } from "angular2/common";
 import { Http, Response } from "angular2/http";
 import { Observable } from "rxjs/Rx";
 import { MODES, CONTESTS } from "../lib/constants";
@@ -24,7 +24,6 @@ const DXCC_PRIORITY: number = 2;
 @Component({
     templateUrl: "/app/+contacts/contacts.new.component.html",
     directives: [
-        NgIf, NgFor, FORM_DIRECTIVES,
         WorldMapComponent,
         UppercaseDirective,
         TAB_DIRECTIVES,

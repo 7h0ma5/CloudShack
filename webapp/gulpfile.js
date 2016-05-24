@@ -130,8 +130,8 @@ gulp.task("default", [
 
 gulp.task("watch", function() {
     $.livereload.listen();
-    gulp.watch("app/**/*", ["app.js"]);
+    gulp.watch("app/**/*.ts", ["app.js"]);
     gulp.watch(["app.less", "style/*.less"], ["app.css"]);
     gulp.watch("index.html", ["index"]);
-    gulp.watch("templates/**/*.*", ["templates"]);
+    gulp.watch("app/**/*.html", ["templates"]);
 });

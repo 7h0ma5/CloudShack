@@ -1,5 +1,4 @@
 import { Component, Input, ContentChildren, QueryList } from "angular2/core";
-import { NgFor, NgClass } from "angular2/common";
 
 @Component({
     selector: "tab",
@@ -19,8 +18,7 @@ export class TabComponent {
           </li>
         </ul>
         <div class="tab-content"><ng-content></ng-content></div>
-    `,
-    directives: [NgFor, NgClass]
+    `
 })
 export class TabsComponent {
     @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;

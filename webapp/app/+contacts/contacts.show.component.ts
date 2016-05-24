@@ -1,12 +1,10 @@
 import { Component } from "angular2/core";
-import { NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault } from "angular2/common";
 import { RouteParams, Router } from "angular2/router";
 import { Location } from "angular2/platform/common";
 import { ContactService } from "../shared/index";
 
 @Component({
-    templateUrl: "/app/+contacts/contacts.show.component.html",
-    directives: [NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault]
+    templateUrl: "/app/+contacts/contacts.show.component.html"
 })
 export class ContactsShowComponent {
     contact: Object = {};

@@ -1,4 +1,5 @@
 import { Injectable, Output, EventEmitter } from "angular2/core";
+import { ReplaySubject } from "rxjs/ReplaySubject";
 
 export class Spot {
     time: String;
@@ -18,8 +19,8 @@ export class Spot {
 
 @Injectable()
 export class SocketService {
-    @Output() spot: EventEmitter<Spot> = new EventEmitter<Spot>();
-    @Output() state: EventEmitter<any> = new EventEmitter<any>();
+    state: ReplaySubject<any> = new ReplaySubject<Spot>(10, null);
+    spot: ReplaySubject<Spot> = new ReplaySubject<Spot>(10, null);
 
     constructor() {
         this.connect();

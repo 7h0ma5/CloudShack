@@ -1,5 +1,4 @@
 import { Component } from "angular2/core";
-import { NgIf } from "angular2/common";
 import { FlashService, FlashMessage } from "./flash.service";
 
 @Component({
@@ -8,8 +7,7 @@ import { FlashService, FlashMessage } from "./flash.service";
       <div class="flash" [hidden]="!visible">
         <span class="flash-{{message?.level}}">{{message?.text}}</span>
       </div>
-    `,
-    directives: [NgIf]
+    `
 })
 export class FlashComponent {
     message: FlashMessage = null;

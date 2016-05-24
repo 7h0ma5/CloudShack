@@ -18,7 +18,9 @@ export class TickerComponent {
     timeout: any = null;
 
     constructor(socketService: SocketService) {
-        socketService.spot.subscribe(this.onSpot.bind(this));
+        socketService.spot.asObservable()
+            .throttleTime(4000)
+            .subscribe(this.onSpot.bind(this));
     }
 
     onSpot(spot) {

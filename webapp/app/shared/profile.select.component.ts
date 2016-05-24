@@ -1,5 +1,4 @@
 import { Component } from "angular2/core";
-import { NgIf, NgFor } from "angular2/common";
 import { Router, RouterLink } from "angular2/router";
 import { ProfileService } from "./profile.service";
 import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
@@ -30,7 +29,7 @@ import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
             </ul>
         </div>
     `,
-    directives: [NgIf, NgFor, RouterLink, DROPDOWN_DIRECTIVES]
+    directives: [RouterLink, DROPDOWN_DIRECTIVES]
 })
 export class ProfileSelectComponent {
     profiles: Array<Object> = [];

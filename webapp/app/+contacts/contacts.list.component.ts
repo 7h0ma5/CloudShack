@@ -1,11 +1,10 @@
 import { Component } from "angular2/core";
-import { NgIf, NgFor } from "angular2/common";
 import { RouterLink } from "angular2/router";
 import { ContactService, UppercaseDirective } from "../shared/index";
 
 @Component({
     templateUrl: "/app/+contacts/contacts.list.component.html",
-    directives: [RouterLink, NgFor, NgIf, UppercaseDirective]
+    directives: [RouterLink, UppercaseDirective]
 })
 export class ContactsListComponent {
     contacts: Array<Object> = [];

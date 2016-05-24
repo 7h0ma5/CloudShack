@@ -1,5 +1,4 @@
 import { Component } from "angular2/core";
-import { NgIf, NgClass } from "angular2/common";
 import { StateService } from "./state.service";
 
 @Component({
@@ -16,8 +15,7 @@ import { StateService } from "./state.service";
             {{status}}
           </div>
         </div>
-    `,
-    directives: [NgIf, NgClass]
+    `
 })
 export class StatusSelectComponent {
     onAir: boolean = false;
