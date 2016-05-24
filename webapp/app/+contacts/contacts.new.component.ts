@@ -7,24 +7,28 @@ import { coord_distance, coord_bearing, grid_to_coord } from "../lib/geo";
 
 import {
     ContactService,
+    StateService,
     FlashService,
-    TAB_DIRECTIVES,
+    WorldMapComponent,
     UppercaseDirective,
-    WorldMapComponent
+    TAB_DIRECTIVES,
+    DROPDOWN_DIRECTIVES
 } from "../shared/index";
+
+const RETAIN_FIELDS: [string] = ["freq", "mode", "submode", "tx_pwr"];
 
 const GRID_PRIORITY: number = 0;
 const CALLBOOK_PRIORITY: number = 1;
 const DXCC_PRIORITY: number = 2;
 
 @Component({
-    providers: [ContactService],
     templateUrl: "/app/+contacts/contacts.new.component.html",
     directives: [
         NgIf, NgFor, FORM_DIRECTIVES,
         WorldMapComponent,
         UppercaseDirective,
-        TAB_DIRECTIVES
+        TAB_DIRECTIVES,
+        DROPDOWN_DIRECTIVES
     ]
 })
 export class ContactsNewComponent {
@@ -49,6 +53,7 @@ export class ContactsNewComponent {
 
     constructor(
         public api: ContactService,
+        public stateService: StateService,
         public flash: FlashService,
         public http: Http
     )
@@ -79,6 +84,8 @@ export class ContactsNewComponent {
             .debounceTime(10)
             .subscribe((grid: string) => this.updateGridsquare(grid));
 
+        this.contact = stateService.state["log"] || {};
+
         this.reset();
     }
 
@@ -89,7 +96,7 @@ export class ContactsNewComponent {
     save() {
         this.contact["start"] = new Date(this.startDate);
         this.contact["end"] = new Date(this.endDate);
-        console.log(this.contact);
+
         this.api.insert(this.contact).subscribe(result => {
             this.flash.success("Contact saved.");
         }, err => {
@@ -102,7 +109,15 @@ export class ContactsNewComponent {
         this.resetDxcc();
         this.resetStart();
         this.resetEnd();
-        this.contact = {};
+
+        let contact = {};
+
+        for (let field of RETAIN_FIELDS) {
+            let value = this.contact[field];
+            if (value) contact[field] = value;
+        }
+
+        this.contact = contact;
     }
 
     resetStart() {

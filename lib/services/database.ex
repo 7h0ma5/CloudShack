@@ -18,20 +18,30 @@ defmodule Database do
     password = config |> Map.get(:password, nil)
     database = config |> Map.get(:database, "contacts")
 
-    db = CouchDB.connect(host, port, protocol, user, password)
-      |> CouchDB.Server.database(database)
+    server = CouchDB.connect(host, port, protocol, user, password)
 
-    {:ok, db}
+    contacts = server |> CouchDB.Server.database(database)
+    profiles = server |> CouchDB.Server.database("profiles")
+
+    {:ok, %{contacts: contacts, profiles: profiles}}
   end
 
-  def get, do: GenServer.call(__MODULE__, :get)
+  def contacts, do: GenServer.call(__MODULE__, {:get, :contacts})
+  def profiles, do: GenServer.call(__MODULE__, {:get, :profiles})
 
-  def handle_call(:get, _from, db) do
-    {:reply, db, db}
+  def handle_call({:get, name}, _from, state) do
+    database = state |> Map.get(name)
+    {:reply, database, state}
   end
 
-  def handle_cast(:migrate, db) do
-    db |> CouchDB.Database.create
+  def handle_cast(:migrate, state) do
+    state
+      |> Map.get(:profiles)
+      |> CouchDB.Database.create
+
+    contacts = state |> Map.get(:contacts)
+
+    CouchDB.Database.create contacts
 
     new_doc = @design_doc_path |> File.read!
       |> String.replace("\n", "")
@@ -39,7 +49,7 @@ defmodule Database do
 
     new_version = new_doc |> Map.get("version")
 
-    current_doc = case db |> CouchDB.Database.get("_design/logbook") do
+    current_doc = case contacts |> CouchDB.Database.get("_design/logbook") do
       {:ok, result} -> result |> Poison.decode!
       {:error, _} -> nil
     end
@@ -62,10 +72,10 @@ defmodule Database do
         Logger.info "Updating the design document from v#{current_version} to v#{new_version}..."
         rev = current_doc |> Map.get("_rev")
         new_doc = new_doc |> Map.put("_rev", rev)
-        db |> CouchDB.Database.insert(Poison.encode!(new_doc))
+        contacts |> CouchDB.Database.insert(Poison.encode!(new_doc))
       true ->
         Logger.info "Creating the design document (v#{new_version})..."
-        db |> CouchDB.Database.insert(Poison.encode!(new_doc))
+        contacts |> CouchDB.Database.insert(Poison.encode!(new_doc))
     end
 
     case result do
@@ -74,6 +84,6 @@ defmodule Database do
       _ -> ()
     end
 
-    {:noreply, db}
+    {:noreply, state}
   end
 end

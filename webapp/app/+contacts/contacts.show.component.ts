@@ -5,7 +5,6 @@ import { Location } from "angular2/platform/common";
 import { ContactService } from "../shared/index";
 
 @Component({
-    providers: [ContactService],
     templateUrl: "/app/+contacts/contacts.show.component.html",
     directives: [NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault]
 })

@@ -62,19 +62,20 @@ input[type=submit],
     display: inline-block;
 
     > button {
+
         &:after {
             font-family: FontAwesome;
             content: " \f0d7";
         }
     }
 
-    &.open > ul {
+    &.open > .dropdown-menu {
         display: block;
     }
 
-    > ul {
+    > .dropdown-menu {
         position: absolute;
-        z-index: 1000;
+        z-index: 10000;
         display: none;
         padding: 5px 0;
         margin: 2px 0 0 0;
@@ -85,7 +86,7 @@ input[type=submit],
         box-shadow: 0 6px 12px rgba(0,0,0,.175);
     }
 
-    > ul > li > a {
+    > ul.dropdown-menu > li > a {
         display: block;
         padding: 3px 20px;
         color: #333;

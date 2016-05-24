@@ -1,8 +1,10 @@
-import { Injectable } from "angular2/core";
+import { Injectable, Output, EventEmitter } from "angular2/core";
 import { SocketService } from "./socket.service";
 
 @Injectable()
 export class StateService {
+    @Output() stateChange: EventEmitter<any> = new EventEmitter<any>();
+
     state = {};
 
     constructor(socketService: SocketService) {
@@ -10,9 +12,8 @@ export class StateService {
     }
 
     onUpdate(newState) {
-        console.log("received state update:", this.state);
-        console.log("old state: ", this.state);
+        console.log("state update", newState);
         Object.assign(this.state, newState);
-        console.log("new state: ", this.state);
+        this.stateChange.next(newState);
     }
 }

@@ -4,7 +4,6 @@ import { RouterLink } from "angular2/router";
 import { ContactService, UppercaseDirective } from "../shared/index";
 
 @Component({
-    providers: [ContactService],
     templateUrl: "/app/+contacts/contacts.list.component.html",
     directives: [RouterLink, NgFor, NgIf, UppercaseDirective]
 })

@@ -3,7 +3,6 @@ import { NgIf, NgFor } from "angular2/common";
 import { ContactService } from "../shared/index";
 
 @Component({
-    providers: [ContactService],
     templateUrl: "/app/+home/home.component.html",
     directives: [NgIf, NgFor]
 })

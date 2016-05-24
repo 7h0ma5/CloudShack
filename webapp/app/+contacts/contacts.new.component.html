@@ -194,7 +194,7 @@
         </div>
         <div class="box-content">
           <b>{{rig?.freq|number:4}} MHz</b> {{rig?.mode}}
-          <div class="dropdown" dropdown>
+          <div dropdown>
             <button dropdown-toggle>Band</button>
             <ul class="dropdown-menu">
               <li><a ngClick="rig.setFrequency(1.800)">160m</a></li>
@@ -211,7 +211,7 @@
               <li><a ngClick="rig.setFrequency(430)">70cm</a></li>
             </ul>
           </div>
-          <div class="dropdown" dropdown>
+          <div dropdown>
             <button dropdown-toggle>Mode</button>
             <ul class="dropdown-menu">
               <li><a ngClick="rig.setMode('LSB', 3000)">LSB</a></li>

@@ -11,7 +11,7 @@ defmodule CloudShack.Controller.Contacts do
     options = %{"limit" => 10, "include_docs" => true, "descending" => true}
       |> Map.merge(conn.query_params)
 
-    {:ok, results} = Database.get
+    {:ok, results} = Database.contacts
       |> CouchDB.Database.view("logbook", "byDate", options)
 
     send_resp(conn, 200, results)
@@ -21,7 +21,7 @@ defmodule CloudShack.Controller.Contacts do
     options = %{"group_level" => 3}
       |> Map.merge(conn.query_params)
 
-    {:ok, results} = Database.get
+    {:ok, results} = Database.contacts
       |> CouchDB.Database.view("logbook", "stats", options)
 
     send_resp(conn, 200, results)
@@ -31,14 +31,14 @@ defmodule CloudShack.Controller.Contacts do
     options = %{"limit" => 10, "include_docs" => true, "descending" => true}
       |> Map.merge(conn.query_params)
 
-    {:ok, results} =  Database.get
+    {:ok, results} = Database.contacts
       |> CouchDB.Database.view("logbook", view, options)
 
     send_resp(conn, 200, results)
   end
 
   get "/:id" do
-    {:ok, result} =  Database.get
+    {:ok, result} = Database.contacts
       |> CouchDB.Database.get(id)
 
     send_resp(conn, 200, result)
@@ -48,6 +48,7 @@ defmodule CloudShack.Controller.Contacts do
     {:ok, body, conn} = read_body(conn)
 
     profile = CloudShack.State.get(:profile)
+      |> Map.get("fields")
 
     doc = body
       |> Poison.decode!
@@ -55,7 +56,7 @@ defmodule CloudShack.Controller.Contacts do
       |> Contact.update_band
       |> Poison.encode!
 
-    {:ok, result} = Database.get
+    {:ok, result} = Database.contacts
       |> CouchDB.Database.insert(doc)
 
     send_resp(conn, 200, result)
@@ -64,7 +65,7 @@ defmodule CloudShack.Controller.Contacts do
   delete "/:id" do
     rev = conn.query_params["rev"]
 
-    {:ok, result} = Database.get
+    {:ok, result} = Database.contacts
       |> CouchDB.Database.delete(id, rev)
 
     send_resp(conn, 200, result)

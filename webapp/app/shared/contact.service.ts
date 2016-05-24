@@ -3,12 +3,9 @@ import { Http, Response, URLSearchParams } from "angular2/http";
 
 @Injectable()
 export class ContactService {
-    constructor(public http: Http) {
-
-    }
+    constructor(public http: Http) {}
 
     insert(doc) : any {
-        console.log("insert!");
         return this.http.post("/contacts", JSON.stringify(doc))
             .map((res: Response) => res.json());
     }

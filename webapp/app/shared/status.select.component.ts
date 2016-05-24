@@ -10,7 +10,7 @@ import { StateService } from "./state.service";
         </div>
         <div class="status-text">
           <div class="status-operator">
-            {{stateService.state?.profile?.operator}}
+            {{stateService.state?.profile?.fields?.operator}}
           </div>
           <div class="status-message" (click)="toggle()">
             {{status}}
