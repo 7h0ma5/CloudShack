@@ -33,6 +33,11 @@ export class ProfileService {
         return this.http.delete(url);
     }
 
+    activate(id: string) : any {
+        return this.http.post("/profiles/activate", id)
+            .map((res: Response) => res.json())
+    }
+
     query(base: string, options?: Object) : string {
         if (!options) return base;
         var params = new URLSearchParams();

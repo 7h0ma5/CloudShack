@@ -53,6 +53,10 @@ profile-select {
         color: @header-foreground;
     }
 
+    ul li {
+        line-height: 2.5em;
+    }
+
     ul a:hover {
         color: #00a2ff;
     }
@@ -63,7 +67,7 @@ profile-select {
         right: 0;
         z-index: 100;
         display: none;
-        padding: 0;
+        padding: 0 10px;
         margin: 0;
         text-align: left;
         list-style: none;
@@ -75,11 +79,11 @@ profile-select {
         position: static;
     }
 
-    .dropdown.open > ul {
-        display: block;
+    .dropdown.open a[dropdown-toggle] {
+        color: #888;
     }
 
-    li {
-        padding: 10px;
+    .dropdown.open > ul {
+        display: block;
     }
 }

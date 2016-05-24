@@ -19,7 +19,7 @@ import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
             </a>
             <ul>
               <li *ngFor="let profile of profiles; let i = index">
-                <a (click)="edit(i)"><i class="fa fa-pencil fg-lg fa-fw"></i></a>
+                <a (click)="edit(i)"><i class="fa fa-pencil fa-lg fa-fw"></i></a>
                 <a (click)="activate(i)">{{profile.doc.name}}</a>
               </li>
               <li>
@@ -44,8 +44,10 @@ export class ProfileSelectComponent {
     }
 
     activate(index) {
-        let profile = this.profiles[index]["doc"];
-        console.log("activate profile ", profile);
+        let profile_id = this.profiles[index]["id"];
+        if (profile_id) {
+            this.profileService.activate(profile_id).subscribe();
+        }
     }
 
     edit(index) {
