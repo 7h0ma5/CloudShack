@@ -7,7 +7,7 @@ import { SocketService, Spot } from "./socket.service";
         <div class="ticker-text" [hidden]="!visible">
             <i class="fa fa-globe fa-lg"></i>
             <b>{{spot?.call}}</b> on
-            {{spot?.freq}} by
+            {{spot?.freq|number:'.3-3'}} by
             {{spot?.spotter}}
         </div>
     `
