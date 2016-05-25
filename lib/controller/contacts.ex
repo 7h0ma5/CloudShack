@@ -47,12 +47,12 @@ defmodule CloudShack.Controller.Contacts do
   post "/" do
     {:ok, body, conn} = read_body(conn)
 
-    profile = CloudShack.State.get(:profile)
-      |> Map.get("fields")
+    profile = CloudShack.State.get(:profile) || %{}
+      |> Map.get("fields", %{})
 
     doc = body
       |> Poison.decode!
-      |> Map.merge(profile || %{})
+      |> Map.merge(profile)
       |> Contact.update_band
       |> Poison.encode!
 
