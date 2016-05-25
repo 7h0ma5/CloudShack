@@ -10,6 +10,7 @@ import {
     StateService,
     FlashService,
     WorldMapComponent,
+    SmartInputDirective,
     UppercaseDirective,
     TAB_DIRECTIVES,
     DROPDOWN_DIRECTIVES
@@ -25,6 +26,7 @@ const DXCC_PRIORITY: number = 2;
     templateUrl: "/app/+contacts/contacts.new.component.html",
     directives: [
         WorldMapComponent,
+        SmartInputDirective,
         UppercaseDirective,
         TAB_DIRECTIVES,
         DROPDOWN_DIRECTIVES
@@ -98,10 +100,10 @@ export class ContactsNewComponent {
 
         this.api.insert(this.contact).subscribe(result => {
             this.flash.success("Contact saved.");
+            this.reset();
         }, err => {
             this.flash.error("Failed to save contact.");
         });
-
     }
 
     reset() {
@@ -150,11 +152,12 @@ export class ContactsNewComponent {
     }
 
     resetCallbook() {
-
+        this.callbook = null;
     }
 
     updateCallbook(callbook) {
-      console.log(callbook)
+        console.log(callbook);
+        this.callbook = callbook;
     }
 
     updateMode(newMode: string) {

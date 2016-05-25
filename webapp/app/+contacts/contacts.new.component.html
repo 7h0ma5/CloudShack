@@ -14,13 +14,13 @@
 
           <div class="form-group">
             <label for="rst-rcvd">RST Rcvd</label>
-            <input smartinput type="text" id="rst-rcvd" autocomplete="off"
+            <input smartinput type="text" id="rst-rcvd" autocomplete="off" smartInput
                    placeholder="{{rst}}" [(ngModel)]="contact.rst_rcvd" class="input-rst">
           </div>
 
           <div class="form-group">
             <label for="rst-sent">RST Sent</label>
-            <input smartinput type="text" id="rst-sent" autocomplete="off"
+            <input smartinput type="text" id="rst-sent" autocomplete="off" smartInput
                    placeholder="{{rst}}" [(ngModel)]="contact.rst_sent" class="input-rst">
           </div>
         </div>
@@ -28,19 +28,19 @@
         <div class="form-row">
           <div class="form-group">
             <label for="name">Name</label>
-            <input smartinput type="text" [(ngModel)]="contact.name" id="name"
+            <input type="text" [(ngModel)]="contact.name" id="name" smartInput
                    placeholder="{{callbook?.name}}" autocomplete="off">
           </div>
 
           <div class="form-group">
             <label for="qth">QTH</label>
-            <input smartinput type="text" [(ngModel)]="contact.qth" id="qth"
+            <input type="text" [(ngModel)]="contact.qth" id="qth" smartInput
                    placeholder="{{callbook?.qth}}" autocomplete="off">
           </div>
 
           <div class="form-group">
             <label for="gridsquare">Gridsquare</label>
-            <input smartinput uppercase type="text" [(ngModel)]="contact.gridsquare"
+            <input uppercase type="text" [(ngModel)]="contact.gridsquare" smartInput
                    class="input-gridsquare" id="gridsquare" autocomplete="off"
                    placeholder="{{callbook?.gridsquare}}" [ngFormControl]="gridsquare">
           </div>

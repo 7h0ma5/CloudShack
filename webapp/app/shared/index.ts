@@ -4,6 +4,7 @@ export * from "./dropdown/index";
 export * from "./flash/index";
 export * from "./profile.select.component";
 export * from "./profile.service";
+export * from "./smart.input.directive";
 export * from "./socket.service";
 export * from "./state.service";
 export * from "./status.select.component";

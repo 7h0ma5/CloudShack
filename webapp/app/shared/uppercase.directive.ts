@@ -1,4 +1,4 @@
-import { Directive, Renderer, ElementRef, Self, forwardRef, Provider } from "angular2/core";
+import { Directive, Renderer, ElementRef, HostListener, forwardRef, Provider } from "angular2/core";
 import { NG_VALUE_ACCESSOR, DefaultValueAccessor } from 'angular2/common';
 import { CONST_EXPR } from 'angular2/src/facade/lang';
 
@@ -8,7 +8,6 @@ const PROVIDER = CONST_EXPR(new Provider(
 
 @Directive({
     selector: "input[uppercase]",
-    host: {'(input)': 'input($event.target.value)', '(blur)': 'blur()'},
     bindings: [PROVIDER]
 })
 export class UppercaseDirective extends DefaultValueAccessor {
@@ -16,16 +15,16 @@ export class UppercaseDirective extends DefaultValueAccessor {
         super(_renderer, _elementRef);
     }
 
-    writeValue(value: any) : void {
-      if (value) { value = value.toUpperCase(); }
-      super.writeValue(value);
-    }
-
+    @HostListener("blur")
     blur() {
         this.onTouched();
     }
 
+    @HostListener("input", ["$event.target.value"])
     input(value) {
-        this.onChange(value.toUpperCase());
+        let uppercase = value.toUpperCase();
+        this.writeValue(uppercase);
+        this.onTouched();
+        this.onChange(uppercase);
     }
 }
