@@ -13,7 +13,7 @@ defmodule CloudShack.State do
     state = %{
       profile: nil,
       rig: %{freq: 0.0, mode: "SSB"},
-      log: %{freq: 14200.0, mode: "SSB", tx_pwr: 100.0}
+      log: %{freq: 14.200, mode: "SSB", tx_pwr: 100.0}
     }
     {:ok, state}
   end
