@@ -1,4 +1,4 @@
-import { Component } from "angular2/core";
+import { Component, ViewChild, ElementRef, Renderer, AfterViewInit } from "angular2/core";
 import { Control } from "angular2/common";
 import { Http, Response } from "angular2/http";
 import { Observable } from "rxjs/Rx";
@@ -32,7 +32,9 @@ const DXCC_PRIORITY: number = 2;
         DROPDOWN_DIRECTIVES
     ]
 })
-export class ContactsNewComponent {
+export class ContactsNewComponent implements AfterViewInit {
+    @ViewChild("callsignInput") callsignInput: ElementRef;
+
     contact: Object = {};
     dxcc: Object = null;
     callbook: Object = null;
@@ -53,10 +55,11 @@ export class ContactsNewComponent {
     contests = CONTESTS;
 
     constructor(
-        public api: ContactService,
-        public stateService: StateService,
-        public flash: FlashService,
-        public http: Http
+        private renderer: Renderer,
+        private api: ContactService,
+        private stateService: StateService,
+        private flash: FlashService,
+        private http: Http
     )
     {
         this.callsign.valueChanges
@@ -86,8 +89,11 @@ export class ContactsNewComponent {
             .subscribe((grid: string) => this.updateGridsquare(grid));
 
         this.contact = stateService.state["log"] || {};
+    }
 
-        this.reset();
+    ngAfterViewInit() {
+        // BUGFIX: https://github.com/angular/angular/issues/6005
+        setTimeout(_ => this.reset());
     }
 
     qrz() {
@@ -114,12 +120,17 @@ export class ContactsNewComponent {
 
         let contact = {};
 
+        // Carry over the fields defined by RETAIN_FIELDS
         for (let field of RETAIN_FIELDS) {
             let value = this.contact[field];
             if (value) contact[field] = value;
         }
 
         this.contact = contact;
+
+        // Set focus to callsign input
+        let callsignInput = this.callsignInput.nativeElement;
+        this.renderer.invokeElementMethod(callsignInput, "focus", []);
     }
 
     resetStart() {

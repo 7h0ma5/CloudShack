@@ -8,8 +8,8 @@
           <div class="form-group">
             <label for="call">Callsign</label>
             <input required uppercase type="text" autocomplete="off" id="call"
-                   [(ngModel)]="contact.call" class="input-callsign" autofocus
-                   [ngFormControl]="callsign">
+                   [(ngModel)]="contact.call" class="input-callsign"
+                   [ngFormControl]="callsign" #callsignInput>
           </div>
 
           <div class="form-group">
