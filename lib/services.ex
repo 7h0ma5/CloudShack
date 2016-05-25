@@ -9,12 +9,14 @@ defmodule CloudShack.Services do
   def init(:ok) do
     Logger.info "Starting services..."
 
+    sync = CloudShack.Config.get(:sync)
+
     children = [
       worker(CloudShack.State, []),
       worker(Callbook.HamQTH, [CloudShack.Config.get(:hamqth)]),
       worker(WSJT, [CloudShack.Config.get(:wsjt)]),
       worker(Cluster, [CloudShack.Config.get(:cluster)]),
-      worker(Database, [CloudShack.Config.get(:database)]),
+      worker(Database, [CloudShack.Config.get(:database), sync]),
       worker(DXCC, [])
     ]
 

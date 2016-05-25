@@ -4,26 +4,30 @@ defmodule Database do
 
   @design_doc_path Path.join("#{:code.priv_dir(:cloudshack)}", "logbook.json")
 
-  def start_link(config) do
-    GenServer.start_link(__MODULE__, config, [name: __MODULE__])
+  def start_link(database, sync) do
+    GenServer.start_link(__MODULE__, {database, sync}, [name: __MODULE__])
   end
 
-  def init(config) do
-    GenServer.cast(__MODULE__, :migrate)
-
-    host = config |> Map.get(:host, "127.0.0.1")
-    port = config |> Map.get(:port, 5984)
-    protocol = config |> Map.get(:protocol, "http")
-    user = config |> Map.get(:user, nil)
-    password = config |> Map.get(:password, nil)
-    database = config |> Map.get(:name, "contacts")
+  def init({database, sync}) do
+    host = database |> Map.get(:host, "127.0.0.1")
+    port = database |> Map.get(:port, 5984)
+    protocol = database |> Map.get(:protocol, "http")
+    user = database |> Map.get(:user, nil)
+    password = database |> Map.get(:password, nil)
+    name = database |> Map.get(:name, "contacts")
 
     server = CouchDB.connect(host, port, protocol, user, password)
 
-    contacts = server |> CouchDB.Server.database(database)
+    contacts = server |> CouchDB.Server.database(name)
     profiles = server |> CouchDB.Server.database("profiles")
 
-    {:ok, %{contacts: contacts, profiles: profiles}}
+    GenServer.cast(__MODULE__, :migrate)
+
+    if (sync && sync |> Map.get(:user) && sync |> Map.get(:key)) do
+      GenServer.cast(__MODULE__, :sync)
+    end
+
+    {:ok, %{contacts: contacts, profiles: profiles, server: server, sync: sync}}
   end
 
   def contacts, do: GenServer.call(__MODULE__, {:get, :contacts})
@@ -32,6 +36,30 @@ defmodule Database do
   def handle_call({:get, name}, _from, state) do
     database = state |> Map.get(name)
     {:reply, database, state}
+  end
+
+  def handle_cast(:sync, %{server: server, contacts: contacts, sync: sync} = state) do
+    Logger.info "Starting database replication"
+
+    %{name: local_db} = contacts
+
+    local_url = CouchDB.Server.url(server, "/#{local_db}")
+
+    remote_user = sync |> Map.get(:user)
+    remote_password = sync |> Map.get(:key)
+    remote_db = "user_" <> String.downcase(remote_user)
+    remote_url = "https://#{remote_user}:#{remote_password}"
+                  <> "@cloudshack.org:6984/#{remote_db}"
+
+    options = [create_target: false, filter: "logbook/sync", continuous: true]
+    CouchDB.Server.replicate(server, local_url, remote_url, options)
+      |> inspect |> Logger.debug
+
+    # TODO: Enable other direction
+    # options = [filter: "logbook/sync"]
+    # CouchDB.Server.replicate server, remote_url, local_url, options
+
+    {:noreply, state}
   end
 
   def handle_cast(:migrate, state) do

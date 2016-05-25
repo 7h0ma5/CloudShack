@@ -11,9 +11,9 @@ defmodule CloudShack.State do
 
   def init(_) do
     state = %{
-      profile: %{"name" => "Test", "fields" => %{"operator" => "N0CALL", "my_gridsquare" => "AB12CD", "my_rig" => "IC-7851"}},
-      rig: %{freq: 0.0, mode: :cw},
-      log: %{freq: 14.055, mode: "CW", tx_pwr: 10.0}
+      profile: nil,
+      rig: %{freq: 0.0, mode: "SSB"},
+      log: %{freq: 14200.0, mode: "SSB", tx_pwr: 100.0}
     }
     {:ok, state}
   end

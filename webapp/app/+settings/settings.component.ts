@@ -10,7 +10,8 @@ export class SettingsComponent {
     config = {
         cluster: {},
         hamqth: {},
-        database: {}
+        database: {},
+        sync: {}
     };
 
     constructor(public http: Http) {

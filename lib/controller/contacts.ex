@@ -52,7 +52,7 @@ defmodule CloudShack.Controller.Contacts do
 
     doc = body
       |> Poison.decode!
-      |> Map.merge(profile)
+      |> Map.merge(profile || %{})
       |> Contact.update_band
       |> Poison.encode!
 
