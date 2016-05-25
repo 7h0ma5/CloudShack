@@ -107,6 +107,7 @@ export class ContactsNewComponent {
     }
 
     reset() {
+        this.resetCallbook();
         this.resetDxcc();
         this.resetStart();
         this.resetEnd();
