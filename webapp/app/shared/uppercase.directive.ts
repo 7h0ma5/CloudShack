@@ -22,9 +22,6 @@ export class UppercaseDirective extends DefaultValueAccessor {
 
     @HostListener("input", ["$event.target.value"])
     input(value) {
-        let uppercase = value.toUpperCase();
-        this.writeValue(uppercase);
-        this.onTouched();
-        this.onChange(uppercase);
+        this.onChange(value.toUpperCase());
     }
 }
