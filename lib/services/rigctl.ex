@@ -6,6 +6,14 @@ defmodule RigCtl do
     GenServer.start_link(__MODULE__, config, [name: __MODULE__])
   end
 
+  def set_freq(freq) do
+     GenServer.cast(__MODULE__, {:set, {:freq, freq}})
+  end
+
+  def set_mode(mode, passband) do
+    GenServer.cast(__MODULE__, {:set, {:mode, mode, passband}})
+  end
+
   def init(config) do
     Process.send_after(self, :connect, 100)
 
@@ -14,6 +22,23 @@ defmodule RigCtl do
       port: Map.get(config, :port, 4532),
       socket: nil
     }}
+  end
+
+  def handle_cast({:set, value}, state) do
+    cmd = case value do
+      {:freq, freq} -> "F #{round(freq * 1.0e6)}\n+F\n"
+      {:mode, mode, passband} -> "M #{mode} #{passband}\n+M\n"
+      _ -> nil
+    end
+
+    IO.inspect {cmd, state}
+
+    if cmd && state[:socket] do
+      Logger.info "send cmd #{cmd}"
+      :gen_tcp.send(state[:socket], cmd)
+    end
+
+    {:noreply, state}
   end
 
   def handle_info(:connect, state) do
@@ -80,7 +105,6 @@ defmodule RigCtl do
       nil -> nil
       "" -> nil
       value -> %{mode: value}
-      _ -> nil
     end
   end
 end
