@@ -4,14 +4,7 @@ import { StateService } from "./state.service";
 
 @Injectable()
 export class ProfileService {
-    activeProfile: any = null;
-
-    constructor(public http: Http, private stateService: StateService) {
-        stateService.stateChange.subscribe(newState => {
-            if (newState["profile"]) this.activeProfile = newState["profile"];
-        })
-        this.activeProfile = stateService.state["profile"] || null;
-    }
+    constructor(public http: Http) {}
 
     insert(doc) : any {
         return this.http.post("/profiles", JSON.stringify(doc))

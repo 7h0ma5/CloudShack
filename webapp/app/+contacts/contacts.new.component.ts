@@ -57,7 +57,7 @@ export class ContactsNewComponent implements AfterViewInit {
     constructor(
         private renderer: Renderer,
         private api: ContactService,
-        private stateService: StateService,
+        private state: StateService,
         private flash: FlashService,
         private http: Http
     )
@@ -69,7 +69,7 @@ export class ContactsNewComponent implements AfterViewInit {
             .switchMap((val: string) => this.http.get("/dxcc/" + val))
             .catch((err, caught) => { this.resetDxcc(); return caught; })
             .map((res: Response) => res.json())
-            .subscribe((dxcc: any) => this.updateDxcc(dxcc));
+            .subscribe(this.updateDxcc.bind(this));
 
         this.callsign.valueChanges
             .filter((val: string) => val && val.length > 2)
@@ -78,17 +78,20 @@ export class ContactsNewComponent implements AfterViewInit {
             .switchMap((val: string) => this.http.get("/callbook/" + val))
             .catch((err, caught) => { this.resetCallbook(); return caught; })
             .map((res: Response) => res.json())
-            .subscribe((callbook: any) => this.updateCallbook(callbook));
+            .subscribe(this.updateCallbook.bind(this));
 
         this.mode.valueChanges
             .debounceTime(10)
-            .subscribe((mode: string) => this.updateMode(mode));
+            .subscribe(this.updateMode.bind(this));
 
         this.gridsquare.valueChanges
             .debounceTime(10)
-            .subscribe((grid: string) => this.updateGridsquare(grid));
+            .subscribe(this.updateGridsquare.bind(this));
 
-        this.contact = stateService.state["log"] || {};
+        this.state.rigChange
+            .subscribe(this.rigChange.bind(this));
+
+        this.contact = state.log || {};
     }
 
     ngAfterViewInit() {
@@ -206,6 +209,12 @@ export class ContactsNewComponent implements AfterViewInit {
 
     removeMaptarget(priority: number) {
         this.updateMaptarget(null, priority);
+    }
+
+    rigChange(rig) {
+        if (rig && rig["freq"]) {
+            this.contact["freq"] = rig["freq"].toFixed(3);
+        }
     }
 
     sendCW(text) {

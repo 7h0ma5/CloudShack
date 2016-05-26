@@ -1,6 +1,7 @@
 import { Component } from "angular2/core";
 import { Router, RouterLink } from "angular2/router";
 import { ProfileService } from "./profile.service";
+import { StateService } from "./state.service";
 import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
 
 @Component({
@@ -8,10 +9,10 @@ import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
     template: `
         <div dropdown>
             <a dropdown-toggle>
-              <span *ngIf="profileService.activeProfile">
-                {{profileService.activeProfile?.name}}
+              <span *ngIf="state.profile['name']">
+                {{state.profile.name}}
               </span>
-              <span *ngIf="!profileService.activeProfile">
+              <span *ngIf="!state.profile['name']">
                 No Profile
               </span>&nbsp;
               <i class="fa fa-angle-down"></i>
@@ -34,7 +35,10 @@ import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
 export class ProfileSelectComponent {
     profiles: Array<Object> = [];
 
-    constructor(public profileService: ProfileService) {
+    constructor(private profileService: ProfileService,
+                private state: StateService)
+    {
+        console.log(this);
         profileService.all().subscribe(result => {
             this.profiles = result.rows;
         }, err => {

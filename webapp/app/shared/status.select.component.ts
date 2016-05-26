@@ -9,7 +9,7 @@ import { StateService } from "./state.service";
         </div>
         <div class="status-text">
           <div class="status-operator">
-            {{stateService.state?.profile?.fields?.operator}}
+            {{state.profile?.fields?.operator}}
           </div>
           <div class="status-message" (click)="toggle()">
             {{status}}
@@ -21,7 +21,7 @@ export class StatusSelectComponent {
     onAir: boolean = false;
     status: string = "Off Air";
 
-    constructor(public stateService: StateService) {
+    constructor(public state: StateService) {
         this.toggle();
     }
 

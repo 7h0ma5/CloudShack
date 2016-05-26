@@ -189,11 +189,13 @@
   <div class="newcontact-side">
     <div class="box">
         <div class="box-title">
-          <i class="fa fa-circle" ngClass="{green: rig.connected, red: !rig.connected}"></i>
+          <i class="fa fa-circle" [class.green]="state.rig.connected"
+                                  [class.red]="!state.rig.connected"></i>
           Radio
         </div>
         <div class="box-content">
-          <b>{{rig?.freq|number:4}} MHz</b> {{rig?.mode}}
+          <b>{{state.rig?.freq|number:'.3-3'}} MHz</b>
+          {{state.rig?.mode}}
           <div dropdown>
             <button dropdown-toggle>Band</button>
             <ul class="dropdown-menu">
