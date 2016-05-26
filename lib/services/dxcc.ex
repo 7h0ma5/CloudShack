@@ -65,7 +65,7 @@ defmodule DXCC do
   end
 
   def handle_cast(:load, state) do
-    Logger.info "Loading the DXCC data..."
+    Logger.debug "Loading the DXCC data..."
 
     :ets.new(:dxcc_entities, [:set, :protected, :named_table])
     :ets.new(:dxcc_prefixes, [:bag, :public, :named_table])

@@ -8,11 +8,12 @@ defmodule CloudShack.State do
   def get(), do: GenServer.call(__MODULE__, :get)
   def get(key), do: GenServer.call(__MODULE__, {:get, key})
   def set(key, value), do: GenServer.cast(__MODULE__, {:set, key, value})
+  def update(key, map), do: GenServer.cast(__MODULE__, {:update, key, map})
 
   def init(_) do
     state = %{
       profile: nil,
-      rig: %{freq: 0.0, mode: "SSB"},
+      rig: %{connected: false, freq: 0.0, mode: "SSB"},
       log: %{freq: 14.200, mode: "SSB", tx_pwr: 100.0}
     }
     {:ok, state}
@@ -28,8 +29,19 @@ defmodule CloudShack.State do
   end
 
   def handle_cast({:set, key, value}, state) do
-    state = state |> Map.put(key, value)
-    :gproc.send({:p, :l, :websocket}, {:state, %{key => value}})
-    {:noreply, state}
+    currentValue = Map.get(state, key)
+
+    if currentValue && currentValue == value do
+      {:noreply, state}
+    else
+      state = state |> Map.put(key, value)
+      :gproc.send({:p, :l, :websocket}, {:state, %{key => value}})
+      {:noreply, state}
+    end
+  end
+
+  def handle_cast({:update, key, map}, state) do
+    value = Map.get(state, key, %{}) |> Map.merge(map)
+    handle_cast({:set, key, value}, state)
   end
 end

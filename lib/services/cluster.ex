@@ -14,7 +14,8 @@ defmodule Cluster do
     {:ok, %{
       host: config[:host],
       port: Map.get(config, :port, 23),
-      user: Map.get(config, :user, nil)
+      user: Map.get(config, :user, nil),
+      socket: nil
     }}
   end
 
@@ -27,15 +28,15 @@ defmodule Cluster do
         if state.user do
           :gen_tcp.send(socket, state.user <> "\r\n")
         end
-        {:noreply, socket}
+        {:noreply, Map.put(state, :socket, socket)}
       {:error, _} ->
         Logger.warn "Failed to connect to the DX cluster"
         Process.send_after(self(), :connect, 10000)
+        {:noreply, state}
     end
-    {:noreply, state}
   end
 
-  def handle_info({:tcp, _, packet}, state) do
+  def handle_info({:tcp, _socket, packet}, state) do
     packet = parse_line(packet)
     if packet do
       :gproc.send({:p, :l, :websocket}, {:spot, packet})
@@ -43,7 +44,7 @@ defmodule Cluster do
     {:noreply, state}
   end
 
-  def handle_info({:tcp_closed, socket}, state) do
+  def handle_info({:tcp_closed, _socket}, state) do
     Process.send_after(self(), :connect, 10000)
     {:noreply, state}
   end

@@ -7,7 +7,7 @@ defmodule WSJT do
   end
 
   def init(config) do
-    Logger.info "Starting WSJT server..."
+    Logger.debug "Starting WSJT server..."
     port = Map.get(config, :port, 2237)
     {:ok, socket} = :gen_udp.open(port, [:binary, active: true])
     {:ok, socket}

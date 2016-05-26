@@ -7,7 +7,7 @@ defmodule CloudShack.Services do
   end
 
   def init(:ok) do
-    Logger.info "Starting services..."
+    Logger.debug "Starting services..."
 
     sync = CloudShack.Config.get(:sync)
 
@@ -17,6 +17,7 @@ defmodule CloudShack.Services do
       worker(WSJT, [CloudShack.Config.get(:wsjt)]),
       worker(Cluster, [CloudShack.Config.get(:cluster)]),
       worker(Database, [CloudShack.Config.get(:database), sync]),
+      worker(RigCtl, [CloudShack.Config.get(:rigctl)]),
       worker(DXCC, [])
     ]
 
