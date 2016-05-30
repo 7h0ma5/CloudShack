@@ -37,6 +37,27 @@ defmodule CloudShack.Controller.Contacts do
     send_resp(conn, 200, results)
   end
 
+  get "/_adi" do
+    options = %{"include_docs" => true, "descending" => false}
+      |> Map.merge(conn.query_params)
+
+    {:ok, results} = Database.contacts
+      |> CouchDB.Database.view("logbook", "byDate", options)
+
+    conn = conn
+      |> put_resp_content_type("application/text")
+      |> send_chunked(200)
+
+    chunk(conn, Adif.Generate.header)
+
+    results
+      |> Poison.decode!
+      |> Map.get("rows")
+      |> Stream.map(&(Map.get(&1, "doc")))
+      |> Stream.map(&(Adif.Generate.contact(&1)))
+      |> Enum.into(conn)
+  end
+
   get "/:id" do
     {:ok, result} = Database.contacts
       |> CouchDB.Database.get(id)
