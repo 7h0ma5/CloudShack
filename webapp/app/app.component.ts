@@ -38,8 +38,8 @@ declare var System:any;
     new AsyncRoute({path: "/profile/new", loader: () => System.import("+profiles/profiles.new.component").then(m => m.ProfilesNewComponent), name: "NewProfile"}),
     new AsyncRoute({path: "/profile/:id", loader: () => System.import("+profiles/profiles.edit.component").then(m => m.ProfilesEditComponent), name: "EditProfile"}),
     new AsyncRoute({path: "/cluster", loader: () => System.import("+cluster/cluster.component").then(m => m.ClusterComponent), name: "Cluster"}),
-    new AsyncRoute({path: "/import", loader: () => System.import("+contacts/contacts.import.component").then(m => m.ImportComponent), name: "Import"}),
-    new AsyncRoute({path: "/export", loader: () => System.import("+contacts/contacts.export.component").then(m => m.ExportComponent), name: "Export"}),
+    new AsyncRoute({path: "/import", loader: () => System.import("+contacts/contacts.import.component").then(m => m.ContactsImportComponent), name: "Import"}),
+    new AsyncRoute({path: "/export", loader: () => System.import("+contacts/contacts.export.component").then(m => m.ContactsExportComponent), name: "Export"}),
     new AsyncRoute({path: "/settings", loader: () => System.import("+settings/settings.component").then(m => m.SettingsComponent), name: "Settings"})
 ])
 export class AppComponent {
