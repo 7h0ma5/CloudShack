@@ -54,7 +54,7 @@ defmodule CloudShack.Controller.Contacts do
       |> Poison.decode!
       |> Map.get("rows")
       |> Stream.map(&(Map.get(&1, "doc")))
-      |> Stream.map(&(Adif.Generate.contact(&1)))
+      |> Stream.map(&Adif.Generate.contact/1)
       |> Enum.into(conn)
   end
 
