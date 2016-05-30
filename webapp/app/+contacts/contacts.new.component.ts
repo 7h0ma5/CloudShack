@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer, AfterViewInit } from "angular2/core";
+import { Component, ViewChild, ElementRef, Renderer, AfterViewInit, HostListener } from "angular2/core";
 import { Control } from "angular2/common";
 import { Http, Response } from "angular2/http";
 import { Observable } from "rxjs/Rx";
@@ -219,5 +219,17 @@ export class ContactsNewComponent implements AfterViewInit {
 
     sendCW(text) {
         console.log("Send CW:", text);
+    }
+
+    @HostListener("keydown.alt.w", ["$event"])
+    resetShortcut(event) {
+        this.reset();
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.control.s", ["$event"])
+    saveShortcut(event) {
+        this.save();
+        event.preventDefault();
     }
 }
