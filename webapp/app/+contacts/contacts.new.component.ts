@@ -48,6 +48,8 @@ export class ContactsNewComponent implements AfterViewInit {
 
     maptargets: Array<[number, number]> = [null, null, null];
     maptarget: [number, number] = null;
+    distance: number = null;
+    bearing: number = null;
 
     modes = MODES;
     submodes = null;
@@ -137,12 +139,12 @@ export class ContactsNewComponent implements AfterViewInit {
     }
 
     resetStart() {
-        var now = (new Date()).toJSON().slice(0, 19);
+        let now = (new Date()).toJSON().slice(0, 19);
         this.startDate = now;
     }
 
     resetEnd() {
-        var now = (new Date()).toJSON().slice(0, 19);
+        let now = (new Date()).toJSON().slice(0, 19);
         this.endDate = now;
     }
 
@@ -168,11 +170,20 @@ export class ContactsNewComponent implements AfterViewInit {
 
     resetCallbook() {
         this.callbook = null;
+        this.removeMaptarget(CALLBOOK_PRIORITY);
     }
 
     updateCallbook(callbook) {
         console.log(callbook);
         this.callbook = callbook;
+
+        if (callbook["gridsquare"]) {
+            let coord = grid_to_coord(callbook["gridsquare"]);
+            this.updateMaptarget(coord, CALLBOOK_PRIORITY);
+        }
+        else {
+            this.removeMaptarget(CALLBOOK_PRIORITY);
+        }
     }
 
     updateMode(newMode: string) {
@@ -188,7 +199,7 @@ export class ContactsNewComponent implements AfterViewInit {
     }
 
     updateGridsquare(newGrid: string) {
-        var coord = grid_to_coord(newGrid);
+        let coord = grid_to_coord(newGrid);
         if (coord) this.updateMaptarget(coord, GRID_PRIORITY);
         else this.removeMaptarget(GRID_PRIORITY);
     }
@@ -197,14 +208,30 @@ export class ContactsNewComponent implements AfterViewInit {
         this.maptargets[priority] = coord;
 
         for (var i in this.maptargets) {
-            var target = this.maptargets[i];
+            let target = this.maptargets[i];
             if (target) {
                 this.maptarget = target;
+                this.updateDistance(target);
                 return;
             }
         }
 
+        this.distance = null;
+        this.bearing = null;
         this.maptarget = null;
+    }
+
+    updateDistance(target) {
+        let profile = this.state.profile["fields"];
+        if (profile && profile["my_gridsquare"]) {
+            let myCoord = grid_to_coord(profile["my_gridsquare"]);
+            this.distance = coord_distance(myCoord, target);
+            this.bearing = coord_bearing(myCoord, target);
+        }
+        else {
+            this.bearing = null;
+            this.distance = null;
+        }
     }
 
     removeMaptarget(priority: number) {
