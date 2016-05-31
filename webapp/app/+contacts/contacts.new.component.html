@@ -7,21 +7,23 @@
         <div class="form-row">
           <div class="form-group">
             <label for="call">Callsign</label>
-            <input required uppercase type="text" autocomplete="off" id="call"
+            <input uppercase type="text" autocomplete="off" id="call"
                    [(ngModel)]="contact.call" class="input-callsign"
                    [ngFormControl]="callsign" #callsignInput>
           </div>
 
           <div class="form-group">
             <label for="rst-rcvd">RST Rcvd</label>
-            <input smartinput type="text" id="rst-rcvd" autocomplete="off" smartInput
-                   placeholder="{{rst}}" [(ngModel)]="contact.rst_rcvd" class="input-rst">
+            <input type="text" id="rst-rcvd" autocomplete="off" smartInput
+                   placeholder="{{rst}}" [(ngModel)]="contact.rst_rcvd"
+                   class="input-rst">
           </div>
 
           <div class="form-group">
             <label for="rst-sent">RST Sent</label>
-            <input smartinput type="text" id="rst-sent" autocomplete="off" smartInput
-                   placeholder="{{rst}}" [(ngModel)]="contact.rst_sent" class="input-rst">
+            <input type="text" id="rst-sent" autocomplete="off" smartInput
+                   placeholder="{{rst}}" [(ngModel)]="contact.rst_sent"
+                   class="input-rst">
           </div>
         </div>
 

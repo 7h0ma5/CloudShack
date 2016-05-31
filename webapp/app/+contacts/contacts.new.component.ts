@@ -7,8 +7,9 @@ import { coord_distance, coord_bearing, grid_to_coord } from "../lib/geo";
 
 import {
     ContactService,
-    StateService,
     FlashService,
+    RigService,
+    StateService,
     WorldMapComponent,
     SmartInputDirective,
     UppercaseDirective,
@@ -59,8 +60,9 @@ export class ContactsNewComponent implements AfterViewInit {
     constructor(
         private renderer: Renderer,
         private api: ContactService,
-        private state: StateService,
         private flash: FlashService,
+        private rig: RigService,
+        private state: StateService,
         private http: Http
     )
     {
@@ -245,7 +247,7 @@ export class ContactsNewComponent implements AfterViewInit {
     }
 
     sendCW(text) {
-        console.log("Send CW:", text);
+        this.rig.send_cw(text);
     }
 
     @HostListener("keydown.alt.w", ["$event"])
@@ -257,6 +259,42 @@ export class ContactsNewComponent implements AfterViewInit {
     @HostListener("keydown.control.s", ["$event"])
     saveShortcut(event) {
         this.save();
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.F1", ["$event"])
+    macroF1(event) {
+        let call = (this.state.profile["fields"] || {})["operator"];
+        if (call) {
+            this.sendCW("CQ de " + call + " " + call + " k");
+        }
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.F2", ["$event"])
+    macroF2(event) {
+        let grid = (this.state.profile["fields"] || {})["my_gridsquare"];
+        if (grid) {
+            this.sendCW(grid + " ");
+        }
+        else {
+            this.sendCW("5NN TU")
+        }
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.F3", ["$event"])
+    macroF3(event) {
+        this.sendCW("TU ");
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.F4", ["$event"])
+    macroF4(event) {
+        let call = ((this.state.profile["fields"] || {})["operator"] || null);
+        if (call) {
+            this.sendCW(call);
+        }
         event.preventDefault();
     }
 }

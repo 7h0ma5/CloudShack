@@ -15,7 +15,7 @@ export class StateService {
     }
 
     onUpdate(newState) {
-        console.log("state update", newState);
+        console.debug("Received a new state:", newState);
 
         for (let key in newState) {
             let value = newState[key] || {};

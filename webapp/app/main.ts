@@ -8,6 +8,7 @@ import {
     ContactService,
     FlashService,
     ProfileService,
+    RigService,
     SocketService,
     StateService
 } from "./shared/index";
@@ -20,6 +21,7 @@ bootstrap(AppComponent, [
     ContactService,
     FlashService,
     ProfileService,
+    RigService,
     SocketService,
     StateService
 ]);

@@ -1,6 +1,5 @@
 import { Injectable } from "angular2/core";
 import { Http, Response, URLSearchParams } from "angular2/http";
-import { StateService } from "./state.service";
 
 @Injectable()
 export class ProfileService {

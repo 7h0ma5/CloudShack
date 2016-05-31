@@ -7,11 +7,19 @@ defmodule RigCtl do
   end
 
   def set_freq(freq) do
-     GenServer.cast(__MODULE__, {:set, {:freq, freq}})
+     GenServer.cast(__MODULE__, {:cmd, {:set_freq, freq}})
   end
 
   def set_mode(mode, passband) do
-    GenServer.cast(__MODULE__, {:set, {:mode, mode, passband}})
+    GenServer.cast(__MODULE__, {:cmd, {:set_mode, mode, passband}})
+  end
+
+  def set_cw_speed(speed) do
+    GenServer.cast(__MODULE__, {:cmd, {:set_cw_speed, speed}})
+  end
+
+  def send_cw(text) do
+    GenServer.cast(__MODULE__, {:cmd, {:send_cw, text}})
   end
 
   def init(config) do
@@ -24,17 +32,16 @@ defmodule RigCtl do
     }}
   end
 
-  def handle_cast({:set, value}, state) do
+  def handle_cast({:cmd, value}, state) do
     cmd = case value do
-      {:freq, freq} -> "F #{round(freq * 1.0e6)}\n+F\n"
-      {:mode, mode, passband} -> "M #{mode} #{passband}\n+M\n"
+      {:set_freq, freq} -> "F #{round(freq * 1.0e6)}\n+F\n"
+      {:set_mode, mode, passband} -> "M #{mode} #{passband}\n+M\n"
+      {:set_cw_speed, speed} -> "L KEYSPD #{speed}\n"
+      {:send_cw, text} -> "b #{text}\n"
       _ -> nil
     end
 
-    IO.inspect {cmd, state}
-
     if cmd && state[:socket] do
-      Logger.info "send cmd #{cmd}"
       :gen_tcp.send(state[:socket], cmd)
     end
 

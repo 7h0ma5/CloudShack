@@ -21,6 +21,7 @@ export class Spot {
 export class SocketService {
     state: ReplaySubject<any> = new ReplaySubject<Spot>(10, null);
     spot: ReplaySubject<Spot> = new ReplaySubject<Spot>(10, null);
+    socket: WebSocket = null;
 
     constructor() {
         this.connect();
@@ -29,12 +30,22 @@ export class SocketService {
     connect() {
         let loc = window.location;
         let url = "ws://" + loc.host + loc.pathname + "websocket";
-        let socket = new WebSocket(url);
-        socket.onmessage = this.onMessage.bind(this);
-        socket.onclose = this.onClose.bind(this);
+        this.socket = new WebSocket(url);
+        this.socket.onmessage = this.onMessage.bind(this);
+        this.socket.onclose = this.onClose.bind(this);
+    }
+
+    send(data) {
+        if (this.socket) {
+            this.socket.send(JSON.stringify(data));
+        }
+        else {
+            console.warn("Websocket not connected. Unable to send:", data);
+        }
     }
 
     onClose() {
+        this.socket = null;
         setTimeout(this.connect.bind(this), 5000);
     }
 
@@ -60,7 +71,7 @@ export class SocketService {
                 this.state.next(data);
                 break;
             default:
-                console.log("unknown websocket event:", event);
+                console.warn("Unknown websocket event:", event);
         }
     }
 }

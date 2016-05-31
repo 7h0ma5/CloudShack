@@ -21,7 +21,15 @@ defmodule CloudShack.WebsocketHandler do
   end
 
   def websocket_handle({:text, message}, req, state) do
-    IO.puts(message)
+    case Poison.decode!(message, keys: :atoms!) do
+      %{action: "rig.set_freq", freq: freq}
+        -> RigCtl.set_freq(freq)
+      %{action: "rig.set_mode", mode: mode, passband: passband}
+        -> RigCtl.set_mode(mode, passband)
+      %{action: "rig.send_cw", text: text}
+        -> RigCtl.send_cw(text)
+      other -> Logger.warn("Unknown websocket command #{inspect other}")
+    end
     {:ok, req, state}
   end
 
