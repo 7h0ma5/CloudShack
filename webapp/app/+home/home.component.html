@@ -3,7 +3,7 @@
 <div class="dashboard">
   <div class="box statistics">
     <div class="box-title">
-      <i class="fa fa-globe"></i>
+      <i class="fa fa-bar-chart"></i>
       QSO Statistics
     </div>
     <div class="box-content">
@@ -25,6 +25,33 @@
 
   <div class="box statistics">
     <div class="box-title">
+      <i class="fa fa-globe"></i>
+      DXCC Statistics
+    </div>
+    <div class="box-content">
+      <div class="column">
+        <small>Worked</small>
+        <div class="value">{{dxcc_count.worked}}</div>
+      </div>
+      <div class="column">
+        <small>Confirmed</small>
+        <div class="value">{{dxcc_count.confirmed}}</div>
+      </div>
+      <div class="column">
+        <small>LoTW</small>
+        <div class="value">{{dxcc_count.lotw}}</div>
+      </div>
+      <div class="column">
+        <small>Card</small>
+        <div class="value">{{dxcc_count.card}}</div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+
+  <div class="box statistics">
+    <div class="box-title">
+      <i class="fa fa-pie-chart"></i>
       Mode Statistics
     </div>
     <table class="box-table">

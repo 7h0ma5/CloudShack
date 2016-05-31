@@ -1,6 +1,6 @@
 {
     "_id": "_design/logbook",
-    "version": 5,
+    "version": 6,
     "views": {
         "byDate": {
             "map": "function(doc) {
@@ -78,5 +78,21 @@
         if (newDoc._deleted) return;
         if (!newDoc.call) throw({forbidden: 'call field required'});
         if (!newDoc.start) throw({forbidden: 'start field required'});
-    }"
+    }",
+    "lists": {
+        "dxccCount": "function() {
+            provides('json', function() {
+                var results = { worked: 0, confirmed: 0, lotw: 0, card: 0  };
+                while (row = getRow()) {
+                    if (row.value) {
+                        results.worked++;
+                        if (row.value.lotw || row.value.card) results.confirmed++;
+                        if (row.value.lotw) results.lotw++;
+                        if (row.value.card) results.card++;
+                    }
+                }
+                return JSON.stringify(results);
+            })
+        }"
+    }
 }

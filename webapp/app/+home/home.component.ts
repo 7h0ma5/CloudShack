@@ -6,6 +6,7 @@ import { ContactService } from "../shared/index";
 })
 export class HomeComponent {
     qso_stats = {total: 0, year: 0, month: 0};
+    dxcc_count = {worked: 0, confirmed: 0, card: 0, lotw:0};
     modes: Array<[string, number]> = [];
 
     constructor(public api: ContactService) {
@@ -43,6 +44,11 @@ export class HomeComponent {
 
         this.api.stats(month_options).subscribe(result => {
             this.qso_stats.month = result.rows.length ? result.rows[0].value : 0;
+        });
+
+        // Query DXCC count
+        this.api.dxccCount().subscribe(result => {
+            this.dxcc_count = result;
         });
 
         // Query modes

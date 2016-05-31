@@ -27,6 +27,13 @@ defmodule CloudShack.Controller.Contacts do
     send_resp(conn, 200, results)
   end
 
+  get "/_dxcc_count" do
+    {:ok, result} = Database.contacts
+      |> CouchDB.Database.list("logbook", "dxccCount", "dxcc", [group_level: 1])
+
+    send_resp(conn, 200, result)
+  end
+
   get "/_view/:view" do
     options = %{"limit" => 10, "include_docs" => true, "descending" => true}
       |> Map.merge(conn.query_params)

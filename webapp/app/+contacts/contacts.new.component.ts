@@ -275,10 +275,10 @@ export class ContactsNewComponent implements AfterViewInit {
     macroF2(event) {
         let grid = (this.state.profile["fields"] || {})["my_gridsquare"];
         if (grid) {
-            this.sendCW(grid + " ");
+            this.sendCW("5NN in " + grid + " ");
         }
         else {
-            this.sendCW("5NN TU")
+            this.sendCW("5NN ")
         }
         event.preventDefault();
     }
@@ -294,6 +294,23 @@ export class ContactsNewComponent implements AfterViewInit {
         let call = ((this.state.profile["fields"] || {})["operator"] || null);
         if (call) {
             this.sendCW(call);
+        }
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.F5", ["$event"])
+    macroF5(event) {
+        if (this.contact["call"]) {
+            this.sendCW(this.contact["call"] + " ");
+        }
+        event.preventDefault();
+    }
+
+    @HostListener("keydown.F6", ["$event"])
+    macroF6(event) {
+        let grid = (this.state.profile["fields"] || {})["my_gridsquare"];
+        if (grid) {
+            this.sendCW(grid);
         }
         event.preventDefault();
     }

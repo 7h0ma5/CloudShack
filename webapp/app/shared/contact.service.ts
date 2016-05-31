@@ -45,6 +45,10 @@ export class ContactService {
         return this.get_req("/contacts/_stats", options);
     }
 
+    dxccCount() : any {
+        return this.get_req("/contacts/_dxcc_count");
+    }
+
     delete(id: string, rev: string) : any {
         var url = this.query("/contacts/" + id, {rev: rev});
         return this.http.delete(url);
