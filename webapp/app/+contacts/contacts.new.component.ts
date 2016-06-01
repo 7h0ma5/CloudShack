@@ -242,7 +242,7 @@ export class ContactsNewComponent implements AfterViewInit {
 
     rigChange(rig) {
         if (rig && rig["freq"]) {
-            this.contact["freq"] = rig["freq"].toFixed(3);
+            this.contact["freq"] = rig["freq"];
         }
     }
 

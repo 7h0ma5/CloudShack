@@ -75,7 +75,7 @@ defmodule CloudShack.Controller.Contacts do
   post "/" do
     {:ok, body, conn} = read_body(conn)
 
-    profile = CloudShack.State.get(:profile) || %{}
+    profile = (CloudShack.State.get(:profile) || %{})
       |> Map.get("fields", %{})
 
     doc = body
