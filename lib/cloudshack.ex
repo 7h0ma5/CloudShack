@@ -13,6 +13,7 @@ defmodule CloudShack do
         ]}]
       ]),
       worker(CloudShack.Config, []),
+      worker(CloudShack.State, []),
       supervisor(CloudShack.Services, [])
     ]
 

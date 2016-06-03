@@ -1,6 +1,6 @@
 defmodule Adif.Field do
   def decode(:string, value) do
-    if value = String.strip(value) != "", do: value, else: nil
+    if (value = String.strip(value)) != "", do: value, else: nil
   end
 
   def decode(:uppercase, value) do
@@ -36,6 +36,7 @@ defmodule Adif.Field do
   def decode(_, _), do: nil
 
   def decode({key, value}) do
+    key = key |> String.downcase
     {key, type(key) |> decode(value)}
   end
 
@@ -57,6 +58,7 @@ defmodule Adif.Field do
   def encode(_, _), do: nil
 
   def encode({key, value}) do
+    key = key |> String.downcase
     {key, type(key) |> encode(value)}
   end
 

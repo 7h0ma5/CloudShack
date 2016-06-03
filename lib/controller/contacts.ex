@@ -65,6 +65,38 @@ defmodule CloudShack.Controller.Contacts do
       |> Enum.into(conn)
   end
 
+  post "/_adi" do
+    options = conn.query_params
+    {:ok, data, conn} = conn |> read_body(read_length: 8_000_000)
+
+    contacts = data
+      |> Adif.Parse.contacts
+      |> Stream.filter(&Contact.valid?/1)
+      |> Stream.map(&Contact.update_band/1)
+      |> Stream.map(&Contact.migrate_mode/1)
+
+    contacts = if options["dxcc"] == "true" do
+      contacts |> Stream.map(&Contact.update_dxcc/1)
+    else
+      contacts
+    end
+
+    contacts = if options["profile"] == "true" do
+      profile = Map.get(CloudShack.State.get(:profile) || %{}, "fields", %{})
+      contacts |> Stream.map(&(Map.merge(&1, profile)))
+    else
+      contacts
+    end
+
+    docs = %{"docs" => contacts} |> Poison.encode!
+
+    {:ok, result} = Database.contacts
+      |> CouchDB.Database.bulk(docs)
+
+    count = Enum.count(contacts)
+    send_resp(conn, 200, %{ok: true, count: count} |> Poison.encode!)
+  end
+
   get "/:id" do
     {:ok, result} = Database.contacts
       |> CouchDB.Database.get(id)

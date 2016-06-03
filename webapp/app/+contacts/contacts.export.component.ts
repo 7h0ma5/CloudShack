@@ -1,5 +1,5 @@
 import { Component } from "angular2/core";
-import { Http, Response, URLSearchParams } from "angular2/http";
+import { URLSearchParams } from "angular2/http";
 
 @Component({
     templateUrl: "/app/+contacts/contacts.export.component.html"

@@ -1,58 +1,26 @@
 <h1>Import</h1>
 
-<tabs>
-  <tab title="File">
+<div class="box">
+  <div class="box-content">
     <p>
-      <input type="file" ngf-select ngf-change="fileSelected($files, $event)">
+      <input type="file" (change)="fileChangeEvent($event)" />
     </p>
 
     <p>
-      <input type="checkbox" ngModel="dateRange"> Date Range:
-      <input type="datetime-local" ngModel="start" ngDisabled="!dateRange"
-             ngModel-options="{timezone: 'UTC'}">
-      <input type="datetime-local" ngModel="end" ngDisabled="!dateRange"
-             ngModel-options="{timezone: 'UTC'}">
+      <input type="checkbox" [(ngModel)]="dateRange"> Date Range:
+      <input type="datetime-local" [(ngModel)]="start" [disabled]="!dateRange"> –
+      <input type="datetime-local" [(ngModel)]="end" [disabled]="!dateRange">
     </p>
 
     <p>
-      <input type="checkbox" ngModel="dxcc"> Update DXCC
+      <input type="checkbox" [(ngModel)]="dxcc"> Update DXCC<br>
+      <input type="checkbox" [(ngModel)]="profile"> Apply current profile
     </p>
 
     <p>
-      Apply profile:
-      <select ngModel="profile" ngOptions="p.id as p.doc.name for p in profiles.rows">
-        <option></option>
-      </select>
-    </p>
-
-    <p>
-      <button class="btn-primary" ngClick="import()" ngDisabled="!file || loading">
+      <button class="btn-primary" (click)="import()" [disabled]="!filesToUpload">
         Import
       </button>
-      <spinner ngShow="loading"></spinner>
     </p>
-  </tab>
-  <tab title="LotW">
-    <p>
-      Import all LotW confirmations:
-    </p>
-    <p>
-      <button class="btn-primary" ngClick="importLotw()">
-        Import
-      </button>
-      <spinner ngShow="loading"></spinner>
-    </p>
-    <div ngShow="lotwResult">
-      <p>
-        Updated <b>{{lotwResult.updates}}</b> contacts.
-      </p>
-      <p ngShow="lotwResult.fails">Failed matches:
-        <ul>
-          <li ngRepeat="call in lotwResult.fails track by $index">
-            {{call}}
-          </li>
-        </ul>
-      </p>
-    </div>
-  </tab>
-</tabs>
+  </div>
+</div>

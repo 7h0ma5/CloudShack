@@ -1,16 +1,17 @@
 defmodule Data do
   @bands %{
     "2190m" => %{ name: "2190m", start: 0.136, end: 0.137 },
+    "630m" => %{ name: "630m", start: 0.472, end: 0.479 },
     "560m" => %{ name: "560m", start: 0.501, end: 0.504 },
     "160m" => %{ name: "160m", start: 1.8, end: 2.0 },
     "80m" => %{ name: "80m", start: 3.5, end: 4.0 },
-    "60m" => %{ name: "60m", start: 5.102, end: 5.404 },
+    "60m" => %{ name: "60m", start: 5.102, end: 5.4065 },
     "40m" => %{ name: "40m", start: 7.0, end: 7.3 },
     "30m" => %{ name: "30m", start: 10.0, end: 10.15 },
     "20m" => %{ name: "20m", start: 14.0, end: 14.35 },
     "17m" => %{ name: "17m", start: 18.068, end: 18.168 },
     "15m" => %{ name: "15m", start: 21.0, end: 21.45 },
-    "12m" => %{ name: "12m", start: 24.890, end: 24.99 },
+    "12m" => %{ name: "12m", start: 24.89, end: 24.99 },
     "10m" => %{ name: "10m", start: 28.0, end: 29.7 },
     "6m" => %{ name: "6m", start: 50.0, end: 54.0 },
     "4m" => %{ name: "4m", start: 70.0, end: 71.0 },
@@ -71,7 +72,9 @@ defmodule Data do
     "QPSK31" => %{ mode: "PSK", submode: "QPSK31" },
     "QPSK63" => %{ mode: "PSK", submode: "QPSK63" },
     "QPSK125" => %{ mode: "PSK", submode: "QPSK125" },
-    "THRBX" => %{ mode: "THRB", submode: "THRBX" }
+    "THRBX" => %{ mode: "THRB", submode: "THRBX" },
+    "USB" => %{ mode: "SSB", submode: "USB" },
+    "LSB" => %{ mode: "SSB", submode: "LSB" }
   }
 
   @dxcc_entities %{
@@ -442,5 +445,9 @@ defmodule Data do
     Enum.find(Map.values(@bands), fn(band) ->
       band.start <= freq && band.end >= freq
     end)
+  end
+
+  def legacy_mode(mode) do
+    Map.get(@legacy_modes, mode)
   end
 end
