@@ -105,6 +105,24 @@
       </div>
     </div>
 
+    <div class="box" *ngIf="previous">
+      <div class="box-title">Previous Contacts ({{previous?.length}})</div>
+      <table class="box-table">
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Mode</th>
+          <th>Freq</th>
+        </tr>
+        <tr *ngFor="let row of previous">
+          <td><!-- row.doc.start|date:"dd.MM.yyyy" --> {{row.doc.start|slice:0:10}}</td>
+          <td><!-- row.doc.start|date:"HH:mm" --> {{row.doc.start|slice:11:16}}</td>
+          <td>{{row.doc.mode}}</td>
+          <td>{{row.doc.freq|number:'.3-3'}}</td>
+        </tr>
+      </table>
+    </div>
+
     <tabs>
       <tab title="QSL" active="true">
         <div class="form-row">
@@ -228,19 +246,6 @@
         </div>
     </div>
 
-    <div class="box">
-      <div class="box-title">
-        <i class="fa fa-circle" ngClass="{green: cw.status.connected, red: !cw.status.connected}"></i>
-        CW
-      </div>
-      <div class="box-content">
-        <form (submit)="sendCW(cwtext.value); cwtext.value = '';">
-          <input #cwtext type="text">
-          <input type="submit" value="Send">
-        </form>
-      </div>
-    </div>
-
     <div class="box" *ngIf="dxcc">
       <div class="box-title">{{dxcc?.prefix}} &ndash; {{dxcc?.country}} &ndash; {{dxcc?.cont}}</div>
       <div class="box-content">
@@ -274,24 +279,6 @@
         </span>
       </div>
       <worldmap [maptarget]="maptarget"></worldmap>
-    </div>
-
-    <div class="box" *ngIf="previous">
-      <div class="box-title">Previous Contacts ({{previous?.length}})</div>
-      <table class="box-table">
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Mode</th>
-          <th>Freq</th>
-        </tr>
-        <tr *ngFor="let row of previous">
-          <td>{{row.doc.start|date:"dd.MM.yyyy":"UTC"}}</td>
-          <td>{{row.doc.start|date:"HH:mm":"UTC"}}</td>
-          <td>{{row.doc.mode}}</td>
-          <td>{{row.doc.freq|number:3}}</td>
-        </tr>
-      </table>
     </div>
   </div>
 </div>

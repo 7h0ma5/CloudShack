@@ -39,6 +39,7 @@ export class ContactsNewComponent implements AfterViewInit {
     contact: Object = {};
     dxcc: Object = null;
     callbook: Object = null;
+    previous: Array<Object> = null;
 
     startDate: string = null;
     endDate: string = null;
@@ -84,6 +85,13 @@ export class ContactsNewComponent implements AfterViewInit {
             .map((res: Response) => res.json())
             .subscribe(this.updateCallbook.bind(this));
 
+        this.callsign.valueChanges
+            .filter((val: string) => val && val.length > 2)
+            .debounceTime(400)
+            .switchMap((val: string) => this.api.previousContacts(val))
+            .catch((err, caught) => { this.resetPreviousContacts(); return caught; })
+            .subscribe(this.updatePreviousContacts.bind(this));
+
         this.mode.valueChanges
             .debounceTime(10)
             .subscribe(this.updateMode.bind(this));
@@ -120,6 +128,7 @@ export class ContactsNewComponent implements AfterViewInit {
     }
 
     reset() {
+        this.resetPreviousContacts();
         this.resetCallbook();
         this.resetDxcc();
         this.resetStart();
@@ -185,6 +194,19 @@ export class ContactsNewComponent implements AfterViewInit {
         }
         else {
             this.removeMaptarget(CALLBOOK_PRIORITY);
+        }
+    }
+
+    resetPreviousContacts() {
+        this.previous = null;
+    }
+
+    updatePreviousContacts(result) {
+        if (result && result["rows"]) {
+            this.previous = result["rows"];
+        }
+        else {
+            this.resetPreviousContacts();
         }
     }
 

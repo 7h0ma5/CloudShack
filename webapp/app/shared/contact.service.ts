@@ -53,4 +53,14 @@ export class ContactService {
         var url = this.query("/contacts/" + id, {rev: rev});
         return this.http.delete(url);
     }
+
+    previousContacts(call: string) : any {
+        var options = {
+            startkey: JSON.stringify([call]),
+            endkey: JSON.stringify([call, {}]),
+            descending: false
+        };
+
+        return this.byCall(options);
+    }
 }
