@@ -1,14 +1,14 @@
 # CloudShack
 
   [![Build Status](https://img.shields.io/travis/7h0ma5/CloudShack.svg?style=flat)](https://travis-ci.org/7h0ma5/CloudShack)
-  [![Coverage](https://img.shields.io/coveralls/7h0ma5/CloudShack.svg?style=flat)](https://coveralls.io/r/7h0ma5/CloudShack)
+  [![GitHub issues](https://img.shields.io/github/issues/7h0ma5/cloudshack.svg?style=flat)](https://github.com/7h0ma5/cloudshack/issues)
+  [![GitHub release](https://img.shields.io/github/release/7h0ma5/CloudShack.svg?maxAge=2592000)](https://github.com/7h0ma5/CloudShack/releases)
 
 CloudShack is an amateur radio logbook server which provides a RESTful API and a
 built-in web interface.
 
 The goal is to create a multiplatform logbook software which does not depend on
-an internet connection but automatically synchronizes with other database
-instances when there is a connection available.
+an internet connection but automatically synchronizes data when there is a connection available.
 
 ## Features
 
@@ -17,8 +17,29 @@ instances when there is a connection available.
 - DX cluster integration
 - HamQTH callbook integration
 - Remote rig control via the hamlib rigctld
+- WSJT-X support
+
+## Installation
+
+To build CloudShack you need [Elixir](http://elixir-lang.org/) and [Node.js](https://nodejs.org/en/).
+
+```bash
+git clone --recursive https://github.com/7h0ma5/CloudShack.git
+cd CloudShack
+
+# Build the webapp
+(cd webapp && npm run build)
+
+# Build the server
+export MIX_ENV=prod
+mix deps.get && mix compile && mix release
+
+# Run CloudShack
+./rel/cloudshack/bin/cloudshack console
+```
 
 ## License
+
 Copyright (C) 2014-2016 Thomas Gatzweiler, DL2IC
 
 This program is free software: you can redistribute it and/or modify
