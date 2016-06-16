@@ -34,11 +34,35 @@ export class ContactService {
     }
 
     byCall(options?: Object) : any {
-        return this.get_req("/contacts/_view/byCall", options);
+        var view_options = {
+            descending: true,
+            include_docs: true,
+            limit: 20
+        };
+
+        Object.assign(view_options, options);
+
+        return this.get_req("/contacts/_view/byCall", view_options);
     }
 
     byMode(options?: Object) : any {
-        return this.get_req("/contacts/_view/byMode", options);
+        var view_options = {
+            group_level: 1
+        };
+
+        Object.assign(view_options, options);
+
+        return this.get_req("/contacts/_view/byMode", view_options);
+    }
+
+    byGrid(options?: Object) : any {
+        var view_options = {
+            group_level: 2
+        };
+
+        Object.assign(view_options, options);
+
+        return this.get_req("/contacts/_view/byGrid", view_options);
     }
 
     stats(options?: Object) : any {

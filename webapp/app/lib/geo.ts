@@ -82,3 +82,24 @@ export function coord_to_grid(coord: [number, number]) {
 
     return grid;
 }
+
+export function grid_to_rect(grid: string) : [[number, number], [number, number]] {
+    if (!validate_grid(grid)) return null;
+
+    grid = grid.toUpperCase();
+
+    var lon = (grid.charCodeAt(0) - 65) * 20 - 180;
+    var lat = (grid.charCodeAt(1) - 65) * 10 - 90;
+
+    lon += (grid.charCodeAt(2) - 48) * 2;
+    lat += (grid.charCodeAt(3) - 48);
+
+    if (grid.length >= 6) {
+        lon += (grid.charCodeAt(4) - 65) * (5/60.0);
+        lat += (grid.charCodeAt(5) - 65) * (2.5/60.0);
+        return [[lat, lon], [lat + 2.5/60, lon + 5.0/60]]
+    }
+    else {
+        return [[lat, lon], [lat + 1, lon + 2]]
+    }
+}

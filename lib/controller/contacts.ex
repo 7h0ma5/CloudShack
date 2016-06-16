@@ -8,7 +8,7 @@ defmodule CloudShack.Controller.Contacts do
   plug :dispatch
 
   get "/" do
-    options = %{"limit" => 10, "include_docs" => true, "descending" => true}
+    options = %{"limit" => 20, "include_docs" => true, "descending" => true}
       |> Map.merge(conn.query_params)
 
     {:ok, results} = Database.contacts
@@ -35,8 +35,7 @@ defmodule CloudShack.Controller.Contacts do
   end
 
   get "/_view/:view" do
-    options = %{"limit" => 10, "include_docs" => true, "descending" => true}
-      |> Map.merge(conn.query_params)
+    options = conn.query_params
 
     {:ok, results} = Database.contacts
       |> CouchDB.Database.view("logbook", view, options)

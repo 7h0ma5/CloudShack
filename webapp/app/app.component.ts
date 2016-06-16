@@ -32,6 +32,7 @@ declare var System:any;
 @RouteConfig([
     new AsyncRoute({path: "/", loader: () => System.import("+home/home.component").then(m => m.HomeComponent), name: "Home"}),
     new AsyncRoute({path: "/logbook", loader: () => System.import("+contacts/contacts.list.component").then(m => m.ContactsListComponent), name: "Logbook"}),
+    new AsyncRoute({path: "/map", loader: () => System.import("+contacts/contacts.map.component").then(m => m.ContactsMapComponent), name: "Map"}),
     new AsyncRoute({path: "/contact/new", loader: () => System.import("+contacts/contacts.new.component").then(m => m.ContactsNewComponent), name: "NewContact"}),
     new AsyncRoute({path: "/contact/:id", loader: () => System.import("+contacts/contacts.show.component").then(m => m.ContactsShowComponent), name: "ShowContact"}),
     new AsyncRoute({path: "/contact/:id/edit", loader: () => System.import("+contacts/contacts.edit.component").then(m => m.ContactsEditComponent), name: "EditContact"}),
