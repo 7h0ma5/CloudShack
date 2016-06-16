@@ -1,6 +1,6 @@
 {
     "_id": "_design/logbook",
-    "version": 6,
+    "version": 7,
     "views": {
         "byDate": {
             "map": "function(doc) {
@@ -15,11 +15,21 @@
         "byGrid": {
             "map": "function(doc) {
                 if (doc.gridsquare) {
+                    var bands = {};
+                    if (doc.band) bands[doc.band.toLowerCase()] = 1;
                     var grid = doc.gridsquare.toUpperCase();
-                    emit([grid.slice(0,2), grid.slice(2,4), grid.slice(4,6)]);
+                    emit([grid.slice(0,2), grid.slice(2,4), grid.slice(4,6)], bands);
                 }
             }",
-            "reduce": "_count"
+            "reduce": "function (key, values, rereduce) {
+                var bands = {};
+                values.forEach(function(value) {
+                    for (band in value) {
+                        bands[band] = (bands[band] || 0) + value[band];
+                    }
+                });
+                return bands;
+            }"
         },
         "byMode": {
             "map": "function(doc) {
