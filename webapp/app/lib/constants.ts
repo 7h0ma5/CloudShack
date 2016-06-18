@@ -48,7 +48,6 @@ export const MODES = [
     ]},
     {name: "JT9", rst: "-1", submodes: [
         {name: "JT9-1"},
-        {name: "JT9-1"},
         {name: "JT9-2"},
         {name: "JT9-5"},
         {name: "JT9-10"},
@@ -67,7 +66,9 @@ export const MODES = [
         {name: "DOMINOF"},
     ]},
     {name: "MT63"},
-    {name: "FSK441"},
+    {name: "JT6M", rst: "26"},
+    {name: "JTMSK", rst: "-1"},
+    {name: "FSK441", rst: "26"},
     {name: "DIGITALVOICE", rst: "59"},
     {name: "DSTAR", rst: "59"},
     {name: "PKT"},
