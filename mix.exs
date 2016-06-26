@@ -53,7 +53,7 @@ defmodule CloudShack.Mixfile do
       {:plug, "~> 1.1.4"},
       {:sweet_xml, "~> 0.6.1"},
       {:httpoison, "~> 0.8.2"},
-      {:poison, "~> 2.1.0"},
+      {:poison, "~> 2.2.0"},
       {:timex, "~> 2.1.5"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
       {:gproc, "~> 0.5.0"},

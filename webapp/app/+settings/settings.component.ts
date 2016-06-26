@@ -11,7 +11,8 @@ export class SettingsComponent {
         cluster: {},
         hamqth: {},
         database: {},
-        sync: {}
+        sync: {},
+        wsjt: {}
     };
 
     constructor(public http: Http) {

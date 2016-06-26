@@ -9,11 +9,21 @@ defmodule WSJT do
   def init(config) do
     Logger.debug "Starting WSJT server..."
     port = Map.get(config, :port, 2237)
+
+    forward_host = Map.get(config, :forward_host, {127, 0, 0, 1})
+    forward_port = Map.get(config, :forward_port)
+
     {:ok, socket} = :gen_udp.open(port, [:binary, active: true])
-    {:ok, socket}
+    {:ok, {socket, forward_host, forward_port}}
   end
 
   def handle_info({:udp, _, _, _, data}, state) do
+    {socket, forward_host, forward_port} = state
+
+    if forward_port do
+      :gen_udp.send(socket, forward_host, forward_port, data)
+    end
+
     packet = case data do
       <<173, 188, 203, 218, _schema :: size(32), rest :: binary>> ->
         try do

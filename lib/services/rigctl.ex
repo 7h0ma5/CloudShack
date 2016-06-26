@@ -58,7 +58,6 @@ defmodule RigCtl do
         CloudShack.State.update(:rig, %{connected: true})
         {:noreply, Map.put(state, :socket, socket)}
       {:error, _} ->
-        Logger.warn "Failed to connect to rigctld"
         Process.send_after(self(), :connect, 10000)
         {:noreply, state}
     end
@@ -89,6 +88,7 @@ defmodule RigCtl do
 
   def handle_info({:tcp_closed, _socket}, state) do
     Process.send_after(self(), :connect, 10000)
+    Logger.warn "Connection to rigctl closed"
     CloudShack.State.update(:rig, %{connected: false})
     {:noreply, Map.put(state, :socket, nil)}
   end

@@ -47,12 +47,12 @@ defmodule Adif.Parse do
     case field do
       {"eor", _, _, _} -> {contact, rest}
       {_, _, _, nil} -> fields(rest, contact)
-      {name, _, _, value} ->
-        {name, value} = Adif.Field.decode({name, value})
+      {name, _, _, raw_value} ->
+        {name, value} = Adif.Field.decode({name, raw_value})
         if value do
           fields(rest, Map.put(contact, name, value))
         else
-          Logger.warn "Ignoring unknown ADIF field '#{name}'"
+          Logger.warn "Ignoring unknown ADIF field '#{name}' (#{raw_value})"
           fields(rest, contact)
         end
       nil -> {contact, rest}

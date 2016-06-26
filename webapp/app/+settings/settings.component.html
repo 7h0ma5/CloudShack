@@ -74,6 +74,24 @@
       <input type="text" id="sync-key" [(ngModel)]="config.sync.key" />
     </div>
   </tab>
+  <tab title="WSJT">
+    <div>
+      <div class="form-group">
+        <label for="wsjt-port">Port</label>
+        <input type="number" step="1" min="1" max="65535"  id="wsjt-port" [(ngModel)]="config.wsjt.port" />
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="wsjt-forward-host">Forward Host</label>
+        <input type="text" id="wsjt-forward-host" [(ngModel)]="config.wsjt.forward_host" />
+      </div>
+      <div class="form-group">
+        <label for="wsjt-forward-port">Forward Port</label>
+        <input type="number" step="1" min="1" max="65535"  id="wsjt-forward-port" [(ngModel)]="config.wsjt.forward_port" />
+      </div>
+    </div>
+  </tab>
 </tabs>
 
 <div class="box-transparent">
