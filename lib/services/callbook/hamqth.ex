@@ -31,9 +31,7 @@ defmodule Callbook.HamQTH do
   end
 
   def handle_call({:lookup, callsign}, _from, state) do
-    if !state[:session] do
-      state = authenticate(state)
-    end
+    state = if !state[:session], do: authenticate(state), else: state
 
     if state[:session] do
       result = query(callsign, state)

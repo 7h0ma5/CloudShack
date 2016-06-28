@@ -52,9 +52,9 @@ defmodule CloudShack.Mixfile do
       {:cowboy, "~> 1.0.4"},
       {:plug, "~> 1.1.4"},
       {:sweet_xml, "~> 0.6.1"},
-      {:httpoison, "~> 0.8.2"},
+      {:httpoison, "~> 0.9.0"},
       {:poison, "~> 2.2.0"},
-      {:timex, "~> 2.1.5"},
+      {:timex, "~> 2.2.1"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
       {:gproc, "~> 0.5.0"},
       {:exrm, "~> 1.0.3"}

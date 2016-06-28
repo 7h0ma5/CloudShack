@@ -48,7 +48,6 @@ defmodule DXCC do
         results |> Enum.find(fn({prefix, result}) ->
           !(Map.get(result, :exact, false) && callsign != prefix)
         end)
-      _ -> nil
     end
   end
 

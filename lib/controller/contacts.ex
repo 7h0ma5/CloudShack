@@ -89,7 +89,7 @@ defmodule CloudShack.Controller.Contacts do
 
     docs = %{"docs" => contacts} |> Poison.encode!
 
-    {:ok, result} = Database.contacts
+    {:ok, _result} = Database.contacts
       |> CouchDB.Database.bulk(docs)
 
     count = Enum.count(contacts)

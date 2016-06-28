@@ -166,7 +166,7 @@ defmodule WSJT do
     <<_utc :: 8-unsigned, rest :: binary>> = rest
 
     datetime = ((julianDay - 2440587.5) * 86400.0)
-      |> +(62_167_176_000 + milliSeconds / 1.0e3)
+      |> Kernel.+(62_167_176_000 + milliSeconds / 1.0e3)
       |> round
       |> :calendar.gregorian_seconds_to_datetime
       |> Timex.DateTime.from
