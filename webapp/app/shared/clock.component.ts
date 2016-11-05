@@ -1,5 +1,5 @@
-import { Component } from "angular2/core";
-import { DatePipe } from "angular2/common";
+import { Component } from "@angular/core";
+import { DatePipe } from "@angular/common";
 import { Observable } from "rxjs/Rx";
 
 @Component({

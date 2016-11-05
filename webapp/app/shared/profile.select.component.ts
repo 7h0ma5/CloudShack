@@ -1,5 +1,5 @@
-import { Component } from "angular2/core";
-import { Router, RouterLink } from "angular2/router";
+import { Component } from "@angular/core";
+import { Router, RouterLink } from "@angular/router";
 import { ProfileService } from "./profile.service";
 import { StateService } from "./state.service";
 import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
@@ -30,7 +30,7 @@ import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
             </ul>
         </div>
     `,
-    directives: [RouterLink, DROPDOWN_DIRECTIVES]
+    providers: [RouterLink, DROPDOWN_DIRECTIVES]
 })
 export class ProfileSelectComponent {
     profiles: Array<Object> = [];

@@ -1,5 +1,6 @@
 var gulp = require("gulp"),
     $ = require("gulp-load-plugins")(),
+    Builder = require("systemjs-builder"),
     merge = require("merge-stream");
 
 var NPM_DIR = "node_modules";
@@ -7,25 +8,16 @@ var TARGET_DIR = "../priv/static";
 
 var project = $.typescript.createProject("tsconfig.json");
 
-gulp.task("app.js", ["typings"], function() {
+gulp.task("app", function() {
     return gulp.src([
         "main.ts",
-        "app/**/*.ts",
-        "typings/browser.d.ts",
-        "node_modules/angular2/typings/browser.d.ts"
+        "app/**/*.ts"
     ])
         .pipe($.plumber())
-        .pipe($.sourcemaps.init())
-        .pipe($.typescript(project))
+        .pipe(project())
         .js
-        .pipe($.sourcemaps.write())
-        .pipe(gulp.dest(TARGET_DIR + "/app"))
+        .pipe(gulp.dest("app"))
         .pipe($.livereload());
-});
-
-gulp.task("typings", function(callback) {
-    return gulp.src("./typings.json")
-        .pipe($.typings());
 });
 
 gulp.task("app.css", function() {
@@ -44,7 +36,7 @@ gulp.task("vendor.css", function() {
     return gulp.src([
             NPM_DIR + "/normalize.css/normalize.css",
             NPM_DIR + "/font-awesome/css/font-awesome.css",
-            NPM_DIR + "/roboto-fontface/css/roboto-fontface.css",
+            NPM_DIR + "/roboto-fontface/css/roboto/roboto-fontface.css",
             NPM_DIR + "/leaflet/dist/leaflet.css",
     ])
 //        .pipe($.cleanCss())
@@ -52,25 +44,42 @@ gulp.task("vendor.css", function() {
         .pipe(gulp.dest(TARGET_DIR + "/css"));
 });
 
-gulp.task("vendor.js", function() {
-    var standalone = gulp.src([
-        NPM_DIR + "/leaflet/dist/leaflet.js",
-    ])
-        .pipe(gulp.dest(TARGET_DIR + "/app"));
+gulp.task("app.js", ["app"], function() {
+    var builder = new Builder("", "system.conf.js");
 
+    return builder
+        .bundle("[app/**/*.js]", TARGET_DIR + "/js/app.js")
+        .then(function() { })
+        .catch(function(err) {
+          console.log("Build error");
+          console.log(err);
+        });
+});
+
+gulp.task("vendor.bundle.js", ["app"], function() {
+    var builder = new Builder("", "system.conf.js");
+
+    return builder
+        .bundle("app/**/*.js - [app/**/*.js]", TARGET_DIR + "/js/vendor.bundle.js")
+        .then(function() { })
+        .catch(function(err) {
+          console.log("Build error");
+          console.log(err);
+        });
+});
+
+gulp.task("vendor.js", function() {
     var vendor = gulp.src([
-        NPM_DIR + "/angular2/bundles/angular2-polyfills.js",
+        NPM_DIR + "/reflect-metadata/Reflect.js",
+        NPM_DIR + "/zone.js/dist/zone.js",
         NPM_DIR + "/systemjs/dist/system.src.js",
         "system.conf.js",
-        NPM_DIR + "/rxjs/bundles/Rx.js",
-        NPM_DIR + "/angular2/bundles/angular2.dev.js",
-        NPM_DIR + "/angular2/bundles/router.js",
-        NPM_DIR + "/angular2/bundles/http.js"
+        NPM_DIR + "/rxjs/bundles/Rx.js"
     ])
         .pipe($.concat("vendor.js"))
         .pipe(gulp.dest(TARGET_DIR + "/js"));
 
-    return merge(standalone, vendor);
+    return vendor;
 });
 
 gulp.task("fonts", function() {
@@ -81,7 +90,7 @@ gulp.task("fonts", function() {
         .pipe(gulp.dest(TARGET_DIR + "/fonts"));
 
     var roboto = gulp.src([
-            NPM_DIR + "/roboto-fontface/fonts/**/*.{woff,woff2}"
+            NPM_DIR + "/roboto-fontface/fonts/Roboto/*.{woff,woff2}"
     ])
         .pipe($.changed(TARGET_DIR + "/fonts"))
         .pipe(gulp.dest(TARGET_DIR + "/fonts"));
@@ -119,8 +128,9 @@ gulp.task("index", function() {
 
 gulp.task("default", [
     "vendor.css",
-    "vendor.js",
     "app.css",
+    "vendor.bundle.js",
+    "vendor.js",
     "app.js",
     "fonts",
     "images",

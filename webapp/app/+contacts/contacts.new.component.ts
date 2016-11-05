@@ -1,6 +1,6 @@
-import { Component, ViewChild, ElementRef, Renderer, AfterViewInit, HostListener } from "angular2/core";
-import { Control } from "angular2/common";
-import { Http, Response } from "angular2/http";
+import { Component, ViewChild, ElementRef, Renderer, AfterViewInit, HostListener } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import { MODES, CONTESTS } from "../lib/constants";
 import { coord_distance, coord_bearing, grid_to_coord } from "../lib/geo";
@@ -25,7 +25,7 @@ const DXCC_PRIORITY: number = 2;
 
 @Component({
     templateUrl: "/app/+contacts/contacts.new.component.html",
-    directives: [
+    providers: [
         WorldMapComponent,
         SmartInputDirective,
         UppercaseDirective,
@@ -44,9 +44,9 @@ export class ContactsNewComponent implements AfterViewInit {
     startDate: string = null;
     endDate: string = null;
 
-    callsign: Control = new Control();
-    gridsquare: Control = new Control();
-    mode: Control = new Control();
+    callsign: FormControl = new FormControl();
+    gridsquare: FormControl = new FormControl();
+    mode: FormControl = new FormControl();
 
     maptargets: Array<[number, number]> = [null, null, null];
     maptarget: [number, number] = null;

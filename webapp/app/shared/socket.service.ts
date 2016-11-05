@@ -1,4 +1,4 @@
-import { Injectable, Output, EventEmitter } from "angular2/core";
+import { Injectable, Output, EventEmitter } from "@angular/core";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 
 export class Spot {

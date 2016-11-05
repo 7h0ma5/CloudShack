@@ -1,10 +1,10 @@
-import { Component } from "angular2/core";
+import { Component } from "@angular/core";
 import { TAB_DIRECTIVES } from "../shared/index";
-import { Http, Response } from "angular2/http";
+import { Http, Response } from "@angular/http";
 
 @Component({
     templateUrl: "/app/+settings/settings.component.html",
-    directives: [TAB_DIRECTIVES]
+    providers: [TAB_DIRECTIVES]
 })
 export class SettingsComponent {
     config = {

@@ -1,13 +1,18 @@
 {
-    "version": "1.6.0",
+    "version": "2.0.0",
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "module": "system",
         "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "moduleResolution": "node",
-        "outDir": "public/"
-    }
+        "moduleResolution": "node"
+    },
+    "typeRoots": [
+        "../node_modules/@types"
+    ],
+    "types": [
+        "leaflet"
+    ]
 }

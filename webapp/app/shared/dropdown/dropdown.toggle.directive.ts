@@ -1,5 +1,5 @@
 import { DropdownDirective } from "./dropdown.directive";
-import { Directive, ElementRef, OnDestroy, Host, HostListener } from "angular2/core";
+import { Directive, ElementRef, OnDestroy, Host, HostListener } from "@angular/core";
 
 @Directive({
     selector: "[dropdown-toggle]"

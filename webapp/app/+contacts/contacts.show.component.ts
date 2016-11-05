@@ -1,6 +1,4 @@
-import { Component } from "angular2/core";
-import { RouteParams, Router } from "angular2/router";
-import { Location } from "angular2/platform/common";
+import { Component } from "@angular/core";
 import { ContactService } from "../shared/index";
 
 @Component({
@@ -10,12 +8,9 @@ export class ContactsShowComponent {
     contact: Object = {};
 
     constructor(
-        params: RouteParams,
-        public api: ContactService,
-        public router: Router,
-        public location: Location
+        public api: ContactService
     ) {
-        var id = params.get("id");
+        var id = ""; // TODO
         this.api.get(id).subscribe(contact => this.contact = contact);
     }
 
@@ -24,7 +19,7 @@ export class ContactsShowComponent {
     }
 
     edit() {
-        this.router.navigate(["/EditContact", {id: this.contact["_id"]}]);
+        //this.router.navigate(["/EditContact", {id: this.contact["_id"]}]);
     }
 
     delete() {
@@ -32,7 +27,7 @@ export class ContactsShowComponent {
         if (!window.confirm(msg)) return;
 
         this.api.delete(this.contact["_id"], this.contact["_rev"]).subscribe(
-            success => this.location.back(),
+            success => null,//this.location.back(),
             error => alert("Failed to delete")
         );
     }

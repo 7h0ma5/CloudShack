@@ -1,4 +1,4 @@
-import { Injectable } from "angular2/core";
+import { Injectable } from "@angular/core";
 import { StateService } from "./state.service";
 import { SocketService } from "./socket.service";
 

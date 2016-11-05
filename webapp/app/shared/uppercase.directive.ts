@@ -1,14 +1,15 @@
-import { Directive, Renderer, ElementRef, HostListener, forwardRef, Provider } from "angular2/core";
-import { NG_VALUE_ACCESSOR, DefaultValueAccessor } from 'angular2/common';
-import { CONST_EXPR } from 'angular2/src/facade/lang';
+import { Directive, Renderer, ElementRef, HostListener, forwardRef } from "@angular/core";
+import { NG_VALUE_ACCESSOR, DefaultValueAccessor } from "@angular/forms";
 
-const PROVIDER = CONST_EXPR(new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => UppercaseDirective), multi: true}
-));
+const PROVIDER = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => UppercaseDirective),
+    multi: true
+};
 
 @Directive({
     selector: "input[uppercase]",
-    bindings: [PROVIDER]
+    providers: [PROVIDER]
 })
 export class UppercaseDirective extends DefaultValueAccessor {
     constructor(_renderer: Renderer, _elementRef: ElementRef) {

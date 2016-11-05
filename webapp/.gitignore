@@ -9,6 +9,7 @@
 *.vi
 *~
 *.sass-cache
+*.map
 
 # OS or Editor folders
 .DS_Store
@@ -27,6 +28,7 @@ tmp/
 
 # Brunch output folder.
 public/
+dist/
 
 # Bower stuff.
 bower_components/
@@ -34,3 +36,5 @@ bower_components/
 bin/
 coverage/
 typings/
+
+app/**/*.js

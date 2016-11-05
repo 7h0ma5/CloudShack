@@ -1,23 +1,21 @@
-import { Component, Directive, Inject, ElementRef, OnDestroy } from "angular2/core";
+import { Component, Directive, Inject, ElementRef, OnDestroy } from "@angular/core";
 import { Map, Icon, LatLng, Marker, marker, tileLayer, control } from "leaflet";
+import * as L from "leaflet";
 
 @Directive({
-    selector: "worldmap",
-    properties: ["maptarget"]
+    selector: "worldmap"
 })
 export class WorldMapComponent implements OnDestroy {
     target: [number, number];
-    map: Map;
-    marker: Marker;
+    map: L.Map;
+    marker: L.Marker;
 
     constructor(@Inject(ElementRef) elementRef: ElementRef) {
-        Icon.Default.imagePath = '/css/images';
-
-        var offline = tileLayer("/images/map/{z}/{x}/{y}.png", {
+        var offline = L.tileLayer("/images/map/{z}/{x}/{y}.png", {
             maxZoom: 4
         });
 
-        var osm = tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
+        var osm = L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
             subdomains: ["1", "2", "3", "4"],
             maxZoom: 14,
             attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -28,13 +26,13 @@ export class WorldMapComponent implements OnDestroy {
             "MapQuest OSM": osm
         };
 
-        this.map = new Map(elementRef.nativeElement, {
-            center: new LatLng(51.505, -0.09),
+        this.map = L.map(elementRef.nativeElement, {
+            center: L.latLng(51.505, -0.09),
             zoom: 2,
             layers: [offline]
         });
 
-        control.layers(layers, []).addTo(this.map);
+        control.layers(layers).addTo(this.map);
 
         this.marker = marker([0, 0]);
     }

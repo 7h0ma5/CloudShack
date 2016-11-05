@@ -1,5 +1,5 @@
-import { Component } from "angular2/core";
-import { Http, Response, URLSearchParams } from "angular2/http";
+import { Component } from "@angular/core";
+import { Http, Response, URLSearchParams } from "@angular/http";
 import { FlashService } from "../shared/index";
 
 @Component({

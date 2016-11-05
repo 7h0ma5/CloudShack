@@ -1,4 +1,4 @@
-import { Component, Input, ContentChildren, QueryList } from "angular2/core";
+import { Component, Input, ContentChildren, QueryList } from "@angular/core";
 
 @Component({
     selector: "tab",
