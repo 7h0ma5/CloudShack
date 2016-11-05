@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ContactService } from "../shared/index";
 
 @Component({
-    templateUrl: "/app/+home/home.component.html"
+    templateUrl: "./home.component.html"
 })
 export class HomeComponent {
     qso_stats = {total: 0, year: 0, month: 0};

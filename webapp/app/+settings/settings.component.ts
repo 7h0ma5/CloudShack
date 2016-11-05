@@ -3,7 +3,7 @@ import { TAB_DIRECTIVES } from "../shared/index";
 import { Http, Response } from "@angular/http";
 
 @Component({
-    templateUrl: "/app/+settings/settings.component.html",
+    templateUrl: "./settings.component.html",
     providers: [TAB_DIRECTIVES]
 })
 export class SettingsComponent {

@@ -3,7 +3,7 @@ import { RouterLink } from "@angular/router";
 import { ContactService, UppercaseDirective } from "../shared/index";
 
 @Component({
-    templateUrl: "/app/+contacts/contacts.list.component.html",
+    templateUrl: "./contacts.list.component.html",
     providers: [RouterLink, UppercaseDirective]
 })
 export class ContactsListComponent {

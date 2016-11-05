@@ -9,7 +9,7 @@
             <label for="call">Callsign</label>
             <input uppercase type="text" autocomplete="off" id="call"
                    [(ngModel)]="contact.call" class="input-callsign"
-                   [ngFormControl]="callsign" #callsignInput>
+                   #callsignInput>
           </div>
 
           <div class="form-group">
@@ -44,7 +44,7 @@
             <label for="gridsquare">Gridsquare</label>
             <input uppercase type="text" [(ngModel)]="contact.gridsquare" smartInput
                    class="input-gridsquare" id="gridsquare" autocomplete="off"
-                   placeholder="{{callbook?.gridsquare}}" [ngFormControl]="gridsquare">
+                   placeholder="{{callbook?.gridsquare}}">
           </div>
         </div>
 
@@ -62,7 +62,7 @@
 
           <div class="form-group">
             <label for="mode">Mode</label>
-            <select id="mode" [(ngModel)]="contact.mode" [ngFormControl]="mode">
+            <select id="mode" [(ngModel)]="contact.mode">
               <option *ngFor="let m of modes" [value]="m.name">{{m.name}}</option>
             </select>
           </div>

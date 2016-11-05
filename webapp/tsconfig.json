@@ -1,18 +1,25 @@
 {
-    "version": "2.0.0",
-    "compilerOptions": {
-        "target": "es6",
-        "module": "system",
-        "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "sourceMap": true,
-        "moduleResolution": "node"
-    },
-    "typeRoots": [
-        "../node_modules/@types"
-    ],
-    "types": [
-        "leaflet"
-    ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "outDir": "../priv/static/app",
+    "rootDir": ".",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+     "types": [
+       "core-js",
+       "node"
+     ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": { "rewriteTsconfig": false }
 }

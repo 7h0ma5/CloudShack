@@ -24,7 +24,7 @@ const CALLBOOK_PRIORITY: number = 1;
 const DXCC_PRIORITY: number = 2;
 
 @Component({
-    templateUrl: "/app/+contacts/contacts.new.component.html",
+    templateUrl: "./contacts.new.component.html",
     providers: [
         WorldMapComponent,
         SmartInputDirective,

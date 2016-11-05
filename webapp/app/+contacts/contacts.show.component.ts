@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ContactService } from "../shared/index";
 
 @Component({
-    templateUrl: "/app/+contacts/contacts.show.component.html"
+    templateUrl: "./contacts.show.component.html"
 })
 export class ContactsShowComponent {
     contact: Object = {};

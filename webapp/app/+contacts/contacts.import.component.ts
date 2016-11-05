@@ -3,7 +3,7 @@ import { Http, Response, URLSearchParams } from "@angular/http";
 import { FlashService } from "../shared/index";
 
 @Component({
-    templateUrl: "/app/+contacts/contacts.import.component.html"
+    templateUrl: "./contacts.import.component.html"
 })
 export class ContactsImportComponent {
     filesToUpload: Array<File> = null;

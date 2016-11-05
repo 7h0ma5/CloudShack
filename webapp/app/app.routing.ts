@@ -1,8 +1,6 @@
 import { ModuleWithProviders } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { HomeComponent } from "./+home/home.component";
-
 const appRoutes: Routes = [
   // { path: "logbook", loadChildren: "./app/+contacts/contacts.list.component.js" },
   // { path: "map", loadChildren: "./app/+contacts/contacts.map.component" },
@@ -15,7 +13,8 @@ const appRoutes: Routes = [
   // { path: "import", loadChildren: "./app/+contacts/contacts.import.component" },
   // { path: "export", loadChildren: "./app/+contacts/contacts.export.component" },
   // { path: "settings", loadChildren: "./app/+settings/settings.component" },
-  { path: "", component: HomeComponent }
+  { path: "contacts", loadChildren: "./+contacts/contacts.module#ContactsModule" },
+  { path: "", loadChildren: "./+home/home.module#HomeModule" }
 ];
 
 export const appRoutingProviders: any[] = [

@@ -5,7 +5,7 @@ import { BANDS } from "../lib/constants";
 import { grid_to_rect } from "../lib/geo";
 
 @Component({
-    templateUrl: "/app/+contacts/contacts.map.component.html"
+    templateUrl: "./contacts.map.component.html"
 })
 export class ContactsMapComponent implements AfterViewInit, OnDestroy {
     @ViewChild("mapView") mapView: ElementRef;

@@ -6,7 +6,7 @@ declare var System:any;
 
 @Component({
     selector: "app",
-    templateUrl: "/app/app.component.html"
+    templateUrl: "./app.component.html"
 })
 export class AppComponent {
     version: string = "?";

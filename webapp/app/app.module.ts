@@ -5,7 +5,6 @@ import { HttpModule }     from "@angular/http";
 
 import { AppComponent } from "./app.component";
 import { routing, appRoutingProviders } from "./app.routing";
-import { HomeComponent } from "./+home/home.component";
 
 import {
     ClockComponent,
@@ -29,7 +28,6 @@ import {
     routing
   ],
   declarations: [
-    HomeComponent,
     AppComponent,
     ClockComponent,
     TickerComponent,
