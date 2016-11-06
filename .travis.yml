@@ -14,6 +14,9 @@ services:
   - couchdb
 before_script:
   - curl https://cdn.cloudshack.org/dxcc.json.gz > dxcc.json.gz
+before_install:
+  - nvm install 6
+  - nvm use 6
 install:
   - mix local.hex --force
   - mix deps.get
