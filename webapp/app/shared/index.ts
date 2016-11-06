@@ -9,7 +9,7 @@ export * from "./smart.input.directive";
 export * from "./socket.service";
 export * from "./state.service";
 export * from "./status.select.component";
-export * from "./tabs.component";
 export * from "./ticker.component";
 export * from "./uppercase.directive";
 export * from "./world.map.component";
+export * from "./shared.module";

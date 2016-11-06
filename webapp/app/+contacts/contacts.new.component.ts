@@ -9,12 +9,7 @@ import {
     ContactService,
     FlashService,
     RigService,
-    StateService,
-    WorldMapComponent,
-    SmartInputDirective,
-    UppercaseDirective,
-    TAB_DIRECTIVES,
-    DROPDOWN_DIRECTIVES
+    StateService
 } from "../shared/index";
 
 const RETAIN_FIELDS: [string] = ["freq", "mode", "submode", "tx_pwr"];
@@ -24,14 +19,7 @@ const CALLBOOK_PRIORITY: number = 1;
 const DXCC_PRIORITY: number = 2;
 
 @Component({
-    templateUrl: "./contacts.new.component.html",
-    providers: [
-        WorldMapComponent,
-        SmartInputDirective,
-        UppercaseDirective,
-        TAB_DIRECTIVES,
-        DROPDOWN_DIRECTIVES
-    ]
+    templateUrl: "./contacts.new.component.html"
 })
 export class ContactsNewComponent implements AfterViewInit {
     @ViewChild("callsignInput") callsignInput: ElementRef;

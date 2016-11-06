@@ -25,7 +25,7 @@ build_script:
 - cmd: >-
     bash -c "yes | mix compile"
 
-    bash -c "cd webapp && npm run build"
+    bash -c "cd webapp && npm install && npm run build"
 
     bash -c "yes | mix release"
 

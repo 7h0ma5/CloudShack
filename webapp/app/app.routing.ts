@@ -2,17 +2,9 @@ import { ModuleWithProviders } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 const appRoutes: Routes = [
-  // { path: "logbook", loadChildren: "./app/+contacts/contacts.list.component.js" },
-  // { path: "map", loadChildren: "./app/+contacts/contacts.map.component" },
-  // { path: "contact/new", loadChildren: "./app/+contacts/contacts.new.component" },
-  // { path: "contact/:id", loadChildren: "./app/+contacts/contacts.show.component" },
-  // { path: "contact/:id/edit", loadChildren: "./app/+contacts/contacts.edit.component" },
   // { path: "profile/new", loadChildren: "./app/+profiles/profiles.new.component" },
   // { path: "profile/:id", loadChildren: "./app/+contacts/profiles.edit.component" },
-  // { path: "cluster", loadChildren: "./app/+cluster/cluster.component" },
-  // { path: "import", loadChildren: "./app/+contacts/contacts.import.component" },
-  // { path: "export", loadChildren: "./app/+contacts/contacts.export.component" },
-  // { path: "settings", loadChildren: "./app/+settings/settings.component" },
+  { path: "settings", loadChildren: "./+settings/settings.module#SettingsModule" },
   { path: "contacts", loadChildren: "./+contacts/contacts.module#ContactsModule" },
   { path: "", loadChildren: "./+home/home.module#HomeModule" }
 ];
@@ -21,4 +13,7 @@ export const appRoutingProviders: any[] = [
 
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const routing: ModuleWithProviders = RouterModule.forRoot(
+    appRoutes,
+    { useHash: true }
+);

@@ -19,13 +19,41 @@
 
     <nav nav-menu>
       <ul>
-        <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
-        <li><a [routerLink]="['/contacts']"><i class="fa fa-book"></i> Logbook</a></li>
-        <li><a [routerLink]="['/contacts/new']"><i class="fa fa-plus"></i> New Contact</a></li>
-        <li><a [routerLink]="['/Cluster']"><i class="fa fa-globe"></i> DX Cluster</a></li>
-        <li><a [routerLink]="['/Import']"><i class="fa fa-cloud-upload"></i> Import</a></li>
-        <li><a [routerLink]="['/Export']"><i class="fa fa-cloud-download"></i> Export</a></li>
-        <li><a [routerLink]="['/Settings']"><i class="fa fa-wrench"></i> Settings</a></li>
+        <li>
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-home"></i> Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contacts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-book"></i> Logbook
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contacts/new" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-plus"></i> New Contact
+          </a>
+        </li>
+        <li>
+          <a routerLink="/cluster" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-globe"></i> DX Cluster
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contacts/import" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-cloud-upload"></i> Import
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contacts/export" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-cloud-download"></i> Export
+          </a>
+        </li>
+        <li>
+          <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fa fa-wrench"></i> Settings
+          </a>
+        </li>
       </ul>
     </nav>
 

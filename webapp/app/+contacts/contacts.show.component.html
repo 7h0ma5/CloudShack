@@ -104,32 +104,32 @@
     <tr>
       <td>QSL card</td>
       <td [ngSwitch]="contact.qsl_sent">
-        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Sent</span>
-        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
-        <span *ngSwitchWhen="'Q'"><i class="fa fa-upload"></i> Queued</span>
-        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Ignore</span>
+        <span *ngSwitchCase="'Y'"><i class="fa fa-check"></i> Sent</span>
+        <span *ngSwitchCase="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchCase="'Q'"><i class="fa fa-upload"></i> Queued</span>
+        <span *ngSwitchCase="'I'"><i class="fa fa-minus-circle"></i> Ignore</span>
         <span *ngSwitchDefault><i class="fa fa-times"></i> Not Sent</span>
       </td>
       <td [ngSwitch]="contact.qsl_rcvd">
-        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Received</span>
-        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
-        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Invalid</span>
+        <span *ngSwitchCase="'Y'"><i class="fa fa-check"></i> Received</span>
+        <span *ngSwitchCase="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchCase="'I'"><i class="fa fa-minus-circle"></i> Invalid</span>
         <span *ngSwitchDefault><i class="fa fa-times"></i> Not Received</span>
       </td>
     </tr>
     <tr>
       <td>LotW</td>
       <td [ngSwitch]="contact.lotw_qsl_sent">
-        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Uploaded</span>
-        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
-        <span *ngSwitchWhen="'Q'"><i class="fa fa-upload"></i> Queued</span>
-        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Ignore</span>
+        <span *ngSwitchCase="'Y'"><i class="fa fa-check"></i> Uploaded</span>
+        <span *ngSwitchCase="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchCase="'Q'"><i class="fa fa-upload"></i> Queued</span>
+        <span *ngSwitchCase="'I'"><i class="fa fa-minus-circle"></i> Ignore</span>
         <span *ngSwitchDefault><i class="fa fa-times"></i> Not Uploaded</span>
       </td>
       <td [ngSwitch]="contact.lotw_qsl_rcvd">
-        <span *ngSwitchWhen="'Y'"><i class="fa fa-check"></i> Received</span>
-        <span *ngSwitchWhen="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
-        <span *ngSwitchWhen="'I'"><i class="fa fa-minus-circle"></i> Invalid</span>
+        <span *ngSwitchCase="'Y'"><i class="fa fa-check"></i> Received</span>
+        <span *ngSwitchCase="'R'"><i class="fa fa-exclamation-circle"></i> Requested</span>
+        <span *ngSwitchCase="'I'"><i class="fa fa-minus-circle"></i> Invalid</span>
         <span *ngSwitchDefault><i class="fa fa-times"></i> Not Received</span>
       </td>
     </tr>

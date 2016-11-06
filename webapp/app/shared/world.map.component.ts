@@ -1,4 +1,4 @@
-import { Component, Directive, Inject, ElementRef, OnDestroy } from "@angular/core";
+import { Component, Directive, Inject, Input, ElementRef, OnDestroy } from "@angular/core";
 import { Map, Icon, LatLng, Marker, marker, tileLayer, control } from "leaflet";
 import * as L from "leaflet";
 
@@ -15,15 +15,14 @@ export class WorldMapComponent implements OnDestroy {
             maxZoom: 4
         });
 
-        var osm = L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
-            subdomains: ["1", "2", "3", "4"],
+        var osm = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 14,
             attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         });
 
         var layers = {
             "Offline": offline,
-            "MapQuest OSM": osm
+            "OpenStreetMap": osm
         };
 
         this.map = L.map(elementRef.nativeElement, {
@@ -45,6 +44,7 @@ export class WorldMapComponent implements OnDestroy {
         this.map.invalidateSize(false);
     }
 
+    @Input("maptarget")
     set maptarget(newTarget) {
         this.map.removeLayer(this.marker);
 

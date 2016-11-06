@@ -17,7 +17,8 @@ import {
     ProfileService,
     RigService,
     SocketService,
-    StateService
+    StateService,
+    SharedModule
 } from "./shared/index";
 
 @NgModule({
@@ -25,6 +26,7 @@ import {
     BrowserModule,
     FormsModule,
     HttpModule,
+    SharedModule,
     routing
   ],
   declarations: [

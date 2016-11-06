@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { ContactService } from "../shared/index";
 
 @Component({
@@ -8,10 +9,12 @@ export class ContactsShowComponent {
     contact: Object = {};
 
     constructor(
+        route: ActivatedRoute,
         public api: ContactService
     ) {
-        var id = ""; // TODO
-        this.api.get(id).subscribe(contact => this.contact = contact);
+        route.params.subscribe(params => {
+            this.api.get(params["id"]).subscribe(contact => this.contact = contact);
+        });
     }
 
     qrz() {

@@ -3,7 +3,7 @@
 <div class="box-transparent">
   <div class="box-content">
     <form (submit)="useFilter()">
-      <input type="text" placeholder="Callsign" [(ngModel)]="filter" uppercase>
+      <input type="text" placeholder="Callsign" [(ngModel)]="filter" name="filter" uppercase>
       <input type="submit" class="button" value="Search">
       <button (click)="resetFilter()">Reset</button>
     </form>
@@ -37,7 +37,7 @@
     </td>
     <td>
       <b>
-        <a [routerLink]="['/ShowContact', {id: contact.doc._id}]">
+        <a [routerLink]="[contact.doc._id]">
           {{contact.doc.call}}
         </a>
       </b>

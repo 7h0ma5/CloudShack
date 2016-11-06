@@ -18,7 +18,7 @@ install:
   - mix local.hex --force
   - mix deps.get
   - mix compile
-  - (cd webapp; npm run build)
+  - (cd webapp && npm install && npm run build)
 before_deploy:
   - mix release
   - mkdir package
