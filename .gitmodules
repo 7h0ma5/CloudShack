@@ -1,6 +1,6 @@
-[submodule "webapp/images/map"]
-	path = webapp/images/map
+[submodule "priv/map"]
+	path = priv/map
 	url = https://github.com/7h0ma5/CloudShack-MapTiles
-[submodule "webapp/images/flags"]
-	path = webapp/images/flags
+[submodule "priv/flags"]
+	path = priv/flags
 	url = https://github.com/7h0ma5/CloudShack-Flags
