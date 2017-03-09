@@ -28,7 +28,7 @@ git clone --recursive https://github.com/7h0ma5/CloudShack.git
 cd CloudShack
 
 # Build the webapp
-(cd webapp && npm run build)
+(cd webapp && npm install && npm run build)
 
 # Build the server
 export MIX_ENV=prod

@@ -4,12 +4,12 @@ defmodule CloudShack.Mixfile do
   def project do
     [app: :cloudshack,
      version: "0.5.0",
-     elixir: "~> 1.2",
+     elixir: "~> 1.4",
      description: "Amateur Radio Logbook Server",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     package: package]
+     deps: deps(),
+     package: package()]
   end
 
   def package do
@@ -49,15 +49,15 @@ defmodule CloudShack.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:cowboy, "~> 1.0.4"},
-      {:plug, "~> 1.1.4"},
-      {:sweet_xml, "~> 0.6.1"},
-      {:httpoison, "~> 0.9.0"},
-      {:poison, "~> 2.2.0"},
-      {:timex, "~> 2.2.1"},
+      {:cowboy, "~> 1.1"},
+      {:plug, "~> 1.3"},
+      {:sweet_xml, "~> 0.6"},
+      {:httpoison, "~> 0.11.1"},
+      {:poison, "~> 3.1"},
+      {:timex, "~> 3.1"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
-      {:gproc, "~> 0.5.0"},
-      {:exrm, "~> 1.0.3"}
+      {:gproc, "~> 0.6.1"},
+      {:exrm, "~> 1.0.8"}
     ]
   end
 end
