@@ -3,6 +3,11 @@ defmodule CloudShack.Router do
   use Plug.ErrorHandler
 
   @static_path Path.join("#{:code.priv_dir(:cloudshack)}", "static/")
+  @map_path Path.join("#{:code.priv_dir(:cloudshack)}", "map/")
+
+  plug Plug.Static,
+    at: "/images/map",
+    from: @map_path
 
   plug Plug.Static,
     at: "/",

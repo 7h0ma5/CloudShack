@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "outDir": "../priv/static/app",
     "rootDir": ".",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-     "types": [
+    "typeRoots": ["node_modules/@types"],
+    "types": [
        "core-js",
        "node"
-     ]
+    ]
   },
   "exclude": [
     "node_modules"

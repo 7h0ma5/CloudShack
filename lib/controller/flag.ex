@@ -2,7 +2,7 @@ defmodule CloudShack.Controller.Flag do
   use Plug.Router
   use Plug.ErrorHandler
 
-  @flag_path Path.join("#{:code.priv_dir(:cloudshack)}", "static/images/flags/")
+  @flag_path Path.join("#{:code.priv_dir(:cloudshack)}", "flags/")
 
   plug :match
   plug :dispatch
