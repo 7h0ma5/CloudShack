@@ -4,7 +4,7 @@ os:
 #  - osx
 language: elixir
 elixir:
-  - 1.2.2
+  - 1.4.1
 otp_release:
   - 18.2.1
 env:

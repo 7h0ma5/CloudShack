@@ -4,7 +4,7 @@ defmodule CloudShack.Mixfile do
   def project do
     [app: :cloudshack,
      version: "0.5.0",
-     elixir: "~> 1.2",
+     elixir: "~> 1.4",
      description: "Amateur Radio Logbook Server",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
