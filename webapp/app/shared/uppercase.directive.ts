@@ -13,7 +13,7 @@ const PROVIDER = {
 })
 export class UppercaseDirective extends DefaultValueAccessor {
     constructor(_renderer: Renderer, _elementRef: ElementRef) {
-        super(_renderer, _elementRef);
+        super(_renderer, _elementRef, true);
     }
 
     @HostListener("blur")

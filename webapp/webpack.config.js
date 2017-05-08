@@ -5,11 +5,11 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: {
-        app: "./app/main.ts",
-        vendor: "./app/vendor.ts"
+        polyfills: "./app/polyfills.ts",
+        vendor: "./app/vendor.ts",
+        app: "./app/main.ts"
     },
     cache: true,
-    debug: true,
     output: {
         path: path.join(__dirname, "../priv/static"),
         filename: "js/[name].bundle.js",
@@ -17,12 +17,15 @@ module.exports = {
         chunkFilename: "js/[id].chunk.js"
     },
     resolve: {
-        root: [ path.join(__dirname, "app") ],
-        extensions: ["", ".ts", ".js"]
+        extensions: [".ts", ".js"]
     },
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(true),
-        new webpack.optimize.CommonsChunkPlugin({ name: ["app", "vendor"], minChunks: Infinity }),
+        new webpack.ContextReplacementPlugin(
+            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+            path.join(__dirname, "./app"),
+            {}
+        ),
+        new webpack.optimize.CommonsChunkPlugin({ name: ["app", "vendor", "polyfills"] }),
         new ExtractTextPlugin("[name].css"),
         new CopyWebpackPlugin([
             { from: "./index.html" },
@@ -30,33 +33,25 @@ module.exports = {
         ])
     ],
     module: {
-        loaders: [
-            { test: /\.ts$/, loaders: ["awesome-typescript-loader", "angular2-template-loader", "angular2-router-loader"] },
-            { test: /\.css$/, loaders: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader") },
-            { test: /\.less$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!less-loader") },
-            { test: /\.html$/, loader: "raw-loader" },
+        rules: [
+            { test: /\.ts$/, use: ["awesome-typescript-loader", "angular2-template-loader", "angular-router-loader"] },
+            { test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: "style-loader", use: "css-loader!postcss-loader" }) },
+            { test: /\.less$/, use: ExtractTextPlugin.extract({ fallback: "style-loader", use: "css-loader!postcss-loader!less-loader" }) },
+            { test: /\.html$/, use: "raw-loader" },
             {
                 test: /\.(eot|svg|ttf|woff(2)?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file",
+                loader: "file-loader",
                 query: {
                     name: "./fonts/[hash].[ext]"
                 }
             },
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
-                loader: "file",
+                loader: "file-loader",
                 query: {
                     name: "./images/[hash].[ext]"
                 }
             }
         ]
-    },
-    node: {
-        global: 1,
-        crypto: "empty",
-        module: 0,
-        Buffer: 0,
-        clearImmediate: 0,
-        setImmediate: 0
     }
 };
