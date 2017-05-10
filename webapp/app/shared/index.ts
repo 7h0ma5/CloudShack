@@ -1,6 +1,5 @@
 export * from "./clock.component";
 export * from "./contact.service";
-export * from "./dropdown/index";
 export * from "./flash/index";
 export * from "./profile.select.component";
 export * from "./profile.service";

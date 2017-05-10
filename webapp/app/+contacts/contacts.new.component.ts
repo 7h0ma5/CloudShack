@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer, AfterViewInit, HostListener } from "@angular/core";
+import { Component, ViewChild, ElementRef, Renderer, AfterViewInit, HostListener, EventEmitter } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
@@ -32,9 +32,9 @@ export class ContactsNewComponent implements AfterViewInit {
     startDate: string = null;
     endDate: string = null;
 
-    callsign: FormControl = new FormControl();
-    gridsquare: FormControl = new FormControl();
-    mode: FormControl = new FormControl();
+    callsignChange: EventEmitter<any> = new EventEmitter<any>();
+    gridChange: EventEmitter<any> = new EventEmitter<any>();
+    modeChange: EventEmitter<any> = new EventEmitter<any>();
 
     maptargets: Array<[number, number]> = [null, null, null];
     maptarget: [number, number] = null;
@@ -55,7 +55,7 @@ export class ContactsNewComponent implements AfterViewInit {
         private http: Http
     )
     {
-        this.callsign.valueChanges
+        this.callsignChange
             .filter((val: string) => val && val.length > 0)
             .debounceTime(200)
             .map(encodeURIComponent)
@@ -64,7 +64,7 @@ export class ContactsNewComponent implements AfterViewInit {
             .map((res: Response) => res.json())
             .subscribe(this.updateDxcc.bind(this));
 
-        this.callsign.valueChanges
+        this.callsignChange
             .filter((val: string) => val && val.length > 2)
             .debounceTime(400)
             .map(encodeURIComponent)
@@ -73,18 +73,18 @@ export class ContactsNewComponent implements AfterViewInit {
             .map((res: Response) => res.json())
             .subscribe(this.updateCallbook.bind(this));
 
-        this.callsign.valueChanges
+        this.callsignChange
             .filter((val: string) => val && val.length > 2)
             .debounceTime(400)
             .switchMap((val: string) => this.api.previousContacts(val))
             .catch((err, caught) => { this.resetPreviousContacts(); return caught; })
             .subscribe(this.updatePreviousContacts.bind(this));
 
-        this.mode.valueChanges
+        this.modeChange
             .debounceTime(10)
             .subscribe(this.updateMode.bind(this));
 
-        this.gridsquare.valueChanges
+        this.gridChange
             .debounceTime(10)
             .subscribe(this.updateGridsquare.bind(this));
 

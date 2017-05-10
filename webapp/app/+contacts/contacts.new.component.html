@@ -9,6 +9,7 @@
             <label for="call">Callsign</label>
             <input uppercase type="text" autocomplete="off" id="call"
                    [(ngModel)]="contact.call" class="input-callsign"
+                   (ngModelChange)="callsignChange.emit($event)"
                    #callsignInput>
           </div>
 
@@ -44,6 +45,7 @@
             <label for="gridsquare">Gridsquare</label>
             <input uppercase type="text" [(ngModel)]="contact.gridsquare" smartInput
                    class="input-gridsquare" id="gridsquare" autocomplete="off"
+                   (ngModelChange)="gridChange.emit($event)"
                    placeholder="{{callbook?.gridsquare}}">
           </div>
         </div>
@@ -62,7 +64,8 @@
 
           <div class="form-group">
             <label for="mode">Mode</label>
-            <select id="mode" [(ngModel)]="contact.mode">
+            <select id="mode" [(ngModel)]="contact.mode"
+                    (ngModelChange)="modeChange.emit($event)">
               <option *ngFor="let m of modes" [value]="m.name">{{m.name}}</option>
             </select>
           </div>
