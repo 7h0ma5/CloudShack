@@ -16,6 +16,7 @@ import {
     FlashService,
     ProfileService,
     RigService,
+    RotService,
     SocketService,
     StateService,
     SharedModule
@@ -43,6 +44,7 @@ import {
     FlashService,
     ProfileService,
     RigService,
+    RotService,
     SocketService,
     StateService
   ],

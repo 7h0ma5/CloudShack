@@ -12,6 +12,7 @@ import { ContactsImportComponent } from "./contacts.import.component";
 import { ContactsExportComponent } from "./contacts.export.component";
 
 import {
+    CompassComponent,
     WorldMapComponent,
     SmartInputDirective,
     UppercaseDirective,
@@ -39,6 +40,7 @@ import {
         ContactsMapComponent,
         ContactsImportComponent,
         ContactsExportComponent,
+        CompassComponent,
         WorldMapComponent,
         SmartInputDirective,
         UppercaseDirective

@@ -28,6 +28,8 @@ defmodule CloudShack.WebsocketHandler do
         -> RigCtl.set_mode(mode, passband)
       %{action: "rig.send_cw", text: text}
         -> RigCtl.send_cw(text)
+      %{action: "rot.set_target", target: target}
+        -> RotCtl.set_target(target)
       other -> Logger.warn("Unknown websocket command #{inspect other}")
     end
     {:ok, req, state}

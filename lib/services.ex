@@ -17,6 +17,7 @@ defmodule CloudShack.Services do
       worker(Cluster, [CloudShack.Config.get(:cluster)]),
       worker(Database, [CloudShack.Config.get(:database), sync]),
       worker(RigCtl, [CloudShack.Config.get(:rigctl)]),
+      worker(RotCtl, [CloudShack.Config.get(:rotctl)]),
       worker(DXCC, [])
     ]
 

@@ -249,6 +249,17 @@
         </div>
     </div>
 
+    <div class="box">
+      <div class="box-title">Rotator</div>
+      <div class="box-content">
+        <compass heading="{{state.rot?.heading}}"></compass>
+        <span style="font-size: 1.5em">{{state.rot?.heading}}°</span>
+        <input type="number" min="0" max="360" step="1" #rotTarget>
+        <button (click)="rotate(rotTarget.value)">Rotate</button>
+        <div style="clear: both"></div>
+      </div>
+    </div>
+
     <div class="box" *ngIf="dxcc">
       <div class="box-title">{{dxcc?.prefix}} &ndash; {{dxcc?.country}} &ndash; {{dxcc?.cont}}</div>
       <div class="box-content">

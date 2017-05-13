@@ -169,7 +169,7 @@ defmodule WSJT do
       |> Kernel.+(62_167_176_000 + milliSeconds / 1.0e3)
       |> round
       |> :calendar.gregorian_seconds_to_datetime
-      |> Timex.DateTime.from
+      |> Timex.to_datetime("Etc/UTC")
 
     {datetime, rest}
   end

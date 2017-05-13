@@ -1,4 +1,4 @@
-defmodule RigCtl do
+defmodule RotCtl do
   use GenServer
   require Logger
 
@@ -6,20 +6,12 @@ defmodule RigCtl do
     GenServer.start_link(__MODULE__, config, [name: __MODULE__])
   end
 
-  def set_freq(freq) do
-     GenServer.cast(__MODULE__, {:cmd, {:set_freq, freq}})
+  def set_target(az) do
+     GenServer.cast(__MODULE__, {:cmd, {:set_target, az}})
   end
 
-  def set_mode(mode, passband) do
-    GenServer.cast(__MODULE__, {:cmd, {:set_mode, mode, passband}})
-  end
-
-  def set_cw_speed(speed) do
-    GenServer.cast(__MODULE__, {:cmd, {:set_cw_speed, speed}})
-  end
-
-  def send_cw(text) do
-    GenServer.cast(__MODULE__, {:cmd, {:send_cw, text}})
+  def stop() do
+    GenServer.cast(__MODULE__, {:cmd, :stop})
   end
 
   def init(config) do
@@ -27,17 +19,15 @@ defmodule RigCtl do
 
     {:ok, %{
       host: Map.get(config, :host, "127.0.0.1"),
-      port: Map.get(config, :port, 4532),
+      port: Map.get(config, :port, 4533),
       socket: nil
     }}
   end
 
   def handle_cast({:cmd, value}, state) do
     cmd = case value do
-      {:set_freq, freq} -> "F #{round(freq * 1.0e6)}\n+F\n"
-      {:set_mode, mode, passband} -> "M #{mode} #{passband}\n+M\n"
-      {:set_cw_speed, speed} -> "L KEYSPD #{speed}\n"
-      {:send_cw, text} -> "b #{text}\n"
+      {:set_target, az} -> "P #{az} 0\n"
+      :stop -> "S\n"
       _ -> nil
     end
 
@@ -53,9 +43,9 @@ defmodule RigCtl do
 
     case :gen_tcp.connect(to_char_list(state.host), state.port, options) do
       {:ok, socket} ->
-        Logger.info "Connected to rigctld"
+        Logger.info "Connected to rotctld"
         Process.send_after(self(), :poll, 100)
-        CloudShack.State.update(:rig, %{connected: true})
+        CloudShack.State.update(:rot, %{connected: true})
         {:noreply, Map.put(state, :socket, socket)}
       {:error, _} ->
         Process.send_after(self(), :connect, 10000)
@@ -65,7 +55,7 @@ defmodule RigCtl do
 
   def handle_info(:poll, state) do
     if socket = state.socket do
-      :gen_tcp.send(socket, "+f\n+m\n")
+      :gen_tcp.send(socket, "+p\n")
       Process.send_after(self(), :poll, 1000)
     end
     {:noreply, state}
@@ -73,14 +63,12 @@ defmodule RigCtl do
 
   def handle_info({:tcp, _socket, packet}, state) do
     result = case packet do
-      "Frequency: " <> tail -> parse_frequency(tail)
-      "Mode: " <> tail -> parse_mode(tail)
-      "Passband: " <> tail -> parse_passband(tail)
+      "Azimuth: " <> tail -> parse_azimuth(tail)
       _ -> nil
     end
 
     if result do
-      CloudShack.State.update(:rig, result)
+      CloudShack.State.update(:rot, result)
     end
 
     {:noreply, state}
@@ -93,25 +81,10 @@ defmodule RigCtl do
     {:noreply, Map.put(state, :socket, nil)}
   end
 
-  def parse_frequency(data) do
-    case Integer.parse(data) do
-      {num, _} -> %{freq: num / 1.0e6}
+  def parse_azimuth(data) do
+    case Float.parse(data) do
+      {num, _} -> %{heading: num}
       :error -> nil
-    end
-  end
-
-  def parse_passband(data) do
-    case Integer.parse(data) do
-      {num, _} -> %{passband: num}
-      :error -> nil
-    end
-  end
-
-  def parse_mode(data) do
-    case String.splitter(data, "\n") |> Enum.at(0) do
-      nil -> nil
-      "" -> nil
-      value -> %{mode: value}
     end
   end
 end

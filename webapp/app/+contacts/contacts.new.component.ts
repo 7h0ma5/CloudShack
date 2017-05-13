@@ -9,6 +9,7 @@ import {
     ContactService,
     FlashService,
     RigService,
+    RotService,
     StateService
 } from "../shared/index";
 
@@ -51,6 +52,7 @@ export class ContactsNewComponent implements AfterViewInit {
         private api: ContactService,
         private flash: FlashService,
         private rig: RigService,
+        private rot: RotService,
         private state: StateService,
         private http: Http
     )
@@ -258,6 +260,10 @@ export class ContactsNewComponent implements AfterViewInit {
 
     sendCW(text) {
         this.rig.send_cw(text);
+    }
+
+    rotate(target) {
+        this.rot.set_target(target);
     }
 
     @HostListener("keydown.alt.w", ["$event"])

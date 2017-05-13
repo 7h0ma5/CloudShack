@@ -8,7 +8,7 @@ defmodule Cluster do
 
   def init(config) do
     if config[:host] do
-      Process.send_after(self, :connect, 100)
+      Process.send_after(self(), :connect, 100)
     end
 
     {:ok, %{
