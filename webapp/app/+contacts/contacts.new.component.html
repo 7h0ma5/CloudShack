@@ -254,7 +254,7 @@
       <div class="box-content">
         <compass heading="{{state.rot?.heading}}"></compass>
         <span style="font-size: 1.5em">{{state.rot?.heading}}°</span>
-        <input type="number" min="0" max="360" step="1" #rotTarget>
+        <input type="number" min="0" max="360" step="1" value="{{bearing}}" #rotTarget>
         <button (click)="rotate(rotTarget.value)">Rotate</button>
         <div style="clear: both"></div>
       </div>

@@ -6,7 +6,7 @@ import { ProfileService, FlashService } from "../shared/index";
     templateUrl: "./profiles.edit.component.html"
 })
 export class ProfilesEditComponent {
-    profile: Object = {};
+    profile: Object = {fields: {}};
     newProfile: boolean = true;
 
     constructor(
