@@ -15,7 +15,6 @@ import {
     CompassComponent,
     WorldMapComponent,
     SmartInputDirective,
-    UppercaseDirective,
     SharedModule
 } from "../shared/index";
 
@@ -42,8 +41,7 @@ import {
         ContactsExportComponent,
         CompassComponent,
         WorldMapComponent,
-        SmartInputDirective,
-        UppercaseDirective
+        SmartInputDirective
     ]
 })
 export class ContactsModule {}

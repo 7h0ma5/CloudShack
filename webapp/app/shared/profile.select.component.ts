@@ -23,7 +23,7 @@ import { DROPDOWN_DIRECTIVES } from "./dropdown/index";
                 <a (click)="activate(i)">{{profile.doc.name}}</a>
               </li>
               <li>
-                <a [routerLink]="['/NewProfile']">
+                <a routerLink="/profiles/new">
                   <i class="fa fa-plus fa-lg fa-fw"></i> New Profile
                 </a>
               </li>

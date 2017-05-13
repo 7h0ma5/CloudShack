@@ -1,10 +1,8 @@
 import { Component } from "@angular/core";
-import { RouterLink } from "@angular/router";
-import { ContactService, UppercaseDirective } from "../shared/index";
+import { ContactService } from "../shared/index";
 
 @Component({
-    templateUrl: "./contacts.list.component.html",
-    providers: [RouterLink, UppercaseDirective]
+    templateUrl: "./contacts.list.component.html"
 })
 export class ContactsListComponent {
     contacts: Array<Object> = [];
