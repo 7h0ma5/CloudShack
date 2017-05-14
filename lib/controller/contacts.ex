@@ -68,9 +68,27 @@ defmodule CloudShack.Controller.Contacts do
     options = conn.query_params
     {:ok, data, conn} = conn |> read_body(read_length: 8_000_000)
 
-    contacts = data
-      |> Adif.Parse.contacts
-      |> Stream.filter(&Contact.valid?/1)
+    start_time = options["start"]
+    end_time = options["end"]
+
+    contacts = data |> Adif.Parse.contacts
+
+
+    contacts = if options["start"] != nil and options["end"] != nil do
+      start_time = options["start"]
+      |> Poison.decode!
+      |> Timex.parse!("{ISO:Extended:Z}")
+      end_time = options["end"]
+      |> Poison.decode!
+      |> Timex.parse!("{ISO:Extended:Z}")
+
+      filter = &(Contact.in_range(&1, start_time, end_time))
+      contacts |> Stream.filter(filter)
+    else
+      contacts
+    end
+
+    contacts = contacts |> Stream.filter(&Contact.valid?/1)
       |> Stream.map(&Contact.update_band/1)
       |> Stream.map(&Contact.migrate_mode/1)
 

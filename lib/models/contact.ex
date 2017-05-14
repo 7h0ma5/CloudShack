@@ -21,6 +21,12 @@ defmodule Contact do
     Timex.parse!(date, "{ISO:Extended:Z}")
   end
 
+  def in_range(contact, start_time, end_time) do
+    contact_start = Contact.start_time(contact)
+    DateTime.compare(contact_start, start_time) == :gt and
+    DateTime.compare(contact_start, end_time) == :lt
+  end
+
   def migrate_mode(%{"mode" => mode} = contact) do
     migration = Data.legacy_mode(mode)
     if migration do

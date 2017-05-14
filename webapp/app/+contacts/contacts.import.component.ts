@@ -23,8 +23,8 @@ export class ContactsImportComponent {
         var params = new URLSearchParams();
 
         if (this.dateRange) {
-            params.set("start", JSON.stringify(new Date(this.start)));
-            params.set("end", JSON.stringify(new Date(this.end)));
+            params.set("start", JSON.stringify(new Date(this.start + "Z")));
+            params.set("end", JSON.stringify(new Date(this.end + "Z")));
         }
 
         params.set("dxcc", JSON.stringify(this.dxcc));
