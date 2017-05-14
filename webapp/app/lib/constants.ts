@@ -68,6 +68,7 @@ export const MODES = [
     {name: "MT63"},
     {name: "JT6M", rst: "26"},
     {name: "JTMSK", rst: "-1"},
+    {name: "MSK144", rst: "0"},
     {name: "FSK441", rst: "26"},
     {name: "DIGITALVOICE", rst: "59"},
     {name: "DSTAR", rst: "59"},
