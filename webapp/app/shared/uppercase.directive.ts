@@ -1,28 +1,17 @@
-import { Directive, Renderer, ElementRef, HostListener, forwardRef } from "@angular/core";
-import { NG_VALUE_ACCESSOR, DefaultValueAccessor } from "@angular/forms";
-
-const PROVIDER = {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => UppercaseDirective),
-    multi: true
-};
+import { Directive, Output, EventEmitter } from "@angular/core";
 
 @Directive({
-    selector: "input[uppercase]",
-    providers: [PROVIDER]
+    selector: "[ngModel][uppercase]",
+    host: {
+        "(input)": "onInputChange($event)"
+    }
 })
-export class UppercaseDirective extends DefaultValueAccessor {
-    constructor(_renderer: Renderer, _elementRef: ElementRef) {
-        super(_renderer, _elementRef, true);
-    }
+export class UppercaseDirective{
+    @Output() ngModelChange: EventEmitter<any> = new EventEmitter();
+    value: any;
 
-    @HostListener("blur")
-    blur() {
-        this.onTouched();
-    }
-
-    @HostListener("input", ["$event.target.value"])
-    input(value) {
-        this.onChange(value.toUpperCase());
+    onInputChange($event){
+        this.value = $event.target.value.toUpperCase();
+        this.ngModelChange.emit(this.value);
     }
 }
