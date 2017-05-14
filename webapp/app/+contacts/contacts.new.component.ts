@@ -92,13 +92,11 @@ export class ContactsNewComponent implements AfterViewInit {
 
         this.state.rigChange
             .subscribe(this.rigChange.bind(this));
-
-        this.contact = state.log || {};
     }
 
     ngAfterViewInit() {
-        // BUGFIX: https://github.com/angular/angular/issues/6005
-        setTimeout(_ => this.reset());
+        this.contact = this.state.log || {};
+        this.reset();
     }
 
     qrz() {
@@ -131,6 +129,10 @@ export class ContactsNewComponent implements AfterViewInit {
             let value = this.contact[field];
             if (value) contact[field] = value;
         }
+
+        this.callsignChange.emit("");
+        this.modeChange.emit(contact["mode"]);
+        this.gridChange.emit("");
 
         this.contact = contact;
 
@@ -201,15 +203,19 @@ export class ContactsNewComponent implements AfterViewInit {
     }
 
     updateMode(newMode: string) {
-        this.submodes = null;
-        delete this.contact["submode"];
+        var mode = this.modes.find(mode => mode.name == newMode);
 
-        this.modes.forEach(mode => {
-            if (mode.name == newMode) {
-                this.submodes = mode["submodes"];
-                this.rst = mode["rst"] || "599";
-            }
-        });
+        if (mode) {
+            this.rst = mode["rst"] || "599";
+        }
+
+        if (mode["submodes"]) {
+            this.submodes = mode["submodes"];
+        }
+        else {
+            this.submodes = null;
+            delete this.contact["submode"];
+        }
     }
 
     updateGridsquare(newGrid: string) {
