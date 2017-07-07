@@ -2,8 +2,6 @@ defmodule CloudShack.Controller.Flag do
   use Plug.Router
   use Plug.ErrorHandler
 
-  @flag_path Path.join("#{:code.priv_dir(:cloudshack)}", "flags/")
-
   plug :match
   plug :dispatch
 
@@ -26,6 +24,7 @@ defmodule CloudShack.Controller.Flag do
     conn
       |> put_resp_header("content-type", "image/png")
       |> put_resp_header("cache-control", "public, max-age=86400000")
-      |> send_file(200, Path.join([@flag_path, res, "#{flag}.png"]))
+      |> send_file(200, Path.join([:code.priv_dir(:cloudshack), "flags",
+                                  res, "#{flag}.png"]))
   end
 end

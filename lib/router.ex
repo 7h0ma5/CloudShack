@@ -2,16 +2,13 @@ defmodule CloudShack.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
-  @static_path Path.join("#{:code.priv_dir(:cloudshack)}", "static/")
-  @map_path Path.join("#{:code.priv_dir(:cloudshack)}", "map/")
-
   plug Plug.Static,
     at: "/images/map",
-    from: @map_path
+    from: {:cloudshack, "priv/map"}
 
   plug Plug.Static,
     at: "/",
-    from: @static_path,
+    from: :cloudshack,
     only_match: ["images", "css", "js", "templates", "fonts", "app"]
 
   plug :match
@@ -25,7 +22,8 @@ defmodule CloudShack.Router do
   get "/" do
     conn
     |> put_resp_header("content-type", "text/html")
-    |> send_file(200, Path.join(@static_path, "index.html"))
+    |> send_file(200, Path.join([:code.priv_dir(:cloudshack),
+                                "static", "index.html"]))
   end
 
   forward "/flag", to: CloudShack.Controller.Flag
@@ -35,7 +33,7 @@ defmodule CloudShack.Router do
   forward "/profiles", to: CloudShack.Controller.Profiles
   forward "/config", to: CloudShack.Controller.Config
 
-  match _ do
-    send_resp(conn, 404, "not found")
+  def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
+    send_resp(conn, conn.status, "Something went wrong")
   end
 end

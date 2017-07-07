@@ -2,10 +2,6 @@ defmodule Database do
   use GenServer
   require Logger
 
-  defp design_doc_path do
-    Path.join("#{:code.priv_dir(:cloudshack)}", "logbook.json")
-  end
-
   def start_link(database, sync) do
     GenServer.start_link(__MODULE__, {database, sync}, [name: __MODULE__])
   end
@@ -73,7 +69,7 @@ defmodule Database do
 
     CouchDB.Database.create contacts
 
-    new_doc = design_doc_path() |> File.read!
+    new_doc = Path.join(:code.priv_dir(:cloudshack), "logbook.json") |> File.read!
       |> String.replace("\n", "")
       |> Poison.decode!
 
