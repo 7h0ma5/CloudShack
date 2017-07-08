@@ -31,7 +31,7 @@ build_script:
 
     bash -c "mkdir cloudshack"
 
-    bash -c "tar xfz rel/cloudshack/releases/*/cloudshack.tar.gz -C cloudshack"
+    bash -c "tar xfz _build/prod/rel/cloudshack/releases/*/cloudshack.tar.gz -C cloudshack"
 
     7z a cloudshack-%APPVEYOR_REPO_BRANCH%-win%BITS%.zip cloudshack/
 test: off

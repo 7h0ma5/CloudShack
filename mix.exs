@@ -57,7 +57,7 @@ defmodule CloudShack.Mixfile do
       {:timex, "~> 3.1.8"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
       {:gproc, "~> 0.6.1"},
-      {:exrm, "~> 1.0.8"}
+      {:distillery, "~> 1.4.1"}
     ]
   end
 end

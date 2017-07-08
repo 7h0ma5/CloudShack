@@ -26,7 +26,7 @@ install:
 before_deploy:
   - mix release
   - mkdir package
-  - cp rel/cloudshack/releases/*/cloudshack.tar.gz package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
+  - cp _build/prod/rel/cloudshack/releases/*/cloudshack.tar.gz package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
 deploy:
   provider: s3
   access_key_id: AKIAJ6SIB6XJBNQL43GQ
