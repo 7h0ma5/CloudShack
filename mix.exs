@@ -50,9 +50,9 @@ defmodule CloudShack.Mixfile do
   defp deps do
     [
       {:cowboy, "~> 1.1.2"},
-      {:plug, "~> 1.3.0"},
+      {:plug, "~> 1.4.0"},
       {:sweet_xml, "~> 0.6.4"},
-      {:httpoison, "~> 0.11.0"},
+      {:httpoison, "~> 0.12.0"},
       {:poison, "~> 3.1.0"},
       {:timex, "~> 3.1.8"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
