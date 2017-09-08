@@ -7,7 +7,7 @@ import "@angular/router";
 import "@angular/forms";
 
 import "rxjs";
-import "leaflet";
+import * as L from "leaflet";
 
 L.Icon.Default.imagePath = ".";
 

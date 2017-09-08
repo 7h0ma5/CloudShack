@@ -17,16 +17,21 @@ before_script:
 before_install:
   - nvm install 6
   - nvm use 6
-install:
-  - mix local.hex --force
-  - mix local.rebar --force
-  - mix deps.get
-  - mix compile
+script:
   - (cd webapp && npm install && npm run build)
-before_deploy:
+  - mix compile
+  - mix test
+after_success:
   - mix release
   - mkdir package
-  - cp _build/prod/rel/cloudshack/releases/*/cloudshack.tar.gz package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
+  - mv _build/prod/rel/cloudshack/releases/*/cloudshack.tar.gz package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
+  - export REPO=7h0ma5/cloudshack
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -t cloudshack -t $REPO:$TAG -f Dockerfile .
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
 deploy:
   provider: s3
   access_key_id: AKIAJ6SIB6XJBNQL43GQ
