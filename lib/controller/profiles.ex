@@ -42,6 +42,7 @@ defmodule CloudShack.Controller.Profiles do
     profile = result |> Poison.decode!
 
     CloudShack.State.set(:profile, profile)
+    CloudShack.State.save()
 
     send_resp(conn, 200, result)
   end

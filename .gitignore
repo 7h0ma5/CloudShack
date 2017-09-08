@@ -5,4 +5,5 @@ erl_crash.dump
 /priv/static
 dxcc.json.gz
 settings.ets
+state.bin
 /tools/**/target
