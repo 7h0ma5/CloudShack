@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar" v-bind:class="{'expand': expand}">
-    <clock></clock>
+    <clock v-if="expand"></clock>
     <md-list>
       <md-list-item>
         <router-link to="/" exact>
@@ -21,15 +21,28 @@
         </router-link>
       </md-list-item>
     </md-list>
+    <div style="flex: 1;"></div>
+    <div v-show="expand" class="version">Version {{version}}</div>
   </div>
 </template>
 
 <style scoped>
+.sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .sidebar .md-list-item span {
   display: none;
 }
 .sidebar.expand .md-list-item span {
   display: inline;
+}
+.version {
+  text-align: center;
+  padding: 5px 0;
+  font-size: 13px;
+  opacity: .54;
 }
 </style>
 
@@ -39,6 +52,14 @@ import Clock from "./Clock"
 export default {
   name: "sidebar",
   props: ["expand"],
-  components: {Clock}
+  components: {Clock},
+  data: function() {
+    return {version: "?"}
+  },
+  created: function() {
+    this.$http.get("version").then(response => {
+      this.version = response.body
+    })
+  }
 }
 </script>

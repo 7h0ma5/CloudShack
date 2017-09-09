@@ -38,9 +38,7 @@ import VueMaterial from "vue-material"
 Vue.use(VueMaterial)
 
 Vue.material.registerTheme("default", {
-  primary: "blue",
-  accent: "red",
-  warn: "red",
+  primary: "blue"
 })
 
 // Vue Resource
@@ -85,7 +83,16 @@ export default {
 </script>
 
 <style>
+body {
+  height: 100%;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 #container {
+  flex: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
