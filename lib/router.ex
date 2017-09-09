@@ -7,9 +7,8 @@ defmodule CloudShack.Router do
     from: {:cloudshack, "priv/map"}
 
   plug Plug.Static,
-    at: "/",
-    from: :cloudshack,
-    only_match: ["images", "css", "js", "templates", "fonts", "app"]
+    at: "/static",
+    from: :cloudshack
 
   plug :match
   plug :dispatch
@@ -32,6 +31,10 @@ defmodule CloudShack.Router do
   forward "/contacts", to: CloudShack.Controller.Contacts
   forward "/profiles", to: CloudShack.Controller.Profiles
   forward "/config", to: CloudShack.Controller.Config
+
+  match _ do
+    send_resp(conn, 404, "Not found")
+  end
 
   def handle_errors(conn, %{kind: _kind, reason: _reason, stack: _stack}) do
     send_resp(conn, conn.status, "Something went wrong")

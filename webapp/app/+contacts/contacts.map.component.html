@@ -1,9 +1,0 @@
-<div style="display: flex; flex-direction: column; height: 100%;">
-  <p>
-    Band: <select [(ngModel)]="bandFilter" (ngModelChange)="onBandFilterChange()" style="z-index: 99999;">
-      <option value="">---</option>
-      <option *ngFor="let band of bands">{{band.name}}</option>
-    </select>
-  </p>
-  <div #mapView style="flex: 1;"></div>
-</div>

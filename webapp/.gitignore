@@ -1,40 +1,13 @@
-# Numerous always-ignore extensions
-*.diff
-*.err
-*.orig
-*.log
-*.rej
-*.swo
-*.swp
-*.vi
-*~
-*.sass-cache
-*.map
-
-# OS or Editor folders
 .DS_Store
-.cache
-.project
-.settings
-.tmproj
-nbproject
-Thumbs.db
-
-# NPM packages folder.
 node_modules/
-
-# Brunch folder for temporary files.
-tmp/
-
-# Brunch output folder.
-public/
 dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Bower stuff.
-bower_components/
-
-bin/
-coverage/
-typings/
-
-app/**/*.js
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
