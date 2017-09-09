@@ -3,7 +3,7 @@
     <clock></clock>
     <md-list>
       <md-list-item>
-        <router-link to="/home">
+        <router-link to="/" exact>
           <md-icon>home</md-icon>
           <span>Home</span>
         </router-link>
