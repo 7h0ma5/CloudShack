@@ -3,6 +3,10 @@ export default {
     home: "Home",
     logbook: "Logbook",
     new_contact: "New Contact",
+    dx_cluster: "DX Cluster",
+    import: "Import",
+    export: "Export",
+    settings: "Settings",
     rows: "Rows",
     save: "Save",
     reset: "Reset",
@@ -11,7 +15,7 @@ export default {
       name: "Name",
       date: "Date",
       mode: "Mode",
-      submod: "Submode",
+      submode: "Submode",
       band: "Band",
       rst_rcvd: "RST Received",
       rst_sent: "RST Sent",
@@ -19,13 +23,21 @@ export default {
       frequency: "Frequenz",
       power: "Leistung",
       start: "Start",
-      end: "End"
+      end: "End",
+      comment: "Comment",
+      qsl_via: "QSL via",
+      qsl_sent: "QSL sent",
+      qsl_rcvd: "QSL received"
     }
   },
   de: {
     home: "Home",
     logbook: "Logbuch",
     new_contact: "Neuer Kontakt",
+    dx_cluster: "DX Cluster",
+    import: "Import",
+    export: "Export",
+    settings: "Einstellungen",
     rows: "Zeilen",
     save: "Speichern",
     reset: "Zurücksetzen",
@@ -42,7 +54,11 @@ export default {
       frequency: "Frequenz",
       power: "Leistung",
       start: "Beginn",
-      end: "Ende"
+      end: "Ende",
+      comment: "Kommentar",
+      qsl_via: "QSL via",
+      qsl_sent: "QSL gesendet",
+      qsl_rcvd: "QSL empfangen"
     }
   }
 }

@@ -105,6 +105,7 @@ body {
 }
 #content {
   padding: 20px;
+  background-color: #f0f0f0;
   flex: 1;
 }
 </style>

@@ -14,10 +14,34 @@
           <span>{{$t("logbook")}}</span>
         </router-link>
       </md-list-item>
-       <md-list-item>
+      <md-list-item>
         <router-link to="/contacts/new">
           <md-icon>add</md-icon>
           <span>{{$t("new_contact")}}</span>
+        </router-link>
+      </md-list-item>
+      <md-list-item>
+        <router-link to="/cluster">
+          <md-icon>public</md-icon>
+          <span>{{$t("dx_cluster")}}</span>
+        </router-link>
+      </md-list-item>
+      <md-list-item>
+        <router-link to="/contacts/export">
+          <md-icon>cloud_download</md-icon>
+          <span>{{$t("export")}}</span>
+        </router-link>
+      </md-list-item>
+      <md-list-item>
+        <router-link to="/contacts/import">
+          <md-icon>cloud_upload</md-icon>
+          <span>{{$t("import")}}</span>
+        </router-link>
+      </md-list-item>
+      <md-list-item>
+        <router-link to="/settings">
+          <md-icon>settings</md-icon>
+          <span>{{$t("settings")}}</span>
         </router-link>
       </md-list-item>
     </md-list>

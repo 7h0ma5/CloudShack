@@ -94,13 +94,52 @@
           </md-input-container>
         </md-layout>
       </md-layout>
+
+      <md-whiteframe>
+        <md-tabs>
+          <md-tab md-icon="mail" md-label="QSL">
+            <md-layout gutter>
+              <md-layout>
+                <md-input-container>
+                  <label>{{$t("contact.qsl_via")}}</label>
+                  <md-input vue-model="contact.qsl_via"></md-input>
+                </md-input-container>
+              </md-layout>
+              <md-layout>
+                <md-input-container>
+                  <label>{{$t("contact.qsl_sent")}}</label>
+                  <md-input vue-model="contact.qsl_sent"></md-input>
+                </md-input-container>
+              </md-layout>
+              <md-layout>
+                <md-input-container>
+                  <label>{{$t("contact.qsl_rcvd")}}</label>
+                  <md-input vue-model="contact.qsl_rcvd"></md-input>
+                </md-input-container>
+              </md-layout>
+            </md-layout>
+          </md-tab>
+          <md-tab md-icon="contact_mail" md-label="Contact">
+          </md-tab>
+          <md-tab md-icon="star" md-label="Contest">
+          </md-tab>
+          <md-tab md-icon="comment" :md-label="$t('contact.comment')">
+            <md-input-container>
+              <label>{{$t("contact.comment")}}</label>
+              <md-textarea></md-textarea>
+            </md-input-container>
+          </md-tab>
+        </md-tabs>
+      </md-whiteframe>
     </div>
 
-    <md-button @click="save()" class="md-raised md-primary">{{$t("save")}}</md-button>
-    <md-button @click="reset()" class="md-raised md-warn">{{$t("reset")}}</md-button>
+    <p>
+      <md-button @click="save()" class="md-raised md-primary">{{$t("save")}}</md-button>
+      <md-button @click="reset()" class="md-raised md-warn">{{$t("reset")}}</md-button>
 
-    <md-button class="md-icon-button md-accent md-raised"><md-icon>announcement</md-icon></md-button>
-    <md-button class="md-icon-button md-raised"><md-icon>search</md-icon></md-button>
+      <md-button class="md-raised md-accent"><md-icon>announcement</md-icon> Spot</md-button>
+      <md-button class="md-raised"><md-icon>search</md-icon> QRZ</md-button>
+    </p>
   </div>
 </template>
 
@@ -111,6 +150,7 @@
 
 .contact-form .md-input-container {
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 </style>
 
@@ -118,9 +158,9 @@
 export default {
   data: function() {
     return {
-        contact: {},
-        start: "",
-        end: ""
+      contact: {},
+      start: "",
+      end: ""
     }
   },
   created: function() {
