@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar" v-bind:class="{'expand': expand}">
+    <clock></clock>
     <md-list>
       <md-list-item>
         <router-link to="/home">
@@ -24,17 +25,20 @@
 </template>
 
 <style scoped>
-  .sidebar .md-list-item span {
-    display: none;
-  }
-  .sidebar.expand .md-list-item span {
-    display: inline;
-  }
+.sidebar .md-list-item span {
+  display: none;
+}
+.sidebar.expand .md-list-item span {
+  display: inline;
+}
 </style>
 
 <script>
+import Clock from "./Clock"
+
 export default {
   name: "sidebar",
-  props: ["expand"]
+  props: ["expand"],
+  components: {Clock}
 }
 </script>
