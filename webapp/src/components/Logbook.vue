@@ -2,7 +2,7 @@
   <div>
    <md-table-card>
      <md-toolbar>
-      <h1 class="md-title">Logbook</h1>
+      <h1 class="md-title">{{$t("logbook")}}</h1>
 
       <md-button class="md-icon-button">
         <md-icon>search</md-icon>
@@ -14,11 +14,11 @@
      <md-table>
        <md-table-header>
          <md-table-row>
-           <md-table-head>Date</md-table-head>
-           <md-table-head>Callsign</md-table-head>
-           <md-table-head>Name</md-table-head>
-           <md-table-head>Mode</md-table-head>
-           <md-table-head>Band</md-table-head>
+           <md-table-head>{{$t("contact.date")}}</md-table-head>
+           <md-table-head>{{$t("contact.callsign")}}</md-table-head>
+           <md-table-head>{{$t("contact.name")}}</md-table-head>
+           <md-table-head>{{$t("contact.mode")}}</md-table-head>
+           <md-table-head>{{$t("contact.band")}}</md-table-head>
          </md-table-row>
        </md-table-header>
        <md-table-body>
@@ -36,7 +36,7 @@
        md-size="10"
        :md-total="total"
        md-page="1"
-       md-label="Rows"
+       :md-label="$t('rows')"
        md-separator="of"
        :md-page-options="[10, 25, 50]"
        @pagination="onPagination">

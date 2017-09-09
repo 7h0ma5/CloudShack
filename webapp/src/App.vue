@@ -28,12 +28,13 @@
 
 <script>
 import Vue from "vue"
-import VueMaterial from "vue-material"
 
 import "vue-material/dist/vue-material.css"
 import "roboto-fontface/css/roboto/roboto-fontface.css"
 import "material-design-icons/iconfont/material-icons.css"
 
+// Vue Material
+import VueMaterial from "vue-material"
 Vue.use(VueMaterial)
 
 Vue.material.registerTheme("default", {
@@ -42,6 +43,7 @@ Vue.material.registerTheme("default", {
   warn: "red",
 })
 
+// Vue Resource
 import VueResource from "vue-resource"
 Vue.use(VueResource)
 
@@ -52,9 +54,21 @@ else {
   Vue.http.options.root = "/"
 }
 
+// Vue i18n
+import VueI18n from "vue-i18n"
+import messages from "./locale"
+Vue.use(VueI18n)
+
+const i18n = new VueI18n({
+  locale: (navigator.languages ? navigator.languages[0] : navigator.language).slice(0, 2),
+  fallbackLocale: "en",
+  messages
+})
+
 import Sidebar from "./components/Sidebar"
 
 export default {
+  i18n,
   name: "app",
   components: {Sidebar},
   data: function() {

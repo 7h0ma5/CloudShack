@@ -5,19 +5,19 @@
       <md-list-item>
         <router-link to="/" exact>
           <md-icon>home</md-icon>
-          <span>Home</span>
+          <span>{{$t("home")}}</span>
         </router-link>
       </md-list-item>
       <md-list-item>
         <router-link to="/contacts" exact>
           <md-icon>book</md-icon>
-          <span>Logbook</span>
+          <span>{{$t("logbook")}}</span>
         </router-link>
       </md-list-item>
        <md-list-item>
         <router-link to="/contacts/new">
           <md-icon>add</md-icon>
-          <span>New Contact</span>
+          <span>{{$t("new_contact")}}</span>
         </router-link>
       </md-list-item>
     </md-list>
