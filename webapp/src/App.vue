@@ -8,9 +8,7 @@
 
         <h1 class="md-title" style="flex: 1">CloudShack</h1>
 
-        <md-button class="md-icon-button">
-          <md-icon>favorite</md-icon>
-        </md-button>
+        <profile-menu></profile-menu>
       </md-toolbar>
     </header>
 
@@ -99,13 +97,13 @@ body {
 }
 #sidebar .sidebar {
   width: 80px;
+  border-right: 1px solid #e9e9e9;
 }
 #sidebar .sidebar.expand {
   width: 250px;
 }
 #content {
   padding: 20px;
-  background-color: #f0f0f0;
   flex: 1;
 }
 </style>

@@ -15,7 +15,9 @@ defmodule CloudShack.Router do
 
   get "/version" do
     version = Application.spec(:cloudshack, :vsn)
-    send_resp(conn, 200, version)
+    conn
+    |> put_resp_header("content-type", "text/plain")
+    |> send_resp(200, version)
   end
 
   get "/" do
