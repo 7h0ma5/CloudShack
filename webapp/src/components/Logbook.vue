@@ -24,7 +24,10 @@
        <md-table-body>
          <md-table-row v-for="contact in contacts" :key="contact.id" :md-item="contact">
            <md-table-cell>{{contact.doc.start.slice(0, 16).replace("T", " ")}}</md-table-cell>
-           <md-table-cell><b>{{contact.doc.call}}</b></md-table-cell>
+           <md-table-cell class="call">
+             <img :src="'/api/flag/24/' + contact.doc.dxcc">
+             <span><b>{{contact.doc.call}}</b></span>
+           </md-table-cell>
            <md-table-cell>{{contact.doc.name}}</md-table-cell>
            <md-table-cell>{{contact.doc.mode}}</md-table-cell>
            <md-table-cell>{{contact.doc.band}}</md-table-cell>
@@ -46,7 +49,15 @@
 </template>
 
 <style scoped>
-
+.call img {
+  display: inline-block;
+  vertical-algin: middle;
+  margin-right: 5px;
+}
+.call span {
+  display: inline-block;
+  vertical-align: middle;
+}
 </style>
 
 <script>
