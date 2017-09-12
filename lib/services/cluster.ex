@@ -62,6 +62,7 @@ defmodule Cluster do
     call = Regex.run(~r/^[a-zA-Z0-9\/]*/, String.slice(line, 20, 12)) |> List.first
     comment = line |> String.slice(33, 30) |> String.strip
     time = line |> String.slice(64, 4)
+    received = Timex.now
 
     # TODO Convert comment from ISO 8859-1 to UTF-8
     comment = if String.printable?(comment), do: comment, else: ""
@@ -70,6 +71,6 @@ defmodule Cluster do
     {freq, _} = Float.parse(freq)
     freq = freq/1000
 
-    %{spotter: spotter, freq: freq, call: call, comment: comment, time: time}
+    %{spotter: spotter, freq: freq, call: call, comment: comment, time: time, received: received}
   end
 end

@@ -36,7 +36,9 @@ defmodule CloudShack.WebsocketHandler do
   end
 
   def websocket_info(:initialize, req, state) do
-    message = %{event: :state, data: CloudShack.State.get} |> Poison.encode!
+    message = CloudShack.State.get
+    |> Enum.map(fn {k,v} -> %{event: k, data: v} end)
+    |> Poison.encode!
     {:reply, {:text, message}, req, state}
   end
 

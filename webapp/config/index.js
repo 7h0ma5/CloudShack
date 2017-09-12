@@ -30,7 +30,11 @@ module.exports = {
     proxyTable: {
       "/api/**": {
         target: "http://localhost:7373/",
-        pathRewrite: {"^/api": ""}
+        pathRewrite: {"^/api": ""},
+      },
+      "/websocket": {
+        target: "http://localhost:7373/",
+        ws: true
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

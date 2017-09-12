@@ -43,7 +43,7 @@ Vue.material.registerTheme("default", {
 import VueResource from "vue-resource"
 Vue.use(VueResource)
 
-if (process.env.NODE_ENV == "development") {
+if (process.env.NODE_ENV === "development") {
   Vue.http.options.root = "/api/"
 }
 else {
@@ -61,12 +61,17 @@ const i18n = new VueI18n({
   messages
 })
 
+// Vuex
+import store from "./store"
+
+import ProfileMenu from "./components/ProfileMenu"
 import Sidebar from "./components/Sidebar"
 
 export default {
   i18n,
+  store,
   name: "app",
-  components: {Sidebar},
+  components: {Sidebar, ProfileMenu},
   data: function() {
     return {
       expandSidebar: true

@@ -44,7 +44,7 @@ defmodule CloudShack.State do
       {:noreply, state}
     else
       state = state |> Map.put(key, value)
-      :gproc.send({:p, :l, :websocket}, {:state, %{key => value}})
+      :gproc.send({:p, :l, :websocket}, {key, value})
       {:noreply, state}
     end
   end
