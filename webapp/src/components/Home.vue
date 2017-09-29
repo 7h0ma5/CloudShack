@@ -6,17 +6,20 @@
       </md-card-header>
 
       <md-card-content>
-        <div class="stats-box">
-          <div class="stats-title">Total</div>
-          <div class="stats-value">{{qso_total}}</div>
-        </div>
-        <div class="stats-box">
-          <div class="stats-title">This Year</div>
-          <div class="stats-value">{{qso_year}}</div>
-        </div>
-        <div class="stats-box">
-          <div class="stats-title">This Month</div>
-          <div class="stats-value">{{qso_month}}</div>
+        <md-progress v-if="!qso" md-indeterminate></md-progress>
+        <div v-if="qso">
+          <div class="stats-box">
+            <div class="stats-title">Total</div>
+            <div class="stats-value">{{qso[0]}}</div>
+          </div>
+          <div class="stats-box">
+            <div class="stats-title">This Year</div>
+            <div class="stats-value">{{qso[1]}}</div>
+          </div>
+          <div class="stats-box">
+            <div class="stats-title">This Month</div>
+            <div class="stats-value">{{qso[2]}}</div>
+          </div>
         </div>
       </md-card-content>
     </md-card>
@@ -27,21 +30,24 @@
       </md-card-header>
 
       <md-card-content>
-        <div class="stats-box">
-          <div class="stats-title">Worked</div>
-          <div class="stats-value">{{dxcc.worked}}</div>
-        </div>
-        <div class="stats-box">
-          <div class="stats-title">Confirmed</div>
-          <div class="stats-value">{{dxcc.confirmed}}</div>
-        </div>
-        <div class="stats-box">
-          <div class="stats-title">LoTW</div>
-          <div class="stats-value">{{dxcc.lotw}}</div>
-        </div>
-        <div class="stats-box">
-          <div class="stats-title">Card</div>
-          <div class="stats-value">{{dxcc.card}}</div>
+        <md-progress v-if="!dxcc" md-indeterminate></md-progress>
+        <div v-if="dxcc">
+          <div class="stats-box">
+            <div class="stats-title">Worked</div>
+            <div class="stats-value">{{dxcc.worked}}</div>
+          </div>
+          <div class="stats-box">
+            <div class="stats-title">Confirmed</div>
+            <div class="stats-value">{{dxcc.confirmed}}</div>
+          </div>
+          <div class="stats-box">
+            <div class="stats-title">LoTW</div>
+            <div class="stats-value">{{dxcc.lotw}}</div>
+          </div>
+          <div class="stats-box">
+            <div class="stats-title">Card</div>
+            <div class="stats-value">{{dxcc.card}}</div>
+          </div>
         </div>
       </md-card-content>
     </md-card>
@@ -52,7 +58,8 @@
       </md-card-header>
 
       <md-card-content>
-        <md-table>
+        <md-progress v-if="!modes" md-indeterminate></md-progress>
+        <md-table v-if="modes">
           <md-table-body>
             <md-table-row v-for="mode in modes" :key="mode.key[0]">
               <md-table-cell><b>{{mode.key[0]}}</b></md-table-cell>
@@ -62,7 +69,6 @@
         </md-table>
       </md-card-content>
     </md-card>
-
   </div>
 </template>
 
@@ -70,16 +76,9 @@
 export default {
   name: 'home',
   data () {
-    return {
-      qso_total: "?",
-      qso_year: "?",
-      qso_month: "?",
-      dxcc: {
-        card: "?",
-        confirmed: "?",
-        lotw: "?",
-        worked: "?"
-      },
+   return {
+      qso: null,
+      dxcc: null,
       modes: null
     }
   },
@@ -90,33 +89,38 @@ export default {
     var month_str = month < 10 ?  "0" + month.toString() : month.toString()
 
     // Total QSO Count
-    this.$http.get("contacts/_stats", {params: {group_level: 0}}).then(response => {
-      let rows = response.body.rows
-      this.qso_total = rows.length ? rows[0].value : 0
+    var total = this.$http.get("contacts/_stats", {
+      params: {group_level: 0}
     })
 
     // Yearly QSO Count
-    this.$http.get("contacts/_stats", {
+    var yearly = this.$http.get("contacts/_stats", {
       params: {
         group_level: 1,
         startkey: JSON.stringify([year]),
         endkey: JSON.stringify([year, {}])
       }
-    }).then(response => {
-      let rows = response.body.rows
-      this.qso_year = rows.length ? rows[0].value : 0
     })
 
     // Monthly QSO Count
-    this.$http.get("contacts/_stats", {
+    var monthly = this.$http.get("contacts/_stats", {
       params: {
         group_level: 2,
         startkey: JSON.stringify([year, month_str]),
         endkey: JSON.stringify([year, month_str, {}])
       }
-    }).then(response => {
-      let rows = response.body.rows
-      this.qso_month = rows.length ? rows[0].value : 0
+    })
+
+    Promise.all([total, yearly, monthly]).then((results) => {
+      let qso = [];
+
+      results.forEach(function(response) {
+        let rows = response.body.rows
+        let value = rows.length ? rows[0].value : 0
+        qso.push(value);
+      });
+
+      this.qso = qso;
     })
 
     // DXCC Count
