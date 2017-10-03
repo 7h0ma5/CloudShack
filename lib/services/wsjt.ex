@@ -2,8 +2,14 @@ defmodule WSJT do
   use GenServer
   require Logger
 
+  @prefix <<173, 188, 203, 218, 3 :: 32-big>>
+
   def start_link(config) do
     GenServer.start_link(__MODULE__, config, [name: __MODULE__])
+  end
+
+  def halt() do
+    GenServer.cast(__MODULE__, {:cmd, :halt})
   end
 
   def init(config) do
@@ -13,15 +19,24 @@ defmodule WSJT do
     forward_host = Map.get(config, :forward_host, {127, 0, 0, 1})
     forward_port = Map.get(config, :forward_port)
 
-    {:ok, socket} = :gen_udp.open(port, [:binary, active: true])
-    {:ok, {socket, forward_host, forward_port}}
+    {:ok, socket} = :gen_udp.open(port, [:binary, :inet, ip: {0, 0, 0, 0}, active: true])
+    socket |> IO.inspect
+
+    {:ok, {socket, %{
+              :forward => {forward_host, forward_port},
+              :address => nil
+           }}}
   end
 
-  def handle_info({:udp, _, _, _, data}, state) do
-    {socket, forward_host, forward_port} = state
+  def handle_info({:udp, _, ip, port, data}, state) do
+    {socket, params} = state
 
-    if forward_port do
-      :gen_udp.send(socket, forward_host, forward_port, data)
+    case Map.get params, :forward do
+      {_, nil} ->
+        # do nothing
+        nil
+      {forward_host, forward_port} ->
+        :gen_udp.send(socket, forward_host, forward_port, data)
     end
 
     packet = case data do
@@ -34,14 +49,31 @@ defmodule WSJT do
       _ -> {:invalid}
     end
 
-    process_packet(packet)
+    case packet do
+      {:heartbeat, heartbeat} ->
+        {:noreply, {socket, params |> Map.put(:address, {ip, port, Map.get(heartbeat, :id)})}}
+      _ ->
+        process_packet(packet)
+        {:noreply, state}
+    end
+  end
 
-    {:noreply, state}
+  def handle_cast({:cmd, halt}, {socket, params}) do
+    case Map.get(params, :address) do
+      {ip, port, id} ->
+        len = byte_size(id)
+        msg = @prefix <> <<8 :: 32-big, len :: 32-signed-big>> <> id <> <<0>>
+        :gen_udp.send(socket, ip, port, msg)
+      _ ->
+        Logger.warn "No WSJT-X address received yet"
+    end
+    {:noreply, {socket, params}}
   end
 
   defp process_packet({:status, status}) do
     %{freq: freq} = status
     CloudShack.State.update(:rig, %{freq: freq})
+    :gproc.send({:p, :l, :websocket}, {:wsjt_status, status})
   end
 
   defp process_packet({:log, log}) do
@@ -67,8 +99,13 @@ defmodule WSJT do
       |> IO.inspect
   end
 
-  defp process_packet(_) do
-    # nothing
+  defp process_packet({:decode, decode}) do
+    :gproc.send({:p, :l, :websocket}, {:wsjt_decode, decode})
+  end
+
+  defp process_packet(p) do
+    Logger.warn "Unknown WSJT packet received"
+    # ignore
   end
 
   defp parse_packet(data) do
@@ -83,11 +120,15 @@ defmodule WSJT do
 
   defp parse_heartbeat(data) do
     {id, rest} = parse_string(data)
-    <<max_schema :: 32-big>> = rest
+    <<max_schema :: 32-big, rest :: binary>> = rest
+    {version, rest} = parse_string(rest)
+    {revision, rest} = parse_string(rest)
 
     {:heartbeat, %{
       id: id,
-      max_schema: max_schema
+      max_schema: max_schema,
+      version: version,
+      revision: revision
     }}
   end
 
