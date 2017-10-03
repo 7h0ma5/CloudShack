@@ -43,6 +43,10 @@ export default store => {
         store.commit("wsjt/addDecode", msg.data)
         break
 
+      case "noaa":
+        store.commit("noaa/update", msg.data)
+        break
+
       default:
         console.warn("Unknown WebSocket Event: ", msg.event)
       }

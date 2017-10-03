@@ -1,20 +1,22 @@
 <template>
   <div class="profile-select">
-    <md-menu md-direction="bottom left" md-align-trigger>
-      <md-button md-menu-trigger>
+    <v-menu md-direction="bottom right">
+      <v-btn slot="activator" flat>
         {{activeProfile ? activeProfile.name : "No Profile"}}
-      </md-button>
+      </v-btn>
 
-      <md-menu-content>
-        <md-menu-item v-for="profile in profiles" :key="profile.key" @click="activate(profile.doc._id)">
-          {{profile.doc.name}}
-        </md-menu-item>
-        <md-menu-item>
-          <span>New Profile</span>
-          <md-icon>add</md-icon>
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
+      <v-list>
+        <v-list-tile v-for="profile in profiles" :key="profile.key" @click="activate(profile.doc._id)">
+          <v-list-tile-title>{{profile.doc.name}}</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-title>New Profile</v-list-tile-title>
+          <v-list-tile-action>
+            <v-icon>add</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
   </div>
 </template>
 

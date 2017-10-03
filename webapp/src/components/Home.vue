@@ -1,75 +1,82 @@
 <template>
-  <div class="home">
-    <md-card>
-      <md-card-header>
-        <div class="md-title">QSO Statistics</div>
-      </md-card-header>
+  <v-container grid-list-lg>
+    <v-layout row wrap>
+      <v-flex md4>
+        <v-card>
+          <v-card-title primary-title>
+            <h2 class="headline mb-0">QSO Statistics</h2>
+          </v-card-title>
+          <v-card-text>
+            <v-progress-linear v-if="!qso" indeterminate></v-progress-linear>
+            <div v-if="qso" class="stats">
+              <div class="stats-box">
+                <div class="stats-title">Total</div>
+                <div class="stats-value">{{qso[0]}}</div>
+              </div>
+              <div class="stats-box">
+                <div class="stats-title">This Year</div>
+                <div class="stats-value">{{qso[1]}}</div>
+              </div>
+              <div class="stats-box">
+                <div class="stats-title">This Month</div>
+                <div class="stats-value">{{qso[2]}}</div>
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
 
-      <md-card-content>
-        <md-progress v-if="!qso" md-indeterminate></md-progress>
-        <div v-if="qso">
-          <div class="stats-box">
-            <div class="stats-title">Total</div>
-            <div class="stats-value">{{qso[0]}}</div>
-          </div>
-          <div class="stats-box">
-            <div class="stats-title">This Year</div>
-            <div class="stats-value">{{qso[1]}}</div>
-          </div>
-          <div class="stats-box">
-            <div class="stats-title">This Month</div>
-            <div class="stats-value">{{qso[2]}}</div>
-          </div>
-        </div>
-      </md-card-content>
-    </md-card>
+      <v-flex md4>
+        <v-card>
+          <v-card-title primary-title>
+            <h2 class="headline mb-0">DXCC Statistics</h2>
+          </v-card-title>
 
-    <md-card>
-      <md-card-header>
-        <div class="md-title">DXCC Statistics</div>
-      </md-card-header>
+          <v-card-text>
+            <v-progress-linear v-if="!dxcc" indeterminate></v-progress-linear>
+            <div v-if="dxcc" class="stats">
+              <div class="stats-box">
+                <div class="stats-title">Worked</div>
+                <div class="stats-value">{{dxcc.worked}}</div>
+              </div>
+              <div class="stats-box">
+                <div class="stats-title">Confirmed</div>
+                <div class="stats-value">{{dxcc.confirmed}}</div>
+              </div>
+              <div class="stats-box">
+                <div class="stats-title">LoTW</div>
+                <div class="stats-value">{{dxcc.lotw}}</div>
+              </div>
+              <div class="stats-box">
+                <div class="stats-title">Card</div>
+                <div class="stats-value">{{dxcc.card}}</div>
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
 
-      <md-card-content>
-        <md-progress v-if="!dxcc" md-indeterminate></md-progress>
-        <div v-if="dxcc">
-          <div class="stats-box">
-            <div class="stats-title">Worked</div>
-            <div class="stats-value">{{dxcc.worked}}</div>
-          </div>
-          <div class="stats-box">
-            <div class="stats-title">Confirmed</div>
-            <div class="stats-value">{{dxcc.confirmed}}</div>
-          </div>
-          <div class="stats-box">
-            <div class="stats-title">LoTW</div>
-            <div class="stats-value">{{dxcc.lotw}}</div>
-          </div>
-          <div class="stats-box">
-            <div class="stats-title">Card</div>
-            <div class="stats-value">{{dxcc.card}}</div>
-          </div>
-        </div>
-      </md-card-content>
-    </md-card>
+      <v-flex md4>
+        <v-card>
+          <v-card-title>
+            <h2 class="headline mb-0">Top Modes</h2>
+          </v-card-title>
 
-    <md-card>
-      <md-card-header>
-        <div class="md-title">Top Modes</div>
-      </md-card-header>
-
-      <md-card-content>
-        <md-progress v-if="!modes" md-indeterminate></md-progress>
-        <md-table v-if="modes">
-          <md-table-body>
-            <md-table-row v-for="mode in modes" :key="mode.key[0]">
-              <md-table-cell><b>{{mode.key[0]}}</b></md-table-cell>
-              <md-table-cell md-numeric>{{mode.value}}</md-table-cell>
-            </md-table-row>
-          </md-table-body>
-        </md-table>
-      </md-card-content>
-    </md-card>
-  </div>
+          <v-card-text>
+            <v-progress-linear v-if="!modes" indeterminate></v-progress-linear>
+            <v-data-table v-if="modes" :items="modes" hide-actions
+                          :headers="[{text: 'Mode', value: 'key[0]', align: 'left'},
+                                    {text: 'QSOs', value: 'value'}]">
+              <template slot="items" scope="props">
+                <td><b>{{props.item.key[0]}}</b></td>
+                <td class="text-xs-right">{{props.item.value}}</td>
+              </template>
+            </v-data-table>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -136,25 +143,13 @@ export default {
         descending: false
       }
     }).then(response => {
-      let modes = response.body.rows
-      modes.sort(function(a, b) {
-        if (a.value > b.value) return -1;
-        if (b.value > a.value) return 1;
-        return 0;
-      })
-      this.modes = modes.slice(0, 5)
+      this.modes = response.body.rows
     })
   }
 }
 </script>
 
 <style scoped>
-.md-card {
-  max-width: 320px;
-  margin: 0 4px 16px;
-  display: inline-block;
-  vertical-align: top;
-}
 .stats-box {
   display: inline-block;
   margin-right: 1em;

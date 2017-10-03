@@ -1,43 +1,34 @@
 <template>
-  <div id="app">
-    <header>
-      <md-toolbar>
-        <md-button @click="toggleSidebar()" class="md-icon-button">
-          <md-icon>menu</md-icon>
-        </md-button>
+  <v-app id="app">
+    <v-navigation-drawer persistent absolute clipped enable-resize-watcher v-model="drawer">
+      <sidebar></sidebar>
+    </v-navigation-drawer>
 
-        <h1 class="md-title" style="flex: 1">CloudShack</h1>
+    <v-toolbar class="blue" dark>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>CloudShack</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <profile-menu></profile-menu>
+    </v-toolbar>
 
-        <profile-menu></profile-menu>
-      </md-toolbar>
-    </header>
-
-    <div id="container">
-      <div id="sidebar">
-        <sidebar :expand="expandSidebar"></sidebar>
-      </div>
-
-      <div id="content">
+    <main>
+      <v-container fluid>
         <router-view></router-view>
-      </div>
-    </div>
-  </div>
+      </v-container>
+    </main>
+  </v-app>
 </template>
 
 <script>
 import Vue from "vue"
 
-import "vue-material/dist/vue-material.css"
+import "vuetify/dist/vuetify.min.css"
 import "roboto-fontface/css/roboto/roboto-fontface.css"
 import "material-design-icons/iconfont/material-icons.css"
 
-// Vue Material
-import VueMaterial from "vue-material"
-Vue.use(VueMaterial)
-
-Vue.material.registerTheme("default", {
-  primary: "blue"
-})
+// Vuetify
+import Vuetify from "vuetify"
+Vue.use(Vuetify)
 
 // Vue Resource
 import VueResource from "vue-resource"
@@ -74,41 +65,13 @@ export default {
   components: {Sidebar, ProfileMenu},
   data: function() {
     return {
-      expandSidebar: true
+      drawer: true
     }
   },
   methods: {
-    toggleSidebar: function() {
-      this.expandSidebar = !this.expandSidebar;
-    }
   }
 }
 </script>
 
 <style>
-body {
-  height: 100%;
-}
-#app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-#container {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-#sidebar .sidebar {
-  width: 80px;
-  border-right: 1px solid #e9e9e9;
-}
-#sidebar .sidebar.expand {
-  width: 250px;
-}
-#content {
-  padding: 20px;
-  flex: 1;
-}
 </style>

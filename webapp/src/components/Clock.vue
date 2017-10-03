@@ -1,17 +1,14 @@
 <template>
   <div class="clock">
     <div class="time">
-      {{time}}
-    </div>
-    <div class="label">
-      UTC
+      {{time}} <span class="label">UTC</span>
     </div>
   </div>
 </template>
 
 <style scoped>
 .clock {
-  margin: 15px 0 5px;
+  padding: 15px 0;
   text-align: center;
 }
 .clock .time {
@@ -19,6 +16,9 @@
   line-height: 36px;
 }
 .clock .label {
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: bold;
   opacity: .54;
 }
 </style>
