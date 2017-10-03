@@ -5,8 +5,7 @@ defmodule Data do
     "560m" => %{ name: "560m", start: 0.501, end: 0.504 },
     "160m" => %{ name: "160m", start: 1.8, end: 2.0 },
     "80m" => %{ name: "80m", start: 3.5, end: 4.0 },
-    "60m" => %{ name: "60m", start: 5.102, end: 5.4065 },
-    "40m" => %{ name: "40m", start: 7.0, end: 7.3 },
+    "60m" => %{ name: "60m", start: 5.102, end: 5.4065 }, "40m" => %{ name: "40m", start: 7.0, end: 7.3 },
     "30m" => %{ name: "30m", start: 10.0, end: 10.15 },
     "20m" => %{ name: "20m", start: 14.0, end: 14.35 },
     "17m" => %{ name: "17m", start: 18.068, end: 18.168 },
@@ -31,6 +30,87 @@ defmodule Data do
     "2mm" => %{ name: "2mm", start: 142000.0, end: 149000.0 },
     "1mm" => %{ name: "1mm", start: 241000.0, end: 250000.0 }
   }
+
+  @modes [
+    %{ name: "CW" },
+    %{ name: "SSB", rst: "59", submodes: [
+     "LSB",
+     "USB"
+    ]},
+    %{ name: "AM", rst: "59" },
+    %{ name: "FM", rst: "59" },
+    %{ name: "PSK", submodes: [
+      "PSK31",
+      "PSK63",
+      "PSK63F",
+      "PSK125",
+      "PSK250",
+      "PSK500",
+      "PSK1000",
+      "QPSK31",
+      "QPSK63",
+      "QPSK125",
+      "QPSK250",
+      "QPSK500"
+    ]},
+    %{ name: "RTTY" },
+    %{ name: "MFSK", submodes: [
+      "MFSK4",
+      "MFSK8",
+      "MFSK11",
+      "MFSK16",
+      "MFSK22",
+      "MFSK31",
+      "MFSK32"
+    ]},
+    %{ name: "OLIVIA", submodes: [
+      "OLIVIA 4/125",
+      "OLIVIA 4/250",
+      "OLIVIA 8/250",
+      "OLIVIA 8/500",
+      "OLIVIA 16/500",
+      "OLIVIA 16/1000",
+      "OLIVIA 32/1000"
+    ]},
+    %{ name: "JT65", rst: "-1", submodes: [
+      "JT65A",
+      "JT65B",
+      "JT65B2",
+      "JT65C",
+      "JT65C2"
+    ]},
+    %{ name: "JT9", rst: "-1", submodes: [
+      "JT9-1",
+      "JT9-2",
+      "JT9-5",
+      "JT9-10",
+      "JT9-30"
+    ]},
+    %{ name: "FT8", rst: "-1" },
+    %{ name: "HELL", submodes: [
+      "FMHELL",
+      "FSKHELL",
+      "HELL80",
+      "HFSK",
+      "PSKHELL"
+    ]},
+    %{ name: "CONTESTIA" },
+    %{ name: "DOMINO", submodes: [
+      "DOMINOEX",
+      "DOMINOF"
+    ]},
+    %{ name: "MT63" },
+    %{ name: "JT6M", rst: "26" },
+    %{ name: "JTMSK", rst: "-1" },
+    %{ name: "MSK144", rst: "0" },
+    %{ name: "FSK441", rst: "26" },
+    %{ name: "DIGITALVOICE", rst: "59" },
+    %{ name: "DSTAR", rst: "59" },
+    %{ name: "PKT" },
+    %{ name: "ATV" },
+    %{ name: "SSTV" }
+];
+
 
   @legacy_modes %{
     "AMTORFEC" => %{ mode: "TOR", submode: "AMTORFEC" },
@@ -434,6 +514,18 @@ defmodule Data do
     520 => %{ name: "BONAIRE", flag: "NL" },
     521 => %{ name: "SOUTH SUDAN", flag: "SS" }
   }
+
+  def bands do
+    @bands
+  end
+
+  def modes do
+    @modes
+  end
+
+  def dxcc_entities do
+    @dxcc_entities
+  end
 
   for {id, dxcc} <- @dxcc_entities do
     def lookup_dxcc(unquote(id)), do: unquote(Macro.escape(dxcc))
