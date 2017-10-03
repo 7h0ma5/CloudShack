@@ -25,7 +25,7 @@
          <md-table-row v-for="contact in contacts" :key="contact.id" :md-item="contact">
            <md-table-cell>{{contact.doc.start.slice(0, 16).replace("T", " ")}}</md-table-cell>
            <md-table-cell class="call">
-             <img :src="'/api/flag/24/' + contact.doc.dxcc">
+             <img :src="'/flag/24/' + contact.doc.dxcc">
              <span><b>{{contact.doc.call}}</b></span>
            </md-table-cell>
            <md-table-cell>{{contact.doc.name}}</md-table-cell>

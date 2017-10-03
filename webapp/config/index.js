@@ -32,6 +32,9 @@ module.exports = {
         target: "http://localhost:7373/",
         pathRewrite: {"^/api": ""},
       },
+      "/flag/**": {
+        target: "http://localhost:7373/",
+      },
       "/websocket": {
         target: "http://localhost:7373/",
         ws: true

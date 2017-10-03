@@ -57,7 +57,9 @@ defmodule CloudShack.Mixfile do
       {:timex, "~> 3.1.8"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
       {:gproc, "~> 0.6.1"},
-      {:distillery, "~> 1.4.1"}
+      {:distillery, "~> 1.4.1"},
+      {:phoenix_gen_socket_client, "~> 1.2"},
+      {:websocket_client, github: "sanmiguel/websocket_client", tag: "1.3.0"}
     ]
   end
 end

@@ -34,6 +34,15 @@ export default store => {
       case "rot":
         console.log("Rot Update", msg.data)
         break
+
+      case "wsjt_status":
+        store.commit("wsjt/setStatus", msg.data)
+        break
+
+      case "wsjt_decode":
+        store.commit("wsjt/addDecode", msg.data)
+        break
+
       default:
         console.warn("Unknown WebSocket Event: ", msg.event)
       }
