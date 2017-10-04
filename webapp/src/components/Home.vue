@@ -63,15 +63,17 @@
           </v-card-title>
 
           <v-card-text>
-            <v-progress-linear v-if="!modes" indeterminate></v-progress-linear>
-            <v-data-table v-if="modes" :items="modes" hide-actions
-                          :headers="[{text: 'Mode', value: 'key[0]', align: 'left'},
-                                    {text: 'QSOs', value: 'value'}]">
-              <template slot="items" scope="props">
-                <td><b>{{props.item.key[0]}}</b></td>
-                <td class="text-xs-right">{{props.item.value}}</td>
-              </template>
-            </v-data-table>
+            <div class="stats">
+              <v-progress-linear v-if="!modes" indeterminate></v-progress-linear>
+              <v-data-table v-if="modes" :items="modes" hide-actions
+                            :headers="[{text: 'Mode', value: 'key[0]', align: 'left'},
+                                      {text: 'QSOs', value: 'value'}]">
+                <template slot="items" scope="props">
+                  <td><b>{{props.item.key[0]}}</b></td>
+                  <td class="text-xs-right">{{props.item.value}}</td>
+                </template>
+              </v-data-table>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -122,7 +124,7 @@ export default {
       let qso = [];
 
       results.forEach(function(response) {
-        let rows = response.body.rows
+        let rows = response.data.rows
         let value = rows.length ? rows[0].value : 0
         qso.push(value);
       });
@@ -132,7 +134,7 @@ export default {
 
     // DXCC Count
     this.$http.get("contacts/_dxcc_count").then(response => {
-      this.dxcc = response.body
+      this.dxcc = response.data
     })
 
     // Modes
@@ -143,13 +145,16 @@ export default {
         descending: false
       }
     }).then(response => {
-      this.modes = response.body.rows
+      this.modes = response.data.rows
     })
   }
 }
 </script>
 
 <style scoped>
+.stats {
+  margin-top: -16px;
+}
 .stats-box {
   display: inline-block;
   margin-right: 1em;

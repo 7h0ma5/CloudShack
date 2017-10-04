@@ -92,8 +92,8 @@ export default {
         }
       }).then(response => {
         this.loading = false
-        this.totalItems = response.body.total_rows
-        this.contacts = response.body.rows
+        this.totalItems = response.data.total_rows
+        this.contacts = response.data.rows
       })
     }
   }

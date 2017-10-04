@@ -158,7 +158,7 @@ defmodule WSJT do
     {id, rest} = parse_string(data)
     <<new :: 8, rest :: binary>> = rest
     {time, rest} = parse_time(rest)
-    <<snr :: 32-big, rest :: binary>> = rest
+    <<snr :: 32-signed-big, rest :: binary>> = rest
     <<d_time :: 64-float, d_freq :: 32-unsigned-big, rest :: binary>> = rest
     {mode, rest} = parse_string(rest)
     {message, _} = parse_string(rest)

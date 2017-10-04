@@ -1,26 +1,53 @@
 <template>
   <div class="wsjt">
-    <b>{{status ? status.mode : ""}}</b> on <b>{{status ? status.freq : ""}}</b>
+    <b>{{status ? status.mode : ""}}</b> on <b>{{status ? status.freq.toFixed(3) : ""}}</b>
 
-    <md-chip :class="{'md-warn': status && status.tx_enabled}">
+    <v-chip :class="{'red white--text': status && status.tx_enabled}">
       <span v-if="status && status.tx_enabled">TX Enabled</span>
       <span v-else>TX Disabled</span>
-    </md-chip>
+    </v-chip>
 
-    <md-chip :class="{'md-accent': status && status.transmitting, 'md-primary': status && !status.transmitting}">
+    <v-chip :class="{'orange white--text': status && status.transmitting,
+                     'green white--text': status && !status.transmitting}">
       <span v-if="status && status.transmitting">Transmitting</span>
       <span v-else>Receiving</span>
-    </md-chip>
+    </v-chip>
 
-    <md-chip v-if="status && status.decoding">
+    <v-chip v-if="status && status.decoding">
       Decoding
-    </md-chip>
+    </v-chip>
 
-    <ul>
-      <li v-for="decode in decodes">{{decode.message}}</li>
-    </ul>
+    <table class="decodes">
+      <tr v-for="decode in decodes">
+        <td class="number">{{decode.snr}}</td>
+        <td class="number">{{decode.d_freq}}</td>
+        <td :class="{'cq': decode.message.startsWith('CQ ')}">
+          {{decode.message}}
+        </td>
+        <td>
+          <v-btn icon small>
+            <v-icon>reply</v-icon>
+          </v-btn>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
+
+<style scoped>
+.decodes {
+  font-family: Monospace;
+}
+.decodes td {
+  padding: 5px;
+}
+.decodes td.number {
+  text-align: right;
+}
+.decodes td.cq {
+  color: #ff0000;
+}
+</style>
 
 <script>
 export default {
@@ -40,7 +67,9 @@ export default {
       let keys = Object.keys(this.$store.state.wsjt.decodes)
       if (keys.length > 0) {
         let max = keys.reduce((a, b) => Math.max(a, b))
-        return this.$store.state.wsjt.decodes[max]
+        let decodes = this.$store.state.wsjt.decodes[max].slice()
+        decodes.sort((a, b) => a.d_freq >= b.d_freq)
+        return decodes
       }
       else {
         return [];
@@ -51,7 +80,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

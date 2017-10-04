@@ -35,7 +35,7 @@ export default {
   },
   created: function() {
     this.$http.get("profiles").then(response => {
-      this.profiles = response.body.rows
+      this.profiles = response.data.rows
     })
   },
   methods: {

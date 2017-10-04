@@ -24,20 +24,20 @@
 </style>
 
 <script>
-  export default {
-    name: "clock",
-    created: function() {
-      this.update()
-      setInterval(this.update, 1000)
-    },
-    data: function() {
-      return {
-        time: "00:00:00"
-      }
-    },
-    methods: {
-      update: function() {
-        var date = new Date()
+export default {
+  name: "clock",
+  created: function() {
+    this.update()
+    setInterval(this.update, 1000)
+  },
+  data: function() {
+    return {
+      time: "00:00:00"
+    }
+  },
+  methods: {
+    update: function() {
+      var date = new Date()
       this.time = date.toISOString().substr(11, 8)
     }
   }

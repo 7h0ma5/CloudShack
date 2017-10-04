@@ -98,7 +98,7 @@ export default {
   },
   created: function() {
     this.$http.get("version").then(response => {
-      this.version = response.body
+      this.version = response.data
     })
   }
 }

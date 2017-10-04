@@ -35,6 +35,9 @@ module.exports = {
       "/flag/**": {
         target: "http://localhost:7373/",
       },
+      "/images/map/**": {
+        target: "http://localhost:7373/",
+      },
       "/websocket": {
         target: "http://localhost:7373/",
         ws: true

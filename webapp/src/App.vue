@@ -25,20 +25,22 @@ import Vue from "vue"
 import "vuetify/dist/vuetify.min.css"
 import "roboto-fontface/css/roboto/roboto-fontface.css"
 import "material-design-icons/iconfont/material-icons.css"
+import "leaflet/dist/leaflet.css"
 
 // Vuetify
 import Vuetify from "vuetify"
 Vue.use(Vuetify)
 
 // Vue Resource
-import VueResource from "vue-resource"
-Vue.use(VueResource)
+import axios from "axios"
 
 if (process.env.NODE_ENV === "development") {
-  Vue.http.options.root = "/api/"
+  Vue.prototype.$http = axios.create({
+    baseURL: '/api/',
+  });
 }
 else {
-  Vue.http.options.root = "/"
+  Vue.prototype.$http = axios
 }
 
 // Vue i18n
