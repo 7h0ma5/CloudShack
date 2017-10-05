@@ -1,10 +1,10 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer persistent absolute clipped enable-resize-watcher v-model="drawer">
+    <v-navigation-drawer app persistent clipped clipped-left enable-resize-watcher v-model="drawer">
       <sidebar></sidebar>
     </v-navigation-drawer>
 
-    <v-toolbar class="blue" dark>
+    <v-toolbar app fixed clipped-left dark class="blue">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>CloudShack</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -12,9 +12,11 @@
     </v-toolbar>
 
     <main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+      <v-content>
+        <v-container fluid>
+          <router-view></router-view>
+        </v-container>
+      </v-content>
     </main>
   </v-app>
 </template>
