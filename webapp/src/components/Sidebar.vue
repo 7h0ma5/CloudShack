@@ -2,10 +2,16 @@
   <div>
     <div>
       <clock></clock>
-      <div style="text-align: center; padding: 10px; line-height: 35px; border-bottom: 1px solid #ccc;">
-        <span>FLUX</span> &nbsp;&nbsp; <b style="font-size: 25px; vertical-align: middle;">{{$store.state.noaa.flux}}</b>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span>K<sub>P</sub></span> &nbsp;&nbsp; <b style="font-size: 25px; vertical-align: middle;">{{$store.state.noaa.kp}}</b>
+      <div class="noaa">
+        <span>FLUX</span>
+        <b>{{$store.state.noaa.flux}}</b>
+
+        <span>K<sub>P</sub></span>
+        <b :class="{'green--text': $store.state.noaa.kp < 4,
+                    'orange--text': $store.state.noaa.kp == 4,
+                    'red--text': $store.state.noaa.kp > 4}">
+          {{$store.state.noaa.kp}}
+        </b>
       </div>
     </div>
 
@@ -84,6 +90,21 @@
   padding: 5px 0;
   font-size: 13px;
   opacity: .54;
+}
+.noaa {
+  text-align: center;
+  padding: 10px;
+  line-height: 35px;
+  border-bottom: 1px solid #ccc;
+}
+.noaa span {
+  vertical-align: middle;
+  margin: 0 5px;
+}
+.noaa b {
+  font-size: 28px;
+  vertical-align: middle;
+  margin: 0 5px;
 }
 </style>
 
