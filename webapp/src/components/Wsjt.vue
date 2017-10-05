@@ -21,8 +21,14 @@
       <tr v-for="decode in decodes">
         <td class="number">{{decode.snr}}</td>
         <td class="number">{{decode.d_freq}}</td>
-        <td :class="{'cq': decode.message.startsWith('CQ ')}">
+        <td :class="{'cq': decode.type == 'cq'}">
           {{decode.message}}
+        </td>
+        <td>
+          <span v-if="decode.dxcc">
+            <img :src="'/flag/24/' + decode.dxcc.dxcc">
+            <span>{{decode.dxcc.country}}</span>
+          </span>
         </td>
         <td>
           <v-btn icon small>
@@ -36,7 +42,6 @@
 
 <style scoped>
 .decodes {
-  font-family: Monospace;
 }
 .decodes td {
   padding: 5px;

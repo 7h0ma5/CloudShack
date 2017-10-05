@@ -4,6 +4,9 @@ defmodule WSJT do
 
   @prefix <<173, 188, 203, 218, 3 :: 32-big>>
 
+  @cq_re ~r/^CQ (DX )?([A-Z0-9\/]+) ?([A-Z]{2}[0-9]{2})?/
+  @msg_re ~r/^([A-Z0-9\/]+) ([A-Z0-9\/]+) ([\-\+A-Z0-9\/]*)/
+
   def start_link(config) do
     GenServer.start_link(__MODULE__, config, [name: __MODULE__])
   end
@@ -100,6 +103,25 @@ defmodule WSJT do
   end
 
   defp process_packet({:decode, decode}) do
+    {type, sender, receiver} = try do
+      parse_message(Map.get(decode, :message))
+    rescue
+      MatchError -> {nil, nil, nil}
+    end
+
+    dxcc = if sender do
+      DXCC.lookup(sender)
+    else
+      nil
+    end
+
+    decode = Map.merge(decode, %{
+      :type => type,
+      :sender => sender,
+      :receiver => receiver,
+      :dxcc => dxcc
+    })
+
     :gproc.send({:p, :l, :websocket}, {:wsjt_decode, decode})
   end
 
@@ -185,10 +207,10 @@ defmodule WSJT do
     {tx_pwr, _} = Float.parse(tx_pwr)
 
     {:log, %{
-      :id => id, :datetime => datetime, "call" => call,
-      "gridsquare"  => gridsquare, "freq" => freq / 1.0e6, "mode" => mode,
-      "rst_sent" => rst_sent, "rst_rcvd" => rst_rcvd, "tx_pwr" => tx_pwr,
-      "comment" => comment, "name" => name
+      :id => id, :datetime => datetime, :call => call,
+      :gridsquare  => gridsquare, :freq => freq / 1.0e6, :mode => mode,
+      :rst_sent => rst_sent, :rst_rcvd => rst_rcvd, :tx_pwr => tx_pwr,
+      :comment => comment, :name => name
     }}
   end
 
@@ -223,5 +245,24 @@ defmodule WSJT do
   defp parse_time(data) do
     <<milliSeconds :: 32-unsigned-big, rest :: binary>> = data
     {milliSeconds, rest}
+  end
+
+  defp parse_message(msg) do
+    if String.starts_with?(msg, "CQ") do
+      [_, dx, sender, grid] = Regex.run(@cq_re, msg)
+      {:cq, sender, nil}
+    else
+      [_, receiver, sender, payload] = Regex.run(@msg_re, msg)
+      type = case payload do
+        "+" <> _ -> :snr
+        "-" <> _ -> :snr
+        "RRR" -> :rrr
+        "73" -> :r73
+        "R73"-> :r73
+        "RR73" -> :r73
+        _ -> nil
+      end
+      {type, sender, receiver}
+    end
   end
 end
