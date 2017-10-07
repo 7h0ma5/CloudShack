@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  name: 'home',
+  name: "home",
   data () {
    return {
       qso: null,

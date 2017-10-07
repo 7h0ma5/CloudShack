@@ -18,6 +18,7 @@ defmodule Socket do
   def handle_connected(transport, state) do
     Logger.info("connected")
     GenSocketClient.join(transport, "noaa")
+    GenSocketClient.join(transport, "rbn:DL2IC")
     {:ok, state}
   end
 
@@ -40,6 +41,11 @@ defmodule Socket do
   def handle_channel_closed(topic, payload, _transport, state) do
     Logger.error("disconnected from the topic #{topic}: #{inspect payload}")
     Process.send_after(self(), {:join, topic}, :timer.seconds(20))
+    {:ok, state}
+  end
+
+  def handle_message("rbn:" <> call, event, payload, _transport, state) do
+    Logger.info("New RBN spot: #{call}")
     {:ok, state}
   end
 

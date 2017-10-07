@@ -44,7 +44,7 @@ export default {
       contacts: [],
       loading: true,
       pagination: {
-        sortBy: 'doc.start',
+        sortBy: "doc.start",
         descending: true,
         rowsPerPage: 10,
         page: 1
@@ -78,7 +78,7 @@ export default {
       let url = "contacts"
 
       switch (this.pagination.sortBy) {
-      case 'doc.call':
+      case "doc.call":
         url += "/_view/byCall"
         break
       }

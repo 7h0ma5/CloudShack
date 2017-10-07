@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  name: 'wsjt',
+  name: "wsjt",
   data () {
     return {
       qso: null,
