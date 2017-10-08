@@ -1,8 +1,11 @@
 export default store => {
-  let loc = window.location;
-  let url = "ws://" + loc.host + loc.pathname + "websocket";
+  let loc = window.location
+  let url = "ws://" + loc.host + loc.pathname + "websocket"
+  let socket = new WebSocket(url)
 
-  let socket = new WebSocket(url);
+  socket.onopen = () => {
+    console.log("Websocket connected!")
+  }
 
   socket.onmessage = message => {
     let messages = JSON.parse(message.data)
@@ -19,18 +22,21 @@ export default store => {
     messages.forEach(msg => {
       switch (msg.event) {
       case "spot":
-        console.log("Spot Received", msg.data)
+        store.commit("cluster/addSpot", msg.data)
         break
+
       case "profile":
-        console.log("Set Profile", msg.data)
         store.commit("profile/setActive", msg.data)
         break
+
       case "rig":
         console.log("Rig Update", msg.data)
         break
+
       case "log":
         console.log("Log Update", msg.data)
         break
+
       case "rot":
         console.log("Rot Update", msg.data)
         break
@@ -56,6 +62,4 @@ export default store => {
   socket.onclose = () => {
     console.log("Websocket closed!")
   }
-
-  console.log("websocket plugin!");
 }

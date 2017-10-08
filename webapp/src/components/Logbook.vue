@@ -7,6 +7,7 @@
       :total-items="totalItems"
       :loading="loading"
       :rows-per-page-items="[10, 25, 50, 100]"
+      must-sort
       class="elevation-1">
       <template slot="items" scope="props">
         <td>{{props.item.doc.start.slice(0, 16).replace("T", " ")}}</td>
