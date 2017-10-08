@@ -7,9 +7,6 @@ elixir:
   - 1.4.1
 otp_release:
   - 18.2.1
-env:
-  global:
-    - MIX_ENV=prod
 services:
   - couchdb
 before_script:
@@ -19,10 +16,9 @@ before_install:
   - nvm use 6
 script:
   - (cd webapp && npm install && npm run build)
-  - mix compile
   - mix test
 after_success:
-  - mix release
+  - MIX_ENV=prod mix release
   - mkdir package
   - mv _build/prod/rel/cloudshack/releases/*/cloudshack.tar.gz package/cloudshack-${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}.tar.gz
   - export REPO=7h0ma5/cloudshack
