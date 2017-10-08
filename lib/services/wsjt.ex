@@ -23,7 +23,6 @@ defmodule WSJT do
     forward_port = Map.get(config, :forward_port)
 
     {:ok, socket} = :gen_udp.open(port, [:binary, :inet, ip: {0, 0, 0, 0}, active: true])
-    socket |> IO.inspect
 
     {:ok, {socket, %{
               :forward => {forward_host, forward_port},

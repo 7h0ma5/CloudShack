@@ -2,6 +2,8 @@ defmodule CloudShack.State do
   use GenServer
   require Logger
 
+  @state_file Path.join(Application.get_env(:cloudshack, :data_dir), "state.bin")
+
   def start_link do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
   end
@@ -14,7 +16,7 @@ defmodule CloudShack.State do
 
   def init(_) do
     try do
-      state = File.read!("state.bin") |> :erlang.binary_to_term
+      state = File.read!(@state_file) |> :erlang.binary_to_term
       {:ok, state}
     rescue
       _ -> Logger.warn "Could not read last state."
@@ -55,7 +57,7 @@ defmodule CloudShack.State do
   end
 
   def handle_cast({:save}, state) do
-    File.write! "state.bin", :erlang.term_to_binary(state)
+    File.write! @state_file, :erlang.term_to_binary(state)
     {:noreply, state}
   end
 end

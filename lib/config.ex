@@ -1,5 +1,8 @@
 defmodule CloudShack.Config do
+  require Logger
   use GenServer
+
+  @config_file Path.join(Application.get_env(:cloudshack, :data_dir), "settings.ets")
 
   def start_link do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
@@ -57,14 +60,16 @@ defmodule CloudShack.Config do
   end
 
   def handle_cast(:load, _) do
-    case :ets.file2tab('settings.ets') do
+    case :ets.file2tab(to_charlist(@config_file)) do
       {:ok, table} -> {:noreply, table}
-      {:error, _} -> {:noreply, :ets.new(:csconfig, [:ordered_set, :private])}
+      {:error, _} ->
+        Logger.warn("Failed to load config file. Using default configuration.")
+        {:noreply, :ets.new(:csconfig, [:ordered_set, :private])}
     end
   end
 
   def handle_cast(:save, table) do
-    :ok = :ets.tab2file(table, 'settings.ets', [sync: true])
+    :ok = :ets.tab2file(table, to_charlist(@config_file), [sync: true])
     {:noreply, table}
   end
 end

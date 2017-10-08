@@ -3,12 +3,15 @@ defmodule DXCC do
   require Logger
 
   @source "https://cdn.cloudshack.org/dxcc.json.gz"
+  @dxcc_file Path.join(Application.get_env(:cloudshack, :data_dir), "dxcc.json.gz")
 
   def start_link do
     GenServer.start_link(__MODULE__, :ok, [name: __MODULE__])
   end
 
   def init(_) do
+    :ets.new(:dxcc_entities, [:set, :protected, :named_table])
+    :ets.new(:dxcc_prefixes, [:bag, :public, :named_table])
     load()
     {:ok, nil}
   end
@@ -54,26 +57,26 @@ defmodule DXCC do
   def handle_cast(:update, state) do
     case HTTPoison.get(@source) do
       {:ok, result} ->
-        File.write!("dxcc.json.gz", result.body)
+        File.write!(@dxcc_file, result.body)
         Logger.info "Successfully updated the DXCC data"
       {:error, _} ->
         Logger.warn "Failed to update the DXCC data"
     end
     load()
-    {:noreply, state}
+    {:noreply, true}
   end
 
   def handle_cast(:load, state) do
     Logger.debug "Loading the DXCC data..."
 
-    :ets.new(:dxcc_entities, [:set, :protected, :named_table])
-    :ets.new(:dxcc_prefixes, [:bag, :public, :named_table])
-
-    case File.open("dxcc.json.gz", [:read, :compressed]) do
+    case File.open(@dxcc_file, [:read, :compressed]) do
       {:ok, file} ->
         file |> IO.read(:all) |> load_json
       _ ->
         Logger.warn "Could not open dxcc.json.gz"
+        if state != true do
+          update()
+        end
     end
 
     {:noreply, state}
