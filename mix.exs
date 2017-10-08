@@ -33,7 +33,7 @@ defmodule CloudShack.Mixfile do
   def application do
     [applications: [
         :cowboy, :plug, :httpoison, :poison, :sweet_xml, :timex, :couchdb,
-        :gproc, :logger
+        :gproc, :logger, :phoenix_gen_socket_client, :websocket_client
       ],
      mod: {CloudShack, []}]
   end
