@@ -1,6 +1,6 @@
 defmodule Adif.Field do
   def decode(:string, value) do
-    if (value = String.strip(value)) != "", do: value, else: nil
+    if (value = String.trim(value)) != "", do: value, else: nil
   end
 
   def decode(:uppercase, value) do
@@ -48,7 +48,7 @@ defmodule Adif.Field do
   def encode(:boolean, false), do: "N"
 
   def encode(:float, value) when is_float(value) do
-    Float.to_string(value, decimals: 6, compact: true)
+    :erlang.float_to_binary(value, [:compact, decimals: 6])
   end
 
   def encode(:float, value) do

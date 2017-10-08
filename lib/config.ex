@@ -42,7 +42,7 @@ defmodule CloudShack.Config do
     map |> Enum.each(fn({key, value}) ->
       value = value
         |> Enum.filter(fn {_, v} ->
-            if is_binary(v), do: String.strip(v) != "", else: v
+            if is_binary(v), do: String.trim(v) != "", else: v
          end)
         |> Enum.into(%{})
       :ets.insert(table, {key, value})

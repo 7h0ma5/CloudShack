@@ -44,7 +44,7 @@ defmodule Socket do
     {:ok, state}
   end
 
-  def handle_message("rbn:" <> call, event, payload, _transport, state) do
+  def handle_message("rbn:" <> call, _event, _payload, _transport, state) do
     Logger.info("New RBN spot: #{call}")
     {:ok, state}
   end

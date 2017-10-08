@@ -124,7 +124,7 @@ defmodule WSJT do
     :gproc.send({:p, :l, :websocket}, {:wsjt_decode, decode})
   end
 
-  defp process_packet(p) do
+  defp process_packet(_) do
     Logger.warn "Unknown WSJT packet received"
     # ignore
   end
@@ -143,7 +143,7 @@ defmodule WSJT do
     {id, rest} = parse_string(data)
     <<max_schema :: 32-big, rest :: binary>> = rest
     {version, rest} = parse_string(rest)
-    {revision, rest} = parse_string(rest)
+    {revision, _rest} = parse_string(rest)
 
     {:heartbeat, %{
       id: id,
@@ -248,7 +248,7 @@ defmodule WSJT do
 
   defp parse_message(msg) do
     if String.starts_with?(msg, "CQ") do
-      [_, dx, sender, grid] = Regex.run(@cq_re, msg)
+      [_, _dx, sender, _grid] = Regex.run(@cq_re, msg)
       {:cq, sender, nil}
     else
       [_, receiver, sender, payload] = Regex.run(@msg_re, msg)

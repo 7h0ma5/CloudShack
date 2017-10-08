@@ -22,7 +22,7 @@ defmodule Cluster do
   def handle_info(:connect, state) do
     options = [:binary, packet: :line, active: true, reuseaddr: true, keepalive: true]
 
-    case :gen_tcp.connect(to_char_list(state.host), state.port, options) do
+    case :gen_tcp.connect(to_charlist(state.host), state.port, options) do
       {:ok, socket} ->
         Logger.info "Connected to the DX cluster"
         if state.user do
@@ -58,9 +58,9 @@ defmodule Cluster do
 
   def parse_dx(line) do
     spotter = Regex.run(~r/^[a-zA-Z0-9\/]*/, String.slice(line, 0, 10)) |> List.first
-    freq = line |> String.slice(10, 8) |> String.strip
+    freq = line |> String.slice(10, 8) |> String.trim
     call = Regex.run(~r/^[a-zA-Z0-9\/]*/, String.slice(line, 20, 12)) |> List.first
-    comment = line |> String.slice(33, 30) |> String.strip
+    comment = line |> String.slice(33, 30) |> String.trim
     time = line |> String.slice(64, 4)
     received = Timex.now
 

@@ -107,7 +107,7 @@ defmodule Database do
     case result do
       {:ok, _} -> Logger.info "Database successfully updated"
       {:error, _} -> Logger.warn "Database update failed"
-      _ -> ()
+      _ -> nil
     end
 
     {:noreply, state}

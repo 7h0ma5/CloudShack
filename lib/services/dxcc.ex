@@ -54,7 +54,7 @@ defmodule DXCC do
     end
   end
 
-  def handle_cast(:update, state) do
+  def handle_cast(:update, _state) do
     case HTTPoison.get(@source) do
       {:ok, result} ->
         File.write!(@dxcc_file, result.body)

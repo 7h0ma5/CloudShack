@@ -51,7 +51,7 @@ defmodule RigCtl do
   def handle_info(:connect, state) do
     options = [:binary, packet: :line, active: true, reuseaddr: true, keepalive: true]
 
-    case :gen_tcp.connect(to_char_list(state.host), state.port, options) do
+    case :gen_tcp.connect(to_charlist(state.host), state.port, options) do
       {:ok, socket} ->
         Logger.info "Connected to rigctld"
         Process.send_after(self(), :poll, 100)
