@@ -16,10 +16,10 @@
     </div>
 
     <div class="sun" v-if="sun">
-      <b>{{sun.event}}</b>
+      <b>{{sun.event}}</b> in
       <v-tooltip right>
-        <span slot="activator">{{sun.diff}} {{sun.time | moment("from")}}</span>
-        <span>{{sun.time | moment("HH:mm")}} UTC</span>
+        <span slot="activator">{{sun.time | moment("from")}}</span>
+        <span><b>{{sun.hours}}:{{sun.minutes}}h</b> ({{sun.time | moment("HH:mm")}} UTC)</span>
       </v-tooltip>
 
     </div>
@@ -86,19 +86,25 @@ export default {
       if (this.position) {
         let lat = this.position[0], lon = this.position[1]
         let times = SunCalc.getTimes(this.now, lat, lon)
-        window.moment = this.$moment
+        let event = null;
+
         if (times.sunrise - this.now > 0) {
-          return {
+          event = {
             event: this.$t("sunrise"),
             time: this.$moment(times.sunrise).utc()
           }
         }
         else {
-          return {
+          event = {
             event: this.$t("sunset"),
-            time: this.$moment(times.sunset).utc()
+            time: this.$moment(times.sunset).utc(),
           }
         }
+
+        event.hours = event.time.diff(this.$moment(), "hours");
+        event.minutes = event.time.diff(this.$moment(), "minutes") % 60;
+
+        return event
       }
       else {
         return null
