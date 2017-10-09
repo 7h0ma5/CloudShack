@@ -176,7 +176,7 @@ export default {
   },
   created: function() {
     this.$http.get("config").then((response) => {
-      this.config = response.data
+      Object.assign(this.config, response.data)
     })
   },
   methods: {
