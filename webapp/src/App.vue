@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app id="app">
-      <v-navigation-drawer app persistent clipped clipped-left enable-resize-watcher. v-model="drawer">
+      <v-navigation-drawer app persistent clipped clipped-left enable-resize-watcher v-model="drawer">
         <sidebar></sidebar>
       </v-navigation-drawer>
 

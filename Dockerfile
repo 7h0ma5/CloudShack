@@ -1,6 +1,7 @@
 FROM ubuntu:trusty
 
 ADD _build/prod/rel/cloudshack /app
+EXEC mkdir -p /var/lib/cloudshack
 
 EXPOSE 2237/udp
 EXPOSE 7373
