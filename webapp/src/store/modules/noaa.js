@@ -1,12 +1,8 @@
-const state = {
-  kp: null,
-  flux: null
-}
+const state = { }
 
 const mutations = {
   update(state, status) {
-    state.kp = status.kp;
-    state.flux = status.flux;
+    Object.assign(state, status)
   }
 }
 

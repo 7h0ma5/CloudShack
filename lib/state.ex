@@ -24,7 +24,8 @@ defmodule CloudShack.State do
                profile: nil,
                rig: %{connected: false, freq: 0.0, mode: "SSB"},
                rot: %{connected: false, heading: 0.0, target: 0.0},
-               log: %{freq: 14.200, mode: "SSB", tx_pwr: 100.0}
+               log: %{freq: 14.200, mode: "SSB", tx_pwr: 100.0},
+               noaa: nil
             }
            }
     end

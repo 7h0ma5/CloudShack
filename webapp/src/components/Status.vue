@@ -13,6 +13,12 @@
                  'red--text': $store.state.noaa.kp > 4}">
         {{$store.state.noaa.kp}}
       </b>
+      <span class="seperator"></span>
+      <span>V<sub>S</sub></span>
+      <b>{{$store.state.noaa.wind_speed}}</b>
+      <span class="seperator"></span>
+      <span>B<sub>Z</sub></span>
+      <b>{{$store.state.noaa.bz}}</b>
     </div>
 
     <div class="sun" v-if="sun">
