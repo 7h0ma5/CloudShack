@@ -3,6 +3,7 @@ import Router from "vue-router"
 import Home from "@/components/Home"
 import Logbook from "@/components/Logbook"
 import NewContact from "@/components/NewContact"
+import EditProfile from"@/components/EditProfile"
 import Cluster from "@/components/Cluster"
 import Settings from "@/components/Settings"
 import Wsjt from "@/components/Wsjt"
@@ -25,6 +26,11 @@ export default new Router({
       path: "/contacts/new",
       name: "NewContact",
       component: NewContact
+    },
+    {
+      path: "/profiles/:id",
+      name: "EditProfile",
+      component: EditProfile
     },
     {
       path: "/cluster",
