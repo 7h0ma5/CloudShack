@@ -1,7 +1,7 @@
 <template>
   <div class="clock">
-    <div class="time">
-      {{time}} <span class="label">UTC</span>
+    <div class="time" @click="utc = !utc; update()">
+      {{time}} <span class="label">{{utc ? "UTC" : "LCL"}}</span>
     </div>
   </div>
 </template>
@@ -32,13 +32,18 @@ export default {
   },
   data: function() {
     return {
-      time: "00:00:00"
+      time: "00:00:00",
+      utc: true
     }
   },
   methods: {
     update: function() {
-      var date = new Date()
-      this.time = date.toISOString().substr(11, 8)
+      if (this.utc) {
+        this.time = this.$moment().utc().format("HH:mm:ss")
+      }
+      else {
+        this.time = this.$moment().format("HH:mm:ss")
+      }
     }
   }
 }

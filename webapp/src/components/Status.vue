@@ -16,12 +16,11 @@
     </div>
 
     <div class="sun" v-if="sun">
-      <b>{{sun.event}}</b> in
+      <b>{{sun.event}}</b>
       <v-tooltip right>
         <span slot="activator">{{sun.time | moment("from")}}</span>
         <span><b>{{sun.hours}}:{{sun.minutes}}h</b> ({{sun.time | moment("HH:mm")}} UTC)</span>
       </v-tooltip>
-
     </div>
   </div>
 </template>
