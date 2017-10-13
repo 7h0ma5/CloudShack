@@ -44,7 +44,7 @@
                   <v-text-field
                     label="Port"
                     type="number" step="1" min="1" max="65535"
-                    v-model="config.cluster.port">
+                    v-model.number="config.cluster.port">
                   </v-text-field>
                 </v-flex>
                 <v-flex sm4>
@@ -69,7 +69,7 @@
                   <v-text-field
                     label="Port"
                     type="number" step="1" min="1" max="65535"
-                    v-model="config.database.port">
+                    v-model.number="config.database.port">
                   </v-text-field>
                 </v-flex>
                 <v-flex sm4>
@@ -134,7 +134,7 @@
                   <v-text-field
                     label="Port"
                     type="number" step="1" min="1" max="65535"
-                    v-model="config.wsjt.port">
+                    v-model.number="config.wsjt.port">
                   </v-text-field>
                 </v-flex>
               </v-layout>

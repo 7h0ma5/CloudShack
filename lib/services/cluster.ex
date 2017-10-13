@@ -38,7 +38,12 @@ defmodule Cluster do
 
   def handle_info({:tcp, _socket, packet}, state) do
     packet = parse_line(packet)
+
     if packet do
+      call = Map.get(packet, :call)
+      dxcc = DXCC.lookup(call)
+
+      packet = Map.merge(packet, %{:dxcc => dxcc})
       :gproc.send({:p, :l, :websocket}, {:spot, packet})
     end
     {:noreply, state}
