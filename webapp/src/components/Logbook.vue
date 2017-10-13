@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-data-table
       :headers="headers"
       :items="contacts"
@@ -23,7 +23,7 @@
         <td>{{props.item.doc.band}}</td>
       </template>
     </v-data-table>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

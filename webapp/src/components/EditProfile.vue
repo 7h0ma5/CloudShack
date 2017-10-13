@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <h4>{{profile.name}}</h4>
     <v-card>
       <v-container fluid grid-list-md>
@@ -46,7 +46,7 @@
         {{$t("save")}}
       </v-btn>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

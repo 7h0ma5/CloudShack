@@ -1,5 +1,5 @@
 <template>
-  <div class="wsjt">
+  <v-container>
     <b>{{status ? status.mode : ""}}</b> on <b>{{status ? status.freq.toFixed(3) : ""}}</b>
 
     <v-chip :class="{'red white--text': status && status.tx_enabled}">
@@ -37,7 +37,7 @@
         </td>
       </tr>
     </table>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

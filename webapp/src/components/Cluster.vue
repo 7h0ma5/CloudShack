@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <table class="spots">
       <tr v-for="spot in $store.state.cluster.spots">
         <td>{{spot.received|moment("HH:mm:ss")}}</td>
@@ -15,7 +15,7 @@
         <td>{{spot.comment}}</td>
       </tr>
     </table>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

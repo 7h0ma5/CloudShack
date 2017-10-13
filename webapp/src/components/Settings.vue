@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-card>
       <v-tabs dark fixed centered>
         <v-tabs-bar>
@@ -157,7 +157,7 @@
         {{$t("reset")}}
       </v-btn>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
