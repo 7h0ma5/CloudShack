@@ -18,6 +18,12 @@
     </v-chip>
 
     <table class="decodes">
+      <tr>
+        <th>SNR</th>
+        <th>Δf</th>
+        <th>Message</th>
+        <th>Country</th>
+      </tr>
       <tr v-for="decode in decodes">
         <td class="number">{{decode.snr}}</td>
         <td class="number">{{decode.d_freq}}</td>
@@ -43,14 +49,23 @@
 <style scoped>
 .decodes {
 }
-.decodes td {
-  padding: 5px;
+.decodes td, .decodes th {
+  padding: 2px 5px;
 }
 .decodes td.number {
   text-align: right;
 }
 .decodes td.cq {
   color: #ff0000;
+}
+.decodes td span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.decodes td img {
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
 }
 </style>
 

@@ -81,14 +81,18 @@ defmodule WSJT do
   defp process_packet({:log, log}) do
     profile = Map.get(CloudShack.State.get(:profile) || %{}, "fields", %{})
 
-    datetime = Map.get(log, :datetime)
+    start_time = Map.get(log, :time_on)
+      |> Timex.format!("{YYYY}-{0M}-{0D}T{h24}:{m}:{s}.000Z")
+
+    end_time = Map.get(log, :time_off)
       |> Timex.format!("{YYYY}-{0M}-{0D}T{h24}:{m}:{s}.000Z")
 
     contact = log
       |> Map.delete(:id)
-      |> Map.delete(:datetime)
-      |> Map.put("start", datetime)
-      |> Map.put("end", datetime)
+      |> Map.delete(:time_on)
+      |> Map.delete(:time_off)
+      |> Map.put("start", start_time)
+      |> Map.put("end", end_time)
       |> Map.merge(profile)
       |> Contact.update_band
       |> Contact.migrate_mode
@@ -192,7 +196,7 @@ defmodule WSJT do
 
   defp parse_log(data) do
     {id, rest} = parse_string(data)
-    {datetime, rest} = parse_datetime(rest)
+    {time_on, rest} = parse_datetime(rest)
     {call, rest} = parse_string(rest)
     {gridsquare, rest} = parse_string(rest)
     <<freq :: 64-unsigned-big, rest :: binary>> = rest
@@ -201,15 +205,16 @@ defmodule WSJT do
     {rst_rcvd, rest} = parse_string(rest)
     {tx_pwr, rest} = parse_string(rest)
     {comment, rest} = parse_string(rest)
-    {name, _} = parse_string(rest)
+    {name, rest} = parse_string(rest)
+    {time_off, _} = parse_datetime(rest)
 
     {tx_pwr, _} = Float.parse(tx_pwr)
 
     {:log, %{
-      :id => id, :datetime => datetime, :call => call,
-      :gridsquare  => gridsquare, :freq => freq / 1.0e6, :mode => mode,
-      :rst_sent => rst_sent, :rst_rcvd => rst_rcvd, :tx_pwr => tx_pwr,
-      :comment => comment, :name => name
+      :id => id, :time_on => time_on, :time_off => time_off, "call" => call,
+      "gridsquare"  => gridsquare, "freq" => freq / 1.0e6, "mode" => mode,
+      "rst_sent" => rst_sent, "rst_rcvd" => rst_rcvd, "tx_pwr" => tx_pwr,
+      "comment" => comment, "name" => name
     }}
   end
 
