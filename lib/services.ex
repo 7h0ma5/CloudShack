@@ -19,7 +19,7 @@ defmodule CloudShack.Services do
       worker(RigCtl, [CloudShack.Config.get(:rigctl)]),
       worker(RotCtl, [CloudShack.Config.get(:rotctl)]),
       worker(DXCC, []),
-      worker(Socket, [])
+      worker(Socket, [sync])
     ]
 
     opts = [strategy: :one_for_one]

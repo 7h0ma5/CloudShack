@@ -3,43 +3,56 @@ defmodule Socket do
   alias Phoenix.Channels.GenSocketClient
   @behaviour GenSocketClient
 
-  def start_link() do
+  def start_link(config) do
     GenSocketClient.start_link(
       __MODULE__,
       Phoenix.Channels.GenSocketClient.Transport.WebSocketClient,
-      "ws://cloudshack.org/socket/websocket"
+      {config, "wss://cloudshack.org/socket/websocket"}
     )
   end
 
-  def init(url) do
-    {:connect, url, nil}
+  def init({config, url}) do
+    state = config
+
+    url = case {Map.get(state, :user), Map.get(state, :password)} do
+      {user, password} when user != nil and password != nil ->
+        query = URI.encode_query([user: user, password: password])
+        url <> "?" <> query
+      _ ->
+        Logger.info("No cloudshack.org credentials provided, skipping authentication")
+        url
+    end
+
+    {:connect, url, state}
   end
 
   def handle_connected(transport, state) do
-    Logger.info("connected")
+    Logger.info("Connected to cloudshack.org")
+
     GenSocketClient.join(transport, "noaa")
     GenSocketClient.join(transport, "rbn:DL2IC")
+
     {:ok, state}
   end
 
   def handle_disconnected(reason, state) do
-    Logger.error("disconnected: #{inspect reason}")
+    Logger.error("Disconnected from cloudshack.org: #{inspect reason}")
     Process.send_after(self(), :connect, :timer.seconds(20))
     {:ok, state}
   end
 
   def handle_joined(topic, _payload, _transport, state) do
-    Logger.info("joined the topic #{topic}")
+    Logger.debug("Joined the topic #{topic}")
     {:ok, state}
   end
 
   def handle_join_error(topic, payload, _transport, state) do
-    Logger.error("join error on the topic #{topic}: #{inspect payload}")
+    Logger.error("Join error on the topic #{topic}: #{inspect payload}")
     {:ok, state}
   end
 
   def handle_channel_closed(topic, payload, _transport, state) do
-    Logger.error("disconnected from the topic #{topic}: #{inspect payload}")
+    Logger.error("Disconnected from the topic #{topic}: #{inspect payload}")
     Process.send_after(self(), {:join, topic}, :timer.seconds(20))
     {:ok, state}
   end
@@ -50,9 +63,10 @@ defmodule Socket do
   end
 
   def handle_message(topic, event, payload, _transport, state) do
-    Logger.warn("message on topic #{topic}: #{event} #{inspect payload}")
     case {topic, event} do
       {"noaa", "update"} -> CloudShack.State.update("noaa", payload)
+      _ ->
+        Logger.warn("Unhandled message on topic #{topic}: #{event} #{inspect payload}")
     end
     {:ok, state}
   end
@@ -67,14 +81,13 @@ defmodule Socket do
   end
 
   def handle_info(:connect, _transport, state) do
-    Logger.info("connecting")
+    Logger.info("Connecting")
     {:connect, state}
   end
   def handle_info({:join, topic}, transport, state) do
-    Logger.info("joining the topic #{topic}")
     case GenSocketClient.join(transport, topic) do
       {:error, reason} ->
-        Logger.error("error joining the topic #{topic}: #{inspect reason}")
+        Logger.error("Error joining the topic #{topic}: #{inspect reason}")
         Process.send_after(self(), {:join, topic}, :timer.seconds(20))
       {:ok, _ref} -> :ok
     end
@@ -82,7 +95,7 @@ defmodule Socket do
     {:ok, state}
   end
   def handle_info(message, _transport, state) do
-    Logger.warn("Unhandled message #{inspect message}")
+    Logger.debug("Unhandled message #{inspect message}")
     {:ok, state}
   end
 end
