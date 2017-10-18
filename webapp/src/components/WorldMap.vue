@@ -1,7 +1,14 @@
 <template>
-  <div ref="map">
+  <div class="map" ref="map">
   </div>
 </template>
+
+<style scoped>
+.map {
+  position: relative;
+  z-index: 0;
+}
+</style>
 
 <script>
 import L from "leaflet"
