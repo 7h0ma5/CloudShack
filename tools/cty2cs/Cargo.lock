@@ -1,4 +1,4 @@
-[root]
+[[package]]
 name = "cty2cs"
 version = "0.1.0"
 dependencies = [
