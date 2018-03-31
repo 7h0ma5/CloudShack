@@ -47,7 +47,7 @@ defmodule Database do
     remote_password = sync |> Map.get(:key)
     remote_db = "user_" <> String.downcase(remote_user)
     remote_url = "https://#{remote_user}:#{remote_password}"
-                  <> "@cloudshack.org:6984/#{remote_db}"
+                  <> "@couch01.cloudshack.org:6984/#{remote_db}"
 
     options = [create_target: false, filter: "logbook/sync", continuous: true]
     CouchDB.Server.replicate(server, local_url, remote_url, options)

@@ -3,24 +3,24 @@ defmodule CloudShack.WebsocketHandler do
 
   require Logger
 
-  def init(_, _req, _opts) do
-    {:upgrade, :protocol, :cowboy_websocket}
+  def init(req, state) do
+    {:cowboy_websocket, req, state}
   end
 
-  def websocket_init(_type, req, _opts) do
+  def websocket_init(state) do
     Logger.debug "Websocket client connected"
 
     :gproc.reg({:p, :l, :websocket})
     send self(), :initialize
 
-    {:ok, req, nil}
+    {:ok, state}
   end
 
-  def websocket_handle({:text, "ping"}, req, state) do
-    {:reply, {:text, "pong"}, req, state}
+  def websocket_handle({:text, "ping"}, state) do
+    {:reply, {:text, "pong"}, state}
   end
 
-  def websocket_handle({:text, message}, req, state) do
+  def websocket_handle({:text, message}, state) do
     case Poison.decode!(message, keys: :atoms!) do
       %{action: "rig.set_freq", freq: freq}
         -> RigCtl.set_freq(freq)
@@ -32,22 +32,22 @@ defmodule CloudShack.WebsocketHandler do
         -> RotCtl.set_target(target)
       other -> Logger.warn("Unknown websocket command #{inspect other}")
     end
-    {:ok, req, state}
+    {:ok, state}
   end
 
-  def websocket_info(:initialize, req, state) do
+  def websocket_info(:initialize, state) do
     message = CloudShack.State.get
     |> Enum.map(fn {k,v} -> %{event: k, data: v} end)
     |> Poison.encode!
-    {:reply, {:text, message}, req, state}
+    {:reply, {:text, message}, state}
   end
 
-  def websocket_info({event, data}, req, state) do
+  def websocket_info({event, data}, state) do
     message = Poison.encode!(%{event: event, data: data})
-    {:reply, {:text, message}, req, state}
+    {:reply, {:text, message}, state}
   end
 
-  def websocket_terminate(_reason, _req, _state) do
+  def terminate(_reason, _req, _state) do
     :ok
   end
 end

@@ -4,7 +4,8 @@ import Home from "@/components/Home"
 import Logbook from "@/components/Logbook"
 import NewContact from "@/components/NewContact"
 import Import from "@/components/Import"
-import EditProfile from"@/components/EditProfile"
+import Export from "@/components/Export"
+import EditProfile from "@/components/EditProfile"
 import Cluster from "@/components/Cluster"
 import Settings from "@/components/Settings"
 import Wsjt from "@/components/Wsjt"
@@ -32,6 +33,11 @@ export default new Router({
       path: "/import",
       name: "Import",
       component: Import
+    },
+    {
+      path: "/export",
+      name: "export",
+      component: Export
     },
     {
       path: "/profiles/:id",

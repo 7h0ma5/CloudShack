@@ -7,23 +7,22 @@ defmodule Socket do
     GenSocketClient.start_link(
       __MODULE__,
       Phoenix.Channels.GenSocketClient.Transport.WebSocketClient,
-      {config, "wss://cloudshack.org/socket/websocket"}
+      {config, "wss://app01.cloudshack.org/socket/websocket"}
     )
   end
 
   def init({config, url}) do
     state = config
 
-    url = case {Map.get(state, :user), Map.get(state, :password)} do
+    query = case {Map.get(state, :user), Map.get(state, :password)} do
       {user, password} when user != nil and password != nil ->
-        query = URI.encode_query([user: user, password: password])
-        url <> "?" <> query
+        [user: user, password: password]
       _ ->
         Logger.info("No cloudshack.org credentials provided, skipping authentication")
-        url
+        []
     end
 
-    {:connect, url, state}
+    {:connect, url, query, state}
   end
 
   def handle_connected(transport, state) do

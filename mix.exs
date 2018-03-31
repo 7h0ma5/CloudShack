@@ -19,7 +19,7 @@ defmodule CloudShack.Mixfile do
      maintainers: ["Thomas Gatzweiler <mail@cloudshack.org>"],
      licenses: ["GPL-3"],
      vendor: "CloudShack",
-     links:  %{
+     links: %{
        "GitHub" => "https://github.com/7h0ma5/CloudShack",
        "Docs" => "http://cloudshack.org",
        "Homepage" => "http://cloudshack.org"
@@ -49,17 +49,17 @@ defmodule CloudShack.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:cowboy, "~> 1.1.2"},
-      {:plug, "~> 1.4.0"},
+      {:cowboy, "~> 2.2"},
+      {:plug, "~> 1.5"},
       {:sweet_xml, "~> 0.6.4"},
-      {:httpoison, "~> 0.12.0"},
+      {:httpoison, "~> 1.0"},
       {:poison, "~> 3.1.0"},
-      {:timex, "~> 3.1.8"},
+      {:timex, "~> 3.2"},
       {:couchdb, github: "7h0ma5/elixir-couchdb"},
       {:gproc, "~> 0.6.1"},
-      {:distillery, "~> 1.4.1"},
-      {:phoenix_gen_socket_client, "~> 1.2"},
-      {:websocket_client, github: "sanmiguel/websocket_client", tag: "1.3.0"}
+      {:distillery, "~> 1.5"},
+      {:phoenix_gen_socket_client, "~> 2.1"},
+      {:websocket_client, "~> 1.2"}
     ]
   end
 end

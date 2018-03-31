@@ -5,12 +5,16 @@ defmodule CloudShack do
     import Supervisor.Spec, warn: false
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, CloudShack.Router, [], [
-        port: 7373,
-        dispatch: [{:_, [
-          {"/websocket", CloudShack.WebsocketHandler, []},
-          {:_, Plug.Adapters.Cowboy.Handler, {CloudShack.Router, []}}
-        ]}]
+      Plug.Adapters.Cowboy2.child_spec([
+        scheme: :http,
+        plug: {CloudShack.Router, []},
+        options: [
+          port: 7373,
+          dispatch: [{:_, [
+                         {"/websocket", CloudShack.WebsocketHandler, []},
+                         {:_, Plug.Adapters.Cowboy2.Handler, {CloudShack.Router, []}}
+                       ]}]
+        ]
       ]),
       worker(CloudShack.Config, []),
       worker(CloudShack.State, []),
