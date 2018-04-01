@@ -24,9 +24,9 @@ after_success:
   - export REPO=7h0ma5/cloudshack
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - docker build -t cloudshack -t $REPO:$TAG -f Dockerfile .
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
+  - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TRAVIS_BUILD_NUMBER
   - docker push $REPO
 deploy:
   provider: s3
